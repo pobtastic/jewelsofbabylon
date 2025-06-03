@@ -33,36 +33,40 @@ Next: <a href="50562.html">50562</a>
 </td>
 </tr>
 </table>
-<div class="description">50553: Routine at C579</div>
+<div class="description">50553: Pause, Print String And Scroll</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="60887.html">60887</a>, <a href="61268.html">61268</a> and <a href="61498.html">61498</a>.
+Used by the routines at <a href="61097.html">61097</a>, <a href="61268.html">61268</a> and <a href="61498.html">61498</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">PausePrintStringAndScroll</td>
 <td class="address-2"><span id="50553"></span>50553</td>
 <td class="instruction">LD B,25</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=25.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50555"></span>50555</td>
-<td class="instruction">CALL <a href="47953.html">47953</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="47953.html">Pause_Loop</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47953.html">Pause_Loop</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50558"></span>50558</td>
-<td class="instruction">CALL <a href="47780.html#47793">47793</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndScroll</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50561"></span>50561</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="EDD7.html">EDD7</a>
+Prev: <a href="EEA9.html">EEA9</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#ef54">Map</a></td>
 <td class="next">
@@ -39,7 +39,7 @@ Next: <a href="F03A.html">F03A</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD82</a>.
+Used by the routines at <a href="F155.html">F155</a> and <a href="FD82.html">GameStart</a>.
 </div>
 </div>
 </td>
@@ -72,12 +72,11 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 <tr>
 <td class="address-1"><span id="ef60"></span>EF60</td>
 <td class="instruction">CP $2C</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 2C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EF54.html#ef7b">EF7B</a> if <span class="register">A</span> is not equal to 2C.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef62"></span>EF62</td>
 <td class="instruction">JR NZ,<a href="EF54.html#ef7b">$EF7B</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EF54.html#ef7b">EF7B</a> if <span class="register">A</span> is not equal to 2C.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef64"></span>EF64</td>
@@ -101,8 +100,8 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 </tr>
 <tr>
 <td class="address-1"><span id="ef6d"></span>EF6D</td>
-<td class="instruction">CALL <a href="C35F.html#c412">$C412</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C35F.html#c412">C412</a>.</td>
+<td class="instruction">CALL <a href="C3AE.html#c412">$C412</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3AE.html#c412">C412</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef70"></span>EF70</td>
@@ -112,7 +111,7 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 <tr>
 <td class="address-1"><span id="ef71"></span>EF71</td>
 <td class="instruction">LD HL,$EC27</td>
-<td class="comment-1" rowspan="2">Write 2F to *<a href="E9CA.html#ec27">EC27</a>.</td>
+<td class="comment-1" rowspan="2">Write 2F to *<a href="EC27.html">EC27</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef74"></span>EF74</td>
@@ -121,7 +120,7 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 <tr>
 <td class="address-1"><span id="ef76"></span>EF76</td>
 <td class="instruction">LD HL,$EC2A</td>
-<td class="comment-1" rowspan="2">Write 30 to *<a href="E9CA.html#ec2a">EC2A</a>.</td>
+<td class="comment-1" rowspan="2">Write 30 to *<a href="EC2A.html">EC2A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef79"></span>EF79</td>
@@ -139,23 +138,21 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 </tr>
 <tr>
 <td class="address-1"><span id="ef80"></span>EF80</td>
-<td class="instruction">CALL <a href="C1FF.html#c21e">$C21E</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C1FF.html#c21e">C21E</a>.</td>
+<td class="instruction">CALL <a href="C21E.html">$C21E</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C21E.html">C21E</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef83"></span>EF83</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BBF0.html#bccb">BCCB</a>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EF54.html#efa7">EFA7</a> if *<a href="BCCB.html">RoomNumber</a> is not equal to 30.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef86"></span>EF86</td>
 <td class="instruction">CP $30</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 30.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef88"></span>EF88</td>
 <td class="instruction">JR NZ,<a href="EF54.html#efa7">$EFA7</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EF54.html#efa7">EFA7</a> if <span class="register">A</span> is not equal to 30.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef8a"></span>EF8A</td>
@@ -185,17 +182,18 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 <tr>
 <td class="address-1"><span id="ef96"></span>EF96</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
+<td class="comment-1" rowspan="3">Write 00 to <ul class="">
+<li>*<a href="EC27.html">EC27</a></li>
+<li>*<a href="EC2A.html">EC2A</a></li>
+</ul></td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef97"></span>EF97</td>
 <td class="instruction">LD ($EC27),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="E9CA.html#ec27">EC27</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef9a"></span>EF9A</td>
 <td class="instruction">LD ($EC2A),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="E9CA.html#ec2a">EC2A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="ef9d"></span>EF9D</td>
@@ -279,12 +277,11 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 <tr>
 <td class="address-1"><span id="efc4"></span>EFC4</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=07.</td>
+<td class="comment-1" rowspan="2">Write 07 to *<a href="BBF0.html#bc6a">BC6A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="efc6"></span>EFC6</td>
 <td class="instruction">LD ($BC6A),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="BBF0.html#bc6a">BC6A</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="efc9"></span>EFC9</td>
@@ -293,8 +290,8 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 </tr>
 <tr>
 <td class="address-1"><span id="efcc"></span>EFCC</td>
-<td class="instruction">CALL <a href="C35F.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C35F.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C3AE.html#c401">$C401</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3AE.html#c401">C401</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="efcf"></span>EFCF</td>
@@ -357,7 +354,7 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 <tr>
 <td class="address-2"><span id="efec"></span>EFEC</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="EF54.html#efff">EFFF</a> if *<a href="BBF0.html#bccb">BCCB</a> is not equal to 03.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EF54.html#efff">EFFF</a> if *<a href="BCCB.html">RoomNumber</a> is not equal to 03.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="efef"></span>EFEF</td>
@@ -393,13 +390,13 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 </tr>
 <tr>
 <td class="address-1"><span id="effc"></span>EFFC</td>
-<td class="instruction">JP <a href="EDD7.html#edf2">$EDF2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EDD7.html#edf2">EDF2</a>.</td>
+<td class="instruction">JP <a href="EDF2.html">GameComplete</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EDF2.html">GameComplete</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="efff"></span>EFFF</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="EF54.html#f019">F019</a> if *<a href="BBF0.html#bccb">BCCB</a> is not equal to 02.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EF54.html#f019">F019</a> if *<a href="BCCB.html">RoomNumber</a> is not equal to 02.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f002"></span>F002</td>
@@ -451,7 +448,7 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 <tr>
 <td class="address-2"><span id="f019"></span>F019</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="EF54.html#f039">F039</a> if *<a href="BBF0.html#bccb">BCCB</a> is not equal to 6C.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EF54.html#f039">F039</a> if *<a href="BCCB.html">RoomNumber</a> is not equal to 6C.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f01c"></span>F01C</td>
@@ -477,14 +474,24 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 <td class="comment-1" rowspan="1">Jump to <a href="EF54.html#f039">F039</a> if <span class="register">A</span> is not equal to 1D.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="f027"></span>
+<div class="comments">
+<div class="paragraph">
+Print "The bridge begins to shake...".
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-1"><span id="f027"></span>F027</td>
 <td class="instruction">LD HL,$E5CF</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E5CF.html">E5CF</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f02a"></span>F02A</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">$BAB1</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">BAB1</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f02d"></span>F02D</td>
@@ -494,12 +501,22 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 <tr>
 <td class="address-1"><span id="f02e"></span>F02E</td>
 <td class="instruction">LD HL,$EDD7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EDD7.html">EDD7</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EDD7.html">GameOver</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f031"></span>F031</td>
 <td class="instruction">EX (SP),HL</td>
 <td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="f032"></span>
+<div class="comments">
+<div class="paragraph">
+Print "Suddenly,it collapses.".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f032"></span>F032</td>
@@ -508,8 +525,8 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 </tr>
 <tr>
 <td class="address-1"><span id="f035"></span>F035</td>
-<td class="instruction">CALL <a href="C579.html">$C579</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C579.html">C579</a>.</td>
+<td class="instruction">CALL <a href="C579.html">PausePrintStringAndScroll</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C579.html">PausePrintStringAndScroll</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f038"></span>F038</td>
@@ -525,7 +542,7 @@ Used by the routines at <a href="F03A.html">F03A</a> and <a href="FD82.html">FD8
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="EDD7.html">EDD7</a>
+Prev: <a href="EEA9.html">EEA9</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#ef54">Map</a></td>
 <td class="next">

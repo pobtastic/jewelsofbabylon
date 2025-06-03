@@ -33,33 +33,37 @@ Next: <a href="BA89.html">BA89</a>
 </td>
 </tr>
 </table>
-<div class="description">BA7F: Routine at BA7F</div>
+<div class="description">BA7F: Set Default Screen Position</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="BABA.html">BABA</a> and <a href="C00A.html">C00A</a>.
+Used by the routines at <a href="BABA.html">ScrollScreen</a> and <a href="C00A.html">C00A</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">SetDefaultScreenPosition</td>
 <td class="address-2"><span id="ba7f"></span>BA7F</td>
 <td class="instruction">CALL <a href="BA96.html">SwitchScreenUpper</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BA96.html">SwitchScreenUpper</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba82"></span>BA82</td>
 <td class="instruction">LD BC,$0321</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=0321.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba85"></span>BA85</td>
 <td class="instruction">CALL $0DD9</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkid.github.io/rom/asm/0DD9.html">CL_SET</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba88"></span>BA88</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

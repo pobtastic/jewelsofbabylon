@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="60887.html">60887</a>
+Prev: <a href="61097.html">61097</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#61268">Map</a></td>
 <td class="next">
@@ -39,7 +39,7 @@ Next: <a href="61498.html">61498</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">64898</a>.
+Used by the routines at <a href="61781.html">61781</a> and <a href="64898.html">GameStart</a>.
 </div>
 </div>
 </td>
@@ -72,12 +72,11 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 <tr>
 <td class="address-1"><span id="61280"></span>61280</td>
 <td class="instruction">CP 44</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 44.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61268.html#61307">61307</a> if <span class="register">A</span> is not equal to 44.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61282"></span>61282</td>
 <td class="instruction">JR NZ,<a href="61268.html#61307">61307</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61307">61307</a> if <span class="register">A</span> is not equal to 44.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61284"></span>61284</td>
@@ -101,8 +100,8 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 </tr>
 <tr>
 <td class="address-1"><span id="61293"></span>61293</td>
-<td class="instruction">CALL <a href="50015.html#50194">50194</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html#50194">50194</a>.</td>
+<td class="instruction">CALL <a href="50094.html#50194">50194</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50094.html#50194">50194</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61296"></span>61296</td>
@@ -112,7 +111,7 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 <tr>
 <td class="address-1"><span id="61297"></span>61297</td>
 <td class="instruction">LD HL,60455</td>
-<td class="comment-1" rowspan="2">Write 47 to *<a href="59850.html#60455">60455</a>.</td>
+<td class="comment-1" rowspan="2">Write 47 to *<a href="60455.html">60455</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61300"></span>61300</td>
@@ -121,7 +120,7 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 <tr>
 <td class="address-1"><span id="61302"></span>61302</td>
 <td class="instruction">LD HL,60458</td>
-<td class="comment-1" rowspan="2">Write 48 to *<a href="59850.html#60458">60458</a>.</td>
+<td class="comment-1" rowspan="2">Write 48 to *<a href="60458.html">60458</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61305"></span>61305</td>
@@ -139,23 +138,21 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 </tr>
 <tr>
 <td class="address-1"><span id="61312"></span>61312</td>
-<td class="instruction">CALL <a href="49663.html#49694">49694</a></td>
-<td class="comment-1" rowspan="1">Call <a href="49663.html#49694">49694</a>.</td>
+<td class="instruction">CALL <a href="49694.html">49694</a></td>
+<td class="comment-1" rowspan="1">Call <a href="49694.html">49694</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61315"></span>61315</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48112.html#48331">48331</a>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61351">61351</a> if *<a href="48331.html">RoomNumber</a> is not equal to 48.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61318"></span>61318</td>
 <td class="instruction">CP 48</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 48.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61320"></span>61320</td>
 <td class="instruction">JR NZ,<a href="61268.html#61351">61351</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61351">61351</a> if <span class="register">A</span> is not equal to 48.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61322"></span>61322</td>
@@ -185,17 +182,18 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 <tr>
 <td class="address-1"><span id="61334"></span>61334</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+<td class="comment-1" rowspan="3">Write 0 to <ul class="">
+<li>*<a href="60455.html">60455</a></li>
+<li>*<a href="60458.html">60458</a></li>
+</ul></td>
 </tr>
 <tr>
 <td class="address-1"><span id="61335"></span>61335</td>
 <td class="instruction">LD (60455),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="59850.html#60455">60455</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61338"></span>61338</td>
 <td class="instruction">LD (60458),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="59850.html#60458">60458</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61341"></span>61341</td>
@@ -279,12 +277,11 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 <tr>
 <td class="address-1"><span id="61380"></span>61380</td>
 <td class="instruction">LD A,7</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=7.</td>
+<td class="comment-1" rowspan="2">Write 7 to *<a href="48112.html#48234">48234</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61382"></span>61382</td>
 <td class="instruction">LD (48234),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="48112.html#48234">48234</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="61385"></span>61385</td>
@@ -293,8 +290,8 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 </tr>
 <tr>
 <td class="address-1"><span id="61388"></span>61388</td>
-<td class="instruction">CALL <a href="50015.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50094.html#50177">50177</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50094.html#50177">50177</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61391"></span>61391</td>
@@ -357,7 +354,7 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 <tr>
 <td class="address-2"><span id="61420"></span>61420</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61439">61439</a> if *<a href="48112.html#48331">48331</a> is not equal to 3.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61439">61439</a> if *<a href="48331.html">RoomNumber</a> is not equal to 3.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61423"></span>61423</td>
@@ -393,13 +390,13 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 </tr>
 <tr>
 <td class="address-1"><span id="61436"></span>61436</td>
-<td class="instruction">JP <a href="60887.html#60914">60914</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="60887.html#60914">60914</a>.</td>
+<td class="instruction">JP <a href="60914.html">GameComplete</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="60914.html">GameComplete</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="61439"></span>61439</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61465">61465</a> if *<a href="48112.html#48331">48331</a> is not equal to 2.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61465">61465</a> if *<a href="48331.html">RoomNumber</a> is not equal to 2.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61442"></span>61442</td>
@@ -451,7 +448,7 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 <tr>
 <td class="address-2"><span id="61465"></span>61465</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61497">61497</a> if *<a href="48112.html#48331">48331</a> is not equal to 108.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61497">61497</a> if *<a href="48331.html">RoomNumber</a> is not equal to 108.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61468"></span>61468</td>
@@ -477,14 +474,24 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 <td class="comment-1" rowspan="1">Jump to <a href="61268.html#61497">61497</a> if <span class="register">A</span> is not equal to 29.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="61479"></span>
+<div class="comments">
+<div class="paragraph">
+Print "The bridge begins to shake...".
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-1"><span id="61479"></span>61479</td>
 <td class="instruction">LD HL,58831</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="58831.html">58831</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61482"></span>61482</td>
-<td class="instruction">CALL <a href="47780.html#47793">47793</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">47793</a>.</td>
+<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndScroll</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61485"></span>61485</td>
@@ -494,12 +501,22 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 <tr>
 <td class="address-1"><span id="61486"></span>61486</td>
 <td class="instruction">LD HL,60887</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="60887.html">60887</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="60887.html">GameOver</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61489"></span>61489</td>
 <td class="instruction">EX (SP),HL</td>
 <td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="61490"></span>
+<div class="comments">
+<div class="paragraph">
+Print "Suddenly,it collapses.".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61490"></span>61490</td>
@@ -508,8 +525,8 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 </tr>
 <tr>
 <td class="address-1"><span id="61493"></span>61493</td>
-<td class="instruction">CALL <a href="50553.html">50553</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50553.html">50553</a>.</td>
+<td class="instruction">CALL <a href="50553.html">PausePrintStringAndScroll</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50553.html">PausePrintStringAndScroll</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61496"></span>61496</td>
@@ -525,7 +542,7 @@ Used by the routines at <a href="61498.html">61498</a> and <a href="64898.html">
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="60887.html">60887</a>
+Prev: <a href="61097.html">61097</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#61268">Map</a></td>
 <td class="next">

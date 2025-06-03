@@ -47,127 +47,145 @@ Used by the routine at <a href="50375.html">50375</a>.
 <tr>
 <td class="address-2"><span id="49962"></span>49962</td>
 <td class="instruction">INC BC</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">BC</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49963"></span>49963</td>
 <td class="instruction">LD A,(48426)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48332.html#48426">48426</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49966"></span>49966</td>
 <td class="instruction">SUB C</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49967"></span>49967</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49968"></span>49968</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49969"></span>49969</td>
 <td class="instruction">LD IX,(48410)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="48332.html#48410">48410</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49973"></span>49973</td>
 <td class="instruction">CALL <a href="49648.html">49648</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="49648.html">49648</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49976"></span>49976</td>
 <td class="instruction">POP DE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore <span class="register">DE</span> from the stack.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49977"></span>49977</td>
 <td class="instruction">JR <a href="49962.html#49980">49980</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="49962.html#49980">49980</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="49979"></span>49979</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="49980"></span>49980</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Jump to <a href="49962.html#49991">49991</a> if *<span class="register">HL</span> is equal to 255.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49981"></span>49981</td>
 <td class="instruction">CP 255</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="49983"></span>49983</td>
 <td class="instruction">JR Z,<a href="49962.html#49991">49991</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="49985"></span>49985</td>
 <td class="instruction">CALL <a href="50015.html">50015</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="50015.html">50015</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49988"></span>49988</td>
 <td class="instruction">JR NZ,<a href="49962.html#49979">49979</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="49962.html#49979">49979</a> if <span class="register">A</span> is not equal to 255.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49990"></span>49990</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="49991"></span>
+<div class="comments">
+<div class="paragraph">
+Print "I can't see ".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-2"><span id="49991"></span>49991</td>
 <td class="instruction">LD HL,48669</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48669.html">48669</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49994"></span>49994</td>
-<td class="instruction">CALL <a href="47780.html">47780</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="47780.html">PrintString</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html">PrintString</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49997"></span>49997</td>
 <td class="instruction">LD IX,(48412)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="48332.html#48412">48412</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50001"></span>50001</td>
 <td class="instruction">CALL <a href="49648.html">49648</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="49648.html">49648</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50004"></span>50004</td>
-<td class="instruction">CALL <a href="47780.html">47780</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="47780.html">PrintString</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html">PrintString</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="50007"></span>
+<div class="comments">
+<div class="paragraph">
+Print " here.".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50007"></span>50007</td>
 <td class="instruction">LD HL,48682</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48682.html">48682</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50010"></span>50010</td>
-<td class="instruction">CALL <a href="47780.html#47793">47793</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndScroll</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50013"></span>50013</td>
 <td class="instruction">SCF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set the carry flag.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50014"></span>50014</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

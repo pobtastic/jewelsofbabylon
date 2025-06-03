@@ -56,8 +56,8 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="c05c"></span>C05C</td>
-<td class="instruction">CALL <a href="BAC3.html">$BAC3</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAC3.html">BAC3</a>.</td>
+<td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAC3.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c05f"></span>C05F</td>
@@ -102,7 +102,7 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 <tr>
 <td class="address-2"><span id="c06f"></span>C06F</td>
 <td class="instruction">LD DE,$BD71</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD66.html#bd71">BD71</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD71.html">BD71</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c072"></span>C072</td>
@@ -164,7 +164,7 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 <tr>
 <td class="address-1"><span id="c087"></span>C087</td>
 <td class="instruction">LD DE,$BD71</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD66.html#bd71">BD71</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD71.html">BD71</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c08a"></span>C08A</td>
@@ -309,7 +309,7 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 <tr>
 <td class="address-1"><span id="c0bc"></span>C0BC</td>
 <td class="instruction">LD DE,$BD71</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD66.html#bd71">BD71</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD71.html">BD71</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c0bf"></span>C0BF</td>
@@ -372,22 +372,22 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 <tr>
 <td class="address-1"><span id="c0cf"></span>C0CF</td>
 <td class="instruction">LD ($BD7D),HL</td>
-<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="BD66.html#bd7d">BD7D</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="BD71.html#bd7d">BD7D</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c0d2"></span>C0D2</td>
 <td class="instruction">LD ($BD7F),DE</td>
-<td class="comment-1" rowspan="1">Write <span class="register">DE</span> to *<a href="BD66.html#bd7f">BD7F</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">DE</span> to *<a href="BD71.html#bd7f">BD7F</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c0d6"></span>C0D6</td>
 <td class="instruction">LD ($BD81),BC</td>
-<td class="comment-1" rowspan="1">Write <span class="register">BC</span> to *<a href="BD66.html#bd81">BD81</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">BC</span> to *<a href="BD71.html#bd81">BD81</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c0da"></span>C0DA</td>
 <td class="instruction">LD HL,($BD0C)</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BBF0.html#bd0c">BD0C</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BCCC.html#bd0c">BD0C</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c0dd"></span>C0DD</td>
@@ -410,7 +410,7 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 <tr>
 <td class="address-2"><span id="c0e4"></span>C0E4</td>
 <td class="instruction">LD DE,$BD71</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD66.html#bd71">BD71</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD71.html">BD71</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c0e7"></span>C0E7</td>
@@ -450,7 +450,7 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 <tr>
 <td class="address-1"><span id="c0f1"></span>C0F1</td>
 <td class="instruction">LD HL,$BD81</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD66.html#bd81">BD81</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD71.html#bd81">BD81</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c0f4"></span>C0F4</td>
@@ -489,17 +489,17 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 <tr>
 <td class="address-1"><span id="c0ff"></span>C0FF</td>
 <td class="instruction">LD HL,($BD7D)</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BD66.html#bd7d">BD7D</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BD71.html#bd7d">BD7D</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c102"></span>C102</td>
 <td class="instruction">LD DE,($BD7F)</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="BD66.html#bd7f">BD7F</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="BD71.html#bd7f">BD7F</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c106"></span>C106</td>
 <td class="instruction">LD BC,($BD81)</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD66.html#bd81">BD81</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD71.html#bd81">BD81</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c10a"></span>C10A</td>
@@ -558,17 +558,17 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 <tr>
 <td class="address-2"><span id="c11c"></span>C11C</td>
 <td class="instruction">LD HL,($BD7D)</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BD66.html#bd7d">BD7D</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BD71.html#bd7d">BD7D</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c11f"></span>C11F</td>
 <td class="instruction">LD DE,($BD7F)</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="BD66.html#bd7f">BD7F</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="BD71.html#bd7f">BD7F</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c123"></span>C123</td>
 <td class="instruction">LD BC,($BD81)</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD66.html#bd81">BD81</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD71.html#bd81">BD81</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c127"></span>C127</td>
@@ -680,8 +680,8 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="c14d"></span>C14D</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">$BAB1</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">BAB1</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c150"></span>C150</td>
@@ -695,8 +695,8 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="c153"></span>C153</td>
-<td class="instruction">CALL <a href="BAC3.html">$BAC3</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAC3.html">BAC3</a>.</td>
+<td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAC3.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c156"></span>C156</td>
@@ -719,8 +719,8 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="c15c"></span>C15C</td>
-<td class="instruction">CALL <a href="BAC3.html">$BAC3</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAC3.html">BAC3</a>.</td>
+<td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAC3.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c15f"></span>C15F</td>
@@ -734,8 +734,8 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="c163"></span>C163</td>
-<td class="instruction">CALL <a href="BAC3.html">$BAC3</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAC3.html">BAC3</a>.</td>
+<td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAC3.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c166"></span>C166</td>
@@ -744,8 +744,8 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="c169"></span>C169</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">$BAB1</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">BAB1</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c16c"></span>C16C</td>
@@ -772,8 +772,8 @@ Used by the routine at <a href="C00A.html">C00A</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="c177"></span>C177</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">$BAB1</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">BAB1</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c17a"></span>C17A</td>

@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="F03A.html">F03A</a>
+Prev: <a href="F155.html">F155</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#fd82">Map</a></td>
 <td class="next">
@@ -33,123 +33,144 @@ Next: <a href="FDB5.html">FDB5</a>
 </td>
 </tr>
 </table>
-<div class="description">FD82: Routine at FD82</div>
+<div class="description">FD82: Game Start</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="C592.html">C592</a>.
+Used by the routine at <a href="C592.html">GameStart_Alias</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">GameStart</td>
 <td class="address-2"><span id="fd82"></span>FD82</td>
 <td class="instruction">LD HL,$FDB5</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="FDB5.html">FDB5</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd85"></span>FD85</td>
 <td class="instruction">LD DE,$BBF0</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BBF0.html">BBF0</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd88"></span>FD88</td>
 <td class="instruction">LD BC,$0144</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=0144.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd8b"></span>FD8B</td>
 <td class="instruction">LDIR</td>
 <td class="comment-1" rowspan="1">LDIR.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd8d"></span>FD8D</td>
 <td class="instruction">LD IX,$ED9E</td>
 <td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="ED9E.html">ED9E</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd91"></span>FD91</td>
 <td class="instruction">LD A,($BD32)</td>
-<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="BBF0.html#bd32">BD32</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="BCCC.html#bd32">BD32</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd94"></span>FD94</td>
 <td class="instruction">LD B,A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd95"></span>FD95</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
 </tr>
 <tr>
+<td class="asm-label">GameStart_Loop</td>
 <td class="address-2"><span id="fd96"></span>FD96</td>
 <td class="instruction">LD L,(IX+$00)</td>
 <td class="comment-1" rowspan="1"><span class="register">L</span>=*<span class="register">IX</span>+00.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd99"></span>FD99</td>
 <td class="instruction">LD H,(IX+$01)</td>
 <td class="comment-1" rowspan="1"><span class="register">H</span>=*<span class="register">IX</span>+01.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd9c"></span>FD9C</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd9d"></span>FD9D</td>
 <td class="instruction">INC IX</td>
 <td class="comment-1" rowspan="2">Increment <span class="register">IX</span> by two.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fd9f"></span>FD9F</td>
 <td class="instruction">INC IX</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fda1"></span>FDA1</td>
-<td class="instruction">DJNZ <a href="FD82.html#fd96">$FD96</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="FD82.html#fd96">FD96</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="FD82.html#fd96">GameStart_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="FD82.html#fd96">GameStart_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fda3"></span>FDA3</td>
 <td class="instruction">LD A,$2F</td>
-<td class="comment-1" rowspan="2">Write 2F to *EC27.</td>
+<td class="comment-1" rowspan="2">Write 2F to *<a href="EC27.html">EC27</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fda5"></span>FDA5</td>
 <td class="instruction">LD ($EC27),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fda8"></span>FDA8</td>
 <td class="instruction">LD A,$30</td>
-<td class="comment-1" rowspan="2">Write 30 to *EC2A.</td>
+<td class="comment-1" rowspan="2">Write 30 to *<a href="EC2A.html">EC2A</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fdaa"></span>FDAA</td>
 <td class="instruction">LD ($EC2A),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fdad"></span>FDAD</td>
 <td class="instruction">LD A,$03</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=03.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fdaf"></span>FDAF</td>
 <td class="instruction">CALL <a href="EF54.html">$EF54</a></td>
 <td class="comment-1" rowspan="1">Call <a href="EF54.html">EF54</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fdb2"></span>FDB2</td>
-<td class="instruction">JP <a href="EDC4.html">$EDC4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EDC4.html">EDC4</a>.</td>
+<td class="instruction">JP <a href="EDC4.html">GameLoop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EDC4.html">GameLoop</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="F03A.html">F03A</a>
+Prev: <a href="F155.html">F155</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#fd82">Map</a></td>
 <td class="next">

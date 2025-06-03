@@ -33,7 +33,7 @@ Next: <a href="BA7F.html">BA7F</a>
 </td>
 </tr>
 </table>
-<div class="description">BA74: Routine at BA74</div>
+<div class="description">BA74: Clear Lines</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,24 +42,29 @@ Next: <a href="BA7F.html">BA7F</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">ClearLines</td>
 <td class="address-2"><span id="ba74"></span>BA74</td>
 <td class="instruction">CALL <a href="BA96.html">SwitchScreenUpper</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BA96.html">SwitchScreenUpper</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba77"></span>BA77</td>
 <td class="instruction">LD A,($BD70)</td>
-<td class="comment-1" rowspan="3">Clear the number of lines held by *<a href="BD66.html#bd70">BD70</a> from the bottom of the screen using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0E44.html">CL_LINE</a>.</td>
+<td class="comment-1" rowspan="3">Clear the number of lines held by *<a href="BD70.html">LineNumber</a> from the bottom of the screen using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0E44.html">CL_LINE</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba7a"></span>BA7A</td>
 <td class="instruction">LD B,A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba7b"></span>BA7B</td>
 <td class="instruction">CALL $0E44</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba7e"></span>BA7E</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

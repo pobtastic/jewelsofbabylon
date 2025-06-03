@@ -33,42 +33,48 @@ Next: <a href="BA96.html">BA96</a>
 </td>
 </tr>
 </table>
-<div class="description">BA89: Routine at BA89</div>
+<div class="description">BA89: Set Screen Position</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="C315.html">C315</a>, <a href="EDD7.html">EDD7</a> and <a href="F03A.html">F03A</a>.
+Used by the routines at <a href="C315.html">C315</a>, <a href="EDF2.html">GameComplete</a> and <a href="F03A.html">F03A</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">SetScreenPosition</td>
 <td class="address-2"><span id="ba89"></span>BA89</td>
 <td class="instruction">CALL <a href="BA96.html">SwitchScreenUpper</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BA96.html">SwitchScreenUpper</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba8c"></span>BA8C</td>
 <td class="instruction">LD A,($BD70)</td>
-<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="BD66.html#bd70">BD70</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="BD70.html">LineNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba8f"></span>BA8F</td>
 <td class="instruction">LD B,A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba90"></span>BA90</td>
 <td class="instruction">LD C,$21</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=21.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba92"></span>BA92</td>
 <td class="instruction">CALL $0DD9</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkid.github.io/rom/asm/0DD9.html">CL_SET</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba95"></span>BA95</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

@@ -33,7 +33,7 @@ Next: <a href="47743.html">47743</a>
 </td>
 </tr>
 </table>
-<div class="description">47732: Routine at BA74</div>
+<div class="description">47732: Clear Lines</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,24 +42,29 @@ Next: <a href="47743.html">47743</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">ClearLines</td>
 <td class="address-2"><span id="47732"></span>47732</td>
 <td class="instruction">CALL <a href="47766.html">SwitchScreenUpper</a></td>
 <td class="comment-1" rowspan="1">Call <a href="47766.html">SwitchScreenUpper</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47735"></span>47735</td>
 <td class="instruction">LD A,(48496)</td>
-<td class="comment-1" rowspan="3">Clear the number of lines held by *<a href="48486.html#48496">48496</a> from the bottom of the screen using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0E44.html">CL_LINE</a>.</td>
+<td class="comment-1" rowspan="3">Clear the number of lines held by *<a href="48496.html">LineNumber</a> from the bottom of the screen using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0E44.html">CL_LINE</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47738"></span>47738</td>
 <td class="instruction">LD B,A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47739"></span>47739</td>
 <td class="instruction">CALL 3652</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47742"></span>47742</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

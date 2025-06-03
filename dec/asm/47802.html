@@ -33,38 +33,66 @@ Next: <a href="47811.html">47811</a>
 </td>
 </tr>
 </table>
-<div class="description">47802: Routine at BABA</div>
+<div class="description">47802: Scroll Screen</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="47811.html">47811</a>.
+Used by the routine at <a href="47811.html">PrintCharacter</a>.
+</div>
+<div class="paragraph">
+Scrolls the screen up and then resets the print position.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">ScrollScreen</td>
 <td class="address-2"><span id="47802"></span>47802</td>
 <td class="instruction">EXX</td>
 <td class="comment-1" rowspan="1">Switch to the shadow registers.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="47803"></span>
+<div class="comments">
+<div class="paragraph">
+Scroll the screen up.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47803"></span>47803</td>
 <td class="instruction">CALL 3582</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DFE.html">CL_SC_ALL</a>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="47806"></span>47806</td>
-<td class="instruction">CALL <a href="47743.html">47743</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47743.html">47743</a>.</td>
+<td class="routine-comment" colspan="5">
+<span id="47806"></span>
+<div class="comments">
+<div class="paragraph">
+Reset the print position.
+</div>
+</div>
+</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="47806"></span>47806</td>
+<td class="instruction">CALL <a href="47743.html">SetDefaultScreenPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47743.html">SetDefaultScreenPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47809"></span>47809</td>
 <td class="instruction">EXX</td>
 <td class="comment-1" rowspan="1">Switch back to the normal registers.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47810"></span>47810</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

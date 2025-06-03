@@ -33,28 +33,43 @@ Next: <a href="BB55.html">BB55</a>
 </td>
 </tr>
 </table>
-<div class="description">BB51: Routine at BB51</div>
+<div class="description">BB51: Pause Loop</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="C579.html">C579</a>.
+Used by the routine at <a href="C579.html">PausePrintStringAndScroll</a>.
+</div>
+<div class="paragraph">
+Pauses a given number of HALT loops.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Number of HALT commands to use</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Pause_Loop</td>
 <td class="address-2"><span id="bb51"></span>BB51</td>
 <td class="instruction">HALT</td>
 <td class="comment-1" rowspan="1">Halt operation (suspend CPU until the next interrupt).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bb52"></span>BB52</td>
-<td class="instruction">DJNZ <a href="BB51.html#bb51">$BB51</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="BB51.html">BB51</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="BB51.html#bb51">Pause_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="BB51.html">Pause_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bb54"></span>BB54</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

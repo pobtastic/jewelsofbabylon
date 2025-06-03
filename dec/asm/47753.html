@@ -33,42 +33,48 @@ Next: <a href="47766.html">47766</a>
 </td>
 </tr>
 </table>
-<div class="description">47753: Routine at BA89</div>
+<div class="description">47753: Set Screen Position</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="49941.html">49941</a>, <a href="60887.html">60887</a> and <a href="61498.html">61498</a>.
+Used by the routines at <a href="49941.html">49941</a>, <a href="60914.html">GameComplete</a> and <a href="61498.html">61498</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">SetScreenPosition</td>
 <td class="address-2"><span id="47753"></span>47753</td>
 <td class="instruction">CALL <a href="47766.html">SwitchScreenUpper</a></td>
 <td class="comment-1" rowspan="1">Call <a href="47766.html">SwitchScreenUpper</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47756"></span>47756</td>
 <td class="instruction">LD A,(48496)</td>
-<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="48486.html#48496">48496</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="48496.html">LineNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47759"></span>47759</td>
 <td class="instruction">LD B,A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47760"></span>47760</td>
 <td class="instruction">LD C,33</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=33.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47762"></span>47762</td>
 <td class="instruction">CALL 3545</td>
 <td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkid.github.io/rom/asm/0DD9.html">CL_SET</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="47765"></span>47765</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

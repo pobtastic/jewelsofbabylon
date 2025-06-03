@@ -29,11 +29,11 @@ Prev: <a href="BB51.html">BB51</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#bb55">Map</a></td>
 <td class="next">
-Next: <a href="BBF0.html">BBF0</a>
+Next: <a href="BB59.html">BB59</a>
 </td>
 </tr>
 </table>
-<div class="description">BB55: Routine at BB55</div>
+<div class="description">BB55: Fetch Frames</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,387 +42,28 @@ Next: <a href="BBF0.html">BBF0</a>
 Used by the routines at <a href="C17D.html">C17D</a> and <a href="C582.html">C582</a>.
 </div>
 </div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">The first byte of the <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C78.html">FRAMES</a> variable.</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
+<td class="asm-label">FetchFrames</td>
 <td class="address-2"><span id="bb55"></span>BB55</td>
 <td class="instruction">LD A,($5C78)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C78.html">FRAMES</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bb58"></span>BB58</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="bb59"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="F03A.html">F03A</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address-2"><span id="bb59"></span>BB59</td>
-<td class="instruction">LD A,($BD32)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb5c"></span>BB5C</td>
-<td class="instruction">OR A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb5d"></span>BB5D</td>
-<td class="instruction">JR Z,<a href="BB55.html#bb78">$BB78</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb5f"></span>BB5F</td>
-<td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb60"></span>BB60</td>
-<td class="instruction">LD IX,($BD22)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb64"></span>BB64</td>
-<td class="instruction">LD DE,$BC99</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb67"></span>BB67</td>
-<td class="instruction">JR <a href="BB55.html#bb6e">$BB6E</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="bb69"></span>BB69</td>
-<td class="instruction">INC IX</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb6b"></span>BB6B</td>
-<td class="instruction">INC IX</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb6d"></span>BB6D</td>
-<td class="instruction">INC DE</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="bb6e"></span>BB6E</td>
-<td class="instruction">LD L,(IX+$00)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb71"></span>BB71</td>
-<td class="instruction">LD H,(IX+$01)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb74"></span>BB74</td>
-<td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb75"></span>BB75</td>
-<td class="instruction">LD (DE),A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb76"></span>BB76</td>
-<td class="instruction">DJNZ <a href="BB55.html#bb69">$BB69</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="bb78"></span>BB78</td>
-<td class="instruction">LD HL,$BE78</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb7b"></span>BB7B</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">$BAB1</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb7e"></span>BB7E</td>
-<td class="instruction">CALL <a href="BA5D.html">GetUserInput</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb81"></span>BB81</td>
-<td class="instruction">LD IX,$BBF0</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb85"></span>BB85</td>
-<td class="instruction">LD DE,$0144</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb88"></span>BB88</td>
-<td class="instruction">LD A,$FF</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb8a"></span>BB8A</td>
-<td class="instruction">CALL $04C2</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb8d"></span>BB8D</td>
-<td class="instruction">LD HL,$BE9A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb90"></span>BB90</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">$BAB1</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb93"></span>BB93</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="bb94"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="F03A.html">F03A</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address-2"><span id="bb94"></span>BB94</td>
-<td class="instruction">LD HL,$BE57</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb97"></span>BB97</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">$BAB1</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb9a"></span>BB9A</td>
-<td class="instruction">LD IX,$BBF0</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bb9e"></span>BB9E</td>
-<td class="instruction">LD DE,$0144</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bba1"></span>BBA1</td>
-<td class="instruction">LD A,$FF</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bba3"></span>BBA3</td>
-<td class="instruction">SCF</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bba4"></span>BBA4</td>
-<td class="instruction">CALL $0556</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bba7"></span>BBA7</td>
-<td class="instruction">JR C,<a href="BB55.html#bbb0">$BBB0</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bba9"></span>BBA9</td>
-<td class="instruction">LD HL,$BE6C</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbac"></span>BBAC</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">$BAB1</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbaf"></span>BBAF</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="bbb0"></span>BBB0</td>
-<td class="instruction">LD A,($BD32)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbb3"></span>BBB3</td>
-<td class="instruction">OR A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbb4"></span>BBB4</td>
-<td class="instruction">RET Z</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbb5"></span>BBB5</td>
-<td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbb6"></span>BBB6</td>
-<td class="instruction">LD IX,($BD22)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbba"></span>BBBA</td>
-<td class="instruction">LD DE,$BC99</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbbd"></span>BBBD</td>
-<td class="instruction">JR <a href="BB55.html#bbc4">$BBC4</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="bbbf"></span>BBBF</td>
-<td class="instruction">INC IX</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbc1"></span>BBC1</td>
-<td class="instruction">INC IX</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbc3"></span>BBC3</td>
-<td class="instruction">INC DE</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="bbc4"></span>BBC4</td>
-<td class="instruction">LD L,(IX+$00)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbc7"></span>BBC7</td>
-<td class="instruction">LD H,(IX+$01)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbca"></span>BBCA</td>
-<td class="instruction">LD A,(DE)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbcb"></span>BBCB</td>
-<td class="instruction">LD (HL),A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbcc"></span>BBCC</td>
-<td class="instruction">DJNZ <a href="BB55.html#bbbf">$BBBF</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbce"></span>BBCE</td>
-<td class="instruction">LD E,$00</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbd0"></span>BBD0</td>
-<td class="instruction">CALL <a href="C1FF.html#c21e">$C21E</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbd3"></span>BBD3</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="bbd4"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="C00A.html">C00A</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address-2"><span id="bbd4"></span>BBD4</td>
-<td class="instruction">LD HL,$5080</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbd7"></span>BBD7</td>
-<td class="instruction">LD DE,$0100</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbda"></span>BBDA</td>
-<td class="instruction">LD B,$08</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbdc"></span>BBDC</td>
-<td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="bbdd"></span>BBDD</td>
-<td class="instruction">OR (HL)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbde"></span>BBDE</td>
-<td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbdf"></span>BBDF</td>
-<td class="instruction">DJNZ <a href="BB55.html#bbdd">$BBDD</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbe1"></span>BBE1</td>
-<td class="instruction">OR A</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbe2"></span>BBE2</td>
-<td class="instruction">JR Z,<a href="BB55.html#bbe9">$BBE9</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbe4"></span>BBE4</td>
-<td class="instruction">LD A,$0D</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbe6"></span>BBE6</td>
-<td class="instruction">CALL <a href="BAC3.html">$BAC3</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-2"><span id="bbe9"></span>BBE9</td>
-<td class="instruction">LD HL,$BD85</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbec"></span>BBEC</td>
-<td class="instruction">CALL <a href="BAA4.html">$BAA4</a></td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="bbef"></span>BBEF</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -432,7 +73,7 @@ Prev: <a href="BB51.html">BB51</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#bb55">Map</a></td>
 <td class="next">
-Next: <a href="BBF0.html">BBF0</a>
+Next: <a href="BB59.html">BB59</a>
 </td>
 </tr>
 </table>

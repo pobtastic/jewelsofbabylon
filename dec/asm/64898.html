@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="61498.html">61498</a>
+Prev: <a href="61781.html">61781</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#64898">Map</a></td>
 <td class="next">
@@ -33,123 +33,144 @@ Next: <a href="64949.html">64949</a>
 </td>
 </tr>
 </table>
-<div class="description">64898: Routine at FD82</div>
+<div class="description">64898: Game Start</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="50578.html">50578</a>.
+Used by the routine at <a href="50578.html">GameStart_Alias</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">GameStart</td>
 <td class="address-2"><span id="64898"></span>64898</td>
 <td class="instruction">LD HL,64949</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="64949.html">64949</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64901"></span>64901</td>
 <td class="instruction">LD DE,48112</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="48112.html">48112</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64904"></span>64904</td>
 <td class="instruction">LD BC,324</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=0324.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64907"></span>64907</td>
 <td class="instruction">LDIR</td>
 <td class="comment-1" rowspan="1">LDIR.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64909"></span>64909</td>
 <td class="instruction">LD IX,60830</td>
 <td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="60830.html">60830</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64913"></span>64913</td>
 <td class="instruction">LD A,(48434)</td>
-<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="48112.html#48434">48434</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="48332.html#48434">48434</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64916"></span>64916</td>
 <td class="instruction">LD B,A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64917"></span>64917</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
 </tr>
 <tr>
+<td class="asm-label">GameStart_Loop</td>
 <td class="address-2"><span id="64918"></span>64918</td>
 <td class="instruction">LD L,(IX+0)</td>
 <td class="comment-1" rowspan="1"><span class="register">L</span>=*<span class="register">IX</span>+0.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64921"></span>64921</td>
 <td class="instruction">LD H,(IX+1)</td>
 <td class="comment-1" rowspan="1"><span class="register">H</span>=*<span class="register">IX</span>+1.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64924"></span>64924</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64925"></span>64925</td>
 <td class="instruction">INC IX</td>
 <td class="comment-1" rowspan="2">Increment <span class="register">IX</span> by two.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64927"></span>64927</td>
 <td class="instruction">INC IX</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64929"></span>64929</td>
-<td class="instruction">DJNZ <a href="64898.html#64918">64918</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="64898.html#64918">64918</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="64898.html#64918">GameStart_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="64898.html#64918">GameStart_Loop</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64931"></span>64931</td>
 <td class="instruction">LD A,47</td>
-<td class="comment-1" rowspan="2">Write 47 to *60455.</td>
+<td class="comment-1" rowspan="2">Write 47 to *<a href="60455.html">60455</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64933"></span>64933</td>
 <td class="instruction">LD (60455),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64936"></span>64936</td>
 <td class="instruction">LD A,48</td>
-<td class="comment-1" rowspan="2">Write 48 to *60458.</td>
+<td class="comment-1" rowspan="2">Write 48 to *<a href="60458.html">60458</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64938"></span>64938</td>
 <td class="instruction">LD (60458),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64941"></span>64941</td>
 <td class="instruction">LD A,3</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=3.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64943"></span>64943</td>
 <td class="instruction">CALL <a href="61268.html">61268</a></td>
 <td class="comment-1" rowspan="1">Call <a href="61268.html">61268</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="64946"></span>64946</td>
-<td class="instruction">JP <a href="60868.html">60868</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="60868.html">60868</a>.</td>
+<td class="instruction">JP <a href="60868.html">GameLoop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="60868.html">GameLoop</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="61498.html">61498</a>
+Prev: <a href="61781.html">61781</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#64898">Map</a></td>
 <td class="next">

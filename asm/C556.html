@@ -39,7 +39,7 @@ Next: <a href="C579.html">C579</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="EDC4.html">EDC4</a>.
+Used by the routine at <a href="EDC4.html">GameLoop</a>.
 </div>
 </div>
 </td>
@@ -47,77 +47,87 @@ Used by the routine at <a href="EDC4.html">EDC4</a>.
 <tr>
 <td class="address-2"><span id="c556"></span>C556</td>
 <td class="instruction">LD HL,($BD26)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BCCC.html#bd26">BD26</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c559"></span>C559</td>
 <td class="instruction">LD BC,($BD2C)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BCCC.html#bd2c">BD2C</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c55d"></span>C55D</td>
 <td class="instruction">LD A,($BD66)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BD66.html">BD66</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c560"></span>C560</td>
 <td class="instruction">CPIR</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">CPIR.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c562"></span>C562</td>
 <td class="instruction">JR Z,<a href="C556.html#c56b">$C56B</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C556.html#c56b">C56B</a> if ?? is equal to 00.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="c564"></span>
+<div class="comments">
+<div class="paragraph">
+Print "I don't understand.".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c564"></span>C564</td>
 <td class="instruction">LD HL,$BD91</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD91.html">BD91</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c567"></span>C567</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">$BAB1</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c56a"></span>C56A</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c56b"></span>C56B</td>
 <td class="instruction">LD A,($BD2C)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCC.html#bd2c">BD2C</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c56e"></span>C56E</td>
 <td class="instruction">SUB C</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c56f"></span>C56F</td>
 <td class="instruction">DEC A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">A</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c570"></span>C570</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c571"></span>C571</td>
 <td class="instruction">LD IX,($BD20)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="BCCC.html#bd20">BD20</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c575"></span>C575</td>
 <td class="instruction">CALL <a href="C1F0.html">$C1F0</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="C1F0.html">C1F0</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c578"></span>C578</td>
 <td class="instruction">JP (HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to *<span class="register">HL</span>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Jewels of Babylon: Data at BFE2</title>
+<title>Jewels of Babylon: Game status buffer entry at BFE2</title>
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
@@ -15,11 +15,11 @@ gtag('js', new Date());
 gtag('config', 'G-75RERFCHBG');
 </script>
 </head>
-<body class="Asm-b">
+<body class="Asm-g">
 <table class="header">
 <tr>
 <td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="page-header">Data</td>
+<td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -29,11 +29,11 @@ Prev: <a href="BFC4.html">BFC4</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#bfe2">Map</a></td>
 <td class="next">
-Next: <a href="BFE3.html">BFE3</a>
+Next: <a href="BFEE.html">BFEE</a>
 </td>
 </tr>
 </table>
-<div class="description">BFE2: Messaging: Terminator</div>
+<div class="description">BFE2: Table: Directions</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,9 +42,40 @@ Next: <a href="BFE3.html">BFE3</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Table_Directions</td>
 <td class="address-1"><span id="bfe2"></span>BFE2</td>
-<td class="instruction">DEFB $FF</td>
-<td class="comment-1" rowspan="1">Terminator.</td>
+<td class="instruction">DEFW <a href="BDFF.html">$BDFF</a></td>
+<td class="comment-1" rowspan="1">"North".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="bfe4"></span>BFE4</td>
+<td class="instruction">DEFW <a href="BE05.html">$BE05</a></td>
+<td class="comment-1" rowspan="1">"South".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="bfe6"></span>BFE6</td>
+<td class="instruction">DEFW <a href="BE0B.html">$BE0B</a></td>
+<td class="comment-1" rowspan="1">"East".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="bfe8"></span>BFE8</td>
+<td class="instruction">DEFW <a href="BE10.html">$BE10</a></td>
+<td class="comment-1" rowspan="1">"West".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="bfea"></span>BFEA</td>
+<td class="instruction">DEFW <a href="BE15.html">$BE15</a></td>
+<td class="comment-1" rowspan="1">"Up".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="bfec"></span>BFEC</td>
+<td class="instruction">DEFW <a href="BE18.html">$BE18</a></td>
+<td class="comment-1" rowspan="1">"Down".</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -54,7 +85,7 @@ Prev: <a href="BFC4.html">BFC4</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#bfe2">Map</a></td>
 <td class="next">
-Next: <a href="BFE3.html">BFE3</a>
+Next: <a href="BFEE.html">BFEE</a>
 </td>
 </tr>
 </table>

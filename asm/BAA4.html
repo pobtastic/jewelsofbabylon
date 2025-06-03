@@ -33,77 +33,110 @@ Next: <a href="BABA.html">BABA</a>
 </td>
 </tr>
 </table>
-<div class="description">BAA4: Routine at BAA4</div>
+<div class="description">BAA4: Print String</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="BB55.html">BB55</a>, <a href="C00A.html">C00A</a>, <a href="C1FF.html">C1FF</a>, <a href="C32A.html">C32A</a> and <a href="F03A.html">F03A</a>.
+Used by the routines at <a href="BBD4.html">BBD4</a>, <a href="C00A.html">C00A</a>, <a href="C26A.html">C26A</a>, <a href="C2AD.html">C2AD</a>, <a href="C32A.html">C32A</a> and <a href="F155.html">F155</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Pointer to string to be printed</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
+<td class="asm-label">PrintString</td>
 <td class="address-2"><span id="baa4"></span>BAA4</td>
 <td class="instruction">CALL <a href="BA96.html">SwitchScreenUpper</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BA96.html">SwitchScreenUpper</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">PrintString_Loop</td>
 <td class="address-2"><span id="baa7"></span>BAA7</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Load a character from the string pointer into <span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baa8"></span>BAA8</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Move the string pointer to the next character.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baa9"></span>BAA9</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-1" rowspan="2">Return if <span class="register">A</span> is equal to FF.</td>
+<td class="comment-1" rowspan="2">Return if the string termination character (FF) has been reached.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baab"></span>BAAB</td>
 <td class="instruction">RET Z</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baac"></span>BAAC</td>
-<td class="instruction">CALL <a href="BAC3.html">$BAC3</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAC3.html">BAC3</a>.</td>
+<td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAC3.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baaf"></span>BAAF</td>
-<td class="instruction">JR <a href="BAA4.html#baa7">$BAA7</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="BAA4.html#baa7">BAA7</a>.</td>
+<td class="instruction">JR <a href="BAA4.html#baa7">PrintString_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="BAA4.html#baa7">PrintString_Loop</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="bab1"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="BB55.html">BB55</a>, <a href="BFEE.html">BFEE</a>, <a href="C058.html">C058</a>, <a href="C1FF.html">C1FF</a>, <a href="C315.html">C315</a>, <a href="C32A.html">C32A</a>, <a href="C556.html">C556</a>, <a href="C579.html">C579</a>, <a href="EDD7.html">EDD7</a>, <a href="EF54.html">EF54</a> and <a href="F03A.html">F03A</a>.
+This entry point is used by the routines at <a href="BB59.html">SaveGame</a>, <a href="BB94.html">LoadTape</a>, <a href="BFEE.html">BFEE</a>, <a href="C058.html">C058</a>, <a href="C1FF.html">C1FF</a>, <a href="C2AD.html">C2AD</a>, <a href="C2E8.html">C2E8</a>, <a href="C315.html">C315</a>, <a href="C32A.html">C32A</a>, <a href="C556.html">C556</a>, <a href="C579.html">PausePrintStringAndScroll</a>, <a href="EDD7.html">GameOver</a>, <a href="EDF2.html">GameComplete</a>, <a href="EE00.html">EE00</a>, <a href="EEA9.html">EEA9</a>, <a href="EF54.html">EF54</a>, <a href="F03A.html">F03A</a> and <a href="F155.html">F155</a>.
+</div>
+<div class="paragraph">
+Shortcut print routine which auto-scrolls after it's done.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">PrintStringAndScroll</td>
 <td class="address-2"><span id="bab1"></span>BAB1</td>
-<td class="instruction">CALL <a href="BAA4.html#baa4">$BAA4</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html">BAA4</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#baa4">PrintString</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html">PrintString</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="bab4"></span>
+<div class="comments">
+<div class="paragraph">
+Force a newline to be "printed".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bab4"></span>BAB4</td>
 <td class="instruction">LD A,$0D</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0D.</td>
+<td class="comment-1" rowspan="1">Load a "newline" character into <span class="register">A</span> (0D).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bab6"></span>BAB6</td>
-<td class="instruction">CALL <a href="BAC3.html">$BAC3</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAC3.html">BAC3</a>.</td>
+<td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAC3.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bab9"></span>BAB9</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
