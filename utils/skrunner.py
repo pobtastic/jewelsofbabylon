@@ -26,7 +26,7 @@ def run_skool2asm():
     skool2asm.main(sys.argv[1:] + [JEWELSOFBABYLON_SKOOL])
 
 def run_skool2html():
-    options = "-c Config/InitModule={}:publish --ini ListRefs=2 -d {}/build/html".format(SKOOLKIT_TOOLS, JEWELSOFBABYLON_HOME)
+    options = "-c Config/InitModule={}:publish -d {}/build/html".format(SKOOLKIT_TOOLS, JEWELSOFBABYLON_HOME)
     art.tprint("Jewels of Babylon")
     hex = '-H -c Config/GameDir=jewelsofbabylon --var pub=2'
     dec = '-D -c Config/GameDir=jewelsofbabylon/dec --var pub=4'

@@ -3408,12 +3408,13 @@ c$BA50 LD HL,$5C6A   ; {#HTML(Set CAPS LOCK on, using bit 3 of *<a
  $BA57 LD ($BD70),A  ; }
  $BA5A JP $C592      ; Jump to #R$C592.
 
-; Routine at BA5D
+; Get User Input
 ;
 ; Used by the routines at #R$BB55, #R$C00A, #R$EDD7, #R$F03A and #R$FEFA.
+@label=GetUserInput
 c$BA5D LD A,($5C3B)  ; #HTML(#REGa=*<a rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>.)
- $BA60 BIT 5,A       ; {Jump to #R$BA5D if bit 5 of #REGa is set.
+ $BA60 BIT 5,A       ; {Jump to #R$BA5D until bit 5 of #REGa is set.
  $BA62 JR Z,$BA5D    ; }
  $BA64 RES 5,A       ; Reset bit 5 of #REGa.
  $BA66 LD ($5C3B),A  ; #HTML(Write #REGa back to *<a rel="noopener nofollow"
@@ -3426,7 +3427,7 @@ c$BA5D LD A,($5C3B)  ; #HTML(#REGa=*<a rel="noopener nofollow"
 ;
 ; Used by the routines at #R$C1FF, #R$EDD7 and #R$F03A.
 c$BA6D CALL $BA96    ; Call #R$BA96.
- $BA70 CALL $0D6B    ; #HTML(Call <a
+ $BA70 CALL $0D6B    ; #HTML(Call <a rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0D6B.html">CLS</a>.)
  $BA73 RET           ; Return.
 
@@ -3496,15 +3497,20 @@ c$BAA4 CALL $BA96    ; Call #R$BA96.
  $BAB9 RET           ; Return.
 
 ; Routine at BABA
+;
+; Used by the routine at #R$BAC3.
 c$BABA EXX           ; Switch to the shadow registers.
  $BABB CALL $0DFE    ; #HTML(Call <a rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0DFE.html">CL_SC_ALL</a>.)
  $BABE CALL $BA7F    ; Call #R$BA7F.
  $BAC1 EXX           ; Switch back to the normal registers.
  $BAC2 RET           ; Return.
-; This entry point is used by the routines at #R$BAA4, #R$BB55, #R$C00A,
-; #R$C058, #R$C1FF and #R$EDD7.
-*$BAC3 PUSH AF       ; Stash #REGaf on the stack.
+
+; Routine at BAC3
+;
+; Used by the routines at #R$BAA4, #R$BB55, #R$C00A, #R$C058, #R$C1FF and
+; #R$EDD7.
+c$BAC3 PUSH AF       ; Stash #REGaf on the stack.
  $BAC4 LD A,($5C89)  ; {#HTML(Jump to #R$BADE if *<a rel="noopener nofollow"
  $BAC7 CP $03        ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C88.html#5C89">S_POSN</a>
  $BAC9 JR NZ,$BADE   ; is not equal to #N$03.)}
@@ -3519,7 +3525,8 @@ c$BABA EXX           ; Switch to the shadow registers.
  $BAD9 CP $01        ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C88.html">S_POSN</a>
  $BADB CALL Z,$BABA  ; is equal to #N$01.)}
 *$BADE POP AF        ; Restore #REGaf from the stack.
- $BADF RST $10       ;
+ $BADF RST $10       ; #HTML(Call <a rel="noopener nofollow"
+                     ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0010.html">PRINT_A_1</a>.)
  $BAE0 RET           ; Return.
 
 ; Print Location Graphic
@@ -3531,7 +3538,7 @@ c$BAE1 CALL $BA96    ; Call #R$BA96.
  $BAE7 CALL $0DD9    ; #HTML(Call <a rel="noopener nofollow"
                      ; href="https://skoolkid.github.io/rom/asm/0DD9.html">CL_SET</a>.)
 ; Reset graphic display area.
- $BAEA LD HL,$5C8F   ; #HTML(Point #REGhl at <a
+ $BAEA LD HL,$5C8F   ; #HTML(Point #REGhl at <a rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR-T</a>
                      ; which holds the current attribute value.)
  $BAED LD A,(HL)     ; Fetch the attribute byte.

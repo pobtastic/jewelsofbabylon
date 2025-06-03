@@ -101,9 +101,10 @@ c $BA50 Game Entry Point
   $BA55,$05 Write #N$18 to *#R$BD70.
   $BA5A,$03 Jump to #R$C592.
 
-c $BA5D
+c $BA5D Get User Input
+@ $BA5D label=GetUserInput
   $BA5D,$03 #HTML(#REGa=*<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>.)
-  $BA60,$04 Jump to #R$BA5D if bit 5 of #REGa is set.
+  $BA60,$04 Jump to #R$BA5D until bit 5 of #REGa is set.
   $BA64,$02 Reset bit 5 of #REGa.
   $BA66,$03 #HTML(Write #REGa back to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>.)
   $BA69,$03 #HTML(#REGa=*<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C08.html">LAST_K</a>.)
@@ -111,7 +112,7 @@ c $BA5D
 
 c $BA6D
   $BA6D,$03 Call #R$BA96.
-  $BA70,$03 #HTML(Call <a href="https://skoolkit.ca/disassemblies/rom/hex/asm/0D6B.html">CLS</a>.)
+  $BA70,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0D6B.html">CLS</a>.)
   $BA73,$01 Return.
 
 c $BA74
@@ -158,6 +159,7 @@ c $BABA
   $BAC1,$01 Switch back to the normal registers.
   $BAC2,$01 Return.
 
+c $BAC3
   $BAC3,$01 Stash #REGaf on the stack.
   $BAC4,$07 #HTML(Jump to #R$BADE if *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C88.html#5C89">S_POSN</a> is not equal to #N$03.)
   $BACB,$01 Restore #REGaf from the stack.
@@ -169,6 +171,7 @@ c $BABA
 
   $BAD6,$08 #HTML(Call #R$BABA if *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C88.html">S_POSN</a> is equal to #N$01.)
   $BADE,$01 Restore #REGaf from the stack.
+  $BADF,$01 #HTML(Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0010.html">PRINT_A_1</a>.)
   $BAE0,$01 Return.
 
 c $BAE1 Print Location Graphic
@@ -177,7 +180,7 @@ c $BAE1 Print Location Graphic
   $BAE4,$03 #REGbc=#N($1821,$04,$04).
   $BAE7,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkid.github.io/rom/asm/0DD9.html">CL_SET</a>.)
 N $BAEA Reset graphic display area.
-  $BAEA,$03 #HTML(Point #REGhl at <a href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR-T</a> which holds the current attribute value.)
+  $BAEA,$03 #HTML(Point #REGhl at <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR-T</a> which holds the current attribute value.)
   $BAED,$01 Fetch the attribute byte.
   $BAEE,$02,b$01 Keep only the PAPER bits 3-5.
   $BAF0,$03 Move the PAPER bits into the INK bits.
