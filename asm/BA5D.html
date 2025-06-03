@@ -33,7 +33,7 @@ Next: <a href="BA6D.html">BA6D</a>
 </td>
 </tr>
 </table>
-<div class="description">BA5D: Routine at BA5D</div>
+<div class="description">BA5D: Get User Input</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -45,35 +45,42 @@ Used by the routines at <a href="BB55.html">BB55</a>, <a href="C00A.html">C00A</
 </td>
 </tr>
 <tr>
+<td class="asm-label">GetUserInput</td>
 <td class="address-2"><span id="ba5d"></span>BA5D</td>
 <td class="instruction">LD A,($5C3B)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba60"></span>BA60</td>
 <td class="instruction">BIT 5,A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="BA5D.html">BA5D</a> if bit 5 of <span class="register">A</span> is set.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="BA5D.html">GetUserInput</a> until bit 5 of <span class="register">A</span> is set.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba62"></span>BA62</td>
-<td class="instruction">JR Z,<a href="BA5D.html#ba5d">$BA5D</a></td>
+<td class="instruction">JR Z,<a href="BA5D.html#ba5d">GetUserInput</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba64"></span>BA64</td>
 <td class="instruction">RES 5,A</td>
 <td class="comment-1" rowspan="1">Reset bit 5 of <span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba66"></span>BA66</td>
 <td class="instruction">LD ($5C3B),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> back to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba69"></span>BA69</td>
 <td class="instruction">LD A,($5C08)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C08.html">LAST_K</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ba6c"></span>BA6C</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

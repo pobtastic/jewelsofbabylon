@@ -29,7 +29,7 @@ Prev: <a href="47780.html">47780</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#47802">Map</a></td>
 <td class="next">
-Next: <a href="47841.html">47841</a>
+Next: <a href="47811.html">47811</a>
 </td>
 </tr>
 </table>
@@ -38,6 +38,9 @@ Next: <a href="47841.html">47841</a>
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+Used by the routine at <a href="47811.html">47811</a>.
+</div>
 </div>
 </td>
 </tr>
@@ -66,96 +69,6 @@ Next: <a href="47841.html">47841</a>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="47811"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routines at <a href="47780.html">47780</a>, <a href="47957.html">47957</a>, <a href="49162.html">49162</a>, <a href="49240.html">49240</a>, <a href="49663.html">49663</a> and <a href="60887.html">60887</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="address-2"><span id="47811"></span>47811</td>
-<td class="instruction">PUSH AF</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47812"></span>47812</td>
-<td class="instruction">LD A,(23689)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="47802.html#47838">47838</a> if *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C88.html#5C89">S_POSN</a> is not equal to 3.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47815"></span>47815</td>
-<td class="instruction">CP 3</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47817"></span>47817</td>
-<td class="instruction">JR NZ,<a href="47802.html#47838">47838</a></td>
-</tr>
-<tr>
-<td class="address-1"><span id="47819"></span>47819</td>
-<td class="instruction">POP AF</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47820"></span>47820</td>
-<td class="instruction">PUSH AF</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47821"></span>47821</td>
-<td class="instruction">CP 13</td>
-<td class="comment-1" rowspan="2">Jump to <a href="47802.html#47830">47830</a> if <span class="register">A</span> is not equal to 13.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47823"></span>47823</td>
-<td class="instruction">JR NZ,<a href="47802.html#47830">47830</a></td>
-</tr>
-<tr>
-<td class="address-1"><span id="47825"></span>47825</td>
-<td class="instruction">CALL <a href="47802.html#47802">47802</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47802.html">47802</a>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47828"></span>47828</td>
-<td class="instruction">POP AF</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47829"></span>47829</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
-</tr>
-<tr>
-<td class="address-2"><span id="47830"></span>47830</td>
-<td class="instruction">LD A,(23688)</td>
-<td class="comment-1" rowspan="3">Call <a href="47802.html">47802</a> if *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C88.html">S_POSN</a> is equal to 1.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47833"></span>47833</td>
-<td class="instruction">CP 1</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47835"></span>47835</td>
-<td class="instruction">CALL Z,<a href="47802.html#47802">47802</a></td>
-</tr>
-<tr>
-<td class="address-2"><span id="47838"></span>47838</td>
-<td class="instruction">POP AF</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="47839"></span>47839</td>
-<td class="instruction">RST 16</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="47840"></span>47840</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
-</tr>
 </table>
 <table class="asm-navigation">
 <tr>
@@ -164,7 +77,7 @@ Prev: <a href="47780.html">47780</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#47802">Map</a></td>
 <td class="next">
-Next: <a href="47841.html">47841</a>
+Next: <a href="47811.html">47811</a>
 </td>
 </tr>
 </table>
