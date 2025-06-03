@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Jewels of Babylon: Routine at 47780</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="47766.html">47766</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#47780">Map</a></td>
+<td class="next">
+Next: <a href="47802.html">47802</a>
+</td>
+</tr>
+</table>
+<div class="description">47780: Routine at BAA4</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="47957.html">47957</a>, <a href="49162.html">49162</a>, <a href="49663.html">49663</a>, <a href="49962.html">49962</a> and <a href="61498.html">61498</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="47780"></span>47780</td>
+<td class="instruction">CALL <a href="47766.html">SwitchScreenUpper</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47766.html">SwitchScreenUpper</a>.</td>
+</tr>
+<tr>
+<td class="address-2"><span id="47783"></span>47783</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47784"></span>47784</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47785"></span>47785</td>
+<td class="instruction">CP 255</td>
+<td class="comment-1" rowspan="2">Return if <span class="register">A</span> is equal to 255.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47787"></span>47787</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47788"></span>47788</td>
+<td class="instruction">CALL <a href="47802.html#47811">47811</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47802.html#47811">47811</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47791"></span>47791</td>
+<td class="instruction">JR <a href="47780.html#47783">47783</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="47780.html#47783">47783</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="47793"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="47957.html">47957</a>, <a href="49134.html">49134</a>, <a href="49240.html">49240</a>, <a href="49663.html">49663</a>, <a href="49941.html">49941</a>, <a href="49962.html">49962</a>, <a href="50518.html">50518</a>, <a href="50553.html">50553</a>, <a href="60887.html">60887</a>, <a href="61268.html">61268</a> and <a href="61498.html">61498</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="47793"></span>47793</td>
+<td class="instruction">CALL <a href="47780.html#47780">47780</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html">47780</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47796"></span>47796</td>
+<td class="instruction">LD A,13</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=13.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47798"></span>47798</td>
+<td class="instruction">CALL <a href="47802.html#47811">47811</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47802.html#47811">47811</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47801"></span>47801</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="47766.html">47766</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#47780">Map</a></td>
+<td class="next">
+Next: <a href="47802.html">47802</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1985 Interceptor Software UK &copy; 2025 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.6.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/jewelsofbabylon/">Source code</a>.</div>
+<div><a href="../../asm/BAA4.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>
