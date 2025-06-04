@@ -8,19 +8,34 @@
 
 [Config]
 Expand=#INCLUDE(Expand)
-RefFiles=bases.ref;analytics.ref;changelog.ref;pokes.ref
+RefFiles=bases.ref;analytics.ref;changelog.ref;locations.ref;pokes.ref
 GameDir=jewelsofbabylon
 
 [Game]
 Game=Jewels of Babylon
-Logo=#SCR$02,$00,$00,$09,$04,$4000,$5800(/images/logo)
+Logo=#SCR$02,$00,$00,$11,$0B,$4000,$5800(/images/logo)
 Copyright=&copy; 1985 Interceptor Software UK &copy; 2025 ArcadeGeek LTD.
 Repository=https://github.com/pobtastic/jewelsofbabylon/
 LinkInternalOperands=1
 AddressAnchor={address#IF({base}==16)(:04x)}
 
+[Titles]
+GameStatusBuffer=Game Status Buffer
+
+[Paths]
+Locations=graphics/locations.html
+
+[Page:Locations]
+SectionPrefix=Location
+
 [PageHeaders]
 GameIndex=The complete<>RAM disassembly (work in progress)
+
+[Index:DataTables:Data Tables And Buffers]
+GameStatusBuffer
+
+[Index:Graphics:Graphics]
+Locations
 
 [Expand]
 #DEF(#COLOUR(id)

@@ -1,4 +1,4 @@
 GAME=jewelsofbabylon
-SRCFILES=$(echo jewelsofbabylon.skool {jewelsofbabylon,analytics,bases,changelog,pokes}.ref {dark,wide}.css)
+SRCFILES=$(echo jewelsofbabylon.skool {jewelsofbabylon,analytics,bases,changelog,locations,pokes}.ref {dark,wide}.css)
 SKOOL2BINOPTS="-i 47696"
 WAVCONVERT=""

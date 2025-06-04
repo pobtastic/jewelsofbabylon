@@ -1,6 +1,7 @@
 ; Copyright Interceptor Software UK 1985, 2025 ArcadeGeek LTD.
 ; NOTE: Disassembly is Work-In-Progress.
-; Label naming is loosely based on Action_ActionName_SubAction e.g. Print_HighScore_Loop.
+; Label naming is loosely based on Action_ActionName_SubAction
+; e.g. Print_HighScore_Loop.
 
 > $4000 @rom
 > $4000 @start
@@ -25,7 +26,7 @@ u $5B50
 
 b $607C Graphics: Boat
 @ $607C label=Graphics_Boat
-D $607C #PUSHS #UDGTABLE
+D $607C #SIM(start=$5B46,stop=$5B4E) #PUSHS #UDGTABLE
 . { =h On Your Boat }
 . { #SIM(start=$BB3B,stop=$BB41,ix=#PC)#SCR$02{$00,$00,$200,$100}(boat) }
 . UDGTABLE# #POPS
@@ -361,8 +362,11 @@ N $BBE9 Print "#STR$BD85,$08($b==$FF)".
   $BBEC,$03 Call #R$BAA4.
   $BBEF,$01 Return.
 
-b $BBF0
-  $BC54
+g $BBF0 Table: Object Locations
+@ $BBF0 label=Table_ObjectLocations
+B $BBF0
+
+b $BC54
   $BC66
   $BC67
   $BC68
@@ -391,13 +395,20 @@ b $BCCC
 W $BD22,$02
 
   $BD26
-  $BD2A
+
+g $BD28 Number Of Objects?
+@ $BD28 label=NumberObjects
+W $BD28,$02
+
+b $BD2A
   $BD2C
   $BD30
   $BD32
 
 g $BD34 Command Buffer
 B $BD34
+
+  $BD65
 
 g $BD66
 
@@ -587,10 +598,42 @@ N $BFFC Print "#STR$BF00,$08($b==$FF)".
 N $C003 Print "#STR$BF0B,$08($b==$FF)".
 
 c $C00A
-
+  $C00A,$03 Call #R$BA7F.
+  $C00D,$03 #REGhl=#R$BD34.
+  $C010,$02 #REGa=#N$20.
+  $C012,$02 #REGb=#N$32.
+  $C014,$01 Write #REGa to *#REGhl.
+  $C015,$01 Increment #REGhl by one.
+  $C016,$02 Decrease counter by one and loop back to #R$C014 until counter is zero.
+  $C018,$03 Call #R$BBD4.
+  $C01B,$03 #REGhl=#R$BD34.
+  $C01E,$03 Call #R$BA5D.
+  $C021,$04 Jump to #R$C041 if #REGa is equal to #N$0C.
   $C025,$04 Jump to #R$C058 if "ENTER" was pressed.
-
+  $C029,$04 Jump to #R$C01E if #REGa is less than #N$20.
+  $C02D,$01 Exchange the #REGde and #REGhl registers.
+  $C02E,$03 #REGhl=#R$BD65.
+  $C031,$03 #REGhl-=#REGde (with carry).
+  $C034,$01 Exchange the #REGde and #REGhl registers.
+  $C035,$02 Jump to #R$C01E if #REGa is equal to #REGa.
+  $C037,$01 Write #REGa to *#REGhl.
+  $C038,$03 Call #R$BA96.
+  $C03B,$03 Call #R$BAC3.
+  $C03E,$01 Increment #REGhl by one.
+  $C03F,$02 Jump to #R$C01E.
+  $C041,$01 Exchange the #REGde and #REGhl registers.
+  $C042,$03 #REGhl=#R$BD34.
+  $C045,$03 #REGhl-=#REGde (with carry).
+  $C048,$01 Exchange the #REGde and #REGhl registers.
+  $C049,$02 Jump to #R$C01E if #REGhl is equal to #REGa.
+  $C04B,$01 Stash #REGhl on the stack.
 N $C04C Print "#STR$BD88,$08($b==$FF)".
+  $C04C,$03 #REGhl=#R$BD88.
+  $C04F,$03 Call #R$BAA4.
+  $C052,$01 Restore #REGhl from the stack.
+  $C053,$01 Decrease #REGhl by one.
+  $C054,$02 Write #N$20 to *#REGhl.
+  $C056,$02 Jump to #R$C01E.
 
 c $C058
   $C058,$01 Write #REGa to *#REGhl.
@@ -637,9 +680,7 @@ c $C058
   $C0B9,$03 #REGhl=#R$BD8C.
   $C0BC,$03 #REGde=#R$BD71.
   $C0BF,$02 #REGb=#N$04.
-  $C0C1,$01 #REGa=*#REGde.
-  $C0C2,$01 Compare #REGa with *#REGhl.
-  $C0C3,$02 Jump to #R$C0C9 if #REGa is not equal to *#REGhl.
+  $C0C1,$04 Jump to #R$C0C9 if *#REGde is not equal to *#REGhl.
   $C0C5,$01 Increment #REGde by one.
   $C0C6,$01 Increment #REGhl by one.
   $C0C7,$02 Decrease counter by one and loop back to #R$C0C1 until counter is zero.
@@ -654,9 +695,7 @@ c $C058
   $C0DF,$05 Jump to #R$C11C if *#REGhl is equal to #N$FF.
   $C0E4,$03 #REGde=#R$BD71.
   $C0E7,$02 #REGb=#N$04.
-  $C0E9,$01 #REGa=*#REGde.
-  $C0EA,$01 Compare #REGa with *#REGhl.
-  $C0EB,$02 Jump to #R$C10D if #REGa is not equal to *#REGhl.
+  $C0E9,$04 Jump to #R$C10D if *#REGde is not equal to *#REGhl.
   $C0ED,$01 Increment #REGde by one.
   $C0EE,$01 Increment #REGhl by one.
   $C0EF,$02 Decrease counter by one and loop back to #R$C0E9 until counter is zero.
@@ -686,9 +725,7 @@ c $C058
   $C11C,$03 #REGhl=*#R$BD7D.
   $C11F,$04 #REGde=*#R$BD7F.
   $C123,$04 #REGbc=*#R$BD81.
-  $C127,$02 #REGa=#N$0A.
-  $C129,$01 #REGa-=#REGc.
-  $C12A,$01 #REGc=#REGa.
+  $C127,$04 #REGc=#N$0A-#REGc.
   $C12B,$03 #REGhl=#R$BD34.
   $C12E,$01 Decrease #REGc by one.
   $C12F,$02 Jump to #R$C149 if #REGc is equal to #N$0A.
@@ -699,15 +736,16 @@ c $C058
   $C13B,$02 Jump to #R$C131.
   $C13D,$01 Increment #REGhl by one.
   $C13E,$01 #REGa=*#REGhl.
-  $C13F,$02 Compare #REGa with #N$20.
-  $C141,$02 Jump to #R$C13D if #REGa is equal to #N$20.
-  $C143,$02 Compare #REGa with #N$2C.
-  $C145,$02 Jump to #R$C13D if #REGa is equal to #N$2C.
+  $C13F,$04 Jump to #R$C13D if #REGa is equal to #N$20.
+  $C143,$04 Jump to #R$C13D if #REGa is equal to #N$2C.
   $C147,$02 Jump to #R$C12E.
+
   $C149,$01 Stash #REGhl on the stack.
+N $C14A Print "#STR$BDA5,$08($b==$FF)".
   $C14A,$03 #REGhl=#R$BDA5.
   $C14D,$03 Call #R$BAB1.
   $C150,$01 Restore #REGhl from the stack.
+M $C151,$05 #HTML(Print a double quote character: "<code>#CHR$22</code>".)
   $C151,$02 #REGa=#N$22.
   $C153,$03 Call #R$BAC3.
   $C156,$01 #REGa=*#REGhl.
@@ -715,6 +753,7 @@ c $C058
   $C15B,$01 Increment #REGhl by one.
   $C15C,$03 Call #R$BAC3.
   $C15F,$02 Jump to #R$C156.
+M $C161,$05 #HTML(Print a double quote character: "<code>#CHR$22</code>".)
   $C161,$02 #REGa=#N$22.
   $C163,$03 Call #R$BAC3.
   $C166,$03 #REGhl=#R$BF29.
@@ -722,6 +761,7 @@ c $C058
   $C16C,$02 Jump to #R$C17A.
 
   $C16E,$06 Return if *#R$BD66 is not equal to #N$FF.
+N $C174 Print "#STR$BD91,$08($b==$FF)".
   $C174,$03 #REGhl=#R$BD91.
   $C177,$03 Call #R$BAB1.
   $C17A,$03 Jump to #R$C00A.
@@ -788,71 +828,132 @@ c $C1F0
   $C1FB,$03 #REGh=*#REGix+#N$01.
   $C1FE,$01 Return.
 
-c $C1FF
+c $C1FF Print Room Objects
+@ $C1FF label=PrintRoomObjects
+  $C1FF,$03 #REGhl=#R$BBF0.
+  $C202,$04 #REGbc=*#R$BD28.
+  $C206,$02 CPIR.
+  $C208,$01 Return if ?? is not equal to #N$00.
+  $C209,$01 Stash #REGhl on the stack.
+  $C20A,$03 Call #R$C456.
+  $C20D,$02 Jump to #R$C216 if ?? is equal to #N$00.
+  $C20F,$02 Stash #REGaf and #REGbc on the stack.
+  $C211,$03 Call #R$BAB1.
+  $C214,$02 Restore #REGbc and #REGaf from the stack.
+  $C216,$01 #REGe=#REGa.
+  $C217,$01 Restore #REGhl from the stack.
+  $C218,$01 #REGa=#REGb.
+  $C219,$01 Set the bits from #REGc.
+  $C21A,$01 #REGa=#REGe.
+  $C21B,$02 Jump to #R$C206 if ?? is not equal to #REGc.
+  $C21D,$01 Return.
 
 c $C21E
 
-c $C26A
+c $C26A Handler: Room Description
+@ $C26A label=Handler_RoomDescription
+D $C26A Handles displaying the text description of the current room.
   $C26A,$03 Call #R$BA6D.
-  $C26D,$02 #REGa=#N$18.
-  $C26F,$03 Call #R$C315.
-  $C272,$03 Call #R$C302.
-  $C275,$01 #REGd=#REGh.
-  $C276,$01 #REGe=#REGl.
-  $C277,$02 #REGb=#N$06.
-  $C279,$02 #REGc=#N$00.
-  $C27B,$01 #REGa=#N$00.
-  $C27C,$01 Compare #REGa with *#REGhl.
-  $C27D,$02 Jump to #R$C280 if #REGa is equal to *#REGhl.
-  $C27F,$01 Increment #REGc by one.
-  $C280,$01 Increment #REGhl by one.
-  $C281,$02 Decrease counter by one and loop back to #R$C27C until counter is zero.
-  $C283,$03 Jump to #R$C2EE if #REGc is zero.
-  $C286,$05 Jump to #R$C2AD if #REGc is not equal to #N$01.
+  $C26D,$05 Set up the printing position.
+  $C272,$03 Call #R$C302 which loads #REGhl with the room data pointer.
+  $C275,$02 Store this in #REGde for later.
+N $C277 Count the number of exits in the room data.
+  $C277,$02 Set an "exits" counter in #REGb of #N$06.
+  $C279,$02 Initialise #REGc to #N$00 to count the number of valid exits.
+  $C27B,$01 Set #REGa to #N$00 which is used just for the comparison.
+@ $C27C label=RoomDescription_ExitCount_Loop
+  $C27C,$01 Does this room have an exit?
+  $C27D,$02 Jump to #R$C280 if this room doesn't have an exit for this
+. position.
+  $C27F,$01 Increment the valid exits count by one.
+@ $C280 label=RoomDescription_ExitCount_Skip
+  $C280,$01 Move to the next byte of room data.
+  $C281,$02 Decrease the exits counter by one and loop back to #R$C27C until
+. all the exits have been checked.
+N $C283 Process the exits count result.
+  $C283,$03 Jump to #R$C2EE if no exits were found.
+  $C286,$05 Jump to #R$C2AD if more than #N$01 exit was found.
+N $C28B Only one exit was found:
 N $C28B Print "#STR$BDEC,$08($b==$FF)".
   $C28B,$03 #REGhl=#R$BDEC.
   $C28E,$03 Call #R$BAA4.
-  $C291,$01 #REGh=#REGd.
-  $C292,$01 #REGl=#REGe.
-  $C293,$04 #REGix=#R$BFE2.
-  $C297,$01 #REGa=#N$00.
+  $C291,$02 Retrieve the room data pointer and load it into #REGhl.
+  $C293,$04 Set a pointer in #REGix to #R$BFE2.
+  $C297,$01 Set #REGa to #N$00 which is used just for the comparison.
   $C298,$02 Jump to #R$C29F.
-  $C29A,$01 Increment #REGhl by one.
-  $C29B,$04 Increment #REGix by two.
-  $C29F,$03 Jump to #R$C29A if #REGa is equal to *#REGhl.
-  $C2A2,$03 #REGl=*#REGix+#N$00.
-  $C2A5,$03 #REGh=*#REGix+#N$01.
-  $C2A8,$03 Call #R$BAA4.
+N $C29A Move both the pointers to the next item of data (increment by two for
+. the direction name table pointer as it contains addresses).
+@ $C29A label=RoomDescription_CheckForExit_Loop
+  $C29A,$01 Move to the next byte of room data.
+  $C29B,$04 Increment the direction name table pointer by two.
+@ $C29F label=RoomDescription_CheckForExit
+  $C29F,$03 Jump to #R$C29A if the current exit isn't a valid exit.
+  $C2A2,$06 Get the direction name from the direction name table.
+  $C2A8,$03 Call #R$BAA4 to print the direction name.
   $C2AB,$02 Jump to #R$C2E8.
-
-c $C2AD
+N $C2AD More than one exit was found:
 N $C2AD Print "#STR$BDD9,$08($b==$FF)".
-
-c $C2E8
+@ $C2AD label=RoomDescription_MultipleExits
+  $C2AD,$03 #REGhl=#R$BDD9.
+  $C2B0,$03 Call #R$BAB1.
+  $C2B3,$02 Retrieve the room data pointer and load it into #REGhl.
+  $C2B5,$04 Set a pointer in #REGix to #R$BFE2.
+  $C2B9,$01 Set #REGa to #N$00 which is used just for the comparison.
+  $C2BA,$02 Jump to #R$C2C2.
+N $C2BC So as not to corrupt the pointer to the room data (as #REGhl is also
+. used when printing), it's temporarily held in #REGde.
+@ $C2BC label=RoomDescription_Initialise
+  $C2BC,$01 Switch back the #REGde and #REGhl registers.
+N $C2BD Move both the pointers to the next item of data (increment by two for
+. the direction name table pointer as it contains addresses).
+@ $C2BD label=RoomDescription_CheckForExits_Loop
+  $C2BD,$01 Move to the next byte of room data.
+  $C2BE,$04 Increment the direction name table pointer by two.
+@ $C2C2 label=RoomDescription_CheckForExits
+  $C2C2,$03 Jump to #R$C2BD if the current exit isn't a valid exit.
+  $C2C5,$01 Temporarily store the room data pointer in #REGde.
+  $C2C6,$06 Get the direction name from the direction name table.
+  $C2CC,$03 Call #R$BAA4 to print the direction name.
+  $C2CF,$01 Decrease the valid exits count by one.
+  $C2D0,$05 Jump to #R$C2E8 if there are no more exits to process.
+  $C2D5,$02 Jump to #R$C2DF if there is only one exit left to process.
+N $C2D7 #HTML(Print a comma character: "<code>#CHR$2C</code>".)
+  $C2D7,$02 #REGa=#N$2C.
+  $C2D9,$03 Call #R$BAC3.
+  $C2DC,$01 Reset #REGa back to #N$00 for the comparison.
+  $C2DD,$02 Jump back to #R$C2BC to continue processing.
+@ $C2DF label=RoomDescription_PrintAmpersand
+N $C2DF Print "#STR$BDD5,$08($b==$FF)".
+  $C2DF,$03 #REGhl=#R$BDD5.
+  $C2E2,$03 Call #R$BAA4.
+  $C2E5,$01 Reset #REGa back to #N$00 for the comparison.
+  $C2E6,$02 Jump to #R$C2BC to continue processing.
 N $C2E8 Print "#STR$BF29,$08($b==$FF)".
+@ $C2E8 label=RoomDescription_PrintFullStop
   $C2E8,$03 #REGhl=#R$BF29.
   $C2EB,$03 Call #R$BAB1.
+N $C2EE Are there any objects here?
+@ $C2EE label=RoomDescription_YouCanSee
   $C2EE,$03 #REGa=*#R$BCCB.
   $C2F1,$03 Call #R$C439.
-  $C2F4,$01 Return if ?? is not equal to #N$00.
+  $C2F4,$01 Return if no objects were found at this location.
 N $C2F5 Print "#STR$BDC6,$08($b==$FF)".
   $C2F5,$03 #REGhl=#R$BDC6.
   $C2F8,$03 Call #R$BAB1.
+N $C2FB Print the objects at this location.
   $C2FB,$03 #REGa=*#R$BCCB.
   $C2FE,$03 Call #R$C1FF.
   $C301,$01 Return.
-  $C302,$03 #REGa=*#R$BCCB.
-  $C305,$01 #REGe=#REGa.
+
+c $C302 Get Room Pointer
+@ $C302 label=GetRoomPointer
+R $C302 O:HL Pointer to the room data
+M $C302,$06 Load the *#R$BCCB into #REGde.
+  $C302,$04 #REGe=*#R$BCCB.
   $C306,$02 #REGd=#N$00.
-  $C308,$01 #REGh=#REGd.
-  $C309,$01 #REGl=#REGe.
-  $C30A,$01 #REGhl+=#REGde.
-  $C30B,$01 #REGhl+=#REGde.
-  $C30C,$01 #REGhl+=#REGde.
-  $C30D,$01 #REGhl+=#REGde.
-  $C30E,$01 #REGhl+=#REGde.
-  $C30F,$04 #REGde=*#R$BD10.
-  $C313,$01 #REGhl+=#REGde.
+  $C308,$02 Copy it into #REGhl.
+  $C30A,$05 Mulitply by #N$06.
+  $C30F,$05 Add the result to the base address *#R$BD10, stored in #REGhl.
   $C314,$01 Return.
 
 c $C315
@@ -898,6 +999,74 @@ c $C37F
 
 c $C3AE
 
+c $C3D0
+  $C3D0,$01 #REGe=#REGa.
+  $C3D1,$02 #REGd=#N$00.
+  $C3D3,$02 Test bit 7 of #REGa.
+  $C3D5,$02 Jump to #R$C3DC if ?? is not equal to #N$00.
+  $C3D7,$03 #REGhl=#R$BBF0.
+  $C3DA,$02 Jump to #R$C3E1.
+  $C3DC,$03 #REGhl=#R$BC78.
+  $C3DF,$02 Reset bit 7 of #REGe.
+  $C3E1,$01 #REGhl+=#REGde.
+  $C3E2,$01 #REGa=*#REGhl.
+  $C3E3,$01 Return.
+
+c $C3E4
+  $C3E4,$03 Call #R$C3D0.
+  $C3E7,$02 Compare #REGa with #N$01.
+  $C3E9,$01 Return.
+
+c $C3EA
+  $C3EA,$01 #REGb=#REGa.
+  $C3EB,$02 #REGc=#N$00.
+  $C3ED,$03 Call #R$C412.
+  $C3F0,$01 Return.
+
+c $C3F1
+
+c $C3FA
+
+c $C412
+
+c $C426
+
+c $C439 Check Room Objects
+@ $C439 label=CheckRoomObjects
+R $C439 A Room number
+R $C439 O:A #N$00 or #N$01 if objects are found or not
+  $C439,$03 #REGhl=#R$BBF0.
+  $C43C,$04 #REGbc=*#R$BD28.
+@ $C440 label=CheckRoomObjects_Loop
+  $C440,$02 Search for the room number in the table.
+  $C442,$01 Return if no objects are found.
+  $C443,$01 Stash the object location table pointer on the stack.
+  $C444,$03 Call #R$C456.
+  $C447,$01 Restore the object location table pointer from the stack.
+  $C448,$02 Jump to #R$C454 if there are no objects found here.
+  $C44A,$01 Temporarily store #REGa in #REGe.
+  $C44B,$02 Are there more objects to check?
+  $C44D,$01 Restore the #REGa register.
+  $C44E,$02 Jump to #R$C440 if there are more objects to check.
+N $C450 Set the "successful" output.
+  $C450,$02 Set #REGa to #N$01 to indicate that objects were found.
+  $C452,$01 Set flags.
+  $C453,$01 Return.
+N $C454 Set the "failure" output.
+@ $C454 label=NoRoomObjectsFound
+  $C454,$01 Set #REGa to #N$00 to indicate that no objects were found.
+  $C455,$01 Return.
+
+c $C456
+
+c $C470
+
+c $C47B
+
+c $C49F
+
+c $C4B7
+
 c $C4C7
 
 c $C4EB
@@ -925,12 +1094,30 @@ N $C564 Print "#STR$BD91,$08($b==$FF)".
 
 c $C579 Pause, Print String And Scroll
 @ $C579 label=PausePrintStringAndScroll
+D $C579 For dramatic effect! Used when an event occurs.
   $C579,$02 #REGb=#N$19.
   $C57B,$03 Call #R$BB51.
   $C57E,$03 Call #R$BAB1.
   $C581,$01 Return.
 
-c $C582
+c $C582 Generate Random Number
+@ $C582 label=GenerateRandomNumber
+R $C582 A Maximum value of generated number
+  $C582,$01 Stash #REGbc on the stack.
+  $C583,$01 Store the maximum number in #REGc.
+  $C584,$03 Call #R$BB55.
+  $C587,$01 Use the frames number as a loop counter in #REGb.
+  $C588,$01 Restore the maximum number value back to #REGa.
+@ $C589 label=GenerateRandomNumber_Loop
+  $C589,$01 Decrease the maximum number value by one.
+  $C58A,$02 Jump to #R$C58D if the maximum number value is not equal to zero.
+  $C58C,$01 Restore the maximum number value back to #REGa.
+@ $C58D label=GenerateRandomNumber_Next
+  $C58D,$02 Decrease the loop counter by one and loop back to #R$C589 until the
+. loop counter is zero.
+  $C58F,$01 Decrease the maximum number value by one.
+  $C590,$01 Restore #REGbc from the stack.
+  $C591,$01 Return.
 
 c $C592 Game Start Alias
 @ $C592 label=GameStart_Alias
@@ -2016,8 +2203,8 @@ N $EDDD Print "#STR$BE3F,$08($b==$FF)".
   $EDE0,$03 Call #R$BAB1.
 @ $EDE3 label=GameOverInput_Loop
   $EDE3,$03 Call #R$BA5D.
-  $EDE6,$05 Reset back to BASIC if the keypress is "#CHR$4E" (#N$4E).
-  $EDEB,$05 Jump to #R$BA50 if the keypress is "#CHR$59" (#N$59).
+  $EDE6,$05 #HTML(Reset back to BASIC if the keypress is "<code>#CHR$4E</code>".)
+  $EDEB,$05 #HTML(Jump to #R$BA50 if the keypress is "<code>#CHR$59</code>".)
   $EDF0,$02 Jump to #R$EDE3.
 
 c $EDF2 Game Complete
@@ -2098,7 +2285,8 @@ N $EE9B Force a newline to be "printed".
   $EEA3,$03 Restore #REGhl, #REGhl and #REGhl from the stack.
   $EEA6,$03 Jump to #R$EDD7.
 
-c $EEA9
+c $EEA9 Events
+@ $EEA9 label=Event_Seagull
 N $EEA9 Print "#STR$D6EA,$08($b==$FF)".
   $EEA9,$03 #REGhl=#R$D6EA.
   $EEAC,$03 Call #R$BAB1.
@@ -2108,6 +2296,7 @@ N $EEAF Print "#STR$D716,$08($b==$FF)".
   $EEB5,$02 #REGa=#N$80.
   $EEB7,$03 Call #R$C3EA.
   $EEBA,$01 Return.
+@ $EEBB label=Event_Rat
 N $EEBB Print "#STR$D73C,$08($b==$FF)".
   $EEBB,$03 #REGhl=#R$D73C.
   $EEBE,$03 Call #R$BAB1.
@@ -2117,7 +2306,7 @@ N $EEC1 Print "#STR$D76E,$08($b==$FF)".
   $EEC7,$02 #REGa=#N$81.
   $EEC9,$03 Call #R$C3EA.
   $EECC,$01 Return.
-
+@ $EECD label=Event_Deer
 N $EECD Print "#STR$D797,$08($b==$FF)".
   $EECD,$03 #REGhl=#R$D797.
   $EED0,$03 Call #R$BAB1.
@@ -2127,65 +2316,73 @@ N $EED3 Print "#STR$D7AA,$08($b==$FF)".
   $EED9,$02 #REGa=#N$82.
   $EEDB,$03 Call #R$C3EA.
   $EEDE,$01 Return.
-
+@ $EEDF label=Event_Pirate
 N $EEDF Print "#STR$D7C5,$08($b==$FF)".
   $EEDF,$03 #REGhl=#R$D7C5.
   $EEE2,$03 Call #R$BAB1.
   $EEE5,$02 #REGa=#N$0F.
   $EEE7,$03 Call #R$C582.
-  $EEEA,$02 Jump to #R$EEF5 if *#REGhl is not equal to #N$0F.
-  $EEEC,$03 #REGhl=#R$EDD7.
-  $EEEF,$01 Exchange the *#REGsp with the #REGhl register.
+  $EEEA,$02 Jump to #R$EEF5 if the random generator returns a non-zero response.
+  $EEEC,$04 Push #R$EDD7 onto the *#REGsp.
 N $EEF0 Print "#STR$D7F6,$08($b==$FF)".
   $EEF0,$03 #REGhl=#R$D7F6.
   $EEF3,$02 Jump to #R$EEF8.
+@ $EEF5 label=Event_Pirate_Safe
 N $EEF5 Print "#STR$D7DE,$08($b==$FF)".
   $EEF5,$03 #REGhl=#R$D7DE.
+@ $EEF8 label=Event_Pirate_PrintAndReturn
   $EEF8,$03 Call #R$C579.
   $EEFB,$01 Return.
+@ $EEFC label=Event_WaterSnake
 N $EEFC Print "#STR$D821,$08($b==$FF)".
   $EEFC,$03 #REGhl=#R$D821.
   $EEFF,$03 Call #R$BAB1.
   $EF02,$02 #REGa=#N$04.
   $EF04,$03 Call #R$C582.
-  $EF07,$02 Jump to #R$EF1F if *#REGhl is not equal to #N$04.
+  $EF07,$02 Jump to #R$EF1F if the random generator returns a non-zero response..
 N $EF09 Print "#STR$D84C,$08($b==$FF)".
   $EF09,$03 #REGhl=#R$D84C.
   $EF0C,$03 Call #R$C579.
   $EF0F,$02 #REGa=#N$14.
   $EF11,$03 Call #R$C582.
-  $EF14,$02 Jump to #R$EF24 if *#REGhl is not equal to #N$14.
-  $EF16,$03 #REGhl=#R$EDD7.
-  $EF19,$01 Exchange the *#REGsp with the #REGhl register.
+  $EF14,$02 Jump to #R$EF24 if the random generator returns a non-zero response.
+  $EF16,$04 Push #R$EDD7 onto the *#REGsp.
 N $EF1A Print "#STR$D86A,$08($b==$FF)".
   $EF1A,$03 #REGhl=#R$D86A.
   $EF1D,$02 Jump to #R$EF2E.
+@ $EF1F label=Event_WaterSnake_Safe_1
 N $EF1F Print "#STR$D8AA,$08($b==$FF)".
   $EF1F,$03 #REGhl=#R$D8AA.
   $EF22,$02 Jump to #R$EF27.
+@ $EF24 label=Event_WaterSnake_Safe_2
 N $EF24 Print "#STR$D88C,$08($b==$FF)".
   $EF24,$03 #REGhl=#R$D88C.
+@ $EF27 label=WaterSnake_Safe_Continue
   $EF27,$01 Stash #REGhl on the stack.
   $EF28,$02 #REGa=#N$86.
   $EF2A,$03 Call #R$C3EA.
   $EF2D,$01 Restore #REGhl from the stack.
+@ $EF2E label=WaterSnake_PrintAndReturn
   $EF2E,$03 Call #R$C579.
   $EF31,$01 Return.
+@ $EF32 label=Event_Spider
 N $EF32 Print "#STR$D8D8,$08($b==$FF)".
   $EF32,$03 #REGhl=#R$D8D8.
   $EF35,$03 Call #R$BAB1.
   $EF38,$02 #REGa=#N$0A.
   $EF3A,$03 Call #R$C582.
-  $EF3D,$02 Jump to #R$EF48 if *#REGhl is not equal to #N$0A.
+  $EF3D,$02 Jump to #R$EF48 if the random generator returns a non-zero response.
   $EF3F,$03 #REGhl=#R$EDD7.
   $EF42,$01 Exchange the *#REGsp with the #REGhl register.
 N $EF43 Print "#STR$D922,$08($b==$FF)".
   $EF43,$03 #REGhl=#R$D922.
   $EF46,$02 Jump to #R$EF50.
+@ $EF48 label=Event_Spider_Safe
   $EF48,$02 #REGa=#N$87.
   $EF4A,$03 Call #R$C3EA.
 N $EF4D Print "#STR$D8FA,$08($b==$FF)".
   $EF4D,$03 #REGhl=#R$D8FA.
+@ $EF50 label=Event_Spider_PrintAndReturn
   $EF50,$03 Call #R$C579.
   $EF53,$01 Return.
 
@@ -2435,6 +2632,47 @@ N $F13F Print "#STR$BF4F,$08($b==$FF)".
 
 c $F155
 
+N $F8B2 Print "#STR$E0B4,$08($b==$FF)".
+
+N $F8D3 Print "#STR$E138,$08($b==$FF)".
+
+c $F8D9 Action: Shooting
+@ $F8D9 label=Action_Shooting
+  $F8D9,$01 Stash #REGbc on the stack.
+N $F8DA Print "#STR$E0EB,$08($b==$FF)".
+  $F8DA,$03 #REGhl=#R$E0EB.
+  $F8DD,$03 Call #R$BAB1.
+  $F8E0,$02 #REGa=#N$05.
+  $F8E2,$03 Call #R$C582.
+  $F8E5,$01 Restore #REGbc from the stack.
+  $F8E6,$02 Jump to #R$F8EE if the random generator returns a non-zero response.
+N $F8E8 Print "#STR$E122,$08($b==$FF)".
+  $F8E8,$03 #REGhl=#R$E122.
+  $F8EB,$03 Jump to #R$F03E.
+@ $F8EE label=Action_Shooting_Success
+  $F8EE,$01 #REGa=#REGb.
+  $F8EF,$02 #REGa-=#N$03.
+  $F8F1,$02 Reset bit 7 of #REGa.
+  $F8F3,$01 #REGe=#REGa.
+  $F8F4,$02 #REGd=#N$00.
+  $F8F6,$03 #REGhl=#R$F904.
+  $F8F9,$01 #REGhl+=#REGde.
+  $F8FA,$01 #REGc=*#REGhl.
+  $F8FB,$03 Call #R$C426.
+N $F8FE Print "#STR$E0FF,$08($b==$FF)".
+  $F8FE,$03 #REGhl=#R$E0FF.
+  $F901,$03 Jump to #R$F03E.
+B $F904,$06
+
+c $F90A
+N $F912 Print "#STR$E14B,$08($b==$FF)".
+
+N $F926 Print "#STR$E15E,$08($b==$FF)".
+
+N $F93D Print "#STR$E14B,$08($b==$FF)".
+
+N $F9BB Print "#STR$E175,$08($b==$FF)".
+
 c $FD82 Game Start
 @ $FD82 label=GameStart
   $FD82,$03 #REGhl=#R$FDB5.
@@ -2456,7 +2694,12 @@ c $FD82 Game Start
   $FDAF,$03 Call #R$EF54.
   $FDB2,$03 Jump to #R$EDC4.
 
-b $FDB5
+g $FDB5 Default Game Flags
+@ $FDB5 label=DefaultGameFlags
+B $FDB5,$0144
+
+u $FEF9
+B $FEF9,$01
 
 c $FEFA Handler: Graphics
 N $FEFA Displays the graphic for the boat.
