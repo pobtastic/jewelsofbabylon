@@ -33,60 +33,69 @@ Next: <a href="48112.html">48112</a>
 </td>
 </tr>
 </table>
-<div class="description">48084: Routine at BBD4</div>
+<div class="description">48084: Print Input Prompt</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="49162.html">49162</a>.
+Used by the routine at <a href="49162.html">Handler_UserInput</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">PrintInputPrompt</td>
 <td class="address-2"><span id="48084"></span>48084</td>
 <td class="instruction">LD HL,20608</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=20608 (screen buffer location).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48087"></span>48087</td>
 <td class="instruction">LD DE,256</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=0256.</td>
+<td class="comment-1" rowspan="1">Set the increment in <span class="register">DE</span> for the next screen line.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48090"></span>48090</td>
 <td class="instruction">LD B,8</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=8.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48092"></span>48092</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
 </tr>
 <tr>
+<td class="asm-label">PrintInputPrompt_0</td>
 <td class="address-2"><span id="48093"></span>48093</td>
 <td class="instruction">OR (HL)</td>
 <td class="comment-1" rowspan="1">Set the bits from *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48094"></span>48094</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="1">Move down one line.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48095"></span>48095</td>
-<td class="instruction">DJNZ <a href="48084.html#48093">48093</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="48084.html#48093">48093</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="48084.html#48093">PrintInputPrompt_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="48084.html#48093">PrintInputPrompt_0</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48097"></span>48097</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="48084.html#48105">48105</a> if <span class="register">A</span> is zero.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="48084.html#48105">PrintPrompt</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48098"></span>48098</td>
-<td class="instruction">JR Z,<a href="48084.html#48105">48105</a></td>
+<td class="instruction">JR Z,<a href="48084.html#48105">PrintPrompt</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -99,11 +108,13 @@ Force a newline to be "printed".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48100"></span>48100</td>
 <td class="instruction">LD A,13</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=13.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48102"></span>48102</td>
 <td class="instruction">CALL <a href="47811.html">PrintCharacter</a></td>
 <td class="comment-1" rowspan="1">Call <a href="47811.html">PrintCharacter</a>.</td>
@@ -119,16 +130,19 @@ Print "> ".
 </td>
 </tr>
 <tr>
+<td class="asm-label">PrintPrompt</td>
 <td class="address-2"><span id="48105"></span>48105</td>
 <td class="instruction">LD HL,48517</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48517.html">48517</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48108"></span>48108</td>
 <td class="instruction">CALL <a href="47780.html">PrintString</a></td>
 <td class="comment-1" rowspan="1">Call <a href="47780.html">PrintString</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="48111"></span>48111</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

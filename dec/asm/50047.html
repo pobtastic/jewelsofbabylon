@@ -47,152 +47,144 @@ Used by the routines at <a href="61781.html">61781</a> and <a href="63754.html">
 <tr>
 <td class="address-2"><span id="50047"></span>50047</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Exchange the <span class="register">DE</span> and <span class="register">HL</span> registers.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50048"></span>50048</td>
 <td class="instruction">JR <a href="50047.html#50051">50051</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="50047.html#50051">50051</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="50050"></span>50050</td>
 <td class="instruction">INC DE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="50051"></span>50051</td>
 <td class="instruction">LD HL,48487</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48487.html">48487</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50054"></span>50054</td>
 <td class="instruction">JR <a href="50047.html#50058">50058</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="50047.html#50058">50058</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="50056"></span>50056</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50057"></span>50057</td>
 <td class="instruction">INC DE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="50058"></span>50058</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50059"></span>50059</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="50047.html#50056">50056</a> if <span class="register">A</span> is equal to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50060"></span>50060</td>
 <td class="instruction">JR Z,<a href="50047.html#50056">50056</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="50062"></span>50062</td>
 <td class="instruction">CP 254</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="50047.html#50070">50070</a> if <span class="register">A</span> is not equal to 254.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50064"></span>50064</td>
 <td class="instruction">JR NZ,<a href="50047.html#50070">50070</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="50066"></span>50066</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Compare *<span class="register">HL</span> with 255.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50067"></span>50067</td>
 <td class="instruction">CP 255</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="50069"></span>50069</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="50070"></span>50070</td>
 <td class="instruction">CP 253</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="50047.html#50080">50080</a> if <span class="register">A</span> is not equal to 253.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50072"></span>50072</td>
 <td class="instruction">JR NZ,<a href="50047.html#50080">50080</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="50074"></span>50074</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Jump to <a href="50047.html#50050">50050</a> if *<span class="register">HL</span> is not equal to 255.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50075"></span>50075</td>
 <td class="instruction">CP 255</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="50077"></span>50077</td>
 <td class="instruction">JR NZ,<a href="50047.html#50050">50050</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="50079"></span>50079</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="50080"></span>50080</td>
 <td class="instruction">INC DE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50081"></span>50081</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50082"></span>50082</td>
 <td class="instruction">CP 254</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="50047.html#50092">50092</a> if <span class="register">A</span> is equal to 254.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50084"></span>50084</td>
 <td class="instruction">JR Z,<a href="50047.html#50092">50092</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="50086"></span>50086</td>
 <td class="instruction">CP 253</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="50047.html#50080">50080</a> if <span class="register">A</span> is not equal to 253.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50088"></span>50088</td>
 <td class="instruction">JR NZ,<a href="50047.html#50080">50080</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="50090"></span>50090</td>
 <td class="instruction">JR <a href="50047.html#50050">50050</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="50047.html#50050">50050</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="50092"></span>50092</td>
 <td class="instruction">OR A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50093"></span>50093</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

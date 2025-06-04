@@ -48,25 +48,22 @@ Used by the routine at <a href="50578.html">GameStart_Alias</a>.
 <td class="asm-label">GameStart</td>
 <td class="address-2"><span id="64898"></span>64898</td>
 <td class="instruction">LD HL,64949</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="64949.html">DefaultGameFlags</a>.</td>
+<td class="comment-1" rowspan="4">Copy 324 bytes from <a href="64949.html">DefaultGameState</a> to <a href="48112.html">Table_ObjectLocations</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64901"></span>64901</td>
 <td class="instruction">LD DE,48112</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="48112.html">Table_ObjectLocations</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64904"></span>64904</td>
 <td class="instruction">LD BC,324</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0324.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64907"></span>64907</td>
 <td class="instruction">LDIR</td>
-<td class="comment-1" rowspan="1">LDIR.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -78,7 +75,7 @@ Used by the routine at <a href="50578.html">GameStart_Alias</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="64913"></span>64913</td>
 <td class="instruction">LD A,(48434)</td>
-<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="48426.html#48434">48434</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="48430.html#48434">48434</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -130,7 +127,7 @@ Used by the routine at <a href="50578.html">GameStart_Alias</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="64931"></span>64931</td>
 <td class="instruction">LD A,47</td>
-<td class="comment-1" rowspan="2">Write 47 to *<a href="60455.html">60455</a>.</td>
+<td class="comment-1" rowspan="2">Write 47 to *<a href="60176.html#60455">60455</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -141,7 +138,7 @@ Used by the routine at <a href="50578.html">GameStart_Alias</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="64936"></span>64936</td>
 <td class="instruction">LD A,48</td>
-<td class="comment-1" rowspan="2">Write 48 to *<a href="60458.html">60458</a>.</td>
+<td class="comment-1" rowspan="2">Write 48 to *<a href="60176.html#60458">60458</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

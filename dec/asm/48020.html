@@ -70,25 +70,25 @@ Print "LOADING. Start tape.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="48026"></span>48026</td>
 <td class="instruction">LD IX,48112</td>
-<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="48112.html">Table_ObjectLocations</a>.</td>
+<td class="comment-1" rowspan="1">Load the starting address into <span class="register">IX</span> at <a href="48112.html">Table_ObjectLocations</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="48030"></span>48030</td>
 <td class="instruction">LD DE,324</td>
-<td class="comment-1" rowspan="1"><span class="register">DE</span>=0324.</td>
+<td class="comment-1" rowspan="1">Set the block length in <span class="register">DE</span> to 324 bytes.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="48033"></span>48033</td>
 <td class="instruction">LD A,255</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=255.</td>
+<td class="comment-1" rowspan="1">Set <span class="register">A</span> to 255 which indicates this is a data block.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="48035"></span>48035</td>
 <td class="instruction">SCF</td>
-<td class="comment-1" rowspan="1">Set the carry flag.</td>
+<td class="comment-1" rowspan="1">Set the carry flag to indicate this is loading.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -134,7 +134,7 @@ Print "Tape error.".
 <td class="asm-label">LoadTape_Success</td>
 <td class="address-2"><span id="48048"></span>48048</td>
 <td class="instruction">LD A,(48434)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48426.html#48434">48434</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48430.html#48434">48434</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -157,7 +157,7 @@ Print "Tape error.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="48054"></span>48054</td>
 <td class="instruction">LD IX,(48418)</td>
-<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="48332.html#48418">48418</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="48418.html">48418</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

@@ -39,7 +39,7 @@ Next: <a href="BA6D.html">BA6D</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="BB59.html">SaveGame</a>, <a href="C00A.html">C00A</a>, <a href="EDD7.html">GameOver</a>, <a href="F155.html">F155</a> and <a href="FEFA.html">DisplayGraphic_Boat</a>.
+Used by the routines at <a href="BB59.html">SaveGame</a>, <a href="C00A.html">Handler_UserInput</a>, <a href="EDD7.html">GameOver</a>, <a href="F155.html">F155</a> and <a href="FEFA.html">DisplayGraphic_Boat</a>.
 </div>
 </div>
 </td>
@@ -54,7 +54,7 @@ Used by the routines at <a href="BB59.html">SaveGame</a>, <a href="C00A.html">C0
 <td class="asm-label"></td>
 <td class="address-1"><span id="ba60"></span>BA60</td>
 <td class="instruction">BIT 5,A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="BA5D.html">GetUserInput</a> until bit 5 of <span class="register">A</span> is set.</td>
+<td class="comment-1" rowspan="2">Jump back to <a href="BA5D.html">GetUserInput</a> until a new key is pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -65,13 +65,23 @@ Used by the routines at <a href="BB59.html">SaveGame</a>, <a href="C00A.html">C0
 <td class="asm-label"></td>
 <td class="address-1"><span id="ba64"></span>BA64</td>
 <td class="instruction">RES 5,A</td>
-<td class="comment-1" rowspan="1">Reset bit 5 of <span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Reset the "new key has been pressed" flag in <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ba66"></span>BA66</td>
 <td class="instruction">LD ($5C3B),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> back to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>.</td>
+<td class="comment-1" rowspan="1">Write it back to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ba69"></span>
+<div class="comments">
+<div class="paragraph">
+Fetch the keypress.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

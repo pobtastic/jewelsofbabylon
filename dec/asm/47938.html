@@ -57,43 +57,43 @@ Copies a given attribute byte to the 512 bytes where the location image attribut
 <td class="asm-label">ClearLocationImage</td>
 <td class="address-2"><span id="47938"></span>47938</td>
 <td class="instruction">LD BC,512</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0512.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">BC</span> of 512 bytes.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="47941"></span>47941</td>
 <td class="instruction">LD HL,22528</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=22528 (attribute buffer location).</td>
+<td class="comment-1" rowspan="1">Load 22528 (the beginning of the attribute buffer) into <span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="47944"></span>47944</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Copy the attribute byte into the <span class="register">E</span> register.</td>
 </tr>
 <tr>
 <td class="asm-label">ClearLocationImage_Loop</td>
 <td class="address-2"><span id="47945"></span>47945</td>
 <td class="instruction">LD (HL),E</td>
-<td class="comment-1" rowspan="1">Write <span class="register">E</span> to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Write the byte to the attribute buffer.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="47946"></span>47946</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment the attribute buffer pointer by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="47947"></span>47947</td>
 <td class="instruction">DEC BC</td>
-<td class="comment-1" rowspan="1">Decrease <span class="register">BC</span> by one.</td>
+<td class="comment-1" rowspan="1">Decrease the location image byte counter by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="47948"></span>47948</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Jump back to <a href="47938.html#47945">ClearLocationImage_Loop</a> until <span class="register">BC</span> is zero.</td>
+<td class="comment-1" rowspan="3">Jump back to <a href="47938.html#47945">ClearLocationImage_Loop</a> until the whole location image has been covered.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

@@ -47,29 +47,29 @@ Used by the routine at <a href="F155.html">F155</a>.
 <tr>
 <td class="address-2"><span id="c3fa"></span>C3FA</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c3fb"></span>C3FB</td>
 <td class="instruction">LD C,$FF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=FF.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c3fd"></span>C3FD</td>
 <td class="instruction">CALL <a href="C412.html">$C412</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="C412.html">C412</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c400"></span>C400</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="c401"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="EE00.html">EE00</a>, <a href="EF54.html">EF54</a>, <a href="F03A.html">F03A</a>, <a href="F155.html">F155</a> and <a href="F90A.html">F90A</a>.
+This entry point is used by the routines at <a href="EE00.html">Event_Crab</a>, <a href="EF54.html">EF54</a>, <a href="F03A.html">F03A</a>, <a href="F155.html">F155</a> and <a href="F90A.html">F90A</a>.
 </div>
 </div>
 </td>
@@ -77,57 +77,55 @@ This entry point is used by the routines at <a href="EE00.html">EE00</a>, <a hre
 <tr>
 <td class="address-2"><span id="c401"></span>C401</td>
 <td class="instruction">JR <a href="C3FA.html#c404">$C404</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C3FA.html#c404">C404</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c403"></span>C403</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c404"></span>C404</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Jump to <a href="C3FA.html#c410">C410</a> if *<span class="register">HL</span> is equal to FF.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c405"></span>C405</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c407"></span>C407</td>
 <td class="instruction">JR Z,<a href="C3FA.html#c410">$C410</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c409"></span>C409</td>
 <td class="instruction">CALL <a href="C35F.html">$C35F</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="C35F.html">C35F</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c40c"></span>C40C</td>
 <td class="instruction">JR NZ,<a href="C3FA.html#c403">$C403</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C3FA.html#c403">C403</a> if the zero flag is not set.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c40e"></span>C40E</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c40f"></span>C40F</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c410"></span>C410</td>
 <td class="instruction">AND A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set flags.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c411"></span>C411</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

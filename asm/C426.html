@@ -47,62 +47,60 @@ Used by the routines at <a href="F155.html">F155</a>, <a href="F8D9.html">Action
 <tr>
 <td class="address-2"><span id="c426"></span>C426</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c427"></span>C427</td>
 <td class="instruction">CALL <a href="C3D0.html">$C3D0</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="C3D0.html">C3D0</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c42a"></span>C42A</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Stash <span class="register">BC</span> and <span class="register">AF</span> on the stack.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c42b"></span>C42B</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c42c"></span>C42C</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=00.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c42e"></span>C42E</td>
 <td class="instruction">CALL <a href="C412.html">$C412</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="C412.html">C412</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c431"></span>C431</td>
 <td class="instruction">POP AF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Restore <span class="register">AF</span> and <span class="register">BC</span> from the stack.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c432"></span>C432</td>
 <td class="instruction">POP BC</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c433"></span>C433</td>
 <td class="instruction">LD B,C</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c434"></span>C434</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c435"></span>C435</td>
 <td class="instruction">CALL <a href="C412.html">$C412</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="C412.html">C412</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c438"></span>C438</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -33,634 +33,764 @@ Next: <a href="C17D.html">C17D</a>
 </td>
 </tr>
 </table>
-<div class="description">C058: Routine at C058</div>
+<div class="description">C058: Parser</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="C00A.html">C00A</a>.
+Used by the routine at <a href="C00A.html">Handler_UserInput</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Parser</td>
 <td class="address-2"><span id="c058"></span>C058</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c059"></span>C059</td>
 <td class="instruction">CALL <a href="BA96.html">SwitchScreenUpper</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BA96.html">SwitchScreenUpper</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c05c"></span>C05C</td>
 <td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAC3.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c05f"></span>C05F</td>
 <td class="instruction">LD HL,$BD66</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD66.html">BD66</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c062"></span>C062</td>
 <td class="instruction">LD A,$FF</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=FF.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c064"></span>C064</td>
 <td class="instruction">LD B,$0A</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=0A.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_0</td>
 <td class="address-2"><span id="c066"></span>C066</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c067"></span>C067</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c068"></span>C068</td>
-<td class="instruction">DJNZ <a href="C058.html#c066">$C066</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C058.html#c066">C066</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="C058.html#c066">Parser_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C058.html#c066">Parser_0</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c06a"></span>C06A</td>
 <td class="instruction">LD HL,$BD34</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD34.html">BD34</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD34.html">CommandBuffer</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c06d"></span>C06D</td>
 <td class="instruction">LD C,$0A</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=0A.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_1</td>
 <td class="address-2"><span id="c06f"></span>C06F</td>
 <td class="instruction">LD DE,$BD71</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD71.html">BD71</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c072"></span>C072</td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=04.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c074"></span>C074</td>
 <td class="instruction">LD A,$20</td>
 <td class="comment-1" rowspan="2">Write ASCII "SPACE" (20) to *<span class="register">DE</span>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_2</td>
 <td class="address-2"><span id="c076"></span>C076</td>
 <td class="instruction">LD (DE),A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c077"></span>C077</td>
 <td class="instruction">INC DE</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c078"></span>C078</td>
-<td class="instruction">DJNZ <a href="C058.html#c076">$C076</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C058.html#c076">C076</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="C058.html#c076">Parser_2</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C058.html#c076">Parser_2</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c07a"></span>C07A</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c07b"></span>C07B</td>
 <td class="instruction">OR C</td>
 <td class="comment-1" rowspan="1">Set the bits from <span class="register">C</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c07c"></span>C07C</td>
-<td class="instruction">JP Z,<a href="C058.html#c16e">$C16E</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c16e">C16E</a> if <span class="register">DE</span> is equal to <span class="register">C</span>.</td>
+<td class="instruction">JP Z,<a href="C058.html#c16e">Parser_21</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c16e">Parser_21</a> if <span class="register">DE</span> is equal to <span class="register">C</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c07f"></span>C07F</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="C058.html#c16e">C16E</a> if *<span class="register">HL</span> is equal to 0D.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="C058.html#c16e">Parser_21</a> if *<span class="register">HL</span> is equal to 0D.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c080"></span>C080</td>
 <td class="instruction">CP $0D</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c082"></span>C082</td>
-<td class="instruction">JP Z,<a href="C058.html#c16e">$C16E</a></td>
+<td class="instruction">JP Z,<a href="C058.html#c16e">Parser_21</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c085"></span>C085</td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=04.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c087"></span>C087</td>
 <td class="instruction">LD DE,$BD71</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD71.html">BD71</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_3</td>
 <td class="address-2"><span id="c08a"></span>C08A</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c08b"></span>C08B</td>
 <td class="instruction">CP $0D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0b6">C0B6</a> if <span class="register">A</span> is equal to 0D.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0b6">Parser_6</a> if <span class="register">A</span> is equal to 0D.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c08d"></span>C08D</td>
-<td class="instruction">JR Z,<a href="C058.html#c0b6">$C0B6</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c0b6">Parser_6</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c08f"></span>C08F</td>
 <td class="instruction">CP $20</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">C0AC</a> if <span class="register">A</span> is equal to 20.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">Parser_5</a> if <span class="register">A</span> is equal to 20.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c091"></span>C091</td>
-<td class="instruction">JR Z,<a href="C058.html#c0ac">$C0AC</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c0ac">Parser_5</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c093"></span>C093</td>
 <td class="instruction">CP $2C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">C0AC</a> if <span class="register">A</span> is equal to 2C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">Parser_5</a> if <span class="register">A</span> is equal to 2C.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c095"></span>C095</td>
-<td class="instruction">JR Z,<a href="C058.html#c0ac">$C0AC</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c0ac">Parser_5</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c097"></span>C097</td>
 <td class="instruction">LD (DE),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">DE</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c098"></span>C098</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c099"></span>C099</td>
 <td class="instruction">INC DE</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c09a"></span>C09A</td>
-<td class="instruction">DJNZ <a href="C058.html#c08a">$C08A</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C058.html#c08a">C08A</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="C058.html#c08a">Parser_3</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C058.html#c08a">Parser_3</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_4</td>
 <td class="address-2"><span id="c09c"></span>C09C</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c09d"></span>C09D</td>
 <td class="instruction">CP $0D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0b6">C0B6</a> if <span class="register">A</span> is equal to 0D.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0b6">Parser_6</a> if <span class="register">A</span> is equal to 0D.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c09f"></span>C09F</td>
-<td class="instruction">JR Z,<a href="C058.html#c0b6">$C0B6</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c0b6">Parser_6</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0a1"></span>C0A1</td>
 <td class="instruction">CP $20</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">C0AC</a> if <span class="register">A</span> is equal to 20.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">Parser_5</a> if <span class="register">A</span> is equal to 20.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0a3"></span>C0A3</td>
-<td class="instruction">JR Z,<a href="C058.html#c0ac">$C0AC</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c0ac">Parser_5</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0a5"></span>C0A5</td>
 <td class="instruction">CP $2C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">C0AC</a> if <span class="register">A</span> is equal to 2C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">Parser_5</a> if <span class="register">A</span> is equal to 2C.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0a7"></span>C0A7</td>
-<td class="instruction">JR Z,<a href="C058.html#c0ac">$C0AC</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c0ac">Parser_5</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0a9"></span>C0A9</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0aa"></span>C0AA</td>
-<td class="instruction">JR <a href="C058.html#c09c">$C09C</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c09c">C09C</a>.</td>
+<td class="instruction">JR <a href="C058.html#c09c">Parser_4</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c09c">Parser_4</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_5</td>
 <td class="address-2"><span id="c0ac"></span>C0AC</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0ad"></span>C0AD</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0ae"></span>C0AE</td>
 <td class="instruction">CP $20</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">C0AC</a> if <span class="register">A</span> is equal to 20.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">Parser_5</a> if <span class="register">A</span> is equal to 20.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0b0"></span>C0B0</td>
-<td class="instruction">JR Z,<a href="C058.html#c0ac">$C0AC</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c0ac">Parser_5</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0b2"></span>C0B2</td>
 <td class="instruction">CP $2C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">C0AC</a> if <span class="register">A</span> is equal to 2C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c0ac">Parser_5</a> if <span class="register">A</span> is equal to 2C.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0b4"></span>C0B4</td>
-<td class="instruction">JR Z,<a href="C058.html#c0ac">$C0AC</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c0ac">Parser_5</a></td>
 </tr>
 <tr>
+<td class="asm-label">Parser_6</td>
 <td class="address-2"><span id="c0b6"></span>C0B6</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="3">Stash <span class="register">HL</span>, <span class="register">DE</span> and <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0b7"></span>C0B7</td>
 <td class="instruction">PUSH DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0b8"></span>C0B8</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0b9"></span>C0B9</td>
 <td class="instruction">LD HL,$BD8C</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD8C.html">BD8C</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0bc"></span>C0BC</td>
 <td class="instruction">LD DE,$BD71</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD71.html">BD71</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0bf"></span>C0BF</td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=04.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_7</td>
 <td class="address-2"><span id="c0c1"></span>C0C1</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="C058.html#c0c9">C0C9</a> if *<span class="register">DE</span> is not equal to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="C058.html#c0c9">Parser_8</a> if *<span class="register">DE</span> is not equal to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0c2"></span>C0C2</td>
 <td class="instruction">CP (HL)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0c3"></span>C0C3</td>
-<td class="instruction">JR NZ,<a href="C058.html#c0c9">$C0C9</a></td>
+<td class="instruction">JR NZ,<a href="C058.html#c0c9">Parser_8</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0c5"></span>C0C5</td>
 <td class="instruction">INC DE</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0c6"></span>C0C6</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0c7"></span>C0C7</td>
-<td class="instruction">DJNZ <a href="C058.html#c0c1">$C0C1</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C058.html#c0c1">C0C1</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="C058.html#c0c1">Parser_7</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C058.html#c0c1">Parser_7</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_8</td>
 <td class="address-2"><span id="c0c9"></span>C0C9</td>
 <td class="instruction">POP BC</td>
 <td class="comment-1" rowspan="3">Restore <span class="register">BC</span>, <span class="register">DE</span> and <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0ca"></span>C0CA</td>
 <td class="instruction">POP DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0cb"></span>C0CB</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0cc"></span>C0CC</td>
-<td class="instruction">JR Z,<a href="C058.html#c06f">$C06F</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c06f">C06F</a> if <span class="register">HL</span> is equal to *<span class="register">HL</span>.</td>
+<td class="instruction">JR Z,<a href="C058.html#c06f">Parser_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c06f">Parser_1</a> if <span class="register">HL</span> is equal to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0ce"></span>C0CE</td>
 <td class="instruction">DEC C</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">C</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0cf"></span>C0CF</td>
 <td class="instruction">LD ($BD7D),HL</td>
 <td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="BD71.html#bd7d">BD7D</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0d2"></span>C0D2</td>
 <td class="instruction">LD ($BD7F),DE</td>
 <td class="comment-1" rowspan="1">Write <span class="register">DE</span> to *<a href="BD71.html#bd7f">BD7F</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0d6"></span>C0D6</td>
 <td class="instruction">LD ($BD81),BC</td>
 <td class="comment-1" rowspan="1">Write <span class="register">BC</span> to *<a href="BD71.html#bd81">BD81</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0da"></span>C0DA</td>
 <td class="instruction">LD HL,($BD0C)</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BCCC.html#bd0c">BD0C</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0dd"></span>C0DD</td>
 <td class="instruction">LD C,$00</td>
 <td class="comment-1" rowspan="1"><span class="register">C</span>=00.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_9</td>
 <td class="address-2"><span id="c0df"></span>C0DF</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="C058.html#c11c">C11C</a> if *<span class="register">HL</span> is equal to FF.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="C058.html#c11c">Parser_14</a> if *<span class="register">HL</span> is equal to FF.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0e0"></span>C0E0</td>
 <td class="instruction">CP $FF</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0e2"></span>C0E2</td>
-<td class="instruction">JR Z,<a href="C058.html#c11c">$C11C</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c11c">Parser_14</a></td>
 </tr>
 <tr>
+<td class="asm-label">Parser_10</td>
 <td class="address-2"><span id="c0e4"></span>C0E4</td>
 <td class="instruction">LD DE,$BD71</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="BD71.html">BD71</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0e7"></span>C0E7</td>
 <td class="instruction">LD B,$04</td>
 <td class="comment-1" rowspan="1"><span class="register">B</span>=04.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_11</td>
 <td class="address-2"><span id="c0e9"></span>C0E9</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="C058.html#c10d">C10D</a> if *<span class="register">DE</span> is not equal to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="C058.html#c10d">Parser_12</a> if *<span class="register">DE</span> is not equal to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0ea"></span>C0EA</td>
 <td class="instruction">CP (HL)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0eb"></span>C0EB</td>
-<td class="instruction">JR NZ,<a href="C058.html#c10d">$C10D</a></td>
+<td class="instruction">JR NZ,<a href="C058.html#c10d">Parser_12</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0ed"></span>C0ED</td>
 <td class="instruction">INC DE</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0ee"></span>C0EE</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0ef"></span>C0EF</td>
-<td class="instruction">DJNZ <a href="C058.html#c0e9">$C0E9</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C058.html#c0e9">C0E9</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="C058.html#c0e9">Parser_11</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C058.html#c0e9">Parser_11</a> until counter is zero.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0f1"></span>C0F1</td>
 <td class="instruction">LD HL,$BD81</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD71.html#bd81">BD81</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0f4"></span>C0F4</td>
 <td class="instruction">LD A,$09</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=09.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0f6"></span>C0F6</td>
 <td class="instruction">SUB (HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>-=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0f7"></span>C0F7</td>
 <td class="instruction">LD D,$00</td>
 <td class="comment-1" rowspan="1"><span class="register">D</span>=00.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0f9"></span>C0F9</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0fa"></span>C0FA</td>
 <td class="instruction">LD HL,$BD66</td>
 <td class="comment-1" rowspan="2"><span class="register">HL</span>=<a href="BD66.html">BD66</a>+<span class="register">DE</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0fd"></span>C0FD</td>
 <td class="instruction">ADD HL,DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0fe"></span>C0FE</td>
 <td class="instruction">LD (HL),C</td>
 <td class="comment-1" rowspan="1">Write <span class="register">C</span> to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c0ff"></span>C0FF</td>
 <td class="instruction">LD HL,($BD7D)</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BD71.html#bd7d">BD7D</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c102"></span>C102</td>
 <td class="instruction">LD DE,($BD7F)</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="BD71.html#bd7f">BD7F</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c106"></span>C106</td>
 <td class="instruction">LD BC,($BD81)</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD71.html#bd81">BD81</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c10a"></span>C10A</td>
-<td class="instruction">JP <a href="C058.html#c06f">$C06F</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c06f">C06F</a>.</td>
+<td class="instruction">JP <a href="C058.html#c06f">Parser_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c06f">Parser_1</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_12</td>
 <td class="address-2"><span id="c10d"></span>C10D</td>
 <td class="instruction">LD E,B</td>
 <td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">B</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c10e"></span>C10E</td>
 <td class="instruction">LD D,$00</td>
 <td class="comment-1" rowspan="1"><span class="register">D</span>=00.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c110"></span>C110</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c111"></span>C111</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c112"></span>C112</td>
 <td class="instruction">CP $2C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c119">C119</a> if <span class="register">A</span> is not equal to 2C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c119">Parser_13</a> if <span class="register">A</span> is not equal to 2C.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c114"></span>C114</td>
-<td class="instruction">JR NZ,<a href="C058.html#c119">$C119</a></td>
+<td class="instruction">JR NZ,<a href="C058.html#c119">Parser_13</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c116"></span>C116</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c117"></span>C117</td>
-<td class="instruction">JR <a href="C058.html#c0e4">$C0E4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c0e4">C0E4</a>.</td>
+<td class="instruction">JR <a href="C058.html#c0e4">Parser_10</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c0e4">Parser_10</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_13</td>
 <td class="address-2"><span id="c119"></span>C119</td>
 <td class="instruction">INC C</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">C</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c11a"></span>C11A</td>
-<td class="instruction">JR <a href="C058.html#c0df">$C0DF</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c0df">C0DF</a>.</td>
+<td class="instruction">JR <a href="C058.html#c0df">Parser_9</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c0df">Parser_9</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_14</td>
 <td class="address-2"><span id="c11c"></span>C11C</td>
 <td class="instruction">LD HL,($BD7D)</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BD71.html#bd7d">BD7D</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c11f"></span>C11F</td>
 <td class="instruction">LD DE,($BD7F)</td>
 <td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a href="BD71.html#bd7f">BD7F</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c123"></span>C123</td>
 <td class="instruction">LD BC,($BD81)</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD71.html#bd81">BD81</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c127"></span>C127</td>
 <td class="instruction">LD A,$0A</td>
 <td class="comment-1" rowspan="3"><span class="register">C</span>=0A-<span class="register">C</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c129"></span>C129</td>
 <td class="instruction">SUB C</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c12a"></span>C12A</td>
 <td class="instruction">LD C,A</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c12b"></span>C12B</td>
 <td class="instruction">LD HL,$BD34</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD34.html">BD34</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD34.html">CommandBuffer</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_15</td>
 <td class="address-2"><span id="c12e"></span>C12E</td>
 <td class="instruction">DEC C</td>
 <td class="comment-1" rowspan="1">Decrease <span class="register">C</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c12f"></span>C12F</td>
-<td class="instruction">JR Z,<a href="C058.html#c149">$C149</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c149">C149</a> if <span class="register">C</span> is equal to 0A.</td>
+<td class="instruction">JR Z,<a href="C058.html#c149">Parser_18</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c149">Parser_18</a> if <span class="register">C</span> is equal to 0A.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_16</td>
 <td class="address-2"><span id="c131"></span>C131</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c132"></span>C132</td>
 <td class="instruction">CP $20</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c13d">C13D</a> if <span class="register">A</span> is equal to 20.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c13d">Parser_17</a> if <span class="register">A</span> is equal to 20.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c134"></span>C134</td>
-<td class="instruction">JR Z,<a href="C058.html#c13d">$C13D</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c13d">Parser_17</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c136"></span>C136</td>
 <td class="instruction">CP $2C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c13d">C13D</a> if <span class="register">A</span> is equal to 2C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c13d">Parser_17</a> if <span class="register">A</span> is equal to 2C.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c138"></span>C138</td>
-<td class="instruction">JR Z,<a href="C058.html#c13d">$C13D</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c13d">Parser_17</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c13a"></span>C13A</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c13b"></span>C13B</td>
-<td class="instruction">JR <a href="C058.html#c131">$C131</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c131">C131</a>.</td>
+<td class="instruction">JR <a href="C058.html#c131">Parser_16</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c131">Parser_16</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_17</td>
 <td class="address-2"><span id="c13d"></span>C13D</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c13e"></span>C13E</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c13f"></span>C13F</td>
 <td class="instruction">CP $20</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c13d">C13D</a> if <span class="register">A</span> is equal to 20.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c13d">Parser_17</a> if <span class="register">A</span> is equal to 20.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c141"></span>C141</td>
-<td class="instruction">JR Z,<a href="C058.html#c13d">$C13D</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c13d">Parser_17</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c143"></span>C143</td>
 <td class="instruction">CP $2C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c13d">C13D</a> if <span class="register">A</span> is equal to 2C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c13d">Parser_17</a> if <span class="register">A</span> is equal to 2C.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c145"></span>C145</td>
-<td class="instruction">JR Z,<a href="C058.html#c13d">$C13D</a></td>
+<td class="instruction">JR Z,<a href="C058.html#c13d">Parser_17</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c147"></span>C147</td>
-<td class="instruction">JR <a href="C058.html#c12e">$C12E</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c12e">C12E</a>.</td>
+<td class="instruction">JR <a href="C058.html#c12e">Parser_15</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c12e">Parser_15</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_18</td>
 <td class="address-2"><span id="c149"></span>C149</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
@@ -676,92 +806,121 @@ Print "I don't know the word:-".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c14a"></span>C14A</td>
 <td class="instruction">LD HL,$BDA5</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BDA5.html">BDA5</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c14d"></span>C14D</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c150"></span>C150</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c151"></span>C151</td>
 <td class="instruction">LD A,$22</td>
 <td class="comment-1" rowspan="2">Print a double quote character: "<code>&#34;</code>".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c153"></span>C153</td>
 <td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
 </tr>
 <tr>
+<td class="asm-label">Parser_19</td>
 <td class="address-2"><span id="c156"></span>C156</td>
 <td class="instruction">LD A,(HL)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c157"></span>C157</td>
 <td class="instruction">CP $21</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c161">C161</a> if <span class="register">A</span> is less than 21.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C058.html#c161">Parser_20</a> if <span class="register">A</span> is less than 21.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c159"></span>C159</td>
-<td class="instruction">JR C,<a href="C058.html#c161">$C161</a></td>
+<td class="instruction">JR C,<a href="C058.html#c161">Parser_20</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c15b"></span>C15B</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c15c"></span>C15C</td>
 <td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAC3.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c15f"></span>C15F</td>
-<td class="instruction">JR <a href="C058.html#c156">$C156</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c156">C156</a>.</td>
+<td class="instruction">JR <a href="C058.html#c156">Parser_19</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c156">Parser_19</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_20</td>
 <td class="address-2"><span id="c161"></span>C161</td>
 <td class="instruction">LD A,$22</td>
 <td class="comment-1" rowspan="2">Print a double quote character: "<code>&#34;</code>".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c163"></span>C163</td>
 <td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="c166"></span>
+<div class="comments">
+<div class="paragraph">
+Print ".".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c166"></span>C166</td>
 <td class="instruction">LD HL,$BF29</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF29.html">BF29</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c169"></span>C169</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c16c"></span>C16C</td>
-<td class="instruction">JR <a href="C058.html#c17a">$C17A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c17a">C17A</a>.</td>
+<td class="instruction">JR <a href="C058.html#c17a">Parser_22</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C058.html#c17a">Parser_22</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_21</td>
 <td class="address-2"><span id="c16e"></span>C16E</td>
 <td class="instruction">LD A,($BD66)</td>
 <td class="comment-1" rowspan="3">Return if *<a href="BD66.html">BD66</a> is not equal to FF.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c171"></span>C171</td>
 <td class="instruction">CP $FF</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c173"></span>C173</td>
 <td class="instruction">RET NZ</td>
 </tr>
@@ -776,19 +935,22 @@ Print "I don't understand.".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c174"></span>C174</td>
 <td class="instruction">LD HL,$BD91</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD91.html">BD91</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c177"></span>C177</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_22</td>
 <td class="address-2"><span id="c17a"></span>C17A</td>
-<td class="instruction">JP <a href="C00A.html">$C00A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C00A.html">C00A</a>.</td>
+<td class="instruction">JP <a href="C00A.html">Handler_UserInput</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C00A.html">Handler_UserInput</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

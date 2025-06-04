@@ -47,152 +47,144 @@ Used by the routines at <a href="F155.html">F155</a> and <a href="F90A.html">F90
 <tr>
 <td class="address-2"><span id="c37f"></span>C37F</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Exchange the <span class="register">DE</span> and <span class="register">HL</span> registers.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c380"></span>C380</td>
 <td class="instruction">JR <a href="C37F.html#c383">$C383</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C37F.html#c383">C383</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c382"></span>C382</td>
 <td class="instruction">INC DE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c383"></span>C383</td>
 <td class="instruction">LD HL,$BD67</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD67.html">BD67</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c386"></span>C386</td>
 <td class="instruction">JR <a href="C37F.html#c38a">$C38A</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C37F.html#c38a">C38A</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c388"></span>C388</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c389"></span>C389</td>
 <td class="instruction">INC DE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c38a"></span>C38A</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c38b"></span>C38B</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="C37F.html#c388">C388</a> if <span class="register">A</span> is equal to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c38c"></span>C38C</td>
 <td class="instruction">JR Z,<a href="C37F.html#c388">$C388</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c38e"></span>C38E</td>
 <td class="instruction">CP $FE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="C37F.html#c396">C396</a> if <span class="register">A</span> is not equal to FE.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c390"></span>C390</td>
 <td class="instruction">JR NZ,<a href="C37F.html#c396">$C396</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c392"></span>C392</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Compare *<span class="register">HL</span> with FF.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c393"></span>C393</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c395"></span>C395</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c396"></span>C396</td>
 <td class="instruction">CP $FD</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="C37F.html#c3a0">C3A0</a> if <span class="register">A</span> is not equal to FD.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c398"></span>C398</td>
 <td class="instruction">JR NZ,<a href="C37F.html#c3a0">$C3A0</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c39a"></span>C39A</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Jump to <a href="C37F.html#c382">C382</a> if *<span class="register">HL</span> is not equal to FF.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c39b"></span>C39B</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c39d"></span>C39D</td>
 <td class="instruction">JR NZ,<a href="C37F.html#c382">$C382</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c39f"></span>C39F</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c3a0"></span>C3A0</td>
 <td class="instruction">INC DE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">DE</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c3a1"></span>C3A1</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c3a2"></span>C3A2</td>
 <td class="instruction">CP $FE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="C37F.html#c3ac">C3AC</a> if <span class="register">A</span> is equal to FE.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c3a4"></span>C3A4</td>
 <td class="instruction">JR Z,<a href="C37F.html#c3ac">$C3AC</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c3a6"></span>C3A6</td>
 <td class="instruction">CP $FD</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="C37F.html#c3a0">C3A0</a> if <span class="register">A</span> is not equal to FD.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c3a8"></span>C3A8</td>
 <td class="instruction">JR NZ,<a href="C37F.html#c3a0">$C3A0</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c3aa"></span>C3AA</td>
 <td class="instruction">JR <a href="C37F.html#c382">$C382</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C37F.html#c382">C382</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c3ac"></span>C3AC</td>
 <td class="instruction">OR A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c3ad"></span>C3AD</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

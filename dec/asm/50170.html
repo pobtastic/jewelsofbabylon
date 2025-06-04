@@ -47,29 +47,29 @@ Used by the routine at <a href="61781.html">61781</a>.
 <tr>
 <td class="address-2"><span id="50170"></span>50170</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50171"></span>50171</td>
 <td class="instruction">LD C,255</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=255.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50173"></span>50173</td>
 <td class="instruction">CALL <a href="50194.html">50194</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="50194.html">50194</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50176"></span>50176</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="50177"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="60928.html">60928</a>, <a href="61268.html">61268</a>, <a href="61498.html">61498</a>, <a href="61781.html">61781</a> and <a href="63754.html">63754</a>.
+This entry point is used by the routines at <a href="60928.html">Event_Crab</a>, <a href="61268.html">61268</a>, <a href="61498.html">61498</a>, <a href="61781.html">61781</a> and <a href="63754.html">63754</a>.
 </div>
 </div>
 </td>
@@ -77,57 +77,55 @@ This entry point is used by the routines at <a href="60928.html">60928</a>, <a h
 <tr>
 <td class="address-2"><span id="50177"></span>50177</td>
 <td class="instruction">JR <a href="50170.html#50180">50180</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="50170.html#50180">50180</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="50179"></span>50179</td>
 <td class="instruction">INC HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="50180"></span>50180</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="3">Jump to <a href="50170.html#50192">50192</a> if *<span class="register">HL</span> is equal to 255.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50181"></span>50181</td>
 <td class="instruction">CP 255</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="50183"></span>50183</td>
 <td class="instruction">JR Z,<a href="50170.html#50192">50192</a></td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="50185"></span>50185</td>
 <td class="instruction">CALL <a href="50015.html">50015</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="50015.html">50015</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50188"></span>50188</td>
 <td class="instruction">JR NZ,<a href="50170.html#50179">50179</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="50170.html#50179">50179</a> if the zero flag is not set.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50190"></span>50190</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50191"></span>50191</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="50192"></span>50192</td>
 <td class="instruction">AND A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set flags.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50193"></span>50193</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

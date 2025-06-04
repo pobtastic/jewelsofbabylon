@@ -33,7 +33,7 @@ Next: <a href="EEA9.html">EEA9</a>
 </td>
 </tr>
 </table>
-<div class="description">EE00: Routine at EE00</div>
+<div class="description">EE00: Events</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,201 +42,257 @@ Next: <a href="EEA9.html">EEA9</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Event_Crab</td>
 <td class="address-2"><span id="ee00"></span>EE00</td>
 <td class="instruction">LD HL,$BC66</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html#bc66">BC66</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee03"></span>EE03</td>
 <td class="instruction">RES 0,(HL)</td>
 <td class="comment-1" rowspan="1">Reset bit 0 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee05"></span>EE05</td>
 <td class="instruction">LD A,$29</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=29.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee07"></span>EE07</td>
 <td class="instruction">CALL <a href="C35F.html">$C35F</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C35F.html">C35F</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee0a"></span>EE0A</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-1" rowspan="1">Return if ?? is not equal to 29.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ee0b"></span>
+<div class="comments">
+<div class="paragraph">
+Print "The crab has reached you.A monstrous claw darts outand crushes you.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee0b"></span>EE0B</td>
 <td class="instruction">LD HL,$D5B0</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D5B0.html">D5B0</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee0e"></span>EE0E</td>
-<td class="instruction">JP <a href="EE00.html#ee9b">$EE9B</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">EE9B</a>.</td>
+<td class="instruction">JP <a href="EE00.html#ee9b">Events_GameOver</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">Events_GameOver</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Event_Tentacle</td>
 <td class="address-1"><span id="ee11"></span>EE11</td>
 <td class="instruction">LD HL,$BC66</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html#bc66">BC66</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee14"></span>EE14</td>
 <td class="instruction">RES 1,(HL)</td>
 <td class="comment-1" rowspan="1">Reset bit 1 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee16"></span>EE16</td>
 <td class="instruction">LD A,$2B</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=2B.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee18"></span>EE18</td>
 <td class="instruction">CALL <a href="C35F.html">$C35F</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C35F.html">C35F</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee1b"></span>EE1B</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-1" rowspan="1">Return if ?? is not equal to 2B.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ee1c"></span>
+<div class="comments">
+<div class="paragraph">
+Print "A tentacle suddenly encirclesyou and crushes you.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee1c"></span>EE1C</td>
 <td class="instruction">LD HL,$D5F6</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D5F6.html">D5F6</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee1f"></span>EE1F</td>
-<td class="instruction">JP <a href="EE00.html#ee9b">$EE9B</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">EE9B</a>.</td>
+<td class="instruction">JP <a href="EE00.html#ee9b">Events_GameOver</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">Events_GameOver</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Event_Rum</td>
 <td class="address-1"><span id="ee22"></span>EE22</td>
 <td class="instruction">LD HL,$BC66</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html#bc66">BC66</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee25"></span>EE25</td>
 <td class="instruction">RES 2,(HL)</td>
 <td class="comment-1" rowspan="1">Reset bit 2 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee27"></span>EE27</td>
 <td class="instruction">LD A,($BCCB)</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">RoomNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee2a"></span>EE2A</td>
 <td class="instruction">LD BC,$0007</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=0007.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee2d"></span>EE2D</td>
 <td class="instruction">LD HL,$EE39</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EE00.html#ee39">EE39</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee30"></span>EE30</td>
 <td class="instruction">CPIR</td>
 <td class="comment-1" rowspan="1">CPIR.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee32"></span>EE32</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-1" rowspan="1">Return if ?? is not equal to 2B.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ee33"></span>
+<div class="comments">
+<div class="paragraph">
+Print "You drank too much rum.You stumble and slipand fall over the edge.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee33"></span>EE33</td>
 <td class="instruction">LD HL,$D629</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D629.html">D629</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee36"></span>EE36</td>
-<td class="instruction">JP <a href="EE00.html#ee9b">$EE9B</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">EE9B</a>.</td>
+<td class="instruction">JP <a href="EE00.html#ee9b">Events_GameOver</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">Events_GameOver</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee39"></span>EE39</td>
-<td class="instruction">DEFB $28</td>
+<td class="instruction">DEFB $28,$29,$2A,$2B,$23,$24,$4F</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="address-1"><span id="ee3a"></span>EE3A</td>
-<td class="instruction">ADD HL,HL</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ee3b"></span>EE3B</td>
-<td class="instruction">LD HL,($232B)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ee3e"></span>EE3E</td>
-<td class="instruction">INC H</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">H</span> by one.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="ee3f"></span>EE3F</td>
-<td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
-</tr>
-<tr>
+<td class="asm-label">Event_Lion</td>
 <td class="address-1"><span id="ee40"></span>EE40</td>
 <td class="instruction">LD HL,$BC66</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html#bc66">BC66</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee43"></span>EE43</td>
 <td class="instruction">RES 3,(HL)</td>
 <td class="comment-1" rowspan="1">Reset bit 3 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee45"></span>EE45</td>
 <td class="instruction">LD A,$2A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=2A.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee47"></span>EE47</td>
 <td class="instruction">CALL <a href="C35F.html">$C35F</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C35F.html">C35F</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee4a"></span>EE4A</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-1" rowspan="1">Return if <span class="register">H</span> is not equal to 2A.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ee4b"></span>
+<div class="comments">
+<div class="paragraph">
+Print "The lion pounces upon you.It mauls you savagely.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee4b"></span>EE4B</td>
 <td class="instruction">LD HL,$D66E</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D66E.html">D66E</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee4e"></span>EE4E</td>
-<td class="instruction">JP <a href="EE00.html#ee9b">$EE9B</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">EE9B</a>.</td>
+<td class="instruction">JP <a href="EE00.html#ee9b">Events_GameOver</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">Events_GameOver</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Event_Crocodile</td>
 <td class="address-1"><span id="ee51"></span>EE51</td>
 <td class="instruction">LD HL,$BC66</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html#bc66">BC66</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee54"></span>EE54</td>
 <td class="instruction">RES 4,(HL)</td>
 <td class="comment-1" rowspan="1">Reset bit 4 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee56"></span>EE56</td>
 <td class="instruction">LD HL,$E8C1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8c1">E8C1</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E8C1.html">E8C1</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee59"></span>EE59</td>
 <td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee5c"></span>EE5C</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-1" rowspan="1">Return if <span class="register">H</span> is not equal to 2A.</td>
@@ -252,139 +308,174 @@ Print "The crocodile lunges at you.You are caught in thevicious,snapping jaws.
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee5d"></span>EE5D</td>
 <td class="instruction">LD HL,$D6A0</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D6A0.html">D6A0</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee60"></span>EE60</td>
-<td class="instruction">JP <a href="EE00.html#ee9b">$EE9B</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">EE9B</a>.</td>
+<td class="instruction">JP <a href="EE00.html#ee9b">Events_GameOver</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">Events_GameOver</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Event_Cannibals</td>
 <td class="address-1"><span id="ee63"></span>EE63</td>
-<td class="instruction">DEFB $21</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">LD HL,$BC66</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html#bc66">BC66</a>.</td>
 </tr>
 <tr>
-<td class="address-1"><span id="ee64"></span>EE64</td>
-<td class="instruction">LD H,(HL)</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ee65"></span>EE65</td>
-<td class="instruction">CP H</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee66"></span>EE66</td>
 <td class="instruction">RES 5,(HL)</td>
 <td class="comment-1" rowspan="1">Reset bit 5 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee68"></span>EE68</td>
 <td class="instruction">LD A,$18</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=18.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee6a"></span>EE6A</td>
 <td class="instruction">CALL <a href="C35F.html">$C35F</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C35F.html">C35F</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee6d"></span>EE6D</td>
 <td class="instruction">RET NZ</td>
 <td class="comment-1" rowspan="1">Return if <span class="register">H</span> is not equal to 18.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee6e"></span>EE6E</td>
 <td class="instruction">LD HL,$D931</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D931.html">D931</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee71"></span>EE71</td>
-<td class="instruction">JP <a href="EE00.html#ee9b">$EE9B</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">EE9B</a>.</td>
+<td class="instruction">JP <a href="EE00.html#ee9b">Events_GameOver</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">Events_GameOver</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Event_Match</td>
 <td class="address-1"><span id="ee74"></span>EE74</td>
 <td class="instruction">LD HL,$BC66</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html#bc66">BC66</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee77"></span>EE77</td>
 <td class="instruction">RES 6,(HL)</td>
 <td class="comment-1" rowspan="1">Reset bit 6 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee79"></span>EE79</td>
 <td class="instruction">LD A,$03</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=03.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee7b"></span>EE7B</td>
 <td class="instruction">CALL <a href="C3E4.html">$C3E4</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C3E4.html">C3E4</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee7e"></span>EE7E</td>
-<td class="instruction">JR NZ,<a href="EE00.html#ee8a">$EE8A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee8a">EE8A</a> if <span class="register">H</span> is not equal to 03.</td>
+<td class="instruction">JR NZ,<a href="EE00.html#ee8a">Event_Crab_0</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee8a">Event_Crab_0</a> if <span class="register">H</span> is not equal to 03.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee80"></span>EE80</td>
 <td class="instruction">LD HL,$BC98</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html#bc98">BC98</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee83"></span>EE83</td>
 <td class="instruction">DEC (HL)</td>
 <td class="comment-1" rowspan="1">Decrease *<span class="register">HL</span> by one.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ee84"></span>
+<div class="comments">
+<div class="paragraph">
+Print "Ouch!!The match has burned away,scorching your fingers.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee84"></span>EE84</td>
 <td class="instruction">LD HL,$DB91</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="DB91.html">DB91</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee87"></span>EE87</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Event_Crab_0</td>
 <td class="address-2"><span id="ee8a"></span>EE8A</td>
 <td class="instruction">LD A,$03</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=03.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee8c"></span>EE8C</td>
 <td class="instruction">CALL <a href="C3EA.html">$C3EA</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C3EA.html">C3EA</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee8f"></span>EE8F</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
+<td class="asm-label">Event_Wave</td>
 <td class="address-1"><span id="ee90"></span>EE90</td>
 <td class="instruction">LD HL,$BC66</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html#bc66">BC66</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee93"></span>EE93</td>
 <td class="instruction">RES 7,(HL)</td>
 <td class="comment-1" rowspan="1">Reset bit 7 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ee95"></span>
+<div class="comments">
+<div class="paragraph">
+Print "A massive wave hits the boat.It overturns. You're drowning.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee95"></span>EE95</td>
 <td class="instruction">LD HL,$E567</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E567.html">E567</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee98"></span>EE98</td>
-<td class="instruction">JP <a href="EE00.html#ee9b">$EE9B</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">EE9B</a>.</td>
+<td class="instruction">JP <a href="EE00.html#ee9b">Events_GameOver</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EE00.html#ee9b">Events_GameOver</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -397,34 +488,51 @@ Force a newline to be "printed".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Events_GameOver</td>
 <td class="address-2"><span id="ee9b"></span>EE9B</td>
 <td class="instruction">LD A,$0D</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=0D.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ee9d"></span>EE9D</td>
 <td class="instruction">CALL <a href="BAC3.html">PrintCharacter</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAC3.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eea0"></span>EEA0</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="eea3"></span>
+<div class="comments">
+<div class="paragraph">
+Tidy up the stack.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eea3"></span>EEA3</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="3">Restore <span class="register">HL</span>, <span class="register">HL</span> and <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eea4"></span>EEA4</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eea5"></span>EEA5</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eea6"></span>EEA6</td>
 <td class="instruction">JP <a href="EDD7.html">GameOver</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="EDD7.html">GameOver</a>.</td>
