@@ -33,111 +33,128 @@ Next: <a href="49694.html">49694</a>
 </td>
 </tr>
 </table>
-<div class="description">49663: Routine at C1FF</div>
+<div class="description">49663: Print Room Objects</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="49896.html">49896</a> and <a href="61498.html">61498</a>.
+Used by the routines at <a href="49770.html">Handler_RoomDescription</a> and <a href="61498.html">61498</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">PrintRoomObjects</td>
 <td class="address-2"><span id="49663"></span>49663</td>
 <td class="instruction">LD HL,48112</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48112.html">Table_ObjectLocations</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49666"></span>49666</td>
 <td class="instruction">LD BC,(48424)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="48424.html">NumberObjects</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">PrintRoomObjects_0</td>
 <td class="address-2"><span id="49670"></span>49670</td>
 <td class="instruction">CPIR</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">CPIR.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49672"></span>49672</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return if ?? is not equal to 0.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49673"></span>49673</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49674"></span>49674</td>
-<td class="instruction">CALL <a href="50094.html#50262">50262</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="50262.html">50262</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50262.html">50262</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49677"></span>49677</td>
-<td class="instruction">JR Z,<a href="49663.html#49686">49686</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">JR Z,<a href="49663.html#49686">PrintRoomObjects_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="49663.html#49686">PrintRoomObjects_1</a> if ?? is equal to 0.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49679"></span>49679</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Stash <span class="register">AF</span> and <span class="register">BC</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49680"></span>49680</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49681"></span>49681</td>
 <td class="instruction">CALL <a href="47780.html#47793">PrintStringAndScroll</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49684"></span>49684</td>
 <td class="instruction">POP BC</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Restore <span class="register">BC</span> and <span class="register">AF</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49685"></span>49685</td>
 <td class="instruction">POP AF</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
+<td class="asm-label">PrintRoomObjects_1</td>
 <td class="address-2"><span id="49686"></span>49686</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49687"></span>49687</td>
 <td class="instruction">POP HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49688"></span>49688</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">B</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49689"></span>49689</td>
 <td class="instruction">OR C</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set the bits from <span class="register">C</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49690"></span>49690</td>
 <td class="instruction">LD A,E</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">E</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49691"></span>49691</td>
-<td class="instruction">JR NZ,<a href="49663.html#49670">49670</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">JR NZ,<a href="49663.html#49670">PrintRoomObjects_0</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="49663.html#49670">PrintRoomObjects_0</a> if ?? is not equal to <span class="register">C</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="49693"></span>49693</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

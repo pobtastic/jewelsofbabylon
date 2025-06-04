@@ -33,7 +33,7 @@ Next: <a href="EF54.html">EF54</a>
 </td>
 </tr>
 </table>
-<div class="description">EEA9: Routine at EEA9</div>
+<div class="description">EEA9: Events</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -52,11 +52,13 @@ Print "A seagull soars in the breezeabove you...".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Event_Seagull</td>
 <td class="address-2"><span id="eea9"></span>EEA9</td>
 <td class="instruction">LD HL,$D6EA</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D6EA.html">D6EA</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeac"></span>EEAC</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
@@ -72,26 +74,31 @@ Print "It wheels gently,and then flies off.".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeaf"></span>EEAF</td>
 <td class="instruction">LD HL,$D716</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D716.html">D716</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeb2"></span>EEB2</td>
 <td class="instruction">CALL <a href="C579.html">PausePrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C579.html">PausePrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeb5"></span>EEB5</td>
 <td class="instruction">LD A,$80</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=80.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeb7"></span>EEB7</td>
-<td class="instruction">CALL <a href="C3AE.html#c3ea">$C3EA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3AE.html#c3ea">C3EA</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">$C3EA</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">C3EA</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeba"></span>EEBA</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -107,11 +114,13 @@ Print "A rat runs out on to thepath,in front of you...".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Event_Rat</td>
 <td class="address-1"><span id="eebb"></span>EEBB</td>
 <td class="instruction">LD HL,$D73C</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D73C.html">D73C</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eebe"></span>EEBE</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
@@ -127,26 +136,31 @@ Print "It sniffs the air and thenscurries off.".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eec1"></span>EEC1</td>
 <td class="instruction">LD HL,$D76E</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D76E.html">D76E</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eec4"></span>EEC4</td>
 <td class="instruction">CALL <a href="C579.html">PausePrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C579.html">PausePrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eec7"></span>EEC7</td>
 <td class="instruction">LD A,$81</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=81.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eec9"></span>EEC9</td>
-<td class="instruction">CALL <a href="C3AE.html#c3ea">$C3EA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3AE.html#c3ea">C3EA</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">$C3EA</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">C3EA</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eecc"></span>EECC</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -162,11 +176,13 @@ Print "A deer appears...".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Event_Deer</td>
 <td class="address-1"><span id="eecd"></span>EECD</td>
 <td class="instruction">LD HL,$D797</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D797.html">D797</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eed0"></span>EED0</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
@@ -182,26 +198,31 @@ Print "It sees you and runs away.".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eed3"></span>EED3</td>
 <td class="instruction">LD HL,$D7AA</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D7AA.html">D7AA</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eed6"></span>EED6</td>
 <td class="instruction">CALL <a href="C579.html">PausePrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C579.html">PausePrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eed9"></span>EED9</td>
 <td class="instruction">LD A,$82</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=82.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eedb"></span>EEDB</td>
-<td class="instruction">CALL <a href="C3AE.html#c3ea">$C3EA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3AE.html#c3ea">C3EA</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">$C3EA</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">C3EA</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eede"></span>EEDE</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -217,39 +238,45 @@ Print "A pirate attacks you...".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Event_Pirate</td>
 <td class="address-1"><span id="eedf"></span>EEDF</td>
 <td class="instruction">LD HL,$D7C5</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D7C5.html">D7C5</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eee2"></span>EEE2</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eee5"></span>EEE5</td>
 <td class="instruction">LD A,$0F</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=0F.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eee7"></span>EEE7</td>
-<td class="instruction">CALL <a href="C582.html">$C582</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C582.html">C582</a>.</td>
+<td class="instruction">CALL <a href="C582.html">GenerateRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C582.html">GenerateRandomNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeea"></span>EEEA</td>
-<td class="instruction">JR NZ,<a href="EEA9.html#eef5">$EEF5</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#eef5">EEF5</a> if *<span class="register">HL</span> is not equal to 0F.</td>
+<td class="instruction">JR NZ,<a href="EEA9.html#eef5">Event_Pirate_Safe</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#eef5">Event_Pirate_Safe</a> if the random generator returns a non-zero response.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeec"></span>EEEC</td>
 <td class="instruction">LD HL,$EDD7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EDD7.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="2">Push <a href="EDD7.html">GameOver</a> onto the *<span class="register">SP</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeef"></span>EEEF</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -262,14 +289,16 @@ Print "After a fierce strugglehe overpowers you.".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eef0"></span>EEF0</td>
 <td class="instruction">LD HL,$D7F6</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D7F6.html">D7F6</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eef3"></span>EEF3</td>
-<td class="instruction">JR <a href="EEA9.html#eef8">$EEF8</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#eef8">EEF8</a>.</td>
+<td class="instruction">JR <a href="EEA9.html#eef8">Event_Pirate_PrintAndReturn</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#eef8">Event_Pirate_PrintAndReturn</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -282,16 +311,19 @@ Print "But you avoid his blow.".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Event_Pirate_Safe</td>
 <td class="address-2"><span id="eef5"></span>EEF5</td>
 <td class="instruction">LD HL,$D7DE</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D7DE.html">D7DE</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Event_Pirate_PrintAndReturn</td>
 <td class="address-2"><span id="eef8"></span>EEF8</td>
 <td class="instruction">CALL <a href="C579.html">PausePrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C579.html">PausePrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eefb"></span>EEFB</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -307,29 +339,34 @@ Print "A long water snakeslithers toward you...".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Event_WaterSnake</td>
 <td class="address-1"><span id="eefc"></span>EEFC</td>
 <td class="instruction">LD HL,$D821</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D821.html">D821</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeff"></span>EEFF</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef02"></span>EF02</td>
 <td class="instruction">LD A,$04</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=04.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef04"></span>EF04</td>
-<td class="instruction">CALL <a href="C582.html">$C582</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C582.html">C582</a>.</td>
+<td class="instruction">CALL <a href="C582.html">GenerateRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C582.html">GenerateRandomNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef07"></span>EF07</td>
-<td class="instruction">JR NZ,<a href="EEA9.html#ef1f">$EF1F</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef1f">EF1F</a> if *<span class="register">HL</span> is not equal to 04.</td>
+<td class="instruction">JR NZ,<a href="EEA9.html#ef1f">Event_WaterSnake_Safe_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef1f">Event_WaterSnake_Safe_1</a> if the random generator returns a non-zero response..</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -342,39 +379,45 @@ Print "It suddenly strikes at you...".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef09"></span>EF09</td>
 <td class="instruction">LD HL,$D84C</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D84C.html">D84C</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef0c"></span>EF0C</td>
 <td class="instruction">CALL <a href="C579.html">PausePrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C579.html">PausePrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef0f"></span>EF0F</td>
 <td class="instruction">LD A,$14</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=14.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef11"></span>EF11</td>
-<td class="instruction">CALL <a href="C582.html">$C582</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C582.html">C582</a>.</td>
+<td class="instruction">CALL <a href="C582.html">GenerateRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C582.html">GenerateRandomNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef14"></span>EF14</td>
-<td class="instruction">JR NZ,<a href="EEA9.html#ef24">$EF24</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef24">EF24</a> if *<span class="register">HL</span> is not equal to 14.</td>
+<td class="instruction">JR NZ,<a href="EEA9.html#ef24">Event_WaterSnake_Safe_2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef24">Event_WaterSnake_Safe_2</a> if the random generator returns a non-zero response.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef16"></span>EF16</td>
 <td class="instruction">LD HL,$EDD7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EDD7.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="2">Push <a href="EDD7.html">GameOver</a> onto the *<span class="register">SP</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef19"></span>EF19</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -387,14 +430,16 @@ Print "The venomous fangs sinkinto you.".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef1a"></span>EF1A</td>
 <td class="instruction">LD HL,$D86A</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D86A.html">D86A</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef1d"></span>EF1D</td>
-<td class="instruction">JR <a href="EEA9.html#ef2e">$EF2E</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef2e">EF2E</a>.</td>
+<td class="instruction">JR <a href="EEA9.html#ef2e">WaterSnake_PrintAndReturn</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef2e">WaterSnake_PrintAndReturn</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -407,14 +452,16 @@ Print "It regards you for a moment,then slips away.".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Event_WaterSnake_Safe_1</td>
 <td class="address-2"><span id="ef1f"></span>EF1F</td>
 <td class="instruction">LD HL,$D8AA</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D8AA.html">D8AA</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef22"></span>EF22</td>
-<td class="instruction">JR <a href="EEA9.html#ef27">$EF27</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef27">EF27</a>.</td>
+<td class="instruction">JR <a href="EEA9.html#ef27">WaterSnake_Safe_Continue</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef27">WaterSnake_Safe_Continue</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -427,36 +474,43 @@ Print "But it misses and slips away.".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Event_WaterSnake_Safe_2</td>
 <td class="address-2"><span id="ef24"></span>EF24</td>
 <td class="instruction">LD HL,$D88C</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D88C.html">D88C</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">WaterSnake_Safe_Continue</td>
 <td class="address-2"><span id="ef27"></span>EF27</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef28"></span>EF28</td>
 <td class="instruction">LD A,$86</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=86.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef2a"></span>EF2A</td>
-<td class="instruction">CALL <a href="C3AE.html#c3ea">$C3EA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3AE.html#c3ea">C3EA</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">$C3EA</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">C3EA</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef2d"></span>EF2D</td>
 <td class="instruction">POP HL</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label">WaterSnake_PrintAndReturn</td>
 <td class="address-2"><span id="ef2e"></span>EF2E</td>
 <td class="instruction">CALL <a href="C579.html">PausePrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C579.html">PausePrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef31"></span>EF31</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
@@ -472,36 +526,43 @@ Print "A poisonous spider drops on you.".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Event_Spider</td>
 <td class="address-1"><span id="ef32"></span>EF32</td>
 <td class="instruction">LD HL,$D8D8</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D8D8.html">D8D8</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef35"></span>EF35</td>
 <td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef38"></span>EF38</td>
 <td class="instruction">LD A,$0A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=0A.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef3a"></span>EF3A</td>
-<td class="instruction">CALL <a href="C582.html">$C582</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C582.html">C582</a>.</td>
+<td class="instruction">CALL <a href="C582.html">GenerateRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C582.html">GenerateRandomNumber</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef3d"></span>EF3D</td>
-<td class="instruction">JR NZ,<a href="EEA9.html#ef48">$EF48</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef48">EF48</a> if *<span class="register">HL</span> is not equal to 0A.</td>
+<td class="instruction">JR NZ,<a href="EEA9.html#ef48">Event_Spider_Safe</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef48">Event_Spider_Safe</a> if the random generator returns a non-zero response.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef3f"></span>EF3F</td>
 <td class="instruction">LD HL,$EDD7</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EDD7.html">GameOver</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef42"></span>EF42</td>
 <td class="instruction">EX (SP),HL</td>
 <td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
@@ -517,24 +578,28 @@ Print "It stings you.".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef43"></span>EF43</td>
 <td class="instruction">LD HL,$D922</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D922.html">D922</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef46"></span>EF46</td>
-<td class="instruction">JR <a href="EEA9.html#ef50">$EF50</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef50">EF50</a>.</td>
+<td class="instruction">JR <a href="EEA9.html#ef50">Event_Spider_PrintAndReturn</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EEA9.html#ef50">Event_Spider_PrintAndReturn</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Event_Spider_Safe</td>
 <td class="address-2"><span id="ef48"></span>EF48</td>
 <td class="instruction">LD A,$87</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=87.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef4a"></span>EF4A</td>
-<td class="instruction">CALL <a href="C3AE.html#c3ea">$C3EA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3AE.html#c3ea">C3EA</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">$C3EA</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">C3EA</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -547,16 +612,19 @@ Print "It lingers a moment,then scuttles off.".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef4d"></span>EF4D</td>
 <td class="instruction">LD HL,$D8FA</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D8FA.html">D8FA</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Event_Spider_PrintAndReturn</td>
 <td class="address-2"><span id="ef50"></span>EF50</td>
 <td class="instruction">CALL <a href="C579.html">PausePrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C579.html">PausePrintStringAndScroll</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef53"></span>EF53</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

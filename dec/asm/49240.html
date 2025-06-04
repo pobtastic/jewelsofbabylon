@@ -319,17 +319,15 @@ Used by the routine at <a href="49162.html">49162</a>.
 <tr>
 <td class="address-2"><span id="49345"></span>49345</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="49240.html#49353">49353</a> if *<span class="register">DE</span> is not equal to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49346"></span>49346</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49347"></span>49347</td>
 <td class="instruction">JR NZ,<a href="49240.html#49353">49353</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="49240.html#49353">49353</a> if <span class="register">A</span> is not equal to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49349"></span>49349</td>
@@ -420,17 +418,15 @@ Used by the routine at <a href="49162.html">49162</a>.
 <tr>
 <td class="address-2"><span id="49385"></span>49385</td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="49240.html#49421">49421</a> if *<span class="register">DE</span> is not equal to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49386"></span>49386</td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49387"></span>49387</td>
 <td class="instruction">JR NZ,<a href="49240.html#49421">49421</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="49240.html#49421">49421</a> if <span class="register">A</span> is not equal to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49389"></span>49389</td>
@@ -573,17 +569,15 @@ Used by the routine at <a href="49162.html">49162</a>.
 <tr>
 <td class="address-1"><span id="49447"></span>49447</td>
 <td class="instruction">LD A,10</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=10.</td>
+<td class="comment-1" rowspan="3"><span class="register">C</span>=10-<span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49449"></span>49449</td>
 <td class="instruction">SUB C</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49450"></span>49450</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49451"></span>49451</td>
@@ -646,22 +640,20 @@ Used by the routine at <a href="49162.html">49162</a>.
 <tr>
 <td class="address-1"><span id="49471"></span>49471</td>
 <td class="instruction">CP 32</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 32.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="49240.html#49469">49469</a> if <span class="register">A</span> is equal to 32.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49473"></span>49473</td>
 <td class="instruction">JR Z,<a href="49240.html#49469">49469</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="49240.html#49469">49469</a> if <span class="register">A</span> is equal to 32.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49475"></span>49475</td>
 <td class="instruction">CP 44</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 44.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="49240.html#49469">49469</a> if <span class="register">A</span> is equal to 44.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49477"></span>49477</td>
 <td class="instruction">JR Z,<a href="49240.html#49469">49469</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="49240.html#49469">49469</a> if <span class="register">A</span> is equal to 44.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49479"></span>49479</td>
@@ -672,6 +664,16 @@ Used by the routine at <a href="49162.html">49162</a>.
 <td class="address-2"><span id="49481"></span>49481</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="49482"></span>
+<div class="comments">
+<div class="paragraph">
+Print "I don't know the word:-".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49482"></span>49482</td>
@@ -691,12 +693,11 @@ Used by the routine at <a href="49162.html">49162</a>.
 <tr>
 <td class="address-1"><span id="49489"></span>49489</td>
 <td class="instruction">LD A,34</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=34.</td>
+<td class="comment-1" rowspan="2">Print a double quote character: "<code>&#34;</code>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49491"></span>49491</td>
 <td class="instruction">CALL <a href="47811.html">PrintCharacter</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47811.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="49494"></span>49494</td>
@@ -730,12 +731,11 @@ Used by the routine at <a href="49162.html">49162</a>.
 <tr>
 <td class="address-2"><span id="49505"></span>49505</td>
 <td class="instruction">LD A,34</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=34.</td>
+<td class="comment-1" rowspan="2">Print a double quote character: "<code>&#34;</code>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49507"></span>49507</td>
 <td class="instruction">CALL <a href="47811.html">PrintCharacter</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47811.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49510"></span>49510</td>
@@ -764,6 +764,16 @@ Used by the routine at <a href="49162.html">49162</a>.
 <tr>
 <td class="address-1"><span id="49523"></span>49523</td>
 <td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="49524"></span>
+<div class="comments">
+<div class="paragraph">
+Print "I don't understand.".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49524"></span>49524</td>

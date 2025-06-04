@@ -47,62 +47,61 @@ Used by the routines at <a href="49240.html">49240</a> and <a href="60868.html">
 <tr>
 <td class="address-2"><span id="49162"></span>49162</td>
 <td class="instruction">CALL <a href="47743.html">SetDefaultScreenPosition</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="47743.html">SetDefaultScreenPosition</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49165"></span>49165</td>
 <td class="instruction">LD HL,48436</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48436.html">48436</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49168"></span>49168</td>
 <td class="instruction">LD A,32</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=32.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49170"></span>49170</td>
 <td class="instruction">LD B,50</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=50.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="49172"></span>49172</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49173"></span>49173</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49174"></span>49174</td>
 <td class="instruction">DJNZ <a href="49162.html#49172">49172</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="49162.html#49172">49172</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49176"></span>49176</td>
 <td class="instruction">CALL <a href="48084.html">48084</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="48084.html">48084</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49179"></span>49179</td>
 <td class="instruction">LD HL,48436</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48436.html">48436</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="49182"></span>49182</td>
 <td class="instruction">CALL <a href="47709.html">GetUserInput</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="47709.html">GetUserInput</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49185"></span>49185</td>
 <td class="instruction">CP 12</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="49162.html#49217">49217</a> if <span class="register">A</span> is equal to 12.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49187"></span>49187</td>
 <td class="instruction">JR Z,<a href="49162.html#49217">49217</a></td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="49189"></span>49189</td>
@@ -116,102 +115,99 @@ Used by the routines at <a href="49240.html">49240</a> and <a href="60868.html">
 <tr>
 <td class="address-1"><span id="49193"></span>49193</td>
 <td class="instruction">CP 32</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2">Jump to <a href="49162.html#49182">49182</a> if <span class="register">A</span> is less than 32.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49195"></span>49195</td>
 <td class="instruction">JR C,<a href="49162.html#49182">49182</a></td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="49197"></span>49197</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Exchange the <span class="register">DE</span> and <span class="register">HL</span> registers.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49198"></span>49198</td>
 <td class="instruction">LD HL,48485</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48436.html#48485">48485</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49201"></span>49201</td>
 <td class="instruction">AND A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>-=<span class="register">DE</span> (with carry).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49202"></span>49202</td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="49204"></span>49204</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Exchange the <span class="register">DE</span> and <span class="register">HL</span> registers.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49205"></span>49205</td>
 <td class="instruction">JR Z,<a href="49162.html#49182">49182</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="49162.html#49182">49182</a> if <span class="register">A</span> is equal to <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49207"></span>49207</td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49208"></span>49208</td>
 <td class="instruction">CALL <a href="47766.html">SwitchScreenUpper</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="47766.html">SwitchScreenUpper</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49211"></span>49211</td>
 <td class="instruction">CALL <a href="47811.html">PrintCharacter</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="47811.html">PrintCharacter</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49214"></span>49214</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49215"></span>49215</td>
 <td class="instruction">JR <a href="49162.html#49182">49182</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="49162.html#49182">49182</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="49217"></span>49217</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Exchange the <span class="register">DE</span> and <span class="register">HL</span> registers.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49218"></span>49218</td>
 <td class="instruction">LD HL,48436</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48436.html">48436</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49221"></span>49221</td>
 <td class="instruction">AND A</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>-=<span class="register">DE</span> (with carry).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49222"></span>49222</td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="49224"></span>49224</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Exchange the <span class="register">DE</span> and <span class="register">HL</span> registers.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49225"></span>49225</td>
 <td class="instruction">JR Z,<a href="49162.html#49182">49182</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="49162.html#49182">49182</a> if <span class="register">HL</span> is equal to <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49227"></span>49227</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -226,32 +222,32 @@ Print " ".
 <tr>
 <td class="address-1"><span id="49228"></span>49228</td>
 <td class="instruction">LD HL,48520</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48520.html">48520</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49231"></span>49231</td>
 <td class="instruction">CALL <a href="47780.html">PrintString</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html">PrintString</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49234"></span>49234</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49235"></span>49235</td>
 <td class="instruction">DEC HL</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Decrease <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49236"></span>49236</td>
 <td class="instruction">LD (HL),32</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Write 32 to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="49238"></span>49238</td>
 <td class="instruction">JR <a href="49162.html#49182">49182</a></td>
-<td class="comment-1" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="49162.html#49182">49182</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
