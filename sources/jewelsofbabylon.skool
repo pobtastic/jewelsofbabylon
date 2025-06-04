@@ -236,216 +236,223 @@ b$4000 DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,
 ;
 ; Load the first block: screen data.
 @label=TapeLoader
-c$5B00 LD IX,$4000   ;
- $5B04 LD DE,$1B00   ;
- $5B07 LD A,$5B      ;
- $5B09 CALL $5B21    ;
+c$5B00 LD IX,$4000   ; #REGix=#R$4000.
+ $5B04 LD DE,$1B00   ; #REGde=#N$1B00.
+ $5B07 LD A,$5B      ; #REGa=#N$5B.
+ $5B09 CALL $5B21    ; Call #R$5B21.
 ; Load the second block: graphics data.
- $5B0C LD IX,$607C   ;
- $5B10 LD DE,$59D4   ;
- $5B13 LD A,$E1      ;
- $5B15 CALL $5B21    ;
+ $5B0C LD IX,$607C   ; #REGix=#R$607C.
+ $5B10 LD DE,$59D4   ; #REGde=#N$59D4.
+ $5B13 LD A,$E1      ; #REGa=#N$E1.
+ $5B15 CALL $5B21    ; Call #R$5B21.
 ; Load the third block: game data.
- $5B18 LD IX,$BA50   ;
- $5B1C LD DE,$4572   ;
- $5B1F LD A,$21      ;
+ $5B18 LD IX,$BA50   ; #REGix=#R$BA50.
+ $5B1C LD DE,$4572   ; #REGde=#N$4572.
+ $5B1F LD A,$21      ; #REGa=#N$21.
 ; Tape loading routine.
 @label=TapeLoading
-*$5B21 SCF           ;
- $5B22 INC D         ;
- $5B23 EX AF,AF'     ;
- $5B24 DEC D         ;
- $5B25 DI            ;
- $5B26 LD A,$0F      ;
- $5B28 OUT ($FE),A   ;
- $5B2A CALL $0562    ;
- $5B2D PUSH AF       ;
- $5B2E LD A,($5C48)  ;
- $5B31 AND $38       ;
- $5B33 RRC A         ;
+*$5B21 SCF           ; Set the carry flag to indicate "loading".
+ $5B22 INC D         ; This resets the zero flag. (#REGd cannot hold +#N$FF.)
+ $5B23 EX AF,AF'     ; The #REGa register holds +#N$00 for a header and +#N$FF for a block
+                     ; of data. The carry flag is reset for verifying and set for loading.
+ $5B24 DEC D         ; Restore #REGd to its original value.
+ $5B25 DI            ; Disable interrupts.
+ $5B26 LD A,$0F      ; {Set the border to #INK$0F.
+ $5B28 OUT ($FE),A   ; }
+ $5B2A CALL $0562    ; #HTML(Call <a rel="noopener nofollow"
+                     ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0556.html#0562">LD_BYTES##N$0562</a>.)
+ $5B2D PUSH AF       ; Stash #REGaf on the stack.
+ $5B2E LD A,($5C48)  ; #HTML(#REGa=*<a rel="noopener nofollow"
+                     ; href="https://skoolkid.github.io/rom/asm/5C48.html">BORDCR</a>.)
+ $5B31 AND %00111000 ; Keep only bits 3-5.
+ $5B33 RRC A         ; {Rotate #REGa right (with carry).
  $5B35 RRC A         ;
- $5B37 RRC A         ;
- $5B39 OUT ($FE),A   ;
- $5B3B LD A,$7F      ;
- $5B3D IN A,($FE)    ;
- $5B3F RRA           ;
- $5B40 EI            ;
- $5B41 JP NC,$0000   ;
- $5B44 POP AF        ;
- $5B45 RET C         ;
- $5B46 LD HL,($5C53) ;
- $5B49 LD ($5C4B),HL ;
- $5B4C LD (HL),$80   ;
- $5B4E RST $08       ;
- $5B4F LD A,(DE)     ;
+ $5B37 RRC A         ; }
+ $5B39 OUT ($FE),A   ; Set border to the colour held by #REGa.
+ $5B3B LD A,$7F      ; #REGa=#N$7F.
+ $5B3D IN A,($FE)    ; Make an initial read of port '#N$FE'.
+ $5B3F RRA           ; Rotate the byte obtained.
+ $5B40 EI            ; Enable interrupts.
+ $5B41 JP NC,$0000   ; #HTML(Jump to <a rel="noopener nofollow"
+                     ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0000.html">START</a>
+                     ; if the carry flag is not set.)
+ $5B44 POP AF        ; Restore #REGaf from the stack.
+ $5B45 RET C         ; Return if the carry flag is set.
+ $5B46 LD HL,($5C53) ; #HTML(#REGhl=*<a rel="noopener nofollow"
+                     ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C53.html">PROG</a>.)
+ $5B49 LD ($5C4B),HL ; #HTML(Write #REGhl to *<a rel="noopener nofollow"
+                     ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C4B.html">VARS</a>.)
+ $5B4C LD (HL),$80   ; Write #N$80 to *#REGhl.
+ $5B4E RST $08       ; #HTML(Call <a rel="noopener nofollow"
+                     ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/0008.html">ERROR_1</a>.)
 
 ; Unused
-u$5B50 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5B58 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5B60 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5B68 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5B70 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5B78 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5B80 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5B88 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5B90 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5B98 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BA0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BA8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BB0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BB8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BC0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BC8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BD0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BD8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BE0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BE8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BF0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5BF8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5C00 DEFB $FF,$00,$00,$00,$FF,$00,$23,$78
- $5C08 DEFB $78,$23,$05,$00,$00,$00,$14,$00
- $5C10 DEFB $01,$00,$06,$00,$0B,$00,$01,$00
- $5C18 DEFB $01,$00,$06,$00,$10,$00,$00,$00
- $5C20 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5C28 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5C30 DEFB $00,$00,$00,$00,$00,$00,$00,$3C
- $5C38 DEFB $40,$00,$FF,$CC,$01,$54,$FF,$00
- $5C40 DEFB $00,$00,$E8,$03,$FF,$F2,$03,$01
- $5C48 DEFB $38,$00,$00,$1E,$5E,$BC,$5D,$B6
- $5C50 DEFB $5C,$B6,$5C,$CB,$5C,$10,$5E,$CA
- $5C58 DEFB $5C,$25,$5E,$2A,$5E,$0F,$5E,$5C
- $5C60 DEFB $00,$32,$5E,$43,$5E,$43,$5E,$03
- $5C68 DEFB $92,$5C,$10,$02,$00,$00,$00,$00
- $5C70 DEFB $00,$02,$78,$F0,$00,$1A,$00,$00
- $5C78 DEFB $0C,$14,$00,$58,$FF,$00,$00,$21
- $5C80 DEFB $00,$5B,$21,$17,$40,$50,$E0,$50
- $5C88 DEFB $21,$06,$21,$17,$12,$38,$00,$38
- $5C90 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5C98 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5CA0 DEFB $00,$08,$01,$07,$00,$00,$00,$00
- $5CA8 DEFB $00,$00,$81,$03,$03,$00,$00,$00
- $5CB0 DEFB $00,$00,$57,$FF,$FF,$FF,$F4,$09
- $5CB8 DEFB $A8,$10,$4B,$F4,$09,$C4,$15,$53
- $5CC0 DEFB $81,$0F,$C4,$15,$52,$F4,$09,$C4
- $5CC8 DEFB $15,$50,$80,$00,$0A,$1A,$00,$EA
- $5CD0 DEFB $14,$01,$20,$42,$41,$42,$59,$4C
- $5CD8 DEFB $4F,$4E,$20,$4D,$41,$49,$4E,$20
- $5CE0 DEFB $42,$41,$53,$49,$43,$20,$14,$00
- $5CE8 DEFB $0D,$00,$14,$92,$00,$FD,$32,$34
- $5CF0 DEFB $36,$39,$39,$0E,$00,$00,$7B,$60
- $5CF8 DEFB $00,$3A,$E7,$30,$0E,$00,$00,$00
- $5D00 DEFB $00,$00,$3A,$DA,$30,$0E,$00,$00
- $5D08 DEFB $00,$00,$00,$3A,$D9,$30,$0E,$00
- $5D10 DEFB $00,$00,$00,$00,$3A,$FB,$3A,$F5
- $5D18 DEFB $23,$30,$0E,$00,$00,$00,$00,$00
- $5D20 DEFB $3B,$AC,$30,$0E,$00,$00,$00,$00
- $5D28 DEFB $00,$2C,$30,$0E,$00,$00,$00,$00
- $5D30 DEFB $00,$3B,$D9,$30,$0E,$00,$00,$00
- $5D38 DEFB $00,$00,$3B,$22,$20,$20,$20,$20
- $5D40 DEFB $20,$20,$20,$20,$20,$20,$20,$20
- $5D48 DEFB $20,$20,$20,$20,$20,$20,$20,$20
- $5D50 DEFB $20,$20,$20,$20,$20,$20,$20,$20
- $5D58 DEFB $20,$20,$20,$20,$20,$20,$20,$20
- $5D60 DEFB $20,$20,$20,$20,$20,$20,$20,$20
- $5D68 DEFB $20,$20,$20,$20,$20,$20,$20,$20
- $5D70 DEFB $20,$20,$20,$20,$20,$20,$20,$20
- $5D78 DEFB $20,$20,$20,$20,$22,$3B,$0D,$00
- $5D80 DEFB $1E,$0E,$00,$F9,$C0,$32,$33,$32
- $5D88 DEFB $39,$36,$0E,$00,$00,$00,$5B,$00
- $5D90 DEFB $0D,$00,$28,$22,$00,$D9,$36,$0E
- $5D98 DEFB $00,$00,$06,$00,$00,$3A,$DC,$31
- $5DA0 DEFB $0E,$00,$00,$01,$00,$00,$3A,$FB
- $5DA8 DEFB $3A,$F9,$C0,$34,$37,$36,$39,$36
- $5DB0 DEFB $0E,$00,$00,$50,$BA,$00,$0D,$03
- $5DB8 DEFB $E8,$3A,$00,$F1,$78,$3D,$28,$28
- $5DC0 DEFB $32,$35,$36,$0E,$00,$00,$00,$01
- $5DC8 DEFB $00,$2A,$BE,$32,$33,$36,$35,$34
- $5DD0 DEFB $0E,$00,$00,$66,$5C,$00,$29,$2B
- $5DD8 DEFB $BE,$32,$33,$36,$35,$33,$0E,$00
- $5DE0 DEFB $00,$65,$5C,$00,$29,$2D,$32,$33
- $5DE8 DEFB $32,$39,$36,$0E,$00,$00,$00,$5B
- $5DF0 DEFB $00,$3A,$F5,$78,$0D,$03,$F2,$17
- $5DF8 DEFB $00,$F8,$22,$63,$6F,$64,$65,$31
- $5E00 DEFB $22,$AF,$32,$33,$32,$39,$36,$0E
- $5E08 DEFB $00,$00,$00,$5B,$00,$2C,$78,$0D
- $5E10 DEFB $03,$FC,$0A,$00,$F7,$31,$30,$0E
- $5E18 DEFB $00,$00,$0A,$00,$00,$0D,$78,$00
- $5E20 DEFB $00,$31,$03,$00,$80,$EC,$31,$30
- $5E28 DEFB $30,$30,$0E,$00,$00,$E8,$03,$00
- $5E30 DEFB $0D,$00,$00,$00,$00,$00,$00,$00
- $5E38 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E40 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E48 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E50 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E58 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E60 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E68 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E70 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E78 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E80 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E88 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E90 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5E98 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5EA0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5EA8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5EB0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5EB8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5EC0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5EC8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5ED0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5ED8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5EE0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5EE8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5EF0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5EF8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F00 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F08 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F10 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F18 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F20 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F28 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F30 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F38 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F40 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F48 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F50 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F58 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F60 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F68 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F70 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F78 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F80 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F88 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F90 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5F98 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FA0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FA8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FB0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FB8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FC0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FC8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FD0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FD8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FE0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FE8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FF0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $5FF8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6000 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6008 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6010 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6018 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6020 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6028 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6030 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6038 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6040 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6048 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6050 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6058 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6060 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6068 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6070 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $6078 DEFB $00,$00,$00,$00
+u$5B4F DEFB $1A,$00,$00,$00,$00,$00,$00,$00
+ $5B57 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5B5F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5B67 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5B6F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5B77 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5B7F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5B87 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5B8F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5B97 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5B9F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BA7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BAF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BB7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BBF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BC7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BCF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BD7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BDF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BE7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BEF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BF7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5BFF DEFB $00,$FF,$00,$00,$00,$FF,$00,$23
+ $5C07 DEFB $78,$78,$23,$05,$00,$00,$00,$14
+ $5C0F DEFB $00,$01,$00,$06,$00,$0B,$00,$01
+ $5C17 DEFB $00,$01,$00,$06,$00,$10,$00,$00
+ $5C1F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5C27 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5C2F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5C37 DEFB $3C,$40,$00,$FF,$CC,$01,$54,$FF
+ $5C3F DEFB $00,$00,$00,$E8,$03,$FF,$F2,$03
+ $5C47 DEFB $01,$38,$00,$00,$1E,$5E,$BC,$5D
+ $5C4F DEFB $B6,$5C,$B6,$5C,$CB,$5C,$10,$5E
+ $5C57 DEFB $CA,$5C,$25,$5E,$2A,$5E,$0F,$5E
+ $5C5F DEFB $5C,$00,$32,$5E,$43,$5E,$43,$5E
+ $5C67 DEFB $03,$92,$5C,$10,$02,$00,$00,$00
+ $5C6F DEFB $00,$00,$02,$78,$F0,$00,$1A,$00
+ $5C77 DEFB $00,$0C,$14,$00,$58,$FF,$00,$00
+ $5C7F DEFB $21,$00,$5B,$21,$17,$40,$50,$E0
+ $5C87 DEFB $50,$21,$06,$21,$17,$12,$38,$00
+ $5C8F DEFB $38,$00,$00,$00,$00,$00,$00,$00
+ $5C97 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5C9F DEFB $00,$00,$08,$01,$07,$00,$00,$00
+ $5CA7 DEFB $00,$00,$00,$81,$03,$03,$00,$00
+ $5CAF DEFB $00,$00,$00,$57,$FF,$FF,$FF,$F4
+ $5CB7 DEFB $09,$A8,$10,$4B,$F4,$09,$C4,$15
+ $5CBF DEFB $53,$81,$0F,$C4,$15,$52,$F4,$09
+ $5CC7 DEFB $C4,$15,$50,$80,$00,$0A,$1A,$00
+ $5CCF DEFB $EA,$14,$01,$20,$42,$41,$42,$59
+ $5CD7 DEFB $4C,$4F,$4E,$20,$4D,$41,$49,$4E
+ $5CDF DEFB $20,$42,$41,$53,$49,$43,$20,$14
+ $5CE7 DEFB $00,$0D,$00,$14,$92,$00,$FD,$32
+ $5CEF DEFB $34,$36,$39,$39,$0E,$00,$00,$7B
+ $5CF7 DEFB $60,$00,$3A,$E7,$30,$0E,$00,$00
+ $5CFF DEFB $00,$00,$00,$3A,$DA,$30,$0E,$00
+ $5D07 DEFB $00,$00,$00,$00,$3A,$D9,$30,$0E
+ $5D0F DEFB $00,$00,$00,$00,$00,$3A,$FB,$3A
+ $5D17 DEFB $F5,$23,$30,$0E,$00,$00,$00,$00
+ $5D1F DEFB $00,$3B,$AC,$30,$0E,$00,$00,$00
+ $5D27 DEFB $00,$00,$2C,$30,$0E,$00,$00,$00
+ $5D2F DEFB $00,$00,$3B,$D9,$30,$0E,$00,$00
+ $5D37 DEFB $00,$00,$00,$3B,$22,$20,$20,$20
+ $5D3F DEFB $20,$20,$20,$20,$20,$20,$20,$20
+ $5D47 DEFB $20,$20,$20,$20,$20,$20,$20,$20
+ $5D4F DEFB $20,$20,$20,$20,$20,$20,$20,$20
+ $5D57 DEFB $20,$20,$20,$20,$20,$20,$20,$20
+ $5D5F DEFB $20,$20,$20,$20,$20,$20,$20,$20
+ $5D67 DEFB $20,$20,$20,$20,$20,$20,$20,$20
+ $5D6F DEFB $20,$20,$20,$20,$20,$20,$20,$20
+ $5D77 DEFB $20,$20,$20,$20,$20,$22,$3B,$0D
+ $5D7F DEFB $00,$1E,$0E,$00,$F9,$C0,$32,$33
+ $5D87 DEFB $32,$39,$36,$0E,$00,$00,$00,$5B
+ $5D8F DEFB $00,$0D,$00,$28,$22,$00,$D9,$36
+ $5D97 DEFB $0E,$00,$00,$06,$00,$00,$3A,$DC
+ $5D9F DEFB $31,$0E,$00,$00,$01,$00,$00,$3A
+ $5DA7 DEFB $FB,$3A,$F9,$C0,$34,$37,$36,$39
+ $5DAF DEFB $36,$0E,$00,$00,$50,$BA,$00,$0D
+ $5DB7 DEFB $03,$E8,$3A,$00,$F1,$78,$3D,$28
+ $5DBF DEFB $28,$32,$35,$36,$0E,$00,$00,$00
+ $5DC7 DEFB $01,$00,$2A,$BE,$32,$33,$36,$35
+ $5DCF DEFB $34,$0E,$00,$00,$66,$5C,$00,$29
+ $5DD7 DEFB $2B,$BE,$32,$33,$36,$35,$33,$0E
+ $5DDF DEFB $00,$00,$65,$5C,$00,$29,$2D,$32
+ $5DE7 DEFB $33,$32,$39,$36,$0E,$00,$00,$00
+ $5DEF DEFB $5B,$00,$3A,$F5,$78,$0D,$03,$F2
+ $5DF7 DEFB $17,$00,$F8,$22,$63,$6F,$64,$65
+ $5DFF DEFB $31,$22,$AF,$32,$33,$32,$39,$36
+ $5E07 DEFB $0E,$00,$00,$00,$5B,$00,$2C,$78
+ $5E0F DEFB $0D,$03,$FC,$0A,$00,$F7,$31,$30
+ $5E17 DEFB $0E,$00,$00,$0A,$00,$00,$0D,$78
+ $5E1F DEFB $00,$00,$31,$03,$00,$80,$EC,$31
+ $5E27 DEFB $30,$30,$30,$0E,$00,$00,$E8,$03
+ $5E2F DEFB $00,$0D,$00,$00,$00,$00,$00,$00
+ $5E37 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E3F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E47 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E4F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E57 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E5F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E67 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E6F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E77 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E7F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E87 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E8F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E97 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5E9F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5EA7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5EAF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5EB7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5EBF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5EC7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5ECF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5ED7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5EDF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5EE7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5EEF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5EF7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5EFF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F07 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F0F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F17 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F1F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F27 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F2F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F37 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F3F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F47 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F4F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F57 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F5F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F67 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F6F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F77 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F7F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F87 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F8F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F97 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5F9F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FA7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FAF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FB7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FBF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FC7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FCF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FD7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FDF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FE7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FEF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FF7 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $5FFF DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $6007 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $600F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $6017 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $601F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $6027 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $602F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $6037 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $603F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $6047 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $604F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $6057 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $605F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $6067 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $606F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $6077 DEFB $00,$00,$00,$00,$00
 
 ; Graphics: Boat
 ;
@@ -3414,11 +3421,12 @@ c$BA50 LD HL,$5C6A   ; {#HTML(Set CAPS LOCK on, using bit 3 of *<a
 @label=GetUserInput
 c$BA5D LD A,($5C3B)  ; #HTML(#REGa=*<a rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>.)
- $BA60 BIT 5,A       ; {Jump to #R$BA5D until bit 5 of #REGa is set.
+ $BA60 BIT 5,A       ; {Jump back to #R$BA5D until a new key is pressed.
  $BA62 JR Z,$BA5D    ; }
- $BA64 RES 5,A       ; Reset bit 5 of #REGa.
- $BA66 LD ($5C3B),A  ; #HTML(Write #REGa back to *<a rel="noopener nofollow"
+ $BA64 RES 5,A       ; Reset the "new key has been pressed" flag in #REGa.
+ $BA66 LD ($5C3B),A  ; #HTML(Write it back to *<a rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>.)
+; Fetch the keypress.
  $BA69 LD A,($5C08)  ; #HTML(#REGa=*<a rel="noopener nofollow"
                      ; href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C08.html">LAST_K</a>.)
  $BA6C RET           ; Return.
@@ -3619,6 +3627,8 @@ c$BAE1 CALL $BA96    ; Call #R$BA96.
 ; Colour Location Image
 ;
 ; Used by the routine at #R$BB3B.
+;
+; IX Pointer to the room attribute data
 @label=Colour_LocationImage
 c$BB2F LD DE,$5800   ; #REGde=#N$5800 (attribute buffer location).
  $BB32 PUSH IX       ; {#REGhl=#REGix (using the stack).
@@ -3642,15 +3652,16 @@ c$BB3B CALL $BAE1    ; Call #R$BAE1.
 ;
 ; A Attribute byte value
 @label=ClearLocationImage
-c$BB42 LD BC,$0200   ; #REGbc=#N($0200,$04,$04).
- $BB45 LD HL,$5800   ; #REGhl=#N$5800 (attribute buffer location).
- $BB48 LD E,A        ; #REGe=#REGa.
+c$BB42 LD BC,$0200   ; Set a counter in #REGbc of #N$0200 bytes.
+ $BB45 LD HL,$5800   ; Load #N$5800 (the beginning of the attribute buffer)
+                     ; into #REGhl.
+ $BB48 LD E,A        ; Copy the attribute byte into the #REGe register.
 @label=ClearLocationImage_Loop
-*$BB49 LD (HL),E     ; Write #REGe to *#REGhl.
- $BB4A INC HL        ; Increment #REGhl by one.
- $BB4B DEC BC        ; Decrease #REGbc by one.
- $BB4C LD A,B        ; {Jump back to #R$BB49 until #REGbc is zero.
- $BB4D OR C          ;
+*$BB49 LD (HL),E     ; Write the byte to the attribute buffer.
+ $BB4A INC HL        ; Increment the attribute buffer pointer by one.
+ $BB4B DEC BC        ; Decrease the location image byte counter by one.
+ $BB4C LD A,B        ; {Jump back to #R$BB49 until the whole location image has been
+ $BB4D OR C          ; covered.
  $BB4E JR NZ,$BB49   ; }
  $BB50 RET           ; Return.
 
@@ -3705,7 +3716,7 @@ c$BB59 LD A,($BD32)  ; #REGa=*#R$BD32.
  $BB7E CALL $BA5D    ; Call #R$BA5D.
  $BB81 LD IX,$BBF0   ; #REGix=#R$BBF0.
  $BB85 LD DE,$0144   ; #REGde=#N($0144,$04,$04).
- $BB88 LD A,$FF      ; #REGa=#N$FF.
+ $BB88 LD A,$FF      ; Set #REGa to #N$FF which indicates this is a data block.
  $BB8A CALL $04C2    ; #HTML(Call <a rel="noopener nofollow"
                      ; href="https://skoolkid.github.io/rom/asm/04C2.html">SA_BYTES</a>.)
 ; Print "#STR$BE9A,$08($b==$FF)".
@@ -3723,10 +3734,10 @@ c$BB59 LD A,($BD32)  ; #REGa=*#R$BD32.
 @label=LoadTape
 c$BB94 LD HL,$BE57   ; #REGhl=#R$BE57.
  $BB97 CALL $BAB1    ; Call #R$BAB1.
- $BB9A LD IX,$BBF0   ; #REGix=#R$BBF0.
- $BB9E LD DE,$0144   ; #REGde=#N($0144,$04,$04).
- $BBA1 LD A,$FF      ; #REGa=#N$FF.
- $BBA3 SCF           ; Set the carry flag.
+ $BB9A LD IX,$BBF0   ; Load the starting address into #REGix at #R$BBF0.
+ $BB9E LD DE,$0144   ; Set the block length in #REGde to #N$0144 bytes.
+ $BBA1 LD A,$FF      ; Set #REGa to #N$FF which indicates this is a data block.
+ $BBA3 SCF           ; Set the carry flag to indicate this is loading.
  $BBA4 CALL $0556    ; #HTML(Call <a rel="noopener nofollow"
                      ; href="https://skoolkid.github.io/rom/asm/0556.html">LD_BYTES</a>.)
  $BBA7 JR C,$BBB0    ; Jump to #R$BBB0 if the carry flag is not set.
@@ -3757,15 +3768,16 @@ c$BB94 LD HL,$BE57   ; #REGhl=#R$BE57.
  $BBD0 CALL $C21E    ; Call #R$C21E.
  $BBD3 RET           ; Return.
 
-; Routine at BBD4
+; Print Input Prompt
 ;
 ; Used by the routine at #R$C00A.
+@label=PrintInputPrompt
 c$BBD4 LD HL,$5080   ; #REGhl=#N$5080 (screen buffer location).
- $BBD7 LD DE,$0100   ; #REGde=#N($0100,$04,$04).
+ $BBD7 LD DE,$0100   ; Set the increment in #REGde for the next screen line.
  $BBDA LD B,$08      ; #REGb=#N$08.
  $BBDC XOR A         ; #REGa=#N$00.
 *$BBDD OR (HL)       ; Set the bits from *#REGhl.
- $BBDE ADD HL,DE     ; #REGhl+=#REGde.
+ $BBDE ADD HL,DE     ; Move down one line.
  $BBDF DJNZ $BBDD    ; Decrease counter by one and loop back to #R$BBDD until
                      ; counter is zero.
  $BBE1 OR A          ; {Jump to #R$BBE9 if #REGa is zero.
@@ -3774,22 +3786,23 @@ c$BBD4 LD HL,$5080   ; #REGhl=#N$5080 (screen buffer location).
  $BBE4 LD A,$0D      ; #REGa=#N$0D.
  $BBE6 CALL $BAC3    ; Call #R$BAC3.
 ; Print "#STR$BD85,$08($b==$FF)".
+@label=PrintPrompt
 *$BBE9 LD HL,$BD85   ; #REGhl=#R$BD85.
  $BBEC CALL $BAA4    ; Call #R$BAA4.
  $BBEF RET           ; Return.
 
 ; Table: Object Locations
 @label=Table_ObjectLocations
-g$BBF0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BBF8 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BC00 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BC08 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BC10 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BC18 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BC20 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BC28 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BC30 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BC38 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+g$BBF0 DEFB $03,$04,$22,$00,$07,$00,$00,$0E
+ $BBF8 DEFB $62,$6A,$00,$0B,$00,$00,$27,$51
+ $BC00 DEFB $50,$00,$42,$47,$00,$43,$3D,$31
+ $BC08 DEFB $1F,$00,$00,$2F,$00,$62,$67,$69
+ $BC10 DEFB $1C,$6B,$51,$00,$00,$00,$00,$51
+ $BC18 DEFB $00,$30,$32,$3F,$00,$00,$61,$00
+ $BC20 DEFB $62,$00,$6A,$15,$00,$31,$00,$4E
+ $BC28 DEFB $4F,$2E,$00,$00,$3E,$3F,$52,$66
+ $BC30 DEFB $68,$67,$5F,$02,$30,$14,$11,$12
+ $BC38 DEFB $64,$51,$00,$06,$06,$6B,$6C,$00
  $BC40 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BC48 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BC50 DEFB $00,$00,$00,$00
@@ -3800,14 +3813,16 @@ b$BC54 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BC64 DEFB $00,$00
  $BC66 DEFB $00
  $BC67 DEFB $00
- $BC68 DEFB $00,$00
+ $BC68 DEFB $00
+ $BC69 DEFB $00
  $BC6A DEFB $00
  $BC6B DEFB $00
- $BC6C DEFB $00,$00
+ $BC6C DEFB $00
+ $BC6D DEFB $00
  $BC6E DEFB $00
- $BC6F DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $BC6F DEFB $00,$29,$00,$00,$00,$00,$00,$00
  $BC77 DEFB $00
- $BC78 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $BC78 DEFB $02,$02,$02,$02,$02,$02,$02,$02
  $BC80 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BC88 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BC90 DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -3822,39 +3837,72 @@ b$BC54 DEFB $00,$00,$00,$00,$00,$00,$00,$00
 
 ; Room Number
 @label=RoomNumber
-g$BCCB DEFB $00
+g$BCCB DEFB $03
 
 ; Data block at BCCC
-b$BCCC DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BCD4 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BCDC DEFB $00,$00,$00,$00,$00,$00,$00,$00
+b$BCCC DEFB $33,$E9,$37,$E9,$3B,$E9,$3F,$E9
+ $BCD4 DEFB $43,$E9,$47,$E9,$4D,$E9,$53,$E9
+ $BCDC DEFB $5B,$E9,$00,$00,$00,$00,$00,$00
  $BCE4 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BCEC DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BCF4 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BCFC DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BD04 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BD0C DEFB $00,$00
- $BD0E DEFB $00,$00
- $BD10 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BD18 DEFB $00,$00
- $BD1A DEFB $00,$00
- $BD1C DEFB $00,$00,$00,$00
- $BD20 DEFB $00,$00
- $BD22 DEFW $0000
- $BD24 DEFB $00,$00
- $BD26 DEFB $00,$00
+ $BD0C DEFB $1D,$E6
+
+; Game status buffer entry at BD0E
+g$BD0E DEFW $FF86
+
+; Pointer: Room Map Table
+@label=Pointer_RoomMap
+g$BD10 DEFW $EB10
+
+; Game status buffer entry at BD12
+g$BD12 DEFW $D34E
+
+; Data block at BD14
+b$BD14 DEFB $5D,$E9,$A8,$FF
+
+; Pointer: Room Description Table
+@label=Pointer_RoomDescriptions
+g$BD18 DEFW $D3EC
+
+; Game status buffer entry at BD1A
+g$BD1A DEFW $E96A
+
+; Game status buffer entry at BD1C
+g$BD1C DEFW $D4C6
+
+; Game status buffer entry at BD1E
+g$BD1E DEFW $E83E
+
+; Data block at BD20
+b$BD20 DEFB $3A,$FF
+
+; Game status buffer entry at BD22
+g$BD22 DEFW $ED9E
+ $BD24 DEFB $96,$FF
+
+; Game status buffer entry at BD26
+g$BD26 DEFW $E90D
 
 ; Number Of Objects?
 @label=NumberObjects
-g$BD28 DEFW $0000
+g$BD28 DEFW $004F
 
-; Data block at BD2A
-b$BD2A DEFB $00,$00
- $BD2C DEFB $00,$00,$00,$00
- $BD30 DEFB $00,$00
- $BD32 DEFB $00,$00
+; Game status buffer entry at BD2A
+g$BD2A DEFW $0030
+
+; Game status buffer entry at BD2C
+g$BD2C DEFW $0026
+
+; Data block at BD2E
+b$BD2E DEFB $0D,$00
+ $BD30 DEFB $09,$00
+ $BD32 DEFB $13,$00
 
 ; Command Buffer
+@label=CommandBuffer
 g$BD34 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BD3C DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BD44 DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -3865,8 +3913,11 @@ g$BD34 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BD65 DEFB $00
 
 ; Game status buffer entry at BD66
-g$BD66 DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
- $BD6E DEFB $FF,$FF
+g$BD66 DEFB $FF
+
+; Game status buffer entry at BD67
+g$BD67 DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+ $BD6F DEFB $FF
 
 ; Line Number
 @label=LineNumber
@@ -4073,19 +4124,27 @@ c$BFEE LD HL,$BEEA   ;
  $C006 CALL $BAB1    ;
  $C009 RET           ;
 
-; Routine at C00A
+; Handler: User Input
 ;
 ; Used by the routines at #R$C058 and #R$EDC4.
+;
+; .
+;
+; Reset the screen position to defaults.
+@label=Handler_UserInput
 c$C00A CALL $BA7F    ; Call #R$BA7F.
  $C00D LD HL,$BD34   ; #REGhl=#R$BD34.
- $C010 LD A,$20      ; #REGa=#N$20.
- $C012 LD B,$32      ; #REGb=#N$32.
+ $C010 LD A,$20      ; Store the ASCII code for "SPACE" ("#CHR$20") into #REGa.
+ $C012 LD B,$32      ; Set a counter in #REGb for the size of the command buffer (#N$32
+                     ; bytes).
+@label=EmptyCommandBuffer_Loop
 *$C014 LD (HL),A     ; Write #REGa to *#REGhl.
  $C015 INC HL        ; Increment #REGhl by one.
- $C016 DJNZ $C014    ; Decrease counter by one and loop back to #R$C014 until
-                     ; counter is zero.
+ $C016 DJNZ $C014    ; Decrease the command buffer counter by one and loop back to #R$C014
+                     ; until the whole buffer is cleared.
  $C018 CALL $BBD4    ; Call #R$BBD4.
  $C01B LD HL,$BD34   ; #REGhl=#R$BD34.
+@label=Handler_UserInput_Loop
 *$C01E CALL $BA5D    ; Call #R$BA5D.
  $C021 CP $0C        ; {Jump to #R$C041 if #REGa is equal to #N$0C.
  $C023 JR Z,$C041    ; }
@@ -4119,9 +4178,10 @@ c$C00A CALL $BA7F    ; Call #R$BA7F.
  $C054 LD (HL),$20   ; Write #N$20 to *#REGhl.
  $C056 JR $C01E      ; Jump to #R$C01E.
 
-; Routine at C058
+; Parser
 ;
 ; Used by the routine at #R$C00A.
+@label=Parser
 c$C058 LD (HL),A     ; Write #REGa to *#REGhl.
  $C059 CALL $BA96    ; Call #R$BA96.
  $C05C CALL $BAC3    ; Call #R$BAC3.
@@ -4271,6 +4331,7 @@ c$C058 LD (HL),A     ; Write #REGa to *#REGhl.
  $C15F JR $C156      ; Jump to #R$C156.
 *$C161 LD A,$22      ; {#HTML(Print a double quote character:
  $C163 CALL $BAC3    ; "<code>#CHR$22</code>".)}
+; Print "#STR$BF29,$08($b==$FF)".
  $C166 LD HL,$BF29   ; #REGhl=#R$BF29.
  $C169 CALL $BAB1    ; Call #R$BAB1.
  $C16C JR $C17A      ; Jump to #R$C17A.
@@ -4434,12 +4495,12 @@ c$C21E LD A,($BD2E)  ;
  $C268 PUSH DE       ;
  $C269 JP (HL)       ;
 
-; Handler: Room Description
+; Handler: Display Room Exits
 ;
 ; Used by the routine at #R$C21E.
 ; .
-; Handles displaying the text description of the current room.
-@label=Handler_RoomDescription
+; Handles displaying the exits available for the current room.
+@label=Handler_RoomExits
 c$C26A CALL $BA6D    ; Call #R$BA6D.
  $C26D LD A,$18      ; {Set up the printing position.
  $C26F CALL $C315    ; }
@@ -4453,12 +4514,12 @@ c$C26A CALL $BA6D    ; Call #R$BA6D.
                      ; exits.
  $C27B XOR A         ; Set #REGa to #N$00 which is used just for the
                      ; comparison.
-@label=RoomDescription_ExitCount_Loop
+@label=RoomExitsCount_Loop
 *$C27C CP (HL)       ; Does this room have an exit?
  $C27D JR Z,$C280    ; Jump to #R$C280 if this room doesn't have an exit for this
                      ; position.
  $C27F INC C         ; Increment the valid exits count by one.
-@label=RoomDescription_ExitCount_Skip
+@label=RoomExitsCount_Skip
 *$C280 INC HL        ; Move to the next byte of room data.
  $C281 DJNZ $C27C    ; Decrease the exits counter by one and loop back to #R$C27C until
                      ; all the exits have been checked.
@@ -4481,11 +4542,11 @@ c$C26A CALL $BA6D    ; Call #R$BA6D.
  $C298 JR $C29F      ; Jump to #R$C29F.
 ; Move both the pointers to the next item of data (increment by two for
 ; the direction name table pointer as it contains addresses).
-@label=RoomDescription_CheckForExit_Loop
+@label=RoomCheckForExit_Loop
 *$C29A INC HL        ; Move to the next byte of room data.
  $C29B INC IX        ; {Increment the direction name table pointer by two.
  $C29D INC IX        ; }
-@label=RoomDescription_CheckForExit
+@label=RoomCheckForExit
 *$C29F CP (HL)       ; {Jump to #R$C29A if the current exit isn't a valid exit.
  $C2A0 JR Z,$C29A    ; }
  $C2A2 LD L,(IX+$00) ; {Get the direction name from the direction name table.
@@ -4495,7 +4556,7 @@ c$C26A CALL $BA6D    ; Call #R$BA6D.
 ; More than one exit was found:
 ; .
 ; Print "#STR$BDD9,$08($b==$FF)".
-@label=RoomDescription_MultipleExits
+@label=RoomMultipleExits
 *$C2AD LD HL,$BDD9   ; #REGhl=#R$BDD9.
  $C2B0 CALL $BAB1    ; Call #R$BAB1.
  $C2B3 LD H,D        ; {Retrieve the room data pointer and load it into #REGhl.
@@ -4506,15 +4567,15 @@ c$C26A CALL $BA6D    ; Call #R$BA6D.
  $C2BA JR $C2C2      ; Jump to #R$C2C2.
 ; So as not to corrupt the pointer to the room data (as #REGhl is also
 ; used when printing), it's temporarily held in #REGde.
-@label=RoomDescription_Initialise
+@label=RoomExits_Initialise
 *$C2BC EX DE,HL      ; Switch back the #REGde and #REGhl registers.
 ; Move both the pointers to the next item of data (increment by two for
 ; the direction name table pointer as it contains addresses).
-@label=RoomDescription_CheckForExits_Loop
+@label=RoomCheckForExits_Loop
 *$C2BD INC HL        ; Move to the next byte of room data.
  $C2BE INC IX        ; {Increment the direction name table pointer by two.
  $C2C0 INC IX        ; }
-@label=RoomDescription_CheckForExits
+@label=RoomCheckForExits
 *$C2C2 CP (HL)       ; {Jump to #R$C2BD if the current exit isn't a valid exit.
  $C2C3 JR Z,$C2BD    ; }
  $C2C5 EX DE,HL      ; Temporarily store the room data pointer in #REGde.
@@ -4533,17 +4594,17 @@ c$C26A CALL $BA6D    ; Call #R$BA6D.
  $C2DC XOR A         ; Reset #REGa back to #N$00 for the comparison.
  $C2DD JR $C2BC      ; Jump back to #R$C2BC to continue processing.
 ; Print "#STR$BDD5,$08($b==$FF)".
-@label=RoomDescription_PrintAmpersand
+@label=RoomExits_PrintAmpersand
 *$C2DF LD HL,$BDD5   ; #REGhl=#R$BDD5.
  $C2E2 CALL $BAA4    ; Call #R$BAA4.
  $C2E5 XOR A         ; Reset #REGa back to #N$00 for the comparison.
  $C2E6 JR $C2BC      ; Jump to #R$C2BC to continue processing.
 ; Print "#STR$BF29,$08($b==$FF)".
-@label=RoomDescription_PrintFullStop
+@label=RoomExits_PrintFullStop
 *$C2E8 LD HL,$BF29   ; #REGhl=#R$BF29.
  $C2EB CALL $BAB1    ; Call #R$BAB1.
 ; Are there any objects here?
-@label=RoomDescription_YouCanSee
+@label=RoomExits_YouCanSee
 *$C2EE LD A,($BCCB)  ; #REGa=*#R$BCCB.
  $C2F1 CALL $C439    ; Call #R$C439.
  $C2F4 RET NZ        ; Return if no objects were found at this location.
@@ -4622,83 +4683,84 @@ c$C32A INC BC        ; Increment #REGbc by one.
 ;
 ; Used by the routines at #R$C32A, #R$C3FA, #R$EE00, #R$EF54, #R$F03A, #R$F155
 ; and #R$F90A.
-c$C35F PUSH HL       ;
- $C360 PUSH DE       ;
- $C361 LD E,A        ;
- $C362 LD D,$00      ;
- $C364 BIT 7,E       ;
- $C366 JR NZ,$C36D   ;
- $C368 LD HL,$BBF0   ;
- $C36B JR $C372      ;
-*$C36D RES 7,E       ;
- $C36F LD HL,$BC78   ;
-*$C372 ADD HL,DE     ;
- $C373 LD A,($BCCB)  ;
+c$C35F PUSH HL       ; {Stash #REGhl and #REGde on the stack.
+ $C360 PUSH DE       ; }
+ $C361 LD E,A        ; #REGe=#REGa.
+ $C362 LD D,$00      ; #REGd=#N$00.
+ $C364 BIT 7,E       ; Test bit 7 of #REGe.
+ $C366 JR NZ,$C36D   ; Jump to #R$C36D if ?? is not equal to #N$00.
+ $C368 LD HL,$BBF0   ; #REGhl=#R$BBF0.
+ $C36B JR $C372      ; Jump to #R$C372.
+*$C36D RES 7,E       ; Reset bit 7 of #REGe.
+ $C36F LD HL,$BC78   ; #REGhl=#R$BC78.
+*$C372 ADD HL,DE     ; #REGhl+=#REGde.
+ $C373 LD A,($BCCB)  ; {Jump to #R$C37C if *#R$BCCB is equal to *#REGhl.
  $C376 CP (HL)       ;
- $C377 JR Z,$C37C    ;
- $C379 LD A,$01      ;
- $C37B CP (HL)       ;
-*$C37C POP DE        ;
- $C37D POP HL        ;
- $C37E RET           ;
+ $C377 JR Z,$C37C    ; }
+ $C379 LD A,$01      ; {Compare #N$01 with *#REGhl.
+ $C37B CP (HL)       ; }
+*$C37C POP DE        ; {Restore #REGde and #REGhl from the stack.
+ $C37D POP HL        ; }
+ $C37E RET           ; Return.
 
 ; Routine at C37F
 ;
 ; Used by the routines at #R$F155 and #R$F90A.
-c$C37F EX DE,HL      ;
- $C380 JR $C383      ;
-*$C382 INC DE        ;
-*$C383 LD HL,$BD67   ;
- $C386 JR $C38A      ;
-*$C388 INC HL        ;
- $C389 INC DE        ;
-*$C38A LD A,(DE)     ;
- $C38B CP (HL)       ;
- $C38C JR Z,$C388    ;
- $C38E CP $FE        ;
- $C390 JR NZ,$C396   ;
- $C392 LD A,(HL)     ;
- $C393 CP $FF        ;
- $C395 RET           ;
-*$C396 CP $FD        ;
- $C398 JR NZ,$C3A0   ;
- $C39A LD A,(HL)     ;
+c$C37F EX DE,HL      ; Exchange the #REGde and #REGhl registers.
+ $C380 JR $C383      ; Jump to #R$C383.
+*$C382 INC DE        ; Increment #REGde by one.
+*$C383 LD HL,$BD67   ; #REGhl=#R$BD67.
+ $C386 JR $C38A      ; Jump to #R$C38A.
+*$C388 INC HL        ; Increment #REGhl by one.
+ $C389 INC DE        ; Increment #REGde by one.
+*$C38A LD A,(DE)     ; #REGa=*#REGde.
+ $C38B CP (HL)       ; {Jump to #R$C388 if #REGa is equal to *#REGhl.
+ $C38C JR Z,$C388    ; }
+ $C38E CP $FE        ; {Jump to #R$C396 if #REGa is not equal to #N$FE.
+ $C390 JR NZ,$C396   ; }
+ $C392 LD A,(HL)     ; {Compare *#REGhl with #N$FF.
+ $C393 CP $FF        ; }
+ $C395 RET           ; Return.
+*$C396 CP $FD        ; {Jump to #R$C3A0 if #REGa is not equal to #N$FD.
+ $C398 JR NZ,$C3A0   ; }
+ $C39A LD A,(HL)     ; {Jump to #R$C382 if *#REGhl is not equal to #N$FF.
  $C39B CP $FF        ;
- $C39D JR NZ,$C382   ;
- $C39F RET           ;
-*$C3A0 INC DE        ;
- $C3A1 LD A,(DE)     ;
- $C3A2 CP $FE        ;
- $C3A4 JR Z,$C3AC    ;
- $C3A6 CP $FD        ;
- $C3A8 JR NZ,$C3A0   ;
- $C3AA JR $C382      ;
-*$C3AC OR A          ;
- $C3AD RET           ;
+ $C39D JR NZ,$C382   ; }
+ $C39F RET           ; Return.
+*$C3A0 INC DE        ; Increment #REGde by one.
+ $C3A1 LD A,(DE)     ; #REGa=*#REGde.
+ $C3A2 CP $FE        ; {Jump to #R$C3AC if #REGa is equal to #N$FE.
+ $C3A4 JR Z,$C3AC    ; }
+ $C3A6 CP $FD        ; {Jump to #R$C3A0 if #REGa is not equal to #N$FD.
+ $C3A8 JR NZ,$C3A0   ; }
+ $C3AA JR $C382      ; Jump to #R$C382.
+*$C3AC OR A          ; Set the bits from #REGa.
+ $C3AD RET           ; Return.
 
 ; Routine at C3AE
 ;
 ; Used by the routines at #R$C47B, #R$C4B7 and #R$F90A.
-c$C3AE LD HL,$BD66   ;
- $C3B1 LD B,$0A      ;
- $C3B3 LD E,$00      ;
-*$C3B5 LD A,(HL)     ;
- $C3B6 CP $FF        ;
- $C3B8 JR Z,$C3CD    ;
- $C3BA PUSH HL       ;
- $C3BB PUSH BC       ;
- $C3BC LD HL,($BD1E) ;
- $C3BF LD BC,($BD2A) ;
- $C3C3 CPIR          ;
- $C3C5 POP BC        ;
- $C3C6 POP HL        ;
- $C3C7 JR NZ,$C3CA   ;
- $C3C9 INC E         ;
-*$C3CA INC HL        ;
- $C3CB DJNZ $C3B5    ;
-*$C3CD XOR A         ;
- $C3CE OR E          ;
- $C3CF RET           ;
+c$C3AE LD HL,$BD66   ; #REGhl=#R$BD66.
+ $C3B1 LD B,$0A      ; #REGb=#N$0A.
+ $C3B3 LD E,$00      ; #REGe=#N$00.
+*$C3B5 LD A,(HL)     ; #REGa=*#REGhl.
+ $C3B6 CP $FF        ; Compare #REGa with #N$FF.
+ $C3B8 JR Z,$C3CD    ; Jump to #R$C3CD if #REGa is equal to #N$FF.
+ $C3BA PUSH HL       ; {Stash #REGhl and #REGbc on the stack.
+ $C3BB PUSH BC       ; }
+ $C3BC LD HL,($BD1E) ; #REGhl=*#R$BD1E.
+ $C3BF LD BC,($BD2A) ; #REGbc=*#R$BD2A.
+ $C3C3 CPIR          ; CPIR.
+ $C3C5 POP BC        ; {Restore #REGbc and #REGhl from the stack.
+ $C3C6 POP HL        ; }
+ $C3C7 JR NZ,$C3CA   ; Jump to #R$C3CA if #REGa is not equal to #N$FF.
+ $C3C9 INC E         ; Increment #REGe by one.
+*$C3CA INC HL        ; Increment #REGhl by one.
+ $C3CB DJNZ $C3B5    ; Decrease counter by one and loop back to #R$C3B5 until
+                     ; counter is zero.
+*$C3CD XOR A         ; #REGa=#N$00.
+ $C3CE OR E          ; Set the bits from #REGe.
+ $C3CF RET           ; Return.
 
 ; Routine at C3D0
 ;
@@ -4733,64 +4795,64 @@ c$C3EA LD B,A        ; #REGb=#REGa.
 ; Routine at C3F1
 ;
 ; Used by the routines at #R$C520 and #R$F90A.
-c$C3F1 LD B,A        ;
- $C3F2 LD A,($BCCB)  ;
- $C3F5 LD C,A        ;
- $C3F6 CALL $C412    ;
- $C3F9 RET           ;
+c$C3F1 LD B,A        ; #REGb=#REGa.
+ $C3F2 LD A,($BCCB)  ; {#REGc=*#R$BCCB.
+ $C3F5 LD C,A        ; }
+ $C3F6 CALL $C412    ; Call #R$C412.
+ $C3F9 RET           ; Return.
 
 ; Routine at C3FA
 ;
 ; Used by the routine at #R$F155.
-c$C3FA LD B,A        ;
- $C3FB LD C,$FF      ;
- $C3FD CALL $C412    ;
- $C400 RET           ;
+c$C3FA LD B,A        ; #REGb=#REGa.
+ $C3FB LD C,$FF      ; #REGc=#N$FF.
+ $C3FD CALL $C412    ; Call #R$C412.
+ $C400 RET           ; Return.
 ; This entry point is used by the routines at #R$EE00, #R$EF54, #R$F03A,
 ; #R$F155 and #R$F90A.
-*$C401 JR $C404      ;
-*$C403 INC HL        ;
-*$C404 LD A,(HL)     ;
+*$C401 JR $C404      ; Jump to #R$C404.
+*$C403 INC HL        ; Increment #REGhl by one.
+*$C404 LD A,(HL)     ; {Jump to #R$C410 if *#REGhl is equal to #N$FF.
  $C405 CP $FF        ;
- $C407 JR Z,$C410    ;
- $C409 CALL $C35F    ;
- $C40C JR NZ,$C403   ;
- $C40E LD A,(HL)     ;
- $C40F RET           ;
-*$C410 AND A         ;
- $C411 RET           ;
+ $C407 JR Z,$C410    ; }
+ $C409 CALL $C35F    ; Call #R$C35F.
+ $C40C JR NZ,$C403   ; Jump to #R$C403 if the zero flag is not set.
+ $C40E LD A,(HL)     ; #REGa=*#REGhl.
+ $C40F RET           ; Return.
+*$C410 AND A         ; Set flags.
+ $C411 RET           ; Return.
 
 ; Routine at C412
 ;
 ; Used by the routines at #R$C3EA, #R$C3F1, #R$C3FA, #R$C426, #R$EF54 and
 ; #R$F155.
-c$C412 BIT 7,B       ;
- $C414 JR Z,$C41D    ;
- $C416 RES 7,B       ;
- $C418 LD HL,$BC78   ;
- $C41B JR $C420      ;
-*$C41D LD HL,$BBF0   ;
-*$C420 LD D,$00      ;
- $C422 LD E,B        ;
- $C423 ADD HL,DE     ;
- $C424 LD (HL),C     ;
- $C425 RET           ;
+c$C412 BIT 7,B       ; Test bit 7 of #REGb.
+ $C414 JR Z,$C41D    ; Jump to #R$C41D if #REGa is equal to #REGa.
+ $C416 RES 7,B       ; Reset bit 7 of #REGb.
+ $C418 LD HL,$BC78   ; #REGhl=#R$BC78.
+ $C41B JR $C420      ; Jump to #R$C420.
+*$C41D LD HL,$BBF0   ; #REGhl=#R$BBF0.
+*$C420 LD D,$00      ; #REGd=#N$00.
+ $C422 LD E,B        ; #REGe=#REGb.
+ $C423 ADD HL,DE     ; #REGhl+=#REGde.
+ $C424 LD (HL),C     ; Write #REGc to *#REGhl.
+ $C425 RET           ; Return.
 
 ; Routine at C426
 ;
 ; Used by the routines at #R$F155, #R$F8D9 and #R$F90A.
-c$C426 LD A,B        ;
- $C427 CALL $C3D0    ;
- $C42A PUSH BC       ;
- $C42B PUSH AF       ;
- $C42C LD C,$00      ;
- $C42E CALL $C412    ;
- $C431 POP AF        ;
- $C432 POP BC        ;
- $C433 LD B,C        ;
- $C434 LD C,A        ;
- $C435 CALL $C412    ;
- $C438 RET           ;
+c$C426 LD A,B        ; #REGa=#REGb.
+ $C427 CALL $C3D0    ; Call #R$C3D0.
+ $C42A PUSH BC       ; {Stash #REGbc and #REGaf on the stack.
+ $C42B PUSH AF       ; }
+ $C42C LD C,$00      ; #REGc=#N$00.
+ $C42E CALL $C412    ; Call #R$C412.
+ $C431 POP AF        ; {Restore #REGaf and #REGbc from the stack.
+ $C432 POP BC        ; }
+ $C433 LD B,C        ; #REGb=#REGc.
+ $C434 LD C,A        ; #REGc=#REGa.
+ $C435 CALL $C412    ; Call #R$C412.
+ $C438 RET           ; Return.
 
 ; Check Room Objects
 ;
@@ -5758,163 +5820,324 @@ w$D34E DEFW $C595    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
  $D3E6 DEFW $CADE    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
  $D3E8 DEFW $CADE    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
  $D3EA DEFW $0000
- $D3EC DEFW $0000
- $D3EE DEFW $0000
- $D3F0 DEFW $CB06    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3F2 DEFW $CB2A    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3F4 DEFW $CB66    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3F6 DEFW $CB78    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3F8 DEFW $CB78    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3FA DEFW $CB78    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3FC DEFW $CB8E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3FE DEFW $CB8E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D400 DEFW $CB8E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D402 DEFW $CBC1    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D404 DEFW $CBC1    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D406 DEFW $CBC1    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D408 DEFW $CBC1    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D40A DEFW $CC14    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D40C DEFW $CC14    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D40E DEFW $CC27    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D410 DEFW $CC4C    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D412 DEFW $CC8F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D414 DEFW $CCBD    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D416 DEFW $CCF1    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D418 DEFW $CD18    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D41A DEFW $CD18    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D41C DEFW $CD18    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D41E DEFW $CD18    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D420 DEFW $CD18    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D422 DEFW $CD18    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D424 DEFW $CD18    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D426 DEFW $CD18    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D428 DEFW $CD18    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D42A DEFW $CD53    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D42C DEFW $CD6B    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D42E DEFW $CD6B    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D430 DEFW $CD7E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D432 DEFW $CDBF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D434 DEFW $CDBF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D436 DEFW $CDCF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D438 DEFW $CDCF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D43A DEFW $CE10    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D43C DEFW $CE21    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D43E DEFW $CE21    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D440 DEFW $CE21    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D442 DEFW $CE31    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D444 DEFW $CE54    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D446 DEFW $CE64    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D448 DEFW $CE81    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D44A DEFW $CEB6    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D44C DEFW $CECA    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D44E DEFW $CEFE    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D450 DEFW $CF0E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D452 DEFW $CF0E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D454 DEFW $CF0E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D456 DEFW $CF0E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D458 DEFW $CF0E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D45A DEFW $CF0E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D45C DEFW $CF0E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D45E DEFW $CF0E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D460 DEFW $CF0E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D462 DEFW $CF0E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D464 DEFW $CF42    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D466 DEFW $CF65    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D468 DEFW $CF76    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D46A DEFW $CF91    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D46C DEFW $CFC4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D46E DEFW $CFC4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D470 DEFW $CFC4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D472 DEFW $CFD0    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D474 DEFW $CFFB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D476 DEFW $CFFB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D478 DEFW $CFFB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D47A DEFW $CFFB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D47C DEFW $CFFB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D47E DEFW $CFFB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D480 DEFW $CFFB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D482 DEFW $CFFB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D484 DEFW $CFFB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D486 DEFW $CFFB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D488 DEFW $D02E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D48A DEFW $D052    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D48C DEFW $D07D    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D48E DEFW $D08F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D490 DEFW $D0B6    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D492 DEFW $CFC4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D494 DEFW $CFC4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D496 DEFW $D0C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D498 DEFW $D0C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D49A DEFW $D0C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D49C DEFW $D0C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D49E DEFW $D0C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4A0 DEFW $D0C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4A2 DEFW $D0C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4A4 DEFW $D0C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4A6 DEFW $D0C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4A8 DEFW $D0C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4AA DEFW $CFC4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4AC DEFW $D0DF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4AE DEFW $D0F3    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4B0 DEFW $D107    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4B2 DEFW $CFC4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4B4 DEFW $D124    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4B6 DEFW $CFC4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4B8 DEFW $D155    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4BA DEFW $D163    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4BC DEFW $D173    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4BE DEFW $CFC4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4C0 DEFW $D191    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4C2 DEFW $CB66    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4C4 DEFW $D1A7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4C6 DEFW $D1B3    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4C8 DEFW $D1BB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4CA DEFW $D1C3    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4CC DEFW $D1CD    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4CE DEFW $D1D3    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4D0 DEFW $D1DC    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4D2 DEFW $D1E4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4D4 DEFW $D1EE    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4D6 DEFW $D1F4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4D8 DEFW $D200    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4DA DEFW $D20E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4DC DEFW $D214    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4DE DEFW $D21B    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4E0 DEFW $D225    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4E2 DEFW $D22D    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4E4 DEFW $D234    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4E6 DEFW $D23F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4E8 DEFW $D249    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4EA DEFW $D24F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4EC DEFW $D257    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4EE DEFW $D25F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4F0 DEFW $D268    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4F2 DEFW $D26F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4F4 DEFW $D278    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4F6 DEFW $D286    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4F8 DEFW $D28F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4FA DEFW $D298    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4FC DEFW $D29F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D4FE DEFW $D2AB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D500 DEFW $D2B2    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D502 DEFW $D2BC    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D504 DEFW $D2C7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D506 DEFW $D2CE    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D508 DEFW $D2D7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D50A DEFW $D2DF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D50C DEFW $D2E8    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D50E DEFW $D2F1    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D510 DEFW $D2FB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D512 DEFW $D302    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D514 DEFW $D30D    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D516 DEFW $D314    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D518 DEFW $D31A    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D51A DEFW $D321    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D51C DEFW $D328    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D51E DEFW $D32F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D520 DEFW $D336    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D522 DEFW $D33C    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D524 DEFW $D344    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
+
+; Table: Room Descriptions
+@label=Table_RoomDescriptions
+g$D3EC DEFW $0000    ; N/A.
+ $D3EE DEFW $0000    ; N/A.
+ $D3F0 DEFW $CB06    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D3F2 DEFW $CB2A    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D3F4 DEFW $CB66    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D3F6 DEFW $CB78    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D3F8 DEFW $CB78    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D3FA DEFW $CB78    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D3FC DEFW $CB8E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D3FE DEFW $CB8E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D400 DEFW $CB8E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D402 DEFW $CBC1    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D404 DEFW $CBC1    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D406 DEFW $CBC1    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D408 DEFW $CBC1    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D40A DEFW $CC14    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D40C DEFW $CC14    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D40E DEFW $CC27    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D410 DEFW $CC4C    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D412 DEFW $CC8F    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D414 DEFW $CCBD    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D416 DEFW $CCF1    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D418 DEFW $CD18    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D41A DEFW $CD18    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D41C DEFW $CD18    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D41E DEFW $CD18    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D420 DEFW $CD18    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D422 DEFW $CD18    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D424 DEFW $CD18    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D426 DEFW $CD18    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D428 DEFW $CD18    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D42A DEFW $CD53    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D42C DEFW $CD6B    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D42E DEFW $CD6B    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D430 DEFW $CD7E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D432 DEFW $CDBF    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D434 DEFW $CDBF    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D436 DEFW $CDCF    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D438 DEFW $CDCF    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D43A DEFW $CE10    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D43C DEFW $CE21    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D43E DEFW $CE21    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D440 DEFW $CE21    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D442 DEFW $CE31    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D444 DEFW $CE54    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D446 DEFW $CE64    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D448 DEFW $CE81    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D44A DEFW $CEB6    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D44C DEFW $CECA    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D44E DEFW $CEFE    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D450 DEFW $CF0E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D452 DEFW $CF0E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D454 DEFW $CF0E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D456 DEFW $CF0E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D458 DEFW $CF0E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D45A DEFW $CF0E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D45C DEFW $CF0E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D45E DEFW $CF0E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D460 DEFW $CF0E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D462 DEFW $CF0E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D464 DEFW $CF42    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D466 DEFW $CF65    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D468 DEFW $CF76    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D46A DEFW $CF91    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D46C DEFW $CFC4    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D46E DEFW $CFC4    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D470 DEFW $CFC4    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D472 DEFW $CFD0    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D474 DEFW $CFFB    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D476 DEFW $CFFB    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D478 DEFW $CFFB    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D47A DEFW $CFFB    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D47C DEFW $CFFB    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D47E DEFW $CFFB    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D480 DEFW $CFFB    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D482 DEFW $CFFB    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D484 DEFW $CFFB    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D486 DEFW $CFFB    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D488 DEFW $D02E    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D48A DEFW $D052    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D48C DEFW $D07D    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D48E DEFW $D08F    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D490 DEFW $D0B6    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D492 DEFW $CFC4    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D494 DEFW $CFC4    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D496 DEFW $D0C7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D498 DEFW $D0C7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D49A DEFW $D0C7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D49C DEFW $D0C7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D49E DEFW $D0C7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4A0 DEFW $D0C7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4A2 DEFW $D0C7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4A4 DEFW $D0C7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4A6 DEFW $D0C7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4A8 DEFW $D0C7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4AA DEFW $CFC4    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4AC DEFW $D0DF    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4AE DEFW $D0F3    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4B0 DEFW $D107    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4B2 DEFW $CFC4    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4B4 DEFW $D124    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4B6 DEFW $CFC4    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4B8 DEFW $D155    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4BA DEFW $D163    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4BC DEFW $D173    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4BE DEFW $CFC4    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4C0 DEFW $D191    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4C2 DEFW $CB66    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+ $D4C4 DEFW $D1A7    ; Room
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
+
+; Table: Object Descriptions
+@label=Table_ObjectDescriptions
+g$D4C6 DEFW $D1B3    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4C8 DEFW $D1BB    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4CA DEFW $D1C3    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4CC DEFW $D1CD    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4CE DEFW $D1D3    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4D0 DEFW $D1DC    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4D2 DEFW $D1E4    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4D4 DEFW $D1EE    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4D6 DEFW $D1F4    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4D8 DEFW $D200    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4DA DEFW $D20E    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4DC DEFW $D214    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4DE DEFW $D21B    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4E0 DEFW $D225    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4E2 DEFW $D22D    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4E4 DEFW $D234    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4E6 DEFW $D23F    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4E8 DEFW $D249    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4EA DEFW $D24F    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4EC DEFW $D257    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4EE DEFW $D25F    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4F0 DEFW $D268    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4F2 DEFW $D26F    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4F4 DEFW $D278    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4F6 DEFW $D286    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4F8 DEFW $D28F    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4FA DEFW $D298    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4FC DEFW $D29F    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D4FE DEFW $D2AB    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D500 DEFW $D2B2    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D502 DEFW $D2BC    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D504 DEFW $D2C7    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D506 DEFW $D2CE    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D508 DEFW $D2D7    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D50A DEFW $D2DF    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D50C DEFW $D2E8    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D50E DEFW $D2F1    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D510 DEFW $D2FB    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D512 DEFW $D302    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D514 DEFW $D30D    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D516 DEFW $D314    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D518 DEFW $D31A    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D51A DEFW $D321    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D51C DEFW $D328    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D51E DEFW $D32F    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D520 DEFW $D336    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D522 DEFW $D33C    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+ $D524 DEFW $D344    ; Object
+                     ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
 
 ; Messaging: Congratulations!!<CR>Your Quest Has Been Successful.<CR>You Weigh
 ; Anchor And Then Sail<CR>Off Into The Sunset With The<CR>Fabulous Jewels Of
@@ -6514,22 +6737,36 @@ b$E83E DEFB $00,$01,$02,$03,$04,$05,$06,$07
 
 ; Data block at E86E
 b$E86E DEFB $02,$03,$FF,$04,$05,$06,$FF,$07
- $E876 DEFB $FF,$08,$0A,$FF,$0B,$0C,$0D,$FF
- $E87E DEFB $0B,$0C,$FF,$0E,$FF,$0F,$FF,$10
- $E886 DEFB $11,$FF,$12,$14,$FF,$12,$14,$FF
- $E88E DEFB $15,$FF,$16,$FF,$17,$19,$FF,$1B
- $E896 DEFB $1C,$FF,$1D,$FF,$1E,$FF,$1F,$FF
- $E89E DEFB $20,$FF,$18,$1A,$FF,$00,$01,$FF
- $E8A6 DEFB $01,$4B,$00,$21,$FF,$00,$01,$21
- $E8AE DEFB $FF,$18,$19,$FF,$83,$84,$85,$88
- $E8B6 DEFB $23,$24,$25,$26,$22,$FF,$27,$28
- $E8BE DEFB $FF,$29,$FF
- $E8C1 DEFB $13,$14,$FF,$2A,$FF,$80,$FF,$2B
- $E8C9 DEFB $FF,$2C,$2D,$2E,$2F,$30,$31,$32
- $E8D1 DEFB $FF,$35,$FF,$86,$FF,$87,$FF,$37
- $E8D9 DEFB $38,$4E,$FF,$39,$3A,$FF,$3B,$34
- $E8E1 DEFB $FF,$34,$FF,$49,$3C,$3D,$3E,$FF
- $E8E9 DEFB $3F,$40,$41,$FF,$00,$01,$4C,$4D
+ $E876 DEFB $FF,$08,$0A,$FF
+
+; Game status buffer entry at E87A
+g$E87A DEFB $0B,$0C,$0D,$FF,$0B,$0C,$FF,$0E
+ $E882 DEFB $FF,$0F,$FF,$10,$11,$FF,$12,$14
+ $E88A DEFB $FF,$12,$14,$FF,$15,$FF,$16,$FF
+ $E892 DEFB $17,$19,$FF
+
+; Game status buffer entry at E895
+g$E895 DEFB $1B,$1C,$FF,$1D,$FF,$1E,$FF,$1F
+ $E89D DEFB $FF,$20,$FF,$18,$1A,$FF,$00,$01
+ $E8A5 DEFB $FF,$01,$4B,$00,$21,$FF,$00,$01
+ $E8AD DEFB $21,$FF,$18,$19,$FF
+
+; Game status buffer entry at E8B2
+g$E8B2 DEFB $83,$84,$85,$88,$23,$24,$25,$26
+ $E8BA DEFB $22,$FF,$27,$28,$FF,$29,$FF
+
+; Game status buffer entry at E8C1
+g$E8C1 DEFB $13,$14,$FF,$2A,$FF,$80,$FF,$2B
+ $E8C9 DEFB $FF
+
+; Game status buffer entry at E8CA
+g$E8CA DEFB $2C,$2D,$2E,$2F,$30,$31,$32,$FF
+ $E8D2 DEFB $35,$FF,$86,$FF,$87,$FF,$37,$38
+ $E8DA DEFB $4E,$FF,$39,$3A,$FF,$3B,$34,$FF
+ $E8E2 DEFB $34,$FF,$49,$3C,$3D,$3E,$FF
+
+; Game status buffer entry at E8E9
+g$E8E9 DEFB $3F,$40,$41,$FF,$00,$01,$4C,$4D
  $E8F1 DEFB $FF,$09,$0A,$FF,$82,$FF,$23,$24
  $E8F9 DEFB $25,$26,$28,$35,$FF,$81,$FF,$42
  $E901 DEFB $FF,$00,$01,$21,$43,$44,$3D,$45
@@ -6597,179 +6834,840 @@ w$E96A DEFW $E86E
  $E9C6 DEFW $E900
  $E9C8 DEFW $E902
 
-; Data block at E9CA
-b$E9CA DEFB $04,$FE,$0E,$FD,$5A,$0E,$FE,$0D
- $E9D2 DEFB $FE,$0B,$FE,$03,$FE,$06,$FE,$23
- $E9DA DEFB $FE,$0F,$FD,$0F,$57,$5B,$FE,$00
- $E9E2 DEFB $FE,$01,$FE,$02,$FE,$04,$FD,$05
- $E9EA DEFB $FD,$04,$57,$05,$FE,$07,$FE,$08
- $E9F2 DEFB $FE,$09,$FD,$0A,$FD,$0A,$57,$09
- $E9FA DEFB $FE,$0C,$FE,$10,$FE,$11,$FE,$12
- $EA02 DEFB $FD,$61,$12,$FE,$13,$FE,$19,$FD
- $EA0A DEFB $5D,$19,$FE,$54,$15,$FD,$53,$55
- $EA12 DEFB $15,$FD,$54,$5C,$15,$FD,$53,$55
- $EA1A DEFB $5C,$15,$FE,$56,$57,$15,$FD,$56
- $EA22 DEFB $57,$5C,$15,$FE,$01,$67,$28,$FE
- $EA2A DEFB $13,$55,$1C,$FE,$02,$55,$1C,$FE
- $EA32 DEFB $06,$55,$1C,$FE,$0E,$55,$1C,$FD
- $EA3A DEFB $5A,$0E,$55,$1C,$FE,$06,$55,$19
- $EA42 DEFB $FE,$0D,$55,$17,$FE,$13,$55,$1E
- $EA4A DEFB $FD,$13,$55,$62,$1E,$FE,$09,$55
- $EA52 DEFB $1B,$FD,$0A,$55,$1B,$FD,$0A,$57
- $EA5A DEFB $09,$55,$1B,$FE,$00,$55,$0A,$FD
- $EA62 DEFB $00,$55,$09,$FD,$00,$55,$0A,$57
- $EA6A DEFB $09,$FE,$00,$55,$1B,$FE,$03,$53
- $EA72 DEFB $60,$FD,$03,$53,$59,$60,$FD,$03
- $EA7A DEFB $54,$60,$FD,$03,$54,$59,$60,$FD
- $EA82 DEFB $03,$53,$55,$60,$FD,$03,$53,$55
- $EA8A DEFB $59,$60,$FE,$1E,$58,$13,$FD,$62
- $EA92 DEFB $1E,$58,$13,$FE,$1C,$58,$13,$FE
- $EA9A DEFB $17,$58,$13,$FE,$18,$58,$07,$FE
- $EAA2 DEFB $19,$58,$07,$FE,$18,$FD,$18,$58
- $EAAA DEFB $07,$FE,$19,$FD,$19,$58,$07,$FE
- $EAB2 DEFB $35,$14,$FE,$36,$14,$FE,$05,$FE
- $EABA DEFB $66,$FE,$14,$FE,$1F,$FE,$68,$1F
- $EAC2 DEFB $FD,$1F,$FE,$26,$FE,$FF,$FD,$69
- $EACA DEFB $FE,$25,$FE,$27,$FE,$15,$FD,$5C
- $EAD2 DEFB $15,$FD,$29,$FD,$28,$FE,$5F,$FD
- $EADA DEFB $65,$5F,$FE,$5F,$58,$10,$FD,$65
- $EAE2 DEFB $5F,$58,$10,$FE,$1F,$FD,$1F,$58
- $EAEA DEFB $11,$FE,$31,$FD,$15,$31,$FD,$5C
- $EAF2 DEFB $15,$31,$FE,$32,$FD,$15,$32,$FD
- $EAFA DEFB $5C,$15,$32,$FE,$33,$FD,$15,$33
- $EB02 DEFB $FD,$5C,$15,$33,$FE,$34,$FD,$15
- $EB0A DEFB $34,$FD,$5C,$15,$34,$FE,$00,$00
- $EB12 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $EB1A DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $EB22 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $EB2A DEFB $00,$00,$00,$00,$00,$00,$06,$00
- $EB32 DEFB $08,$00,$00,$00,$07,$05,$09,$00
- $EB3A DEFB $00,$00,$00,$06,$0A,$00,$00,$00
- $EB42 DEFB $09,$00,$00,$05,$0D,$00,$0A,$08
- $EB4A DEFB $00,$06,$00,$00,$00,$09,$00,$07
- $EB52 DEFB $0F,$28,$0C,$00,$00,$00,$00,$00
- $EB5A DEFB $0D,$0B,$00,$00,$10,$09,$0E,$0C
- $EB62 DEFB $00,$00,$00,$00,$00,$0D,$00,$00
- $EB6A DEFB $00,$0B,$10,$2B,$00,$00,$00,$00
- $EB72 DEFB $0D,$0F,$13,$00,$14,$00,$16,$00
- $EB7A DEFB $00,$12,$00,$00,$00,$00,$11,$00
- $EB82 DEFB $43,$00,$14,$2C,$00,$10,$00,$11
- $EB8A DEFB $00,$13,$00,$15,$00,$00
+; Game status buffer entry at E9CA
+g$E9CA DEFB $04,$FE
 
-; Data block at EB90
-b$EB90 DEFB $00,$00,$14,$00,$11,$19,$17,$19
- $EB98 DEFB $00,$00,$18,$1A,$18,$16,$00,$00
- $EBA0 DEFB $17,$1B,$1B,$17,$00,$00,$16,$1C
- $EBA8 DEFB $1A,$16,$00,$00,$17,$1D,$1B,$19
- $EBB0 DEFB $00,$00,$18,$1E,$18,$1A,$00,$00
- $EBB8 DEFB $19,$1C,$1D,$1C,$00,$00,$1A,$1F
- $EBC0 DEFB $1E,$1C,$00,$00,$1B,$1E,$1E,$1D
- $EBC8 DEFB $00,$00
+; Game status buffer entry at E9CC
+g$E9CC DEFB $0E,$FD,$5A,$0E,$FE,$0D,$FE
+ $E9D3 DEFB $0B,$FE,$03,$FE
+ $E9D7 DEFB $06,$FE,$23,$FE
+ $E9DB DEFB $0F,$FD,$0F,$57,$5B,$FE
+ $E9E1 DEFB $00,$FE,$01,$FE
+ $E9E5 DEFB $02,$FE,$04,$FD,$05,$FD,$04,$57
+ $E9ED DEFB $05,$FE,$07,$FE
+ $E9F1 DEFB $08,$FE,$09,$FD,$0A,$FD,$0A,$57
+ $E9F9 DEFB $09,$FE,$0C,$FE,$10,$FE,$11,$FE
+ $EA01 DEFB $12,$FD,$61,$12,$FE,$13,$FE,$19
+ $EA09 DEFB $FD,$5D,$19,$FE
+ $EA0D DEFB $54,$15,$FD,$53,$55,$15,$FD,$54
+ $EA15 DEFB $5C,$15,$FD,$53,$55,$5C,$15,$FE
+ $EA1D DEFB $56,$57,$15,$FD,$56,$57,$5C,$15
+ $EA25 DEFB $FE,$01,$67,$28,$FE,$13,$55,$1C
+ $EA2D DEFB $FE,$02,$55,$1C,$FE,$06,$55,$1C
+ $EA35 DEFB $FE,$0E,$55,$1C,$FD,$5A,$0E,$55
+ $EA3D DEFB $1C,$FE,$06,$55,$19,$FE,$0D,$55
+ $EA45 DEFB $17,$FE,$13,$55,$1E,$FD,$13,$55
+ $EA4D DEFB $62,$1E,$FE,$09,$55,$1B,$FD,$0A
+ $EA55 DEFB $55,$1B,$FD,$0A,$57,$09,$55,$1B
+ $EA5D DEFB $FE,$00,$55,$0A,$FD,$00,$55,$09
+ $EA65 DEFB $FD,$00,$55,$0A,$57,$09,$FE,$00
+ $EA6D DEFB $55,$1B,$FE
+ $EA70 DEFB $03,$53,$60,$FD,$03,$53,$59,$60
+ $EA78 DEFB $FD,$03,$54,$60,$FD,$03,$54,$59
+ $EA80 DEFB $60,$FD,$03,$53,$55,$60,$FD,$03
+ $EA88 DEFB $53,$55,$59,$60,$FE,$1E,$58,$13
+ $EA90 DEFB $FD,$62,$1E,$58,$13,$FE,$1C,$58
+ $EA98 DEFB $13,$FE,$17,$58,$13,$FE
+ $EA9E DEFB $18,$58,$07,$FE
+ $EAA2 DEFB $19,$58,$07,$FE
+ $EAA6 DEFB $18,$FD,$18,$58,$07,$FE
+ $EAAC DEFB $19,$FD,$19,$58,$07,$FE
+ $EAB2 DEFB $35,$14,$FE
+ $EAB5 DEFB $36,$14,$FE
+ $EAB8 DEFB $05,$FE
+ $EABA DEFB $66,$FE
+ $EABC DEFB $14,$FE
+ $EABE DEFB $1F,$FE
+ $EAC0 DEFB $68,$1F,$FD,$1F,$FE
+ $EAC5 DEFB $26,$FE
+ $EAC7 DEFB $FF,$FD,$69,$FE
+ $EACB DEFB $25,$FE
+ $EACD DEFB $27,$FE
+ $EACF DEFB $15,$FD,$5C,$15,$FD,$29,$FD,$28
+ $EAD7 DEFB $FE
+ $EAD8 DEFB $5F,$FD,$65,$5F,$FE
+ $EADD DEFB $5F,$58,$10,$FD,$65,$5F,$58,$10
+ $EAE5 DEFB $FE
+ $EAE6 DEFB $1F,$FD,$1F,$58,$11,$FE
+ $EAEC DEFB $31,$FD,$15,$31,$FD,$5C,$15,$31
+ $EAF4 DEFB $FE
+ $EAF5 DEFB $32,$FD,$15,$32,$FD,$5C,$15,$32
+ $EAFD DEFB $FE
+ $EAFE DEFB $33,$FD,$15,$33,$FD,$5C,$15,$33
+ $EB06 DEFB $FE
+ $EB07 DEFB $34,$FD,$15,$34,$FD,$5C,$15,$34
+ $EB0F DEFB $FE
 
-; Data block at EBCA
-b$EBCA DEFB $00
-
-; Data block at EBCB
-b$EBCB DEFB $00
-
-; Data block at EBCC
-b$EBCC DEFB $00
-
-; Data block at EBCD
-b$EBCD DEFB $00,$00,$00,$1F,$00,$21,$00,$00
- $EBD5 DEFB $00,$1F,$22,$00,$20,$00,$00,$21
- $EBDD DEFB $00,$00,$00,$00,$00,$26,$1F,$24
- $EBE5 DEFB $00,$00,$00,$00,$00,$00,$23,$00
- $EBED DEFB $00,$00,$00,$26,$00,$00,$00,$00
- $EBF5 DEFB $23,$27,$25,$00,$00,$00,$26,$00
- $EBFD DEFB $00,$00,$00,$00,$00,$0B,$29,$00
- $EC05 DEFB $00,$00,$00,$28,$2A,$2B,$00,$00
- $EC0D DEFB $00,$29,$00,$00,$00,$0F,$00,$00
- $EC15 DEFB $00,$00,$29,$3B,$2E,$13,$00,$00
- $EC1D DEFB $2D,$39,$00,$00,$00,$2C,$00,$00
- $EC25 DEFB $00,$2C
-
-; Data block at EC27
-b$EC27 DEFB $2F,$00,$00
-
-; Data block at EC2A
-b$EC2A DEFB $30,$00,$2E,$00,$00,$00
-
-; Data block at EC30
-b$EC30 DEFB $00,$2F,$00,$00,$00,$00,$00,$30
- $EC38 DEFB $00,$00,$00,$00,$33,$35,$33
-
-; Data block at EC3F
-b$EC3F DEFB $00,$00,$00,$32,$36,$34,$32,$00
- $EC47 DEFB $00,$34,$36,$34,$33,$00,$00,$32
- $EC4F DEFB $37,$36,$39,$00,$00,$33,$38,$34
- $EC57 DEFB $35,$00,$00,$35,$3A,$38,$39,$00
- $EC5F DEFB $00,$36,$3A,$3B,$37,$00,$00,$37
- $EC67 DEFB $2D,$3A,$35,$00,$00,$37,$3B,$38
- $EC6F DEFB $39,$00,$00,$38,$2C,$3B,$3A,$00
- $EC77 DEFB $00,$00,$32,$00,$00,$00,$3D,$3E
- $EC7F DEFB $00,$00,$00,$3C,$00,$00,$3D,$00
- $EC87 DEFB $00,$00,$00
-
-; Data block at EC8A
-b$EC8A DEFB $00
-
-; Data block at EC8B
-b$EC8B DEFB $00
-
-; Data block at EC8C
-b$EC8C DEFB $00,$3E,$00,$00,$00,$3F,$00,$00
- $EC94 DEFB $00,$00,$00,$00,$00,$3F,$00,$00
- $EC9C DEFB $00,$00,$00,$3F,$00,$00,$00,$13
- $ECA4 DEFB $4B,$00,$00,$00,$45,$4A,$45,$4A
- $ECAC DEFB $00,$00,$44,$48,$46,$44,$00,$00
- $ECB4 DEFB $47,$49,$47,$45,$00,$00,$46,$49
-
-; Data block at ECBC
-b$ECBC DEFB $00,$46,$00,$00,$45,$4B,$49,$4A
- $ECC4 DEFB $00,$00,$46,$4C,$47,$48,$00,$00
- $ECCC DEFB $48,$44,$4B,$44,$00,$00,$48,$43
- $ECD4 DEFB $4C,$4A,$00,$00,$49,$4D,$4D,$4B
- $ECDC DEFB $00,$00,$4D,$4C,$4D,$4C,$00,$00
- $ECE4 DEFB $6C,$47,$00,$00,$00,$00,$00,$6C
- $ECEC DEFB $00,$00,$00,$50,$00,$00,$51,$00
- $ECF4 DEFB $4F,$00,$00,$00,$00,$50,$00,$00
- $ECFC DEFB $51,$55,$54,$53,$00,$00,$00,$00
- $ED04 DEFB $52,$00,$00,$00,$00,$00,$00,$52
- $ED0C DEFB $00,$00,$56,$58,$56,$52,$00,$00
- $ED14 DEFB $55,$59,$57,$55,$00,$00,$5B,$5A
- $ED1C DEFB $5B,$56,$00,$00,$55,$5C,$59,$5F
- $ED24 DEFB $00,$00,$56,$5D,$5A,$58,$00,$00
- $ED2C DEFB $57,$5E,$5B,$59,$00,$00,$57,$5E
- $ED34 DEFB $57,$5A,$00,$00,$58,$5D,$5D,$5C
- $ED3C DEFB $00,$00,$59,$5C,$5E,$5C,$00,$00
- $ED44 DEFB $5A,$64,$5B,$5D,$00,$00,$58,$00
- $ED4C DEFB $00,$00,$00
-
-; Data block at ED4F
-b$ED4F DEFB $00,$00,$61,$00,$00,$5F,$00,$60
-
-; Data block at ED57
-b$ED57 DEFB $00,$00,$00,$00,$00
-
-; Data block at ED5C
-b$ED5C DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $ED64 DEFB $64,$00,$00,$00,$5E,$00,$65,$63
- $ED6C DEFB $00,$66,$00,$00,$00,$64,$00,$00
- $ED74 DEFB $00
-
-; Data block at ED75
-b$ED75 DEFB $00,$00,$00,$64,$67,$00,$00,$00
- $ED7D DEFB $00,$66,$00
-
-; Data block at ED80
-b$ED80 DEFB $00,$00,$6A,$69,$00,$00,$68,$00
- $ED88 DEFB $00,$00,$00,$00,$00
-
-; Data block at ED8D
-b$ED8D DEFB $00,$00,$68,$00,$00,$00,$00,$00
- $ED95 DEFB $00,$00,$00,$4F,$4E,$00,$00,$00
- $ED9D DEFB $00
+; Table: Room Map
+;
+; .
+;
+; .
+;
+; Room: #N((#PC-$EB10)/$06).
+@label=Table_RoomMap
+g$EB10 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB11 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB12 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB13 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB14 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB15 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB16 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB17 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB18 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB19 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB1A DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB1B DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB1C DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB1D DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB1E DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB1F DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB20 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB21 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB22 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB23 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB24 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB25 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB26 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB27 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB28 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB29 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB2A DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB2B DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB2C DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB2D DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB2E DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB2F DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB30 DEFB $06      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB31 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB32 DEFB $08      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB33 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB34 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB35 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB36 DEFB $07      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB37 DEFB $05      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB38 DEFB $09      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB39 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB3A DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB3B DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB3C DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB3D DEFB $06      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB3E DEFB $0A      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB3F DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB40 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB41 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB42 DEFB $09      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB43 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB44 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB45 DEFB $05      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB46 DEFB $0D      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB47 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB48 DEFB $0A      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB49 DEFB $08      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB4A DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB4B DEFB $06      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB4C DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB4D DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB4E DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB4F DEFB $09      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB50 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB51 DEFB $07      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB52 DEFB $0F      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB53 DEFB $28      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB54 DEFB $0C      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB55 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB56 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB57 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB58 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB59 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB5A DEFB $0D      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB5B DEFB $0B      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB5C DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB5D DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB5E DEFB $10      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB5F DEFB $09      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB60 DEFB $0E      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB61 DEFB $0C      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB62 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB63 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB64 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB65 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB66 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB67 DEFB $0D      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB68 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB69 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB6A DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB6B DEFB $0B      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB6C DEFB $10      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB6D DEFB $2B      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB6E DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB6F DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB70 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB71 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB72 DEFB $0D      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB73 DEFB $0F      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB74 DEFB $13      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB75 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB76 DEFB $14      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB77 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB78 DEFB $16      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB79 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB7A DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB7B DEFB $12      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB7C DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB7D DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB7E DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB7F DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB80 DEFB $11      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB81 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB82 DEFB $43      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB83 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB84 DEFB $14      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB85 DEFB $2C      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB86 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB87 DEFB $10      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB88 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB89 DEFB $11      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB8A DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB8B DEFB $13      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB8C DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB8D DEFB $15      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB8E DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB8F DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB90 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB91 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB92 DEFB $14      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB93 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB94 DEFB $11      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB95 DEFB $19      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB96 DEFB $17      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB97 DEFB $19      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB98 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB99 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EB9A DEFB $18      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EB9B DEFB $1A      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EB9C DEFB $18      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EB9D DEFB $16      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EB9E DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EB9F DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBA0 DEFB $17      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBA1 DEFB $1B      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBA2 DEFB $1B      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBA3 DEFB $17      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBA4 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBA5 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBA6 DEFB $16      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBA7 DEFB $1C      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBA8 DEFB $1A      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBA9 DEFB $16      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBAA DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBAB DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBAC DEFB $17      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBAD DEFB $1D      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBAE DEFB $1B      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBAF DEFB $19      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBB0 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBB1 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBB2 DEFB $18      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBB3 DEFB $1E      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBB4 DEFB $18      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBB5 DEFB $1A      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBB6 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBB7 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBB8 DEFB $19      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBB9 DEFB $1C      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBBA DEFB $1D      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBBB DEFB $1C      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBBC DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBBD DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBBE DEFB $1A      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBBF DEFB $1F      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBC0 DEFB $1E      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBC1 DEFB $1C      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBC2 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBC3 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBC4 DEFB $1B      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBC5 DEFB $1E      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBC6 DEFB $1E      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBC7 DEFB $1D      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBC8 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBC9 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBCA DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBCB DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBCC DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBCD DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBCE DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBCF DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBD0 DEFB $1F      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBD1 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBD2 DEFB $21      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBD3 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBD4 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBD5 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBD6 DEFB $1F      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBD7 DEFB $22      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBD8 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBD9 DEFB $20      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBDA DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBDB DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBDC DEFB $21      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBDD DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBDE DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBDF DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBE0 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBE1 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBE2 DEFB $26      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBE3 DEFB $1F      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBE4 DEFB $24      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBE5 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBE6 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBE7 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBE8 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBE9 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBEA DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBEB DEFB $23      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBEC DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBED DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBEE DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBEF DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBF0 DEFB $26      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBF1 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBF2 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBF3 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBF4 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBF5 DEFB $23      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBF6 DEFB $27      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBF7 DEFB $25      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBF8 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBF9 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EBFA DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EBFB DEFB $26      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EBFC DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EBFD DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EBFE DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EBFF DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC00 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC01 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC02 DEFB $0B      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC03 DEFB $29      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC04 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC05 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC06 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC07 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC08 DEFB $28      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC09 DEFB $2A      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC0A DEFB $2B      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC0B DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC0C DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC0D DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC0E DEFB $29      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC0F DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC10 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC11 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC12 DEFB $0F      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC13 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC14 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC15 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC16 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC17 DEFB $29      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC18 DEFB $3B      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC19 DEFB $2E      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC1A DEFB $13      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC1B DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC1C DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC1D DEFB $2D      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC1E DEFB $39      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC1F DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC20 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC21 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC22 DEFB $2C      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC23 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC24 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC25 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC26 DEFB $2C      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC27 DEFB $2F      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC28 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC29 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC2A DEFB $30      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC2B DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC2C DEFB $2E      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC2D DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC2E DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC2F DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC30 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC31 DEFB $2F      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC32 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC33 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC34 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC35 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC36 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC37 DEFB $30      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC38 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC39 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC3A DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC3B DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC3C DEFB $33      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC3D DEFB $35      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC3E DEFB $33      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC3F DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC40 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC41 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC42 DEFB $32      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC43 DEFB $36      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC44 DEFB $34      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC45 DEFB $32      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC46 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC47 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC48 DEFB $34      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC49 DEFB $36      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC4A DEFB $34      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC4B DEFB $33      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC4C DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC4D DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC4E DEFB $32      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC4F DEFB $37      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC50 DEFB $36      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC51 DEFB $39      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC52 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC53 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC54 DEFB $33      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC55 DEFB $38      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC56 DEFB $34      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC57 DEFB $35      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC58 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC59 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC5A DEFB $35      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC5B DEFB $3A      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC5C DEFB $38      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC5D DEFB $39      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC5E DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC5F DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC60 DEFB $36      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC61 DEFB $3A      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC62 DEFB $3B      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC63 DEFB $37      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC64 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC65 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC66 DEFB $37      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC67 DEFB $2D      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC68 DEFB $3A      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC69 DEFB $35      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC6A DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC6B DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC6C DEFB $37      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC6D DEFB $3B      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC6E DEFB $38      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC6F DEFB $39      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC70 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC71 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC72 DEFB $38      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC73 DEFB $2C      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC74 DEFB $3B      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC75 DEFB $3A      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC76 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC77 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC78 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC79 DEFB $32      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC7A DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC7B DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC7C DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC7D DEFB $3D      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC7E DEFB $3E      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC7F DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC80 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC81 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC82 DEFB $3C      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC83 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC84 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC85 DEFB $3D      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC86 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC87 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC88 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC89 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC8A DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC8B DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC8C DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC8D DEFB $3E      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC8E DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC8F DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC90 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC91 DEFB $3F      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC92 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC93 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC94 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC95 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC96 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC97 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC98 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC99 DEFB $3F      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $EC9A DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $EC9B DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $EC9C DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $EC9D DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $EC9E DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $EC9F DEFB $3F      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECA0 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECA1 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECA2 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECA3 DEFB $13      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECA4 DEFB $4B      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECA5 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECA6 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECA7 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECA8 DEFB $45      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECA9 DEFB $4A      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECAA DEFB $45      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECAB DEFB $4A      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECAC DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECAD DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECAE DEFB $44      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECAF DEFB $48      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECB0 DEFB $46      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECB1 DEFB $44      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECB2 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECB3 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECB4 DEFB $47      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECB5 DEFB $49      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECB6 DEFB $47      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECB7 DEFB $45      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECB8 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECB9 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECBA DEFB $46      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECBB DEFB $49      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECBC DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECBD DEFB $46      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECBE DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECBF DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECC0 DEFB $45      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECC1 DEFB $4B      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECC2 DEFB $49      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECC3 DEFB $4A      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECC4 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECC5 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECC6 DEFB $46      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECC7 DEFB $4C      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECC8 DEFB $47      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECC9 DEFB $48      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECCA DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECCB DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECCC DEFB $48      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECCD DEFB $44      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECCE DEFB $4B      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECCF DEFB $44      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECD0 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECD1 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECD2 DEFB $48      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECD3 DEFB $43      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECD4 DEFB $4C      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECD5 DEFB $4A      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECD6 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECD7 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECD8 DEFB $49      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECD9 DEFB $4D      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECDA DEFB $4D      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECDB DEFB $4B      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECDC DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECDD DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECDE DEFB $4D      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECDF DEFB $4C      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECE0 DEFB $4D      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECE1 DEFB $4C      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECE2 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECE3 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECE4 DEFB $6C      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECE5 DEFB $47      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECE6 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECE7 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECE8 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECE9 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECEA DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECEB DEFB $6C      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECEC DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECED DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECEE DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECEF DEFB $50      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECF0 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECF1 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECF2 DEFB $51      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECF3 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECF4 DEFB $4F      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECF5 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECF6 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECF7 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECF8 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECF9 DEFB $50      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ECFA DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ECFB DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ECFC DEFB $51      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ECFD DEFB $55      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ECFE DEFB $54      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ECFF DEFB $53      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED00 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED01 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED02 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED03 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED04 DEFB $52      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED05 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED06 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED07 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED08 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED09 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED0A DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED0B DEFB $52      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED0C DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED0D DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED0E DEFB $56      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED0F DEFB $58      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED10 DEFB $56      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED11 DEFB $52      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED12 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED13 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED14 DEFB $55      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED15 DEFB $59      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED16 DEFB $57      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED17 DEFB $55      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED18 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED19 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED1A DEFB $5B      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED1B DEFB $5A      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED1C DEFB $5B      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED1D DEFB $56      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED1E DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED1F DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED20 DEFB $55      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED21 DEFB $5C      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED22 DEFB $59      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED23 DEFB $5F      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED24 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED25 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED26 DEFB $56      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED27 DEFB $5D      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED28 DEFB $5A      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED29 DEFB $58      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED2A DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED2B DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED2C DEFB $57      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED2D DEFB $5E      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED2E DEFB $5B      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED2F DEFB $59      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED30 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED31 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED32 DEFB $57      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED33 DEFB $5E      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED34 DEFB $57      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED35 DEFB $5A      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED36 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED37 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED38 DEFB $58      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED39 DEFB $5D      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED3A DEFB $5D      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED3B DEFB $5C      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED3C DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED3D DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED3E DEFB $59      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED3F DEFB $5C      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED40 DEFB $5E      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED41 DEFB $5C      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED42 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED43 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED44 DEFB $5A      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED45 DEFB $64      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED46 DEFB $5B      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED47 DEFB $5D      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED48 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED49 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED4A DEFB $58      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED4B DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED4C DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED4D DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED4E DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED4F DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED50 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED51 DEFB $61      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED52 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED53 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED54 DEFB $5F      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED55 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED56 DEFB $60      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED57 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED58 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED59 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED5A DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED5B DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED5C DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED5D DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED5E DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED5F DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED60 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED61 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED62 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED63 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED64 DEFB $64      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED65 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED66 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED67 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED68 DEFB $5E      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED69 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED6A DEFB $65      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED6B DEFB $63      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED6C DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED6D DEFB $66      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED6E DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED6F DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED70 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED71 DEFB $64      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED72 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED73 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED74 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED75 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED76 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED77 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED78 DEFB $64      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED79 DEFB $67      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED7A DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED7B DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED7C DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED7D DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED7E DEFB $66      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED7F DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED80 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED81 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED82 DEFB $6A      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED83 DEFB $69      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED84 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED85 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED86 DEFB $68      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED87 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED88 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED89 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED8A DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED8B DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED8C DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED8D DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED8E DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED8F DEFB $68      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED90 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED91 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED92 DEFB $00      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED93 DEFB $00      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED94 DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED95 DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED96 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED97 DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+; Room: #N((#PC-$EB10)/$06).
+ $ED98 DEFB $4F      ; #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
+ $ED99 DEFB $4E      ; #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
+ $ED9A DEFB $00      ; #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
+ $ED9B DEFB $00      ; #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
+ $ED9C DEFB $00      ; #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
+ $ED9D DEFB $00      ; #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
 
 ; Data block at ED9E
 w$ED9E DEFW $EB90
@@ -6839,83 +7737,97 @@ c$EDF2 CALL $BA6D    ;
  $EDFB CALL $BAB1    ;
  $EDFE JR $EDDD      ;
 
-; Routine at EE00
-c$EE00 LD HL,$BC66   ; #REGhl=#R$BC66.
- $EE03 RES 0,(HL)    ; Reset bit 0 of *#REGhl.
- $EE05 LD A,$29      ; #REGa=#N$29.
- $EE07 CALL $C35F    ; Call #R$C35F.
- $EE0A RET NZ        ; Return if ?? is not equal to #N$29.
- $EE0B LD HL,$D5B0   ; #REGhl=#R$D5B0.
- $EE0E JP $EE9B      ; Jump to #R$EE9B.
- $EE11 LD HL,$BC66   ; #REGhl=#R$BC66.
- $EE14 RES 1,(HL)    ; Reset bit 1 of *#REGhl.
- $EE16 LD A,$2B      ; #REGa=#N$2B.
- $EE18 CALL $C35F    ; Call #R$C35F.
- $EE1B RET NZ        ; Return if ?? is not equal to #N$2B.
- $EE1C LD HL,$D5F6   ; #REGhl=#R$D5F6.
- $EE1F JP $EE9B      ; Jump to #R$EE9B.
- $EE22 LD HL,$BC66   ; #REGhl=#R$BC66.
- $EE25 RES 2,(HL)    ; Reset bit 2 of *#REGhl.
- $EE27 LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $EE2A LD BC,$0007   ; #REGbc=#N($0007,$04,$04).
- $EE2D LD HL,$EE39   ; #REGhl=#R$EE39.
- $EE30 CPIR          ; CPIR.
- $EE32 RET NZ        ; Return if ?? is not equal to #N$2B.
- $EE33 LD HL,$D629   ; #REGhl=#R$D629.
- $EE36 JP $EE9B      ; Jump to #R$EE9B.
- $EE39 DEFB $28      ;
- $EE3A ADD HL,HL     ;
- $EE3B LD HL,($232B) ;
- $EE3E INC H         ; Increment #REGh by one.
- $EE3F LD C,A        ; #REGc=#REGa.
- $EE40 LD HL,$BC66   ; #REGhl=#R$BC66.
- $EE43 RES 3,(HL)    ; Reset bit 3 of *#REGhl.
- $EE45 LD A,$2A      ; #REGa=#N$2A.
- $EE47 CALL $C35F    ; Call #R$C35F.
- $EE4A RET NZ        ; Return if #REGh is not equal to #N$2A.
- $EE4B LD HL,$D66E   ; #REGhl=#R$D66E.
- $EE4E JP $EE9B      ; Jump to #R$EE9B.
- $EE51 LD HL,$BC66   ; #REGhl=#R$BC66.
- $EE54 RES 4,(HL)    ; Reset bit 4 of *#REGhl.
- $EE56 LD HL,$E8C1   ; #REGhl=#R$E8C1.
- $EE59 CALL $C401    ; Call #R$C401.
- $EE5C RET NZ        ; Return if #REGh is not equal to #N$2A.
+; Events
+@label=Event_Crab
+c$EE00 LD HL,$BC66                      ; #REGhl=#R$BC66.
+ $EE03 RES 0,(HL)                       ; Reset bit 0 of *#REGhl.
+ $EE05 LD A,$29                         ; #REGa=#N$29.
+ $EE07 CALL $C35F                       ; Call #R$C35F.
+ $EE0A RET NZ                           ; Return if ?? is not equal to #N$29.
+; Print "#STR$D5B0,$08($b==$FF)".
+ $EE0B LD HL,$D5B0                      ; #REGhl=#R$D5B0.
+ $EE0E JP $EE9B                         ; Jump to #R$EE9B.
+@label=Event_Tentacle
+ $EE11 LD HL,$BC66                      ; #REGhl=#R$BC66.
+ $EE14 RES 1,(HL)                       ; Reset bit 1 of *#REGhl.
+ $EE16 LD A,$2B                         ; #REGa=#N$2B.
+ $EE18 CALL $C35F                       ; Call #R$C35F.
+ $EE1B RET NZ                           ; Return if ?? is not equal to #N$2B.
+; Print "#STR$D5F6,$08($b==$FF)".
+ $EE1C LD HL,$D5F6                      ; #REGhl=#R$D5F6.
+ $EE1F JP $EE9B                         ; Jump to #R$EE9B.
+@label=Event_Rum
+ $EE22 LD HL,$BC66                      ; #REGhl=#R$BC66.
+ $EE25 RES 2,(HL)                       ; Reset bit 2 of *#REGhl.
+ $EE27 LD A,($BCCB)                     ; #REGa=*#R$BCCB.
+ $EE2A LD BC,$0007                      ; #REGbc=#N($0007,$04,$04).
+ $EE2D LD HL,$EE39                      ; #REGhl=#R$EE39.
+ $EE30 CPIR                             ; CPIR.
+ $EE32 RET NZ                           ; Return if ?? is not equal to #N$2B.
+; Print "#STR$D629,$08($b==$FF)".
+ $EE33 LD HL,$D629                      ; #REGhl=#R$D629.
+ $EE36 JP $EE9B                         ; Jump to #R$EE9B.
+ $EE39 DEFB $28,$29,$2A,$2B,$23,$24,$4F ;
+@label=Event_Lion
+ $EE40 LD HL,$BC66                      ; #REGhl=#R$BC66.
+ $EE43 RES 3,(HL)                       ; Reset bit 3 of *#REGhl.
+ $EE45 LD A,$2A                         ; #REGa=#N$2A.
+ $EE47 CALL $C35F                       ; Call #R$C35F.
+ $EE4A RET NZ                           ; Return if #REGh is not equal to
+                                        ; #N$2A.
+; Print "#STR$D66E,$08($b==$FF)".
+ $EE4B LD HL,$D66E                      ; #REGhl=#R$D66E.
+ $EE4E JP $EE9B                         ; Jump to #R$EE9B.
+@label=Event_Crocodile
+ $EE51 LD HL,$BC66                      ; #REGhl=#R$BC66.
+ $EE54 RES 4,(HL)                       ; Reset bit 4 of *#REGhl.
+ $EE56 LD HL,$E8C1                      ; #REGhl=#R$E8C1.
+ $EE59 CALL $C401                       ; Call #R$C401.
+ $EE5C RET NZ                           ; Return if #REGh is not equal to
+                                        ; #N$2A.
 ; Print "#STR$D6A0,$08($b==$FF)".
- $EE5D LD HL,$D6A0   ; #REGhl=#R$D6A0.
- $EE60 JP $EE9B      ; Jump to #R$EE9B.
- $EE63 DEFB $21      ;
- $EE64 LD H,(HL)     ;
- $EE65 CP H          ;
- $EE66 RES 5,(HL)    ; Reset bit 5 of *#REGhl.
- $EE68 LD A,$18      ; #REGa=#N$18.
- $EE6A CALL $C35F    ; Call #R$C35F.
- $EE6D RET NZ        ; Return if #REGh is not equal to #N$18.
- $EE6E LD HL,$D931   ; #REGhl=#R$D931.
- $EE71 JP $EE9B      ; Jump to #R$EE9B.
- $EE74 LD HL,$BC66   ; #REGhl=#R$BC66.
- $EE77 RES 6,(HL)    ; Reset bit 6 of *#REGhl.
- $EE79 LD A,$03      ; #REGa=#N$03.
- $EE7B CALL $C3E4    ; Call #R$C3E4.
- $EE7E JR NZ,$EE8A   ; Jump to #R$EE8A if #REGh is not equal to #N$03.
- $EE80 LD HL,$BC98   ; #REGhl=#R$BC98.
- $EE83 DEC (HL)      ; Decrease *#REGhl by one.
- $EE84 LD HL,$DB91   ; #REGhl=#R$DB91.
- $EE87 CALL $BAB1    ; Call #R$BAB1.
-*$EE8A LD A,$03      ; #REGa=#N$03.
- $EE8C CALL $C3EA    ; Call #R$C3EA.
- $EE8F RET           ; Return.
- $EE90 LD HL,$BC66   ; #REGhl=#R$BC66.
- $EE93 RES 7,(HL)    ; Reset bit 7 of *#REGhl.
- $EE95 LD HL,$E567   ; #REGhl=#R$E567.
- $EE98 JP $EE9B      ; Jump to #R$EE9B.
+ $EE5D LD HL,$D6A0                      ; #REGhl=#R$D6A0.
+ $EE60 JP $EE9B                         ; Jump to #R$EE9B.
+@label=Event_Cannibals
+ $EE63 LD HL,$BC66                      ; #REGhl=#R$BC66.
+ $EE66 RES 5,(HL)                       ; Reset bit 5 of *#REGhl.
+ $EE68 LD A,$18                         ; #REGa=#N$18.
+ $EE6A CALL $C35F                       ; Call #R$C35F.
+ $EE6D RET NZ                           ; Return if #REGh is not equal to
+                                        ; #N$18.
+ $EE6E LD HL,$D931                      ; #REGhl=#R$D931.
+ $EE71 JP $EE9B                         ; Jump to #R$EE9B.
+@label=Event_Match
+ $EE74 LD HL,$BC66                      ; #REGhl=#R$BC66.
+ $EE77 RES 6,(HL)                       ; Reset bit 6 of *#REGhl.
+ $EE79 LD A,$03                         ; #REGa=#N$03.
+ $EE7B CALL $C3E4                       ; Call #R$C3E4.
+ $EE7E JR NZ,$EE8A                      ; Jump to #R$EE8A if #REGh is not equal
+                                        ; to #N$03.
+ $EE80 LD HL,$BC98                      ; #REGhl=#R$BC98.
+ $EE83 DEC (HL)                         ; Decrease *#REGhl by one.
+; Print "#STR$DB91,$08($b==$FF)".
+ $EE84 LD HL,$DB91                      ; #REGhl=#R$DB91.
+ $EE87 CALL $BAB1                       ; Call #R$BAB1.
+*$EE8A LD A,$03                         ; #REGa=#N$03.
+ $EE8C CALL $C3EA                       ; Call #R$C3EA.
+ $EE8F RET                              ; Return.
+@label=Event_Wave
+ $EE90 LD HL,$BC66                      ; #REGhl=#R$BC66.
+ $EE93 RES 7,(HL)                       ; Reset bit 7 of *#REGhl.
+; Print "#STR$E567,$08($b==$FF)".
+ $EE95 LD HL,$E567                      ; #REGhl=#R$E567.
+ $EE98 JP $EE9B                         ; Jump to #R$EE9B.
 ; Force a newline to be "printed".
-*$EE9B LD A,$0D      ; #REGa=#N$0D.
- $EE9D CALL $BAC3    ; Call #R$BAC3.
- $EEA0 CALL $BAB1    ; Call #R$BAB1.
- $EEA3 POP HL        ; {Restore #REGhl, #REGhl and #REGhl from the stack.
- $EEA4 POP HL        ;
- $EEA5 POP HL        ; }
- $EEA6 JP $EDD7      ; Jump to #R$EDD7.
+@label=Events_GameOver
+*$EE9B LD A,$0D                         ; #REGa=#N$0D.
+ $EE9D CALL $BAC3                       ; Call #R$BAC3.
+ $EEA0 CALL $BAB1                       ; Call #R$BAB1.
+; Tidy up the stack.
+ $EEA3 POP HL                           ; {Restore #REGhl, #REGhl and #REGhl
+ $EEA4 POP HL                           ; from the stack.
+ $EEA5 POP HL                           ; }
+ $EEA6 JP $EDD7                         ; Jump to #R$EDD7.
 
 ; Events
 ;
@@ -7072,8 +7984,8 @@ c$EF54 LD HL,$BC6F   ; #REGhl=#R$BC6F.
  $EFAC JR NZ,$EFB8   ; Jump to #R$EFB8 if #REGa is not equal to #N$2B.
  $EFAE LD HL,$BC66   ; #REGhl=#R$BC66.
  $EFB1 SET 1,(HL)    ; Set bit 1 of *#REGhl.
- $EFB3 LD A,$05      ; #REGa=#N$05.
- $EFB5 LD ($BC68),A  ; Write #REGa to *#R$BC68.
+ $EFB3 LD A,$05      ; {Write #N$05 to *#R$BC68.
+ $EFB5 LD ($BC68),A  ; }
 *$EFB8 LD A,$2A      ; #REGa=#N$2A.
  $EFBA CALL $C35F    ; Call #R$C35F.
  $EFBD JR NZ,$EFC9   ; Jump to #R$EFC9 if #REGa is not equal to #N$2A.
@@ -8046,23 +8958,23 @@ c$F155 LD C,$00      ;
  $F8AE LD HL,$EDD7   ;
  $F8B1 EX (SP),HL    ;
 ; Print "#STR$E0B4,$08($b==$FF)".
- $F8B2 LD HL,$E0B4   ;
- $F8B5 JP $F03A      ;
-*$F8B8 LD HL,$EA9E   ;
- $F8BB CALL $C37F    ;
- $F8BE JR NZ,$F90A   ;
- $F8C0 LD A,$0F      ;
- $F8C2 CALL $C3E4    ;
- $F8C5 JP NZ,$F07E   ;
+ $F8B2 LD HL,$E0B4   ; #REGhl=#R$E0B4.
+ $F8B5 JP $F03A      ; Jump to #R$F03A.
+*$F8B8 LD HL,$EA9E   ; #REGhl=#R$EA9E.
+ $F8BB CALL $C37F    ; Call #R$C37F.
+ $F8BE JR NZ,$F90A   ; Jump to #R$F90A if ?? is not equal to #N$00.
+ $F8C0 LD A,$0F      ; #REGa=#N$0F.
+ $F8C2 CALL $C3E4    ; Call #R$C3E4.
+ $F8C5 JP NZ,$F07E   ; Jump to #R$F07E if ?? is not equal to #N$0F.
 ; This entry point is used by the routine at #R$F90A.
-*$F8C8 LD HL,$E8B2   ;
- $F8CB CALL $C401    ;
- $F8CE LD B,A        ;
- $F8CF BIT 7,A       ;
- $F8D1 JR NZ,$F8D9   ;
+*$F8C8 LD HL,$E8B2   ; #REGhl=#R$E8B2.
+ $F8CB CALL $C401    ; Call #R$C401.
+ $F8CE LD B,A        ; #REGb=#REGa.
+ $F8CF BIT 7,A       ; Test bit 7 of #REGa.
+ $F8D1 JR NZ,$F8D9   ; Jump to #R$F8D9 if ?? is not equal to #N$0F.
 ; Print "#STR$E138,$08($b==$FF)".
- $F8D3 LD HL,$E138   ;
- $F8D6 JP $F03A      ;
+ $F8D3 LD HL,$E138   ; #REGhl=#R$E138.
+ $F8D6 JP $F03A      ; Jump to #R$F03A.
 
 ; Action: Shooting
 ;
@@ -8098,465 +9010,465 @@ c$F8D9 PUSH BC                      ; Stash #REGbc on the stack.
 ; Routine at F90A
 ;
 ; Used by the routine at #R$F155.
-c$F90A LD HL,$EAA2   ;
- $F90D CALL $C37F    ;
- $F910 JR NZ,$F918   ;
+c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
+ $F90D CALL $C37F    ; Call #R$C37F.
+ $F910 JR NZ,$F918   ; Jump to #R$F918 if ?? is not equal to #N$00.
 ; Print "#STR$E14B,$08($b==$FF)".
- $F912 LD HL,$E14B   ;
- $F915 JP $F03A      ;
-*$F918 JP $F06F      ;
- $F91B CALL $C47B    ;
- $F91E RET C         ;
- $F91F LD A,$0F      ;
- $F921 CALL $C3E4    ;
- $F924 JR Z,$F92C    ;
+ $F912 LD HL,$E14B   ; #REGhl=#R$E14B.
+ $F915 JP $F03A      ; Jump to #R$F03A.
+*$F918 JP $F06F      ; Jump to #R$F06F.
+ $F91B CALL $C47B    ; Call #R$C47B.
+ $F91E RET C         ; Return if ?? is less than #N$00.
+ $F91F LD A,$0F      ; #REGa=#N$0F.
+ $F921 CALL $C3E4    ; Call #R$C3E4.
+ $F924 JR Z,$F92C    ; Jump to #R$F92C if ?? is equal to #N$0F.
 ; Print "#STR$E15E,$08($b==$FF)".
- $F926 LD HL,$E15E   ;
- $F929 JP $F03A      ;
-*$F92C LD HL,$EAA6   ;
- $F92F CALL $C37F    ;
- $F932 JP Z,$F8C8    ;
- $F935 LD HL,$EAAC   ;
- $F938 CALL $C37F    ;
- $F93B JR NZ,$F943   ;
+ $F926 LD HL,$E15E   ; #REGhl=#R$E15E.
+ $F929 JP $F03A      ; Jump to #R$F03A.
+*$F92C LD HL,$EAA6   ; #REGhl=#R$EAA6.
+ $F92F CALL $C37F    ; Call #R$C37F.
+ $F932 JP Z,$F8C8    ; Jump to #R$F8C8 if ?? is equal to #N$0F.
+ $F935 LD HL,$EAAC   ; #REGhl=#R$EAAC.
+ $F938 CALL $C37F    ; Call #R$C37F.
+ $F93B JR NZ,$F943   ; Jump to #R$F943 if ?? is not equal to #N$0F.
 ; Print "#STR$E14B,$08($b==$FF)".
- $F93D LD HL,$E14B   ;
- $F940 JP $F03A      ;
-*$F943 JP $F097      ;
- $F946 CALL $C47B    ;
- $F949 RET C         ;
- $F94A LD HL,$EAB2   ;
- $F94D CALL $C37F    ;
- $F950 JR NZ,$F960   ;
- $F952 LD A,($BCCB)  ;
- $F955 CP $04        ;
- $F957 JP NZ,$F06F   ;
- $F95A LD A,$03      ;
- $F95C CALL $EF54    ;
- $F95F RET           ;
-*$F960 LD HL,$EAB5   ;
- $F963 CALL $C37F    ;
- $F966 JR NZ,$F976   ;
- $F968 LD A,($BCCB)  ;
- $F96B CP $03        ;
- $F96D JP NZ,$F06F   ;
- $F970 LD A,$04      ;
- $F972 CALL $EF54    ;
- $F975 RET           ;
-*$F976 LD HL,$EABC   ;
- $F979 CALL $C37F    ;
- $F97C JR NZ,$F984   ;
- $F97E LD HL,$BED1   ;
- $F981 JP $F03A      ;
-*$F984 LD HL,$EA0D   ;
- $F987 CALL $C37F    ;
- $F98A JP Z,$F48D    ;
- $F98D LD HL,$EA1D   ;
- $F990 CALL $C37F    ;
- $F993 JP Z,$F4B4    ;
- $F996 JP $F06F      ;
- $F999 CALL $C47B    ;
- $F99C RET C         ;
- $F99D LD HL,$E9CC   ;
- $F9A0 CALL $C37F    ;
- $F9A3 JR NZ,$F9C1   ;
- $F9A5 LD HL,$E895   ;
- $F9A8 CALL $C401    ;
- $F9AB LD B,A        ;
- $F9AC PUSH BC       ;
- $F9AD CALL $C3E4    ;
- $F9B0 JR NZ,$F9B6   ;
- $F9B2 LD HL,$BC98   ;
- $F9B5 DEC (HL)      ;
-*$F9B6 POP BC        ;
- $F9B7 LD A,B        ;
- $F9B8 CALL $C3EA    ;
+ $F93D LD HL,$E14B   ; #REGhl=#R$E14B.
+ $F940 JP $F03A      ; Jump to #R$F03A.
+*$F943 JP $F097      ; Jump to #R$F097.
+ $F946 CALL $C47B    ; Call #R$C47B.
+ $F949 RET C         ; Return if ?? is less than #N$0F.
+ $F94A LD HL,$EAB2   ; #REGhl=#R$EAB2.
+ $F94D CALL $C37F    ; Call #R$C37F.
+ $F950 JR NZ,$F960   ; Jump to #R$F960 if ?? is not equal to #N$0F.
+ $F952 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $F955 CP $04        ; Compare #REGa with #N$04.
+ $F957 JP NZ,$F06F   ; Jump to #R$F06F if #REGa is not equal to #N$04.
+ $F95A LD A,$03      ; #REGa=#N$03.
+ $F95C CALL $EF54    ; Call #R$EF54.
+ $F95F RET           ; Return.
+*$F960 LD HL,$EAB5   ; #REGhl=#R$EAB5.
+ $F963 CALL $C37F    ; Call #R$C37F.
+ $F966 JR NZ,$F976   ; Jump to #R$F976 if #REGa is not equal to #N$03.
+ $F968 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $F96B CP $03        ; Compare #REGa with #N$03.
+ $F96D JP NZ,$F06F   ; Jump to #R$F06F if #REGa is not equal to #N$03.
+ $F970 LD A,$04      ; #REGa=#N$04.
+ $F972 CALL $EF54    ; Call #R$EF54.
+ $F975 RET           ; Return.
+*$F976 LD HL,$EABC   ; #REGhl=#R$EABC.
+ $F979 CALL $C37F    ; Call #R$C37F.
+ $F97C JR NZ,$F984   ; Jump to #R$F984 if #REGa is not equal to #N$04.
+ $F97E LD HL,$BED1   ; #REGhl=#R$BED1.
+ $F981 JP $F03A      ; Jump to #R$F03A.
+*$F984 LD HL,$EA0D   ; #REGhl=#R$EA0D.
+ $F987 CALL $C37F    ; Call #R$C37F.
+ $F98A JP Z,$F48D    ; Jump to #R$F48D if #REGa is equal to #N$04.
+ $F98D LD HL,$EA1D   ; #REGhl=#R$EA1D.
+ $F990 CALL $C37F    ; Call #R$C37F.
+ $F993 JP Z,$F4B4    ; Jump to #R$F4B4 if #REGa is equal to #N$04.
+ $F996 JP $F06F      ; Jump to #R$F06F.
+ $F999 CALL $C47B    ; Call #R$C47B.
+ $F99C RET C         ; Return if #REGa is less than #N$04.
+ $F99D LD HL,$E9CC   ; #REGhl=#R$E9CC.
+ $F9A0 CALL $C37F    ; Call #R$C37F.
+ $F9A3 JR NZ,$F9C1   ; Jump to #R$F9C1 if #REGa is not equal to #N$04.
+ $F9A5 LD HL,$E895   ; #REGhl=#R$E895.
+ $F9A8 CALL $C401    ; Call #R$C401.
+ $F9AB LD B,A        ; #REGb=#REGa.
+ $F9AC PUSH BC       ; Stash #REGbc on the stack.
+ $F9AD CALL $C3E4    ; Call #R$C3E4.
+ $F9B0 JR NZ,$F9B6   ; Jump to #R$F9B6 if #REGa is not equal to #N$04.
+ $F9B2 LD HL,$BC98   ; #REGhl=#R$BC98.
+ $F9B5 DEC (HL)      ; Decrease *#REGhl by one.
+*$F9B6 POP BC        ; Restore #REGbc from the stack.
+ $F9B7 LD A,B        ; #REGa=#REGb.
+ $F9B8 CALL $C3EA    ; Call #R$C3EA.
 ; Print "#STR$E175,$08($b==$FF)".
- $F9BB LD HL,$E175   ;
- $F9BE JP $F03A      ;
-*$F9C1 LD HL,$E9D7   ;
- $F9C4 CALL $C37F    ;
- $F9C7 JR NZ,$F9D3   ;
- $F9C9 LD HL,$EDD7   ;
- $F9CC EX (SP),HL    ;
- $F9CD LD HL,$E19B   ;
- $F9D0 JP $F03A      ;
-*$F9D3 LD HL,$E9E5   ;
- $F9D6 CALL $C37F    ;
- $F9D9 JR NZ,$F9E1   ;
- $F9DB LD HL,$E208   ;
- $F9DE JP $F03A      ;
-*$F9E1 JP $F083      ;
- $F9E4 CALL $C47B    ;
- $F9E7 RET C         ;
- $F9E8 LD HL,$EAB8   ;
- $F9EB CALL $C37F    ;
- $F9EE JR NZ,$FA14   ;
- $F9F0 LD HL,$E87A   ;
- $F9F3 CALL $C401    ;
- $F9F6 LD B,A        ;
- $F9F7 LD C,$0D      ;
- $F9F9 PUSH BC       ;
- $F9FA CALL $C3E4    ;
- $F9FD POP BC        ;
- $F9FE JP NZ,$F07E   ;
- $FA01 CALL $C426    ;
- $FA04 LD HL,$BC66   ;
- $FA07 SET 2,(HL)    ;
- $FA09 LD A,$06      ;
- $FA0B LD ($BC69),A  ;
- $FA0E LD HL,$E238   ;
- $FA11 JP $F03A      ;
-*$FA14 LD HL,$EABA   ;
- $FA17 CALL $C37F    ;
- $FA1A JR NZ,$FA39   ;
- $FA1C LD A,($BCCB)  ;
- $FA1F LD HL,$FA35   ;
- $FA22 LD BC,$0004   ;
- $FA25 CPIR          ;
- $FA27 JR Z,$FA2F    ;
- $FA29 LD HL,$E28E   ;
- $FA2C JP $F03A      ;
-*$FA2F LD HL,$E2AC   ;
- $FA32 JP $F03A      ;
- $FA35 INC D         ;
- $FA36 LD DE,$6412   ;
-*$FA39 JP $F06F      ;
- $FA3C CALL $C47B    ;
- $FA3F RET C         ;
- $FA40 LD HL,$EABE   ;
- $FA43 CALL $C37F    ;
- $FA46 JR NZ,$FA85   ;
- $FA48 LD A,($BCCB)  ;
- $FA4B CP $61        ;
- $FA4D JR Z,$FA53    ;
- $FA4F CP $62        ;
- $FA51 JR NZ,$FA85   ;
-*$FA53 LD HL,$E8CA   ;
- $FA56 CALL $C401    ;
- $FA59 CP $2E        ;
- $FA5B JR NZ,$FA63   ;
- $FA5D LD HL,$E2F1   ;
- $FA60 JP $F03A      ;
-*$FA63 CP $2D        ;
- $FA65 JR Z,$FA6C    ;
- $FA67 CP $30        ;
- $FA69 JP NZ,$F088   ;
-*$FA6C LD BC,$2D2C   ;
- $FA6F CALL $C426    ;
- $FA72 LD BC,$302F   ;
- $FA75 CALL $C426    ;
- $FA78 LD A,$62      ;
- $FA7A LD ($ED57),A  ;
- $FA7D LD A,$61      ;
- $FA7F LD ($ED5C),A  ;
- $FA82 JP $F06A      ;
-*$FA85 LD HL,$EAC0   ;
- $FA88 CALL $C37F    ;
- $FA8B JR NZ,$FAA5   ;
- $FA8D LD A,($BCCB)  ;
- $FA90 CP $6A        ;
- $FA92 JR NZ,$FAA5   ;
- $FA94 LD A,$31      ;
- $FA96 CALL $C35F    ;
- $FA99 JP Z,$F088    ;
- $FA9C CALL $F06F    ;
- $FA9F LD HL,$E305   ;
- $FAA2 JP $F03A      ;
-*$FAA5 JP $F06F      ;
- $FAA8 CALL $C47B    ;
- $FAAB RET C         ;
- $FAAC LD HL,$EABE   ;
- $FAAF CALL $C37F    ;
- $FAB2 JR NZ,$FAE5   ;
- $FAB4 LD A,($BCCB)  ;
- $FAB7 CP $61        ;
- $FAB9 JR Z,$FABF    ;
- $FABB CP $62        ;
- $FABD JR NZ,$FAE5   ;
-*$FABF LD HL,$E8CA   ;
- $FAC2 CALL $C401    ;
- $FAC5 CP $2D        ;
- $FAC7 JP Z,$F08D    ;
- $FACA CP $30        ;
- $FACC JP Z,$F08D    ;
- $FACF LD BC,$2C2D   ;
- $FAD2 CALL $C426    ;
- $FAD5 LD BC,$2F30   ;
- $FAD8 CALL $C426    ;
- $FADB XOR A         ;
- $FADC LD ($ED57),A  ;
- $FADF LD ($ED5C),A  ;
- $FAE2 JP $F06A      ;
-*$FAE5 LD HL,$EAC0   ;
- $FAE8 CALL $C37F    ;
- $FAEB JR NZ,$FB05   ;
- $FAED LD A,($BCCB)  ;
- $FAF0 CP $6A        ;
- $FAF2 JR NZ,$FB05   ;
- $FAF4 LD A,$32      ;
- $FAF6 CALL $C35F    ;
- $FAF9 JP Z,$F08D    ;
- $FAFC CALL $F06F    ;
- $FAFF LD HL,$E305   ;
- $FB02 JP $F03A      ;
-*$FB05 LD HL,$EAC5   ;
- $FB08 CALL $C37F    ;
- $FB0B JR NZ,$FB13   ;
- $FB0D LD HL,$E31A   ;
- $FB10 JP $F03A      ;
-*$FB13 JP $F06F      ;
- $FB16 CALL $C3AE    ;
- $FB19 JP NZ,$F074   ;
- $FB1C LD HL,$EAC7   ;
- $FB1F CALL $C37F    ;
- $FB22 JR NZ,$FB6E   ;
- $FB24 LD A,$39      ;
- $FB26 CALL $C35F    ;
- $FB29 JP NZ,$F06A   ;
- $FB2C LD A,$29      ;
- $FB2E CALL $C35F    ;
- $FB31 JR Z,$FB43    ;
- $FB33 LD HL,$EDD7   ;
- $FB36 EX (SP),HL    ;
- $FB37 LD HL,$E333   ;
- $FB3A CALL $BAB1    ;
- $FB3D LD HL,$E36A   ;
- $FB40 JP $F03E      ;
-*$FB43 LD HL,$BC6F   ;
- $FB46 RES 0,(HL)    ;
- $FB48 LD A,$29      ;
- $FB4A CALL $C3EA    ;
- $FB4D LD BC,$393A   ;
- $FB50 CALL $C426    ;
- $FB53 LD A,$2F      ;
- $FB55 LD ($EC27),A  ;
- $FB58 LD A,$30      ;
- $FB5A LD ($EC2A),A  ;
- $FB5D LD A,$31      ;
- $FB5F LD ($EC30),A  ;
- $FB62 LD HL,$E333   ;
- $FB65 CALL $BAB1    ;
- $FB68 LD HL,$E384   ;
- $FB6B JP $F03E      ;
-*$FB6E JP $F074      ;
- $FB71 CALL $C49F    ;
- $FB74 RET C         ;
- $FB75 LD HL,$EA70   ;
- $FB78 CALL $C37F    ;
- $FB7B JR NZ,$FB80   ;
- $FB7D JP $F81B      ;
-*$FB80 JP $F06F      ;
- $FB83 CALL $C47B    ;
- $FB86 RET C         ;
- $FB87 LD HL,$BC54   ;
- $FB8A BIT 2,(HL)    ;
- $FB8C JR NZ,$FB96   ;
- $FB8E SET 2,(HL)    ;
- $FB90 LD HL,$E3A3   ;
- $FB93 JP $F03A      ;
-*$FB96 BIT 3,(HL)    ;
- $FB98 JR NZ,$FBA2   ;
- $FB9A SET 3,(HL)    ;
- $FB9C LD HL,$E3B8   ;
- $FB9F JP $F03A      ;
-*$FBA2 LD HL,$E3F7   ;
- $FBA5 JP $F03A      ;
- $FBA8 CALL $C47B    ;
- $FBAB RET C         ;
- $FBAC CP $02        ;
- $FBAE JP NC,$F074   ;
- $FBB1 LD HL,$EACB   ;
- $FBB4 CALL $C37F    ;
- $FBB7 JR NZ,$FBD2   ;
- $FBB9 LD A,$34      ;
- $FBBB CALL $C35F    ;
- $FBBE JP Z,$F065    ;
- $FBC1 LD BC,$3B34   ;
- $FBC4 CALL $C426    ;
- $FBC7 LD A,$60      ;
- $FBC9 LD ($ED4F),A  ;
- $FBCC LD HL,$E40B   ;
- $FBCF JP $F03A      ;
-*$FBD2 JP $F06F      ;
- $FBD5 CALL $C47B    ;
- $FBD8 RET C         ;
- $FBD9 CP $02        ;
- $FBDB JP NC,$F074   ;
- $FBDE LD HL,$E9F1   ;
- $FBE1 CALL $C37F    ;
- $FBE4 JR NZ,$FC0A   ;
- $FBE6 LD A,$11      ;
- $FBE8 CALL $C35F    ;
- $FBEB JR NZ,$FBF3   ;
- $FBED LD HL,$E44C   ;
- $FBF0 JP $F03A      ;
-*$FBF3 LD A,$10      ;
- $FBF5 CALL $C3E4    ;
- $FBF8 JP NZ,$F07E   ;
- $FBFB LD BC,$1011   ;
- $FBFE CALL $C426    ;
- $FC01 CALL $F06A    ;
- $FC04 LD HL,$E467   ;
- $FC07 JP $F03A      ;
-*$FC0A LD HL,$E9D3   ;
- $FC0D CALL $C37F    ;
- $FC10 JR NZ,$FC18   ;
- $FC12 LD HL,$E486   ;
- $FC15 JP $F03A      ;
-*$FC18 LD HL,$E9DB   ;
- $FC1B CALL $C37F    ;
- $FC1E JP Z,$F06F    ;
- $FC21 JP $F092      ;
- $FC24 CALL $C47B    ;
- $FC27 RET C         ;
- $FC28 CP $02        ;
- $FC2A JP NC,$F074   ;
- $FC2D LD HL,$E9E1   ;
- $FC30 CALL $C37F    ;
- $FC33 JR NZ,$FC5E   ;
- $FC35 LD A,$03      ;
- $FC37 CALL $C35F    ;
- $FC3A JP Z,$F079    ;
- $FC3D LD A,$02      ;
- $FC3F CALL $C3E4    ;
- $FC42 JP NZ,$F07E   ;
- $FC45 LD BC,$0203   ;
- $FC48 CALL $C426    ;
- $FC4B LD HL,$BC66   ;
- $FC4E SET 6,(HL)    ;
- $FC50 LD A,$06      ;
- $FC52 LD ($BC6D),A  ;
- $FC55 CALL $F06A    ;
- $FC58 LD HL,$E4D1   ;
- $FC5B JP $F03A      ;
-*$FC5E JP $F06F      ;
- $FC61 CALL $C47B    ;
- $FC64 RET C         ;
- $FC65 CP $02        ;
- $FC67 JP NC,$F074   ;
- $FC6A LD HL,$EACD   ;
- $FC6D CALL $C37F    ;
- $FC70 JR NZ,$FC8C   ;
- $FC72 LD A,($BCCB)  ;
- $FC75 CP $52        ;
- $FC77 JP Z,$F079    ;
- $FC7A CP $3F        ;
- $FC7C JP Z,$F079    ;
- $FC7F LD B,$3F      ;
- $FC81 CP $3E        ;
- $FC83 JR Z,$FC87    ;
- $FC85 LD B,$52      ;
-*$FC87 LD A,B        ;
- $FC88 CALL $EF54    ;
- $FC8B RET           ;
-*$FC8C LD HL,$EACF   ;
- $FC8F CALL $C37F    ;
- $FC92 JP Z,$F074    ;
- $FC95 JP $F06F      ;
- $FC98 CALL $C47B    ;
- $FC9B RET C         ;
- $FC9C LD HL,$EAD8   ;
- $FC9F CALL $C37F    ;
- $FCA2 JR NZ,$FCAA   ;
- $FCA4 LD HL,$E305   ;
- $FCA7 JP $F03A      ;
-*$FCAA LD HL,$EADD   ;
- $FCAD CALL $C37F    ;
- $FCB0 JR NZ,$FCCA   ;
- $FCB2 LD A,$4A      ;
- $FCB4 CALL $C35F    ;
- $FCB7 JP Z,$F079    ;
- $FCBA LD A,$4A      ;
- $FCBC CALL $C3F1    ;
- $FCBF LD A,$3B      ;
- $FCC1 CALL $C3F1    ;
- $FCC4 LD HL,$E508   ;
- $FCC7 JP $F03A      ;
-*$FCCA JP $F074      ;
- $FCCD CALL $C47B    ;
- $FCD0 RET C         ;
- $FCD1 LD HL,$EAE6   ;
- $FCD4 CALL $C37F    ;
- $FCD7 JR NZ,$FCFF   ;
- $FCD9 LD A,($BCCB)  ;
- $FCDC CP $6A        ;
- $FCDE JP Z,$F06F    ;
- $FCE1 LD A,$2E      ;
- $FCE3 CALL $C35F    ;
- $FCE6 JP NZ,$F079   ;
- $FCE9 LD A,$1F      ;
- $FCEB CALL $C3E4    ;
- $FCEE JR Z,$FCF6    ;
- $FCF0 LD HL,$E604   ;
- $FCF3 JP $F03A      ;
-*$FCF6 LD BC,$2E2D   ;
- $FCF9 CALL $C426    ;
- $FCFC JP $F06A      ;
-*$FCFF JP $F06F      ;
- $FD02 CALL $C4B7    ;
- $FD05 RET C         ;
- $FD06 CP $02        ;
- $FD08 JP NC,$F074   ;
- $FD0B LD A,($BCCB)  ;
- $FD0E LD HL,$FD1E   ;
- $FD11 LD BC,$0003   ;
- $FD14 CPIR          ;
- $FD16 JR Z,$FD21    ;
- $FD18 LD HL,$DC37   ;
- $FD1B JP $F03A      ;
- $FD1E LD L,E        ;
- $FD1F INC B         ;
- $FD20 LD (BC),A     ;
-*$FD21 CP $02        ;
- $FD23 JR NZ,$FD29   ;
- $FD25 CALL $EF54    ;
- $FD28 RET           ;
-*$FD29 LD HL,$EAEC   ;
- $FD2C CALL $C37F    ;
- $FD2F JR NZ,$FD3F   ;
- $FD31 LD A,($BCCB)  ;
- $FD34 CP $04        ;
- $FD36 JP NZ,$F079   ;
- $FD39 LD A,$6B      ;
- $FD3B CALL $EF54    ;
- $FD3E RET           ;
-*$FD3F LD HL,$EAF5   ;
- $FD42 CALL $C37F    ;
- $FD45 JR NZ,$FD54   ;
- $FD47 LD A,($BCCB)  ;
- $FD4A CP $6B        ;
- $FD4C JR NZ,$FD67   ;
- $FD4E LD A,$04      ;
- $FD50 CALL $EF54    ;
- $FD53 RET           ;
-*$FD54 LD HL,$EAFE   ;
- $FD57 CALL $C37F    ;
- $FD5A JR Z,$FD67    ;
- $FD5C LD HL,$EB07   ;
- $FD5F CALL $C37F    ;
- $FD62 JR Z,$FD67    ;
- $FD64 JP $F074      ;
-*$FD67 LD A,$02      ;
- $FD69 CALL $EF54    ;
- $FD6C RET           ;
- $FD6D CALL $C47B    ;
- $FD70 RET C         ;
- $FD71 CP $02        ;
- $FD73 JP Z,$F074    ;
- $FD76 LD HL,$DB5F   ;
- $FD79 JP $F03A      ;
- $FD7C LD HL,$E5A4   ;
- $FD7F JP $F03A      ;
+ $F9BB LD HL,$E175   ; #REGhl=#R$E175.
+ $F9BE JP $F03A      ; Jump to #R$F03A.
+*$F9C1 LD HL,$E9D7   ; #REGhl=#R$E9D7.
+ $F9C4 CALL $C37F    ; Call #R$C37F.
+ $F9C7 JR NZ,$F9D3   ; Jump to #R$F9D3 if *#REGhl is not equal to #N$04.
+ $F9C9 LD HL,$EDD7   ; #REGhl=#R$EDD7.
+ $F9CC EX (SP),HL    ; Exchange the *#REGsp with the #REGhl register.
+ $F9CD LD HL,$E19B   ; #REGhl=#R$E19B.
+ $F9D0 JP $F03A      ; Jump to #R$F03A.
+*$F9D3 LD HL,$E9E5   ; #REGhl=#R$E9E5.
+ $F9D6 CALL $C37F    ; Call #R$C37F.
+ $F9D9 JR NZ,$F9E1   ; Jump to #R$F9E1 if *#REGhl is not equal to #N$04.
+ $F9DB LD HL,$E208   ; #REGhl=#R$E208.
+ $F9DE JP $F03A      ; Jump to #R$F03A.
+*$F9E1 JP $F083      ; Jump to #R$F083.
+ $F9E4 CALL $C47B    ; Call #R$C47B.
+ $F9E7 RET C         ; Return if *#REGhl is less than #N$04.
+ $F9E8 LD HL,$EAB8   ; #REGhl=#R$EAB8.
+ $F9EB CALL $C37F    ; Call #R$C37F.
+ $F9EE JR NZ,$FA14   ; Jump to #R$FA14 if *#REGhl is not equal to #N$04.
+ $F9F0 LD HL,$E87A   ; #REGhl=#R$E87A.
+ $F9F3 CALL $C401    ; Call #R$C401.
+ $F9F6 LD B,A        ; #REGb=#REGa.
+ $F9F7 LD C,$0D      ; #REGc=#N$0D.
+ $F9F9 PUSH BC       ; Stash #REGbc on the stack.
+ $F9FA CALL $C3E4    ; Call #R$C3E4.
+ $F9FD POP BC        ; Restore #REGbc from the stack.
+ $F9FE JP NZ,$F07E   ; Jump to #R$F07E if *#REGhl is not equal to #N$0D.
+ $FA01 CALL $C426    ; Call #R$C426.
+ $FA04 LD HL,$BC66   ; #REGhl=#R$BC66.
+ $FA07 SET 2,(HL)    ; Set bit 2 of *#REGhl.
+ $FA09 LD A,$06      ; #REGa=#N$06.
+ $FA0B LD ($BC69),A  ; Write #REGa to *#R$BC69.
+ $FA0E LD HL,$E238   ; #REGhl=#R$E238.
+ $FA11 JP $F03A      ; Jump to #R$F03A.
+*$FA14 LD HL,$EABA   ; #REGhl=#R$EABA.
+ $FA17 CALL $C37F    ; Call #R$C37F.
+ $FA1A JR NZ,$FA39   ; Jump to #R$FA39 if *#REGhl is not equal to #N$06.
+ $FA1C LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $FA1F LD HL,$FA35   ; #REGhl=#R$FA35.
+ $FA22 LD BC,$0004   ; #REGbc=#N($0004,$04,$04).
+ $FA25 CPIR          ; CPIR.
+ $FA27 JR Z,$FA2F    ; Jump to #R$FA2F if *#REGhl is equal to #N$06.
+ $FA29 LD HL,$E28E   ; #REGhl=#R$E28E.
+ $FA2C JP $F03A      ; Jump to #R$F03A.
+*$FA2F LD HL,$E2AC   ; #REGhl=#R$E2AC.
+ $FA32 JP $F03A      ; Jump to #R$F03A.
+ $FA35 INC D         ; Increment #REGd by one.
+ $FA36 LD DE,$6412   ; #REGde=#N$6412.
+*$FA39 JP $F06F      ; Jump to #R$F06F.
+ $FA3C CALL $C47B    ; Call #R$C47B.
+ $FA3F RET C         ; Return if #REGd is less than #N$06.
+ $FA40 LD HL,$EABE   ; #REGhl=#R$EABE.
+ $FA43 CALL $C37F    ; Call #R$C37F.
+ $FA46 JR NZ,$FA85   ; Jump to #R$FA85 if #REGd is not equal to #N$06.
+ $FA48 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $FA4B CP $61        ; Compare #REGa with #N$61.
+ $FA4D JR Z,$FA53    ; Jump to #R$FA53 if #REGa is equal to #N$61.
+ $FA4F CP $62        ; Compare #REGa with #N$62.
+ $FA51 JR NZ,$FA85   ; Jump to #R$FA85 if #REGa is not equal to #N$62.
+*$FA53 LD HL,$E8CA   ; #REGhl=#R$E8CA.
+ $FA56 CALL $C401    ; Call #R$C401.
+ $FA59 CP $2E        ; Compare #REGa with #N$2E.
+ $FA5B JR NZ,$FA63   ; Jump to #R$FA63 if #REGa is not equal to #N$2E.
+ $FA5D LD HL,$E2F1   ; #REGhl=#R$E2F1.
+ $FA60 JP $F03A      ; Jump to #R$F03A.
+*$FA63 CP $2D        ; Compare #REGa with #N$2D.
+ $FA65 JR Z,$FA6C    ; Jump to #R$FA6C if #REGa is equal to #N$2D.
+ $FA67 CP $30        ; Compare #REGa with #N$30.
+ $FA69 JP NZ,$F088   ; Jump to #R$F088 if #REGa is not equal to #N$30.
+*$FA6C LD BC,$2D2C   ; #REGbc=#N($2D2C,$04,$04).
+ $FA6F CALL $C426    ; Call #R$C426.
+ $FA72 LD BC,$302F   ; #REGbc=#N($302F,$04,$04).
+ $FA75 CALL $C426    ; Call #R$C426.
+ $FA78 LD A,$62      ; #REGa=#N$62.
+ $FA7A LD ($ED57),A  ; Write #REGa to *#R$ED57.
+ $FA7D LD A,$61      ; #REGa=#N$61.
+ $FA7F LD ($ED5C),A  ; Write #REGa to *#R$ED5C.
+ $FA82 JP $F06A      ; Jump to #R$F06A.
+*$FA85 LD HL,$EAC0   ; #REGhl=#R$EAC0.
+ $FA88 CALL $C37F    ; Call #R$C37F.
+ $FA8B JR NZ,$FAA5   ; Jump to #R$FAA5 if #REGa is not equal to #N$61.
+ $FA8D LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $FA90 CP $6A        ; Compare #REGa with #N$6A.
+ $FA92 JR NZ,$FAA5   ; Jump to #R$FAA5 if #REGa is not equal to #N$6A.
+ $FA94 LD A,$31      ; #REGa=#N$31.
+ $FA96 CALL $C35F    ; Call #R$C35F.
+ $FA99 JP Z,$F088    ; Jump to #R$F088 if #REGa is equal to #N$31.
+ $FA9C CALL $F06F    ; Call #R$F06F.
+ $FA9F LD HL,$E305   ; #REGhl=#R$E305.
+ $FAA2 JP $F03A      ; Jump to #R$F03A.
+*$FAA5 JP $F06F      ; Jump to #R$F06F.
+ $FAA8 CALL $C47B    ; Call #R$C47B.
+ $FAAB RET C         ; Return if #REGa is less than #N$31.
+ $FAAC LD HL,$EABE   ; #REGhl=#R$EABE.
+ $FAAF CALL $C37F    ; Call #R$C37F.
+ $FAB2 JR NZ,$FAE5   ; Jump to #R$FAE5 if #REGa is not equal to #N$31.
+ $FAB4 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $FAB7 CP $61        ; Compare #REGa with #N$61.
+ $FAB9 JR Z,$FABF    ; Jump to #R$FABF if #REGa is equal to #N$61.
+ $FABB CP $62        ; Compare #REGa with #N$62.
+ $FABD JR NZ,$FAE5   ; Jump to #R$FAE5 if #REGa is not equal to #N$62.
+*$FABF LD HL,$E8CA   ; #REGhl=#R$E8CA.
+ $FAC2 CALL $C401    ; Call #R$C401.
+ $FAC5 CP $2D        ; Compare #REGa with #N$2D.
+ $FAC7 JP Z,$F08D    ; Jump to #R$F08D if #REGa is equal to #N$2D.
+ $FACA CP $30        ; Compare #REGa with #N$30.
+ $FACC JP Z,$F08D    ; Jump to #R$F08D if #REGa is equal to #N$30.
+ $FACF LD BC,$2C2D   ; #REGbc=#N($2C2D,$04,$04).
+ $FAD2 CALL $C426    ; Call #R$C426.
+ $FAD5 LD BC,$2F30   ; #REGbc=#N($2F30,$04,$04).
+ $FAD8 CALL $C426    ; Call #R$C426.
+ $FADB XOR A         ; #REGa=#N$00.
+ $FADC LD ($ED57),A  ; Write #REGa to *#R$ED57.
+ $FADF LD ($ED5C),A  ; Write #REGa to *#R$ED5C.
+ $FAE2 JP $F06A      ; Jump to #R$F06A.
+*$FAE5 LD HL,$EAC0   ; #REGhl=#R$EAC0.
+ $FAE8 CALL $C37F    ; Call #R$C37F.
+ $FAEB JR NZ,$FB05   ; Jump to #R$FB05 if #REGa is not equal to #N$30.
+ $FAED LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $FAF0 CP $6A        ; Compare #REGa with #N$6A.
+ $FAF2 JR NZ,$FB05   ; Jump to #R$FB05 if #REGa is not equal to #N$6A.
+ $FAF4 LD A,$32      ; #REGa=#N$32.
+ $FAF6 CALL $C35F    ; Call #R$C35F.
+ $FAF9 JP Z,$F08D    ; Jump to #R$F08D if #REGa is equal to #N$32.
+ $FAFC CALL $F06F    ; Call #R$F06F.
+ $FAFF LD HL,$E305   ; #REGhl=#R$E305.
+ $FB02 JP $F03A      ; Jump to #R$F03A.
+*$FB05 LD HL,$EAC5   ; #REGhl=#R$EAC5.
+ $FB08 CALL $C37F    ; Call #R$C37F.
+ $FB0B JR NZ,$FB13   ; Jump to #R$FB13 if #REGa is not equal to #N$32.
+ $FB0D LD HL,$E31A   ; #REGhl=#R$E31A.
+ $FB10 JP $F03A      ; Jump to #R$F03A.
+*$FB13 JP $F06F      ; Jump to #R$F06F.
+ $FB16 CALL $C3AE    ; Call #R$C3AE.
+ $FB19 JP NZ,$F074   ; Jump to #R$F074 if #REGa is not equal to #N$32.
+ $FB1C LD HL,$EAC7   ; #REGhl=#R$EAC7.
+ $FB1F CALL $C37F    ; Call #R$C37F.
+ $FB22 JR NZ,$FB6E   ; Jump to #R$FB6E if #REGa is not equal to #N$32.
+ $FB24 LD A,$39      ; #REGa=#N$39.
+ $FB26 CALL $C35F    ; Call #R$C35F.
+ $FB29 JP NZ,$F06A   ; Jump to #R$F06A if #REGa is not equal to #N$39.
+ $FB2C LD A,$29      ; #REGa=#N$29.
+ $FB2E CALL $C35F    ; Call #R$C35F.
+ $FB31 JR Z,$FB43    ; Jump to #R$FB43 if #REGa is equal to #N$29.
+ $FB33 LD HL,$EDD7   ; #REGhl=#R$EDD7.
+ $FB36 EX (SP),HL    ; Exchange the *#REGsp with the #REGhl register.
+ $FB37 LD HL,$E333   ; #REGhl=#R$E333.
+ $FB3A CALL $BAB1    ; Call #R$BAB1.
+ $FB3D LD HL,$E36A   ; #REGhl=#R$E36A.
+ $FB40 JP $F03E      ; Jump to #R$F03E.
+*$FB43 LD HL,$BC6F   ; #REGhl=#R$BC6F.
+ $FB46 RES 0,(HL)    ; Reset bit 0 of *#REGhl.
+ $FB48 LD A,$29      ; #REGa=#N$29.
+ $FB4A CALL $C3EA    ; Call #R$C3EA.
+ $FB4D LD BC,$393A   ; #REGbc=#N($393A,$04,$04).
+ $FB50 CALL $C426    ; Call #R$C426.
+ $FB53 LD A,$2F      ; #REGa=#N$2F.
+ $FB55 LD ($EC27),A  ; Write #REGa to *#R$EC27.
+ $FB58 LD A,$30      ; #REGa=#N$30.
+ $FB5A LD ($EC2A),A  ; Write #REGa to *#R$EC2A.
+ $FB5D LD A,$31      ; #REGa=#N$31.
+ $FB5F LD ($EC30),A  ; Write #REGa to *#R$EC30.
+ $FB62 LD HL,$E333   ; #REGhl=#R$E333.
+ $FB65 CALL $BAB1    ; Call #R$BAB1.
+ $FB68 LD HL,$E384   ; #REGhl=#R$E384.
+ $FB6B JP $F03E      ; Jump to #R$F03E.
+*$FB6E JP $F074      ; Jump to #R$F074.
+ $FB71 CALL $C49F    ; Call #R$C49F.
+ $FB74 RET C         ; Return if #REGa is less than #N$31.
+ $FB75 LD HL,$EA70   ; #REGhl=#R$EA70.
+ $FB78 CALL $C37F    ; Call #R$C37F.
+ $FB7B JR NZ,$FB80   ; Jump to #R$FB80 if #REGa is not equal to #N$31.
+ $FB7D JP $F81B      ; Jump to #R$F81B.
+*$FB80 JP $F06F      ; Jump to #R$F06F.
+ $FB83 CALL $C47B    ; Call #R$C47B.
+ $FB86 RET C         ; Return if #REGa is less than #N$31.
+ $FB87 LD HL,$BC54   ; #REGhl=#R$BC54.
+ $FB8A BIT 2,(HL)    ; Test bit 2 of *#REGhl.
+ $FB8C JR NZ,$FB96   ; Jump to #R$FB96 if #REGa is not equal to #N$31.
+ $FB8E SET 2,(HL)    ; Set bit 2 of *#REGhl.
+ $FB90 LD HL,$E3A3   ; #REGhl=#R$E3A3.
+ $FB93 JP $F03A      ; Jump to #R$F03A.
+*$FB96 BIT 3,(HL)    ; Test bit 3 of *#REGhl.
+ $FB98 JR NZ,$FBA2   ; Jump to #R$FBA2 if #REGa is not equal to #N$31.
+ $FB9A SET 3,(HL)    ; Set bit 3 of *#REGhl.
+ $FB9C LD HL,$E3B8   ; #REGhl=#R$E3B8.
+ $FB9F JP $F03A      ; Jump to #R$F03A.
+*$FBA2 LD HL,$E3F7   ; #REGhl=#R$E3F7.
+ $FBA5 JP $F03A      ; Jump to #R$F03A.
+ $FBA8 CALL $C47B    ; Call #R$C47B.
+ $FBAB RET C         ; Return if #REGa is less than #N$31.
+ $FBAC CP $02        ; Compare #REGa with #N$02.
+ $FBAE JP NC,$F074   ; Jump to #R$F074 if #REGa is greater than #N$02.
+ $FBB1 LD HL,$EACB   ; #REGhl=#R$EACB.
+ $FBB4 CALL $C37F    ; Call #R$C37F.
+ $FBB7 JR NZ,$FBD2   ; Jump to #R$FBD2 if #REGa is not equal to #N$02.
+ $FBB9 LD A,$34      ; #REGa=#N$34.
+ $FBBB CALL $C35F    ; Call #R$C35F.
+ $FBBE JP Z,$F065    ; Jump to #R$F065 if #REGa is equal to #N$34.
+ $FBC1 LD BC,$3B34   ; #REGbc=#N($3B34,$04,$04).
+ $FBC4 CALL $C426    ; Call #R$C426.
+ $FBC7 LD A,$60      ; #REGa=#N$60.
+ $FBC9 LD ($ED4F),A  ; Write #REGa to *#R$ED4F.
+ $FBCC LD HL,$E40B   ; #REGhl=#R$E40B.
+ $FBCF JP $F03A      ; Jump to #R$F03A.
+*$FBD2 JP $F06F      ; Jump to #R$F06F.
+ $FBD5 CALL $C47B    ; Call #R$C47B.
+ $FBD8 RET C         ; Return if #REGa is less than #N$60.
+ $FBD9 CP $02        ; Compare #REGa with #N$02.
+ $FBDB JP NC,$F074   ; Jump to #R$F074 if #REGa is greater than #N$02.
+ $FBDE LD HL,$E9F1   ; #REGhl=#R$E9F1.
+ $FBE1 CALL $C37F    ; Call #R$C37F.
+ $FBE4 JR NZ,$FC0A   ; Jump to #R$FC0A if #REGa is not equal to #N$02.
+ $FBE6 LD A,$11      ; #REGa=#N$11.
+ $FBE8 CALL $C35F    ; Call #R$C35F.
+ $FBEB JR NZ,$FBF3   ; Jump to #R$FBF3 if #REGa is not equal to #N$11.
+ $FBED LD HL,$E44C   ; #REGhl=#R$E44C.
+ $FBF0 JP $F03A      ; Jump to #R$F03A.
+*$FBF3 LD A,$10      ; #REGa=#N$10.
+ $FBF5 CALL $C3E4    ; Call #R$C3E4.
+ $FBF8 JP NZ,$F07E   ; Jump to #R$F07E if #REGa is not equal to #N$10.
+ $FBFB LD BC,$1011   ; #REGbc=#N($1011,$04,$04).
+ $FBFE CALL $C426    ; Call #R$C426.
+ $FC01 CALL $F06A    ; Call #R$F06A.
+ $FC04 LD HL,$E467   ; #REGhl=#R$E467.
+ $FC07 JP $F03A      ; Jump to #R$F03A.
+*$FC0A LD HL,$E9D3   ; #REGhl=#R$E9D3.
+ $FC0D CALL $C37F    ; Call #R$C37F.
+ $FC10 JR NZ,$FC18   ; Jump to #R$FC18 if #REGa is not equal to #N$10.
+ $FC12 LD HL,$E486   ; #REGhl=#R$E486.
+ $FC15 JP $F03A      ; Jump to #R$F03A.
+*$FC18 LD HL,$E9DB   ; #REGhl=#R$E9DB.
+ $FC1B CALL $C37F    ; Call #R$C37F.
+ $FC1E JP Z,$F06F    ; Jump to #R$F06F if #REGa is equal to #N$10.
+ $FC21 JP $F092      ; Jump to #R$F092.
+ $FC24 CALL $C47B    ; Call #R$C47B.
+ $FC27 RET C         ; Return if #REGa is less than #N$10.
+ $FC28 CP $02        ; Compare #REGa with #N$02.
+ $FC2A JP NC,$F074   ; Jump to #R$F074 if #REGa is greater than #N$02.
+ $FC2D LD HL,$E9E1   ; #REGhl=#R$E9E1.
+ $FC30 CALL $C37F    ; Call #R$C37F.
+ $FC33 JR NZ,$FC5E   ; Jump to #R$FC5E if #REGa is not equal to #N$02.
+ $FC35 LD A,$03      ; #REGa=#N$03.
+ $FC37 CALL $C35F    ; Call #R$C35F.
+ $FC3A JP Z,$F079    ; Jump to #R$F079 if #REGa is equal to #N$03.
+ $FC3D LD A,$02      ; #REGa=#N$02.
+ $FC3F CALL $C3E4    ; Call #R$C3E4.
+ $FC42 JP NZ,$F07E   ; Jump to #R$F07E if #REGa is not equal to #N$02.
+ $FC45 LD BC,$0203   ; #REGbc=#N($0203,$04,$04).
+ $FC48 CALL $C426    ; Call #R$C426.
+ $FC4B LD HL,$BC66   ; #REGhl=#R$BC66.
+ $FC4E SET 6,(HL)    ; Set bit 6 of *#REGhl.
+ $FC50 LD A,$06      ; #REGa=#N$06.
+ $FC52 LD ($BC6D),A  ; Write #REGa to *#R$BC6D.
+ $FC55 CALL $F06A    ; Call #R$F06A.
+ $FC58 LD HL,$E4D1   ; #REGhl=#R$E4D1.
+ $FC5B JP $F03A      ; Jump to #R$F03A.
+*$FC5E JP $F06F      ; Jump to #R$F06F.
+ $FC61 CALL $C47B    ; Call #R$C47B.
+ $FC64 RET C         ; Return if #REGa is less than #N$06.
+ $FC65 CP $02        ; Compare #REGa with #N$02.
+ $FC67 JP NC,$F074   ; Jump to #R$F074 if #REGa is greater than #N$02.
+ $FC6A LD HL,$EACD   ; #REGhl=#R$EACD.
+ $FC6D CALL $C37F    ; Call #R$C37F.
+ $FC70 JR NZ,$FC8C   ; Jump to #R$FC8C if #REGa is not equal to #N$02.
+ $FC72 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $FC75 CP $52        ; Compare #REGa with #N$52.
+ $FC77 JP Z,$F079    ; Jump to #R$F079 if #REGa is equal to #N$52.
+ $FC7A CP $3F        ; Compare #REGa with #N$3F.
+ $FC7C JP Z,$F079    ; Jump to #R$F079 if #REGa is equal to #N$3F.
+ $FC7F LD B,$3F      ; #REGb=#N$3F.
+ $FC81 CP $3E        ; Compare #REGa with #N$3E.
+ $FC83 JR Z,$FC87    ; Jump to #R$FC87 if #REGa is equal to #N$3E.
+ $FC85 LD B,$52      ; #REGb=#N$52.
+*$FC87 LD A,B        ; #REGa=#REGb.
+ $FC88 CALL $EF54    ; Call #R$EF54.
+ $FC8B RET           ; Return.
+*$FC8C LD HL,$EACF   ; #REGhl=#R$EACF.
+ $FC8F CALL $C37F    ; Call #R$C37F.
+ $FC92 JP Z,$F074    ; Jump to #R$F074 if #REGa is equal to #N$52.
+ $FC95 JP $F06F      ; Jump to #R$F06F.
+ $FC98 CALL $C47B    ; Call #R$C47B.
+ $FC9B RET C         ; Return if #REGa is less than #N$52.
+ $FC9C LD HL,$EAD8   ; #REGhl=#R$EAD8.
+ $FC9F CALL $C37F    ; Call #R$C37F.
+ $FCA2 JR NZ,$FCAA   ; Jump to #R$FCAA if #REGa is not equal to #N$52.
+ $FCA4 LD HL,$E305   ; #REGhl=#R$E305.
+ $FCA7 JP $F03A      ; Jump to #R$F03A.
+*$FCAA LD HL,$EADD   ; #REGhl=#R$EADD.
+ $FCAD CALL $C37F    ; Call #R$C37F.
+ $FCB0 JR NZ,$FCCA   ; Jump to #R$FCCA if #REGa is not equal to #N$52.
+ $FCB2 LD A,$4A      ; #REGa=#N$4A.
+ $FCB4 CALL $C35F    ; Call #R$C35F.
+ $FCB7 JP Z,$F079    ; Jump to #R$F079 if #REGa is equal to #N$4A.
+ $FCBA LD A,$4A      ; #REGa=#N$4A.
+ $FCBC CALL $C3F1    ; Call #R$C3F1.
+ $FCBF LD A,$3B      ; #REGa=#N$3B.
+ $FCC1 CALL $C3F1    ; Call #R$C3F1.
+ $FCC4 LD HL,$E508   ; #REGhl=#R$E508.
+ $FCC7 JP $F03A      ; Jump to #R$F03A.
+*$FCCA JP $F074      ; Jump to #R$F074.
+ $FCCD CALL $C47B    ; Call #R$C47B.
+ $FCD0 RET C         ; Return if #REGa is less than #N$3B.
+ $FCD1 LD HL,$EAE6   ; #REGhl=#R$EAE6.
+ $FCD4 CALL $C37F    ; Call #R$C37F.
+ $FCD7 JR NZ,$FCFF   ; Jump to #R$FCFF if #REGa is not equal to #N$3B.
+ $FCD9 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $FCDC CP $6A        ; Compare #REGa with #N$6A.
+ $FCDE JP Z,$F06F    ; Jump to #R$F06F if #REGa is equal to #N$6A.
+ $FCE1 LD A,$2E      ; #REGa=#N$2E.
+ $FCE3 CALL $C35F    ; Call #R$C35F.
+ $FCE6 JP NZ,$F079   ; Jump to #R$F079 if #REGa is not equal to #N$2E.
+ $FCE9 LD A,$1F      ; #REGa=#N$1F.
+ $FCEB CALL $C3E4    ; Call #R$C3E4.
+ $FCEE JR Z,$FCF6    ; Jump to #R$FCF6 if #REGa is equal to #N$1F.
+ $FCF0 LD HL,$E604   ; #REGhl=#R$E604.
+ $FCF3 JP $F03A      ; Jump to #R$F03A.
+*$FCF6 LD BC,$2E2D   ; #REGbc=#N($2E2D,$04,$04).
+ $FCF9 CALL $C426    ; Call #R$C426.
+ $FCFC JP $F06A      ; Jump to #R$F06A.
+*$FCFF JP $F06F      ; Jump to #R$F06F.
+ $FD02 CALL $C4B7    ; Call #R$C4B7.
+ $FD05 RET C         ; Return if #REGa is less than #N$1F.
+ $FD06 CP $02        ; Compare #REGa with #N$02.
+ $FD08 JP NC,$F074   ; Jump to #R$F074 if #REGa is greater than #N$02.
+ $FD0B LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $FD0E LD HL,$FD1E   ; #REGhl=#R$FD1E.
+ $FD11 LD BC,$0003   ; #REGbc=#N($0003,$04,$04).
+ $FD14 CPIR          ; CPIR.
+ $FD16 JR Z,$FD21    ; Jump to #R$FD21 if #REGa is equal to #N$02.
+ $FD18 LD HL,$DC37   ; #REGhl=#R$DC37.
+ $FD1B JP $F03A      ; Jump to #R$F03A.
+ $FD1E LD L,E        ; #REGl=#REGe.
+ $FD1F INC B         ; Increment #REGb by one.
+ $FD20 LD (BC),A     ; Write #REGa to *#REGbc.
+*$FD21 CP $02        ; Compare #REGa with #N$02.
+ $FD23 JR NZ,$FD29   ; Jump to #R$FD29 if #REGa is not equal to #N$02.
+ $FD25 CALL $EF54    ; Call #R$EF54.
+ $FD28 RET           ; Return.
+*$FD29 LD HL,$EAEC   ; #REGhl=#R$EAEC.
+ $FD2C CALL $C37F    ; Call #R$C37F.
+ $FD2F JR NZ,$FD3F   ; Jump to #R$FD3F if #REGa is not equal to #N$02.
+ $FD31 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $FD34 CP $04        ; Compare #REGa with #N$04.
+ $FD36 JP NZ,$F079   ; Jump to #R$F079 if #REGa is not equal to #N$04.
+ $FD39 LD A,$6B      ; #REGa=#N$6B.
+ $FD3B CALL $EF54    ; Call #R$EF54.
+ $FD3E RET           ; Return.
+*$FD3F LD HL,$EAF5   ; #REGhl=#R$EAF5.
+ $FD42 CALL $C37F    ; Call #R$C37F.
+ $FD45 JR NZ,$FD54   ; Jump to #R$FD54 if #REGa is not equal to #N$6B.
+ $FD47 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $FD4A CP $6B        ; Compare #REGa with #N$6B.
+ $FD4C JR NZ,$FD67   ; Jump to #R$FD67 if #REGa is not equal to #N$6B.
+ $FD4E LD A,$04      ; #REGa=#N$04.
+ $FD50 CALL $EF54    ; Call #R$EF54.
+ $FD53 RET           ; Return.
+*$FD54 LD HL,$EAFE   ; #REGhl=#R$EAFE.
+ $FD57 CALL $C37F    ; Call #R$C37F.
+ $FD5A JR Z,$FD67    ; Jump to #R$FD67 if #REGa is equal to #N$04.
+ $FD5C LD HL,$EB07   ; #REGhl=#R$EB07.
+ $FD5F CALL $C37F    ; Call #R$C37F.
+ $FD62 JR Z,$FD67    ; Jump to #R$FD67 if #REGa is equal to #N$04.
+ $FD64 JP $F074      ; Jump to #R$F074.
+*$FD67 LD A,$02      ; #REGa=#N$02.
+ $FD69 CALL $EF54    ; Call #R$EF54.
+ $FD6C RET           ; Return.
+ $FD6D CALL $C47B    ; Call #R$C47B.
+ $FD70 RET C         ; Return if #REGa is less than #N$02.
+ $FD71 CP $02        ; Compare #REGa with #N$02.
+ $FD73 JP Z,$F074    ; Jump to #R$F074 if #REGa is equal to #N$02.
+ $FD76 LD HL,$DB5F   ; #REGhl=#R$DB5F.
+ $FD79 JP $F03A      ; Jump to #R$F03A.
+ $FD7C LD HL,$E5A4   ; #REGhl=#R$E5A4.
+ $FD7F JP $F03A      ; Jump to #R$F03A.
 
 ; Game Start
 ;
 ; Used by the routine at #R$C592.
 @label=GameStart
-c$FD82 LD HL,$FDB5   ; #REGhl=#R$FDB5.
- $FD85 LD DE,$BBF0   ; #REGde=#R$BBF0.
- $FD88 LD BC,$0144   ; #REGbc=#N($0144,$04,$04).
- $FD8B LDIR          ; LDIR.
+c$FD82 LD HL,$FDB5   ; {Copy #N$0144 bytes from #R$FDB5 to #R$BBF0.
+ $FD85 LD DE,$BBF0   ;
+ $FD88 LD BC,$0144   ;
+ $FD8B LDIR          ; }
  $FD8D LD IX,$ED9E   ; #REGix=#R$ED9E.
  $FD91 LD A,($BD32)  ; {#REGb=*#R$BD32.
  $FD94 LD B,A        ; }
@@ -8577,8 +9489,8 @@ c$FD82 LD HL,$FDB5   ; #REGhl=#R$FDB5.
  $FDAF CALL $EF54    ; Call #R$EF54.
  $FDB2 JP $EDC4      ; Jump to #R$EDC4.
 
-; Default Game Flags
-@label=DefaultGameFlags
+; Default Game State
+@label=DefaultGameState
 g$FDB5 DEFB $03,$04,$22,$00,$07,$00,$00,$0E
  $FDBD DEFB $62,$6A,$00,$0B,$00,$00,$27,$51
  $FDC5 DEFB $50,$00,$42,$47,$00,$43,$3D,$31
@@ -8674,24 +9586,79 @@ c$FEFA LD IX,$607C   ; #REGix=#R$607C.
  $FF39 RET           ; Return.
 
 ; Data block at FF3A
-b$FF3A DEFB $9C,$F0,$2E,$F1,$4B,$F1,$55,$F1
- $FF42 DEFB $59,$F1,$5D,$F1,$61,$F1,$65,$F1
- $FF4A DEFB $69,$F1,$9D,$F1,$36,$F2,$3E,$F2
- $FF52 DEFB $46,$F2,$63,$F2,$81,$F4,$D4,$F4
- $FF5A DEFB $D4,$F4,$AB,$F7,$D6,$F7,$51,$F8
- $FF62 DEFB $1B,$F9,$46,$F9,$99,$F9,$E4,$F9
- $FF6A DEFB $3C,$FA,$A8,$FA,$16,$FB,$71,$FB
- $FF72 DEFB $83,$FB,$A8,$FB,$D5,$FB,$24,$FC
- $FF7A DEFB $61,$FC,$98,$FC,$CD,$FC,$02,$FD
- $FF82 DEFB $6D,$FD,$7C,$FD,$00,$EE,$11,$EE
- $FF8A DEFB $22,$EE,$40,$EE,$51,$EE,$63,$EE
- $FF92 DEFB $74,$EE,$90,$EE,$A9,$EE,$BB,$EE
- $FF9A DEFB $CD,$EE,$DF,$EE,$DF,$EE,$DF,$EE
- $FFA2 DEFB $FC,$EE,$32,$EF,$DF,$EE,$FA,$FE
- $FFAA DEFB $00,$FF,$00,$FF,$00,$FF,$06,$FF
- $FFB2 DEFB $0C,$FF,$12,$FF,$18,$FF,$1E,$FF
- $FFBA DEFB $1E,$FF,$1E,$FF,$24,$FF,$2A,$FF
- $FFC2 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+w$FF3A DEFW $F09C
+ $FF3C DEFW $F12E
+ $FF3E DEFW $F14B
+ $FF40 DEFW $F155
+ $FF42 DEFW $F159
+ $FF44 DEFW $F15D
+ $FF46 DEFW $F161
+ $FF48 DEFW $F165
+ $FF4A DEFW $F169
+ $FF4C DEFW $F19D
+ $FF4E DEFW $F236
+ $FF50 DEFW $F23E
+ $FF52 DEFW $F246
+ $FF54 DEFW $F263
+ $FF56 DEFW $F481
+ $FF58 DEFW $F4D4
+ $FF5A DEFW $F4D4
+ $FF5C DEFW $F7AB
+ $FF5E DEFW $F7D6
+ $FF60 DEFW $F851
+ $FF62 DEFW $F91B
+ $FF64 DEFW $F946
+ $FF66 DEFW $F999
+ $FF68 DEFW $F9E4
+ $FF6A DEFW $FA3C
+ $FF6C DEFW $FAA8
+ $FF6E DEFW $FB16
+ $FF70 DEFW $FB71
+ $FF72 DEFW $FB83
+ $FF74 DEFW $FBA8
+ $FF76 DEFW $FBD5
+ $FF78 DEFW $FC24
+ $FF7A DEFW $FC61
+ $FF7C DEFW $FC98
+ $FF7E DEFW $FCCD
+ $FF80 DEFW $FD02
+ $FF82 DEFW $FD6D
+ $FF84 DEFW $FD7C
+
+; Data block at FF86
+w$FF86 DEFW $EE00
+ $FF88 DEFW $EE11
+ $FF8A DEFW $EE22
+ $FF8C DEFW $EE40
+ $FF8E DEFW $EE51
+ $FF90 DEFW $EE63
+ $FF92 DEFW $EE74
+ $FF94 DEFW $EE90
+ $FF96 DEFW $EEA9
+ $FF98 DEFW $EEBB
+ $FF9A DEFW $EECD
+ $FF9C DEFW $EEDF
+ $FF9E DEFW $EEDF
+ $FFA0 DEFW $EEDF
+ $FFA2 DEFW $EEFC
+ $FFA4 DEFW $EF32
+ $FFA6 DEFW $EEDF
+ $FFA8 DEFW $FEFA
+ $FFAA DEFW $FF00
+ $FFAC DEFW $FF00
+ $FFAE DEFW $FF00
+ $FFB0 DEFW $FF06
+ $FFB2 DEFW $FF0C
+ $FFB4 DEFW $FF12
+ $FFB6 DEFW $FF18
+ $FFB8 DEFW $FF1E
+ $FFBA DEFW $FF1E
+ $FFBC DEFW $FF1E
+ $FFBE DEFW $FF24
+ $FFC0 DEFW $FF2A
+
+; Unused
+u$FFC2 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $FFCA DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $FFD2 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $FFDA DEFB $00,$00,$00,$00,$00,$00,$00,$00

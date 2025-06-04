@@ -18,4 +18,7 @@ JewelsofBabylon.z80
 ; from tape block #9 to address 47696.
 --ram load=9,$BA50   ;  17780 bytes ; Game data
 
+; copy the defaults into the current game
+--ram move=$FDB5,$144,$BBF0
+
 --start 0xBA50
