@@ -3820,8 +3820,8 @@ b$BC54 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BC6C DEFB $00
  $BC6D DEFB $00
  $BC6E DEFB $00
- $BC6F DEFB $00,$29,$00,$00,$00,$00,$00,$00
- $BC77 DEFB $00
+ $BC6F DEFB $00
+ $BC70 DEFB $29,$00,$00,$00,$00,$00,$00,$00
  $BC78 DEFB $02,$02,$02,$02,$02,$02,$02,$02
  $BC80 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BC88 DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -3839,29 +3839,45 @@ b$BC54 DEFB $00,$00,$00,$00,$00,$00,$00,$00
 @label=RoomNumber
 g$BCCB DEFB $03
 
-; Data block at BCCC
-b$BCCC DEFB $33,$E9,$37,$E9,$3B,$E9,$3F,$E9
- $BCD4 DEFB $43,$E9,$47,$E9,$4D,$E9,$53,$E9
- $BCDC DEFB $5B,$E9,$00,$00,$00,$00,$00,$00
- $BCE4 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BCEC DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BCF4 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BCFC DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BD04 DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BD0C DEFB $1D,$E6
+; Game status buffer entry at BCCC
+g$BCCC DEFW $E933
+ $BCCE DEFW $E937
+ $BCD0 DEFW $E93B
+ $BCD2 DEFW $E93F
+ $BCD4 DEFW $E943
+ $BCD6 DEFW $E947
+ $BCD8 DEFW $E94D
+ $BCDA DEFW $E953
+ $BCDC DEFW $E95B
 
-; Game status buffer entry at BD0E
+; Game status buffer entry at BCDE
+g$BCDE DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $BCE6 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $BCEE DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $BCF6 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $BCFE DEFB $00,$00,$00,$00,$00,$00,$00,$00
+ $BD06 DEFB $00,$00,$00,$00,$00,$00
+
+; Game status buffer entry at BD0C
+g$BD0C DEFB $1D,$E6
+
+; Pointer: Events Jump Table
+@label=Pointer_Events_Jump
 g$BD0E DEFW $FF86
 
 ; Pointer: Room Map Table
 @label=Pointer_RoomMap
 g$BD10 DEFW $EB10
 
-; Game status buffer entry at BD12
+; Pointer: Object Description Table
+@label=Pointer_ObjectDescriptions
 g$BD12 DEFW $D34E
 
-; Data block at BD14
-b$BD14 DEFB $5D,$E9,$A8,$FF
+; Game status buffer entry at BD14
+g$BD14 DEFW $E95D
+
+; Game status buffer entry at BD16
+g$BD16 DEFW $FFA8
 
 ; Pointer: Room Description Table
 @label=Pointer_RoomDescriptions
@@ -3876,12 +3892,16 @@ g$BD1C DEFW $D4C6
 ; Game status buffer entry at BD1E
 g$BD1E DEFW $E83E
 
-; Data block at BD20
-b$BD20 DEFB $3A,$FF
+; Pointer: Jump Table
+@label=Pointer_ JumpTable
+g$BD20 DEFW $FF3A
 
 ; Game status buffer entry at BD22
 g$BD22 DEFW $ED9E
- $BD24 DEFB $96,$FF
+
+; Pointer: Scenic Events Jump Table
+@label=Pointer_ScenicEvents_Jump
+g$BD24 DEFW $FF96
 
 ; Game status buffer entry at BD26
 g$BD26 DEFW $E90D
@@ -3896,10 +3916,10 @@ g$BD2A DEFW $0030
 ; Game status buffer entry at BD2C
 g$BD2C DEFW $0026
 
-; Data block at BD2E
-b$BD2E DEFB $0D,$00
- $BD30 DEFB $09,$00
- $BD32 DEFB $13,$00
+; Game status buffer entry at BD2E
+g$BD2E DEFW $000D
+ $BD30 DEFW $0009
+ $BD32 DEFW $0013
 
 ; Command Buffer
 @label=CommandBuffer
@@ -4099,27 +4119,31 @@ g$BFE2 DEFW $BDFF    ; "#STR$BDFF,$08($b==$FF)".
  $BFEA DEFW $BE15    ; "#STR$BE15,$08($b==$FF)".
  $BFEC DEFW $BE18    ; "#STR$BE18,$08($b==$FF)".
 
-; Routine at BFEE
+; Responses
 ;
 ; Used by the routines at #R$C470, #R$C47B and #R$C49F.
 ;
 ; .
 ;
 ; Print "#STR$BEEA,$08($b==$FF)".
+@label=Response_PleaseRephraseThat
 c$BFEE LD HL,$BEEA   ;
  $BFF1 CALL $BAB1    ;
  $BFF4 RET           ;
 ; This entry point is used by the routines at #R$C47B, #R$C49F and #R$C4B7.
 ; .
 ; Print "#STR$BED1,$08($b==$FF)".
+@label=Response_PleaseBeMoreSpecific
 *$BFF5 LD HL,$BED1   ;
  $BFF8 CALL $BAB1    ;
  $BFFB RET           ;
 ; Print "#STR$BF00,$08($b==$FF)".
+@label=Response_YouCant
  $BFFC LD HL,$BF00   ;
  $BFFF CALL $BAB1    ;
  $C002 RET           ;
 ; Print "#STR$BF0B,$08($b==$FF)".
+@label=Response_OK
  $C003 LD HL,$BF0B   ;
  $C006 CALL $BAB1    ;
  $C009 RET           ;
@@ -4413,87 +4437,100 @@ c$C17D LD A,($BC66)  ; #REGa=*#R$BC66.
                      ; counter is zero.
 *$C1EF RET           ; Return.
 
-; Routine at C1F0
+; Get Table Entry
 ;
 ; Used by the routines at #R$C17D, #R$C21E, #R$C315, #R$C32A, #R$C456, #R$C4EB
 ; and #R$C556.
-c$C1F0 LD D,$00      ; #REGd=#N$00.
- $C1F2 SLA E         ; Shift #REGe left (with carry).
- $C1F4 RL D          ; Rotate #REGd left.
- $C1F6 ADD IX,DE     ; #REGix+=#REGde.
- $C1F8 LD L,(IX+$00) ; #REGl=*#REGix+#N$00.
- $C1FB LD H,(IX+$01) ; #REGh=*#REGix+#N$01.
+; .
+; Retrieves an address from a table using a given index.
+;
+;   E Index of item
+;   IX Base table address
+; O:HL Address of relevant table entry
+@label=GetTableEntry
+c$C1F0 LD D,$00      ; {Multiply the given index by #N$02 and store the result
+ $C1F2 SLA E         ; in #REGde.
+ $C1F4 RL D          ; }
+ $C1F6 ADD IX,DE     ; Add #REGde to the base table address.
+ $C1F8 LD L,(IX+$00) ; {Fetch the relevant table address and store it in
+ $C1FB LD H,(IX+$01) ; #REGhl.}
  $C1FE RET           ; Return.
 
-; Print Room Objects
+; Print Objects
 ;
 ; Used by the routines at #R$C26A and #R$F03A.
-@label=PrintRoomObjects
+;
+; A #N$01 for inventory items, or room number for room objects
+@label=PrintObjects
 c$C1FF LD HL,$BBF0   ; #REGhl=#R$BBF0.
  $C202 LD BC,($BD28) ; #REGbc=*#R$BD28.
-*$C206 CPIR          ; CPIR.
- $C208 RET NZ        ; Return if ?? is not equal to #N$00.
- $C209 PUSH HL       ; Stash #REGhl on the stack.
+@label=FindObject_Loop
+*$C206 CPIR          ; Search for matching objects.
+ $C208 RET NZ        ; Return if no objects were found.
+ $C209 PUSH HL       ; Stash the current place in #R$BBF0 on the stack.
  $C20A CALL $C456    ; Call #R$C456.
- $C20D JR Z,$C216    ; Jump to #R$C216 if ?? is equal to #N$00.
- $C20F PUSH AF       ; {Stash #REGaf and #REGbc on the stack.
- $C210 PUSH BC       ; }
+ $C20D JR Z,$C216    ; Jump to #R$C216 if the object is invalid.
+ $C20F PUSH AF       ; {Temporarily stash the object type and object counter on
+ $C210 PUSH BC       ; the stack.}
  $C211 CALL $BAB1    ; Call #R$BAB1.
- $C214 POP BC        ; {Restore #REGbc and #REGaf from the stack.
- $C215 POP AF        ; }
-*$C216 LD E,A        ; #REGe=#REGa.
- $C217 POP HL        ; Restore #REGhl from the stack.
- $C218 LD A,B        ; #REGa=#REGb.
- $C219 OR C          ; Set the bits from #REGc.
- $C21A LD A,E        ; #REGa=#REGe.
- $C21B JR NZ,$C206   ; Jump to #R$C206 if ?? is not equal to #REGc.
+ $C214 POP BC        ; {Restore the object counter and object type from the
+ $C215 POP AF        ; stack.}
+@label=FindObject_Next
+*$C216 LD E,A        ; Temporarily hold the object type in #REGe.
+ $C217 POP HL        ; Restore the current place in #R$BBF0 from the stack.
+ $C218 LD A,B        ; {Test if all objects have been checked...
+ $C219 OR C          ; }
+ $C21A LD A,E        ; Restore the object type to #REGa.
+ $C21B JR NZ,$C206   ; Jump to #R$C206 until all objects in the table have been
+                     ; checked.
  $C21D RET           ; Return.
 
 ; Routine at C21E
 ;
 ; Used by the routines at #R$BB94, #R$EF54 and #R$F03A.
-c$C21E LD A,($BD2E)  ;
- $C221 OR A          ;
- $C222 JR Z,$C26A    ;
- $C224 LD A,($BCCB)  ;
- $C227 LD HL,($BD14) ;
- $C22A LD BC,($BD2E) ;
- $C22E CPIR          ;
- $C230 JR NZ,$C26A   ;
- $C232 LD A,($BD2E)  ;
- $C235 INC C         ;
- $C236 SUB C         ;
- $C237 LD C,A        ;
- $C238 XOR A         ;
- $C239 OR E          ;
- $C23A JR NZ,$C258   ;
- $C23C LD HL,$BC5C   ;
- $C23F LD A,C        ;
-*$C240 CP $08        ;
- $C242 JR C,$C249    ;
- $C244 SUB $08       ;
- $C246 INC HL        ;
- $C247 JR $C240      ;
-*$C249 LD B,A        ;
- $C24A INC B         ;
- $C24B LD D,$00      ;
-*$C24D RL D          ;
- $C24F DJNZ $C24D    ;
- $C251 LD A,(HL)     ;
- $C252 AND D         ;
- $C253 JR NZ,$C26A   ;
- $C255 LD A,(HL)     ;
- $C256 OR D          ;
- $C257 LD (HL),A     ;
-*$C258 PUSH BC       ;
- $C259 CALL $BA6D    ;
- $C25C POP BC        ;
- $C25D LD IX,($BD16) ;
- $C261 LD E,C        ;
- $C262 CALL $C1F0    ;
- $C265 LD DE,$C26A   ;
- $C268 PUSH DE       ;
- $C269 JP (HL)       ;
+c$C21E LD A,($BD2E)  ; #REGa=*#R$BD2E.
+ $C221 OR A          ; Set the bits from #REGa.
+ $C222 JR Z,$C26A    ; Jump to #R$C26A if ?? is equal to #REGa.
+ $C224 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $C227 LD HL,($BD14) ; #REGhl=*#R$BD14.
+ $C22A LD BC,($BD2E) ; #REGbc=*#R$BD2E.
+ $C22E CPIR          ; CPIR.
+ $C230 JR NZ,$C26A   ; Jump to #R$C26A if ?? is not equal to #REGa.
+ $C232 LD A,($BD2E)  ; #REGa=*#R$BD2E.
+ $C235 INC C         ; Increment #REGc by one.
+ $C236 SUB C         ; #REGa-=#REGc.
+ $C237 LD C,A        ; #REGc=#REGa.
+ $C238 XOR A         ; #REGa=#N$00.
+ $C239 OR E          ; Set the bits from #REGe.
+ $C23A JR NZ,$C258   ; Jump to #R$C258 if #REGc is not equal to #REGe.
+ $C23C LD HL,$BC5C   ; #REGhl=#R$BC5C.
+ $C23F LD A,C        ; #REGa=#REGc.
+*$C240 CP $08        ; {Jump to #R$C249 if #REGa is less than #N$08.
+ $C242 JR C,$C249    ; }
+ $C244 SUB $08       ; #REGa-=#N$08.
+ $C246 INC HL        ; Increment #REGhl by one.
+ $C247 JR $C240      ; Jump to #R$C240.
+*$C249 LD B,A        ; #REGb=#REGa.
+ $C24A INC B         ; Increment #REGb by one.
+ $C24B LD D,$00      ; #REGd=#N$00.
+*$C24D RL D          ; Rotate #REGd left.
+ $C24F DJNZ $C24D    ; Decrease counter by one and loop back to #R$C24D until
+                     ; counter is zero.
+ $C251 LD A,(HL)     ; #REGa=*#REGhl.
+ $C252 AND D         ; Merge the bits from #REGd.
+ $C253 JR NZ,$C26A   ; Jump to #R$C26A if #REGb is not equal to #REGd.
+ $C255 LD A,(HL)     ; #REGa=*#REGhl.
+ $C256 OR D          ; Set the bits from #REGd.
+ $C257 LD (HL),A     ; Write #REGa to *#REGhl.
+*$C258 PUSH BC       ; Stash #REGbc on the stack.
+ $C259 CALL $BA6D    ; Call #R$BA6D.
+ $C25C POP BC        ; Restore #REGbc from the stack.
+ $C25D LD IX,($BD16) ; #REGix=*#R$BD16.
+ $C261 LD E,C        ; #REGe=#REGc.
+ $C262 CALL $C1F0    ; Call #R$C1F0.
+ $C265 LD DE,$C26A   ; #REGde=#R$C26A.
+ $C268 PUSH DE       ; Stash #REGde on the stack.
+ $C269 JP (HL)       ; Jump to *#REGhl.
 
 ; Handler: Display Room Exits
 ;
@@ -4744,8 +4781,8 @@ c$C3AE LD HL,$BD66   ; #REGhl=#R$BD66.
  $C3B1 LD B,$0A      ; #REGb=#N$0A.
  $C3B3 LD E,$00      ; #REGe=#N$00.
 *$C3B5 LD A,(HL)     ; #REGa=*#REGhl.
- $C3B6 CP $FF        ; Compare #REGa with #N$FF.
- $C3B8 JR Z,$C3CD    ; Jump to #R$C3CD if #REGa is equal to #N$FF.
+ $C3B6 CP $FF        ; {Jump to #R$C3CD if #REGa is equal to #N$FF.
+ $C3B8 JR Z,$C3CD    ; }
  $C3BA PUSH HL       ; {Stash #REGhl and #REGbc on the stack.
  $C3BB PUSH BC       ; }
  $C3BC LD HL,($BD1E) ; #REGhl=*#R$BD1E.
@@ -4886,177 +4923,187 @@ c$C439 LD HL,$BBF0   ; #REGhl=#R$BBF0.
                      ; found.
  $C455 RET           ; Return.
 
-; Routine at C456
+; Validate Object
 ;
 ; Used by the routines at #R$C1FF and #R$C439.
-c$C456 PUSH AF       ;
- $C457 PUSH BC       ;
- $C458 INC BC        ;
- $C459 LD A,($BD28)  ;
- $C45C SUB C         ;
- $C45D LD E,A        ;
- $C45E LD IX,($BD12) ;
- $C462 CALL $C1F0    ;
- $C465 POP BC        ;
- $C466 LD A,H        ;
+;
+;   BC Object counter
+; O:F Z is unset if the object is valid, unset when invalid
+@label=ValidateObject
+c$C456 PUSH AF       ; {Stash #REGaf and #REGbc on the stack.
+ $C457 PUSH BC       ; }
+ $C458 INC BC        ; Adjust the object counter.
+ $C459 LD A,($BD28)  ; #REGa=*#R$BD28.
+ $C45C SUB C         ; {Calculate the index and store the result in #REGe.
+ $C45D LD E,A        ; }
+ $C45E LD IX,($BD12) ; #REGix=*#R$BD12.
+ $C462 CALL $C1F0    ; Call #R$C1F0.
+ $C465 POP BC        ; Restore the object counter from the stack.
+ $C466 LD A,H        ; {Jump to #R$C46D if the object is invalid.
  $C467 OR L          ;
- $C468 JR Z,$C46D    ;
- $C46A POP AF        ;
- $C46B AND A         ;
- $C46C RET           ;
-*$C46D POP AF        ;
- $C46E CP A          ;
- $C46F RET           ;
+ $C468 JR Z,$C46D    ; }
+ $C46A POP AF        ; Restore the object type from the stack.
+ $C46B AND A         ; Clear the Z flag.
+ $C46C RET           ; Return.
+@label=InvalidObject
+*$C46D POP AF        ; Restore #REGaf from the stack.
+ $C46E CP A          ; Set the Z flag.
+ $C46F RET           ; Return.
 
 ; Routine at C470
 ;
 ; Used by the routines at #R$F03A and #R$F155.
-c$C470 LD A,($BD67)  ;
- $C473 CP $FF        ;
- $C475 RET Z         ;
- $C476 CALL $BFEE    ;
- $C479 SCF           ;
- $C47A RET           ;
+c$C470 LD A,($BD67)  ; #REGa=*#R$BD67.
+ $C473 CP $FF        ; {Return if #REGa is equal to #N$FF.
+ $C475 RET Z         ; }
+ $C476 CALL $BFEE    ; Call #R$BFEE.
+ $C479 SCF           ; Set the carry flag.
+ $C47A RET           ; Return.
 
 ; Routine at C47B
 ;
 ; Used by the routines at #R$C49F, #R$F155 and #R$F90A.
-c$C47B LD A,($BD67)  ;
- $C47E CP $FF        ;
- $C480 JR NZ,$C487   ;
- $C482 CALL $BFF5    ;
- $C485 SCF           ;
- $C486 RET           ;
-*$C487 CALL $C3AE    ;
- $C48A RET NZ        ;
- $C48B CALL $BFEE    ;
- $C48E SCF           ;
- $C48F RET           ;
- $C490 LD A,($BD67)  ;
- $C493 CP $FF        ;
- $C495 RET Z         ;
- $C496 CALL $C3AE    ;
- $C499 RET NZ        ;
- $C49A CALL $BFEE    ;
- $C49D SCF           ;
- $C49E RET           ;
+c$C47B LD A,($BD67)  ; #REGa=*#R$BD67.
+ $C47E CP $FF        ; {Jump to #R$C487 if #REGa is not equal to #N$FF.
+ $C480 JR NZ,$C487   ; }
+ $C482 CALL $BFF5    ; Call #R$BFF5.
+ $C485 SCF           ; Set the carry flag.
+ $C486 RET           ; Return.
+*$C487 CALL $C3AE    ; Call #R$C3AE.
+ $C48A RET NZ        ; Return if #REGa is not equal to #N$FF.
+ $C48B CALL $BFEE    ; Call #R$BFEE.
+ $C48E SCF           ; Set the carry flag.
+ $C48F RET           ; Return.
+ $C490 LD A,($BD67)  ; #REGa=*#R$BD67.
+ $C493 CP $FF        ; {Return if #REGa is equal to #N$FF.
+ $C495 RET Z         ; }
+ $C496 CALL $C3AE    ; Call #R$C3AE.
+ $C499 RET NZ        ; Return if #REGa is not equal to #N$FF.
+ $C49A CALL $BFEE    ; Call #R$BFEE.
+ $C49D SCF           ; Set the carry flag.
+ $C49E RET           ; Return.
 
 ; Routine at C49F
 ;
 ; Used by the routines at #R$F155 and #R$F90A.
-c$C49F CALL $C47B    ;
- $C4A2 RET C         ;
- $C4A3 CP $01        ;
- $C4A5 JR NZ,$C4AC   ;
- $C4A7 CALL $BFF5    ;
- $C4AA SCF           ;
- $C4AB RET           ;
-*$C4AC CP $03        ;
- $C4AE JR NC,$C4B2   ;
- $C4B0 AND A         ;
- $C4B1 RET           ;
-*$C4B2 CALL $BFEE    ;
- $C4B5 SCF           ;
- $C4B6 RET           ;
+c$C49F CALL $C47B    ; Call #R$C47B.
+ $C4A2 RET C         ; Return if #REGa is less than #N$FF.
+ $C4A3 CP $01        ; {Jump to #R$C4AC if #REGa is not equal to #N$01.
+ $C4A5 JR NZ,$C4AC   ; }
+ $C4A7 CALL $BFF5    ; Call #R$BFF5.
+ $C4AA SCF           ; Set the carry flag.
+ $C4AB RET           ; Return.
+*$C4AC CP $03        ; {Jump to #R$C4B2 if #REGa is greater than or equal to
+ $C4AE JR NC,$C4B2   ; #N$03.}
+ $C4B0 AND A         ; Set flags.
+ $C4B1 RET           ; Return.
+*$C4B2 CALL $BFEE    ; Call #R$BFEE.
+ $C4B5 SCF           ; Set the carry flag.
+ $C4B6 RET           ; Return.
 
 ; Routine at C4B7
 ;
 ; Used by the routine at #R$F90A.
-c$C4B7 LD A,($BD67)  ;
- $C4BA CP $FF        ;
- $C4BC JR NZ,$C4C3   ;
- $C4BE CALL $BFF5    ;
- $C4C1 SCF           ;
- $C4C2 RET           ;
-*$C4C3 CALL $C3AE    ;
- $C4C6 RET           ;
+c$C4B7 LD A,($BD67)  ; #REGa=*#R$BD67.
+ $C4BA CP $FF        ; {Jump to #R$C4C3 if #REGa is not equal to #N$FF.
+ $C4BC JR NZ,$C4C3   ; }
+ $C4BE CALL $BFF5    ; Call #R$BFF5.
+ $C4C1 SCF           ; Set the carry flag.
+ $C4C2 RET           ; Return.
+*$C4C3 CALL $C3AE    ; Call #R$C3AE.
+ $C4C6 RET           ; Return.
 
 ; Routine at C4C7
 ;
 ; Used by the routine at #R$EDC4.
-c$C4C7 LD HL,$BD66   ;
- $C4CA LD B,$0A      ;
-*$C4CC LD A,(HL)     ;
+c$C4C7 LD HL,$BD66   ; #REGhl=#R$BD66.
+ $C4CA LD B,$0A      ; #REGb=#N$0A.
+*$C4CC LD A,(HL)     ; {Return if *#REGhl is equal to #N$FF.
  $C4CD CP $FF        ;
- $C4CF RET Z         ;
- $C4D0 PUSH HL       ;
- $C4D1 PUSH BC       ;
- $C4D2 LD HL,($BD1E) ;
- $C4D5 LD BC,($BD2A) ;
- $C4D9 CPIR          ;
- $C4DB JR NZ,$C4E5   ;
- $C4DD CALL $C32A    ;
- $C4E0 JR NC,$C4E5   ;
- $C4E2 POP BC        ;
- $C4E3 POP HL        ;
- $C4E4 RET           ;
-*$C4E5 POP BC        ;
- $C4E6 POP HL        ;
- $C4E7 INC HL        ;
- $C4E8 DJNZ $C4CC    ;
- $C4EA RET           ;
+ $C4CF RET Z         ; }
+ $C4D0 PUSH HL       ; {Stash #REGhl and #REGbc on the stack.
+ $C4D1 PUSH BC       ; }
+ $C4D2 LD HL,($BD1E) ; #REGhl=*#R$BD1E.
+ $C4D5 LD BC,($BD2A) ; #REGbc=*#R$BD2A.
+ $C4D9 CPIR          ; CPIR.
+ $C4DB JR NZ,$C4E5   ; Jump to #R$C4E5 if #REGa is not equal to #N$FF.
+ $C4DD CALL $C32A    ; Call #R$C32A.
+ $C4E0 JR NC,$C4E5   ; Jump to #R$C4E5 if #REGa is greater than or equal to
+                     ; #N$FF.
+ $C4E2 POP BC        ; {Restore #REGbc and #REGhl from the stack.
+ $C4E3 POP HL        ; }
+ $C4E4 RET           ; Return.
+*$C4E5 POP BC        ; {Restore #REGbc and #REGhl from the stack.
+ $C4E6 POP HL        ; }
+ $C4E7 INC HL        ; Increment #REGhl by one.
+ $C4E8 DJNZ $C4CC    ; Decrease counter by one and loop back to #R$C4CC until
+                     ; counter is zero.
+ $C4EA RET           ; Return.
 
 ; Routine at C4EB
 ;
 ; Used by the routine at #R$EDC4.
-c$C4EB LD HL,$BC78   ;
- $C4EE LD BC,($BD30) ;
-*$C4F2 LD A,($BCCB)  ;
- $C4F5 CPIR          ;
- $C4F7 JR NZ,$C51F   ;
- $C4F9 LD ($BD7D),HL ;
- $C4FC LD ($BD7F),BC ;
- $C500 INC BC        ;
- $C501 LD HL,($BD30) ;
- $C504 AND A         ;
- $C505 SBC HL,BC     ;
- $C507 EX DE,HL      ;
- $C508 LD IX,($BD24) ;
- $C50C CALL $C1F0    ;
- $C50F LD DE,$C514   ;
- $C512 PUSH DE       ;
- $C513 JP (HL)       ;
- $C514 LD HL,($BD7D) ;
- $C517 LD BC,($BD7F) ;
- $C51B XOR A         ;
- $C51C OR C          ;
- $C51D JR NZ,$C4F2   ;
-*$C51F RET           ;
+c$C4EB LD HL,$BC78   ; #REGhl=#R$BC78.
+ $C4EE LD BC,($BD30) ; #REGbc=*#R$BD30.
+*$C4F2 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $C4F5 CPIR          ; CPIR.
+ $C4F7 JR NZ,$C51F   ; Jump to #R$C51F if #REGhl is not equal to #N$FF.
+ $C4F9 LD ($BD7D),HL ; Write #REGhl to *#R$BD7D.
+ $C4FC LD ($BD7F),BC ; Write #REGbc to *#R$BD7F.
+ $C500 INC BC        ; Increment #REGbc by one.
+ $C501 LD HL,($BD30) ; #REGhl=*#R$BD30.
+ $C504 AND A         ; {#REGhl-=#REGbc.
+ $C505 SBC HL,BC     ; }
+ $C507 EX DE,HL      ; Exchange the #REGde and #REGhl registers.
+ $C508 LD IX,($BD24) ; #REGix=*#R$BD24.
+ $C50C CALL $C1F0    ; Call #R$C1F0.
+ $C50F LD DE,$C514   ; #REGde=#R$C514.
+ $C512 PUSH DE       ; Stash #REGde on the stack.
+ $C513 JP (HL)       ; Jump to *#REGhl.
+ $C514 LD HL,($BD7D) ; #REGhl=*#R$BD7D.
+ $C517 LD BC,($BD7F) ; #REGbc=*#R$BD7F.
+ $C51B XOR A         ; #REGa=#N$00.
+ $C51C OR C          ; Set the bits from #REGc.
+ $C51D JR NZ,$C4F2   ; Jump to #R$C4F2 if #REGa is not equal to #REGc.
+*$C51F RET           ; Return.
 
 ; Routine at C520
 ;
 ; Used by the routine at #R$EF54.
-c$C520 LD C,A        ;
- $C521 LD A,($BD30)  ;
- $C524 LD B,A        ;
- $C525 LD A,($BCCB)  ;
- $C528 LD HL,$BC78   ;
- $C52B JR $C52E      ;
-*$C52D INC HL        ;
-*$C52E CP (HL)       ;
- $C52F JR NZ,$C532   ;
- $C531 LD (HL),C     ;
-*$C532 DJNZ $C52D    ;
- $C534 LD A,C        ;
- $C535 LD ($BCCB),A  ;
- $C538 LD A,($BC6F)  ;
- $C53B AND A         ;
- $C53C JR Z,$C555    ;
- $C53E LD B,$08      ;
- $C540 LD HL,$BC70   ;
- $C543 LD C,A        ;
- $C544 JR $C547      ;
-*$C546 INC HL        ;
-*$C547 SRL C         ;
- $C549 JR NC,$C553   ;
- $C54B LD A,(HL)     ;
- $C54C PUSH HL       ;
- $C54D PUSH BC       ;
- $C54E CALL $C3F1    ;
- $C551 POP BC        ;
- $C552 POP HL        ;
-*$C553 DJNZ $C546    ;
-*$C555 RET           ;
+c$C520 LD C,A        ; #REGc=#REGa.
+ $C521 LD A,($BD30)  ; {#REGb=*#R$BD30.
+ $C524 LD B,A        ; }
+ $C525 LD A,($BCCB)  ; #REGa=*#R$BCCB.
+ $C528 LD HL,$BC78   ; #REGhl=#R$BC78.
+ $C52B JR $C52E      ; Jump to #R$C52E.
+*$C52D INC HL        ; Increment #REGhl by one.
+*$C52E CP (HL)       ; {Jump to #R$C532 if #REGa is not equal to *#REGhl.
+ $C52F JR NZ,$C532   ; }
+ $C531 LD (HL),C     ; Write #REGc to *#REGhl.
+*$C532 DJNZ $C52D    ; Decrease counter by one and loop back to #R$C52D until
+                     ; counter is zero.
+ $C534 LD A,C        ; #REGa=#REGc.
+ $C535 LD ($BCCB),A  ; Write #REGa to *#R$BCCB.
+ $C538 LD A,($BC6F)  ; #REGa=*#R$BC6F.
+ $C53B AND A         ; {Jump to #R$C555 if #REGa is equal to #REGa.
+ $C53C JR Z,$C555    ; }
+ $C53E LD B,$08      ; #REGb=#N$08.
+ $C540 LD HL,$BC70   ; #REGhl=#R$BC70.
+ $C543 LD C,A        ; #REGc=#REGa.
+ $C544 JR $C547      ; Jump to #R$C547.
+*$C546 INC HL        ; Increment #REGhl by one.
+*$C547 SRL C         ; Shift #REGc right.
+ $C549 JR NC,$C553   ; Jump to #R$C553 if #REGhl is greater than or equal to
+                     ; #REGa.
+ $C54B LD A,(HL)     ; #REGa=*#REGhl.
+ $C54C PUSH HL       ; {Stash #REGhl and #REGbc on the stack.
+ $C54D PUSH BC       ; }
+ $C54E CALL $C3F1    ; Call #R$C3F1.
+ $C551 POP BC        ; {Restore #REGbc and #REGhl from the stack.
+ $C552 POP HL        ; }
+*$C553 DJNZ $C546    ; Decrease counter by one and loop back to #R$C546 until
+                     ; counter is zero.
+*$C555 RET           ; Return.
 
 ; Routine at C556
 ;
@@ -5740,86 +5787,87 @@ t$D33C DEFM "a stone" ; "#STR$D33C,$08($b==$FF)".
 t$D344 DEFM "any water" ; "#STR$D344,$08($b==$FF)".
  $D34D DEFB $FF         ; Terminator.
 
-; Data block at D34E
-w$D34E DEFW $C595    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D350 DEFW $C5CD    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D352 DEFW $C609    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D354 DEFW $C612    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D356 DEFW $C623    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D358 DEFW $C62C    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D35A DEFW $C62C    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D35C DEFW $C646    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D35E DEFW $C651    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D360 DEFW $C658    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D362 DEFW $C684    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D364 DEFW $C6B9    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D366 DEFW $C6C3    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D368 DEFW $C6B9    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D36A DEFW $C6D4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D36C DEFW $C6E0    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D36E DEFW $C6E7    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D370 DEFW $C6F4    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D372 DEFW $C718    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D374 DEFW $C72C    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D376 DEFW $C739    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D378 DEFW $C787    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D37A DEFW $C78F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D37C DEFW $C79A    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D37E DEFW $C7A3    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D380 DEFW $C813    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D382 DEFW $C83A    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D384 DEFW $C843    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D386 DEFW $C85E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D388 DEFW $C86D    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D38A DEFW $C884    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D38C DEFW $C88F    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D38E DEFW $C896    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D390 DEFW $C8A5    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D392 DEFW $C8BC    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D394 DEFW $C8CF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D396 DEFW $C8CF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D398 DEFW $C8CF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D39A DEFW $C8CF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D39C DEFW $C8DE    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D39E DEFW $C902    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3A0 DEFW $C911    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3A2 DEFW $C937    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3A4 DEFW $C95D    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3A6 DEFW $C97D    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3A8 DEFW $C96E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3AA DEFW $C96E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3AC DEFW $C97D    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3AE DEFW $C96E    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3B0 DEFW $C98B    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3B2 DEFW $C99D    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3B4 DEFW $C9B1    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3B6 DEFW $C9D1    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3B8 DEFW $C9E3    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3BA DEFW $0000
- $D3BC DEFW $C9F9    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3BE DEFW $CA22    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3C0 DEFW $CA36    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3C2 DEFW $CA6D    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3C4 DEFW $CA78    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3C6 DEFW $CA93    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3C8 DEFW $0000
- $D3CA DEFW $0000
- $D3CC DEFW $0000
- $D3CE DEFW $0000
- $D3D0 DEFW $0000
- $D3D2 DEFW $CABB    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3D4 DEFW $0000
- $D3D6 DEFW $0000
- $D3D8 DEFW $0000
- $D3DA DEFW $0000
- $D3DC DEFW $0000
- $D3DE DEFW $0000
- $D3E0 DEFW $0000
- $D3E2 DEFW $0000
- $D3E4 DEFW $CACF    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3E6 DEFW $CADE    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3E8 DEFW $CADE    ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC)).
- $D3EA DEFW $0000
+; Table: Object Descriptions?
+@label=Table_ObjectDescriptions_1
+g$D34E DEFW $C595    ; Object: #N((#PC-$D34E)/$02).
+ $D350 DEFW $C5CD    ; Object: #N((#PC-$D34E)/$02).
+ $D352 DEFW $C609    ; Object: #N((#PC-$D34E)/$02).
+ $D354 DEFW $C612    ; Object: #N((#PC-$D34E)/$02).
+ $D356 DEFW $C623    ; Object: #N((#PC-$D34E)/$02).
+ $D358 DEFW $C62C    ; Object: #N((#PC-$D34E)/$02).
+ $D35A DEFW $C62C    ; Object: #N((#PC-$D34E)/$02).
+ $D35C DEFW $C646    ; Object: #N((#PC-$D34E)/$02).
+ $D35E DEFW $C651    ; Object: #N((#PC-$D34E)/$02).
+ $D360 DEFW $C658    ; Object: #N((#PC-$D34E)/$02).
+ $D362 DEFW $C684    ; Object: #N((#PC-$D34E)/$02).
+ $D364 DEFW $C6B9    ; Object: #N((#PC-$D34E)/$02).
+ $D366 DEFW $C6C3    ; Object: #N((#PC-$D34E)/$02).
+ $D368 DEFW $C6B9    ; Object: #N((#PC-$D34E)/$02).
+ $D36A DEFW $C6D4    ; Object: #N((#PC-$D34E)/$02).
+ $D36C DEFW $C6E0    ; Object: #N((#PC-$D34E)/$02).
+ $D36E DEFW $C6E7    ; Object: #N((#PC-$D34E)/$02).
+ $D370 DEFW $C6F4    ; Object: #N((#PC-$D34E)/$02).
+ $D372 DEFW $C718    ; Object: #N((#PC-$D34E)/$02).
+ $D374 DEFW $C72C    ; Object: #N((#PC-$D34E)/$02).
+ $D376 DEFW $C739    ; Object: #N((#PC-$D34E)/$02).
+ $D378 DEFW $C787    ; Object: #N((#PC-$D34E)/$02).
+ $D37A DEFW $C78F    ; Object: #N((#PC-$D34E)/$02).
+ $D37C DEFW $C79A    ; Object: #N((#PC-$D34E)/$02).
+ $D37E DEFW $C7A3    ; Object: #N((#PC-$D34E)/$02).
+ $D380 DEFW $C813    ; Object: #N((#PC-$D34E)/$02).
+ $D382 DEFW $C83A    ; Object: #N((#PC-$D34E)/$02).
+ $D384 DEFW $C843    ; Object: #N((#PC-$D34E)/$02).
+ $D386 DEFW $C85E    ; Object: #N((#PC-$D34E)/$02).
+ $D388 DEFW $C86D    ; Object: #N((#PC-$D34E)/$02).
+ $D38A DEFW $C884    ; Object: #N((#PC-$D34E)/$02).
+ $D38C DEFW $C88F    ; Object: #N((#PC-$D34E)/$02).
+ $D38E DEFW $C896    ; Object: #N((#PC-$D34E)/$02).
+ $D390 DEFW $C8A5    ; Object: #N((#PC-$D34E)/$02).
+ $D392 DEFW $C8BC    ; Object: #N((#PC-$D34E)/$02).
+ $D394 DEFW $C8CF    ; Object: #N((#PC-$D34E)/$02).
+ $D396 DEFW $C8CF    ; Object: #N((#PC-$D34E)/$02).
+ $D398 DEFW $C8CF    ; Object: #N((#PC-$D34E)/$02).
+ $D39A DEFW $C8CF    ; Object: #N((#PC-$D34E)/$02).
+ $D39C DEFW $C8DE    ; Object: #N((#PC-$D34E)/$02).
+ $D39E DEFW $C902    ; Object: #N((#PC-$D34E)/$02).
+ $D3A0 DEFW $C911    ; Object: #N((#PC-$D34E)/$02).
+ $D3A2 DEFW $C937    ; Object: #N((#PC-$D34E)/$02).
+ $D3A4 DEFW $C95D    ; Object: #N((#PC-$D34E)/$02).
+ $D3A6 DEFW $C97D    ; Object: #N((#PC-$D34E)/$02).
+ $D3A8 DEFW $C96E    ; Object: #N((#PC-$D34E)/$02).
+ $D3AA DEFW $C96E    ; Object: #N((#PC-$D34E)/$02).
+ $D3AC DEFW $C97D    ; Object: #N((#PC-$D34E)/$02).
+ $D3AE DEFW $C96E    ; Object: #N((#PC-$D34E)/$02).
+ $D3B0 DEFW $C98B    ; Object: #N((#PC-$D34E)/$02).
+ $D3B2 DEFW $C99D    ; Object: #N((#PC-$D34E)/$02).
+ $D3B4 DEFW $C9B1    ; Object: #N((#PC-$D34E)/$02).
+ $D3B6 DEFW $C9D1    ; Object: #N((#PC-$D34E)/$02).
+ $D3B8 DEFW $C9E3    ; Object: #N((#PC-$D34E)/$02).
+ $D3BA DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3BC DEFW $C9F9    ; Object: #N((#PC-$D34E)/$02).
+ $D3BE DEFW $CA22    ; Object: #N((#PC-$D34E)/$02).
+ $D3C0 DEFW $CA36    ; Object: #N((#PC-$D34E)/$02).
+ $D3C2 DEFW $CA6D    ; Object: #N((#PC-$D34E)/$02).
+ $D3C4 DEFW $CA78    ; Object: #N((#PC-$D34E)/$02).
+ $D3C6 DEFW $CA93    ; Object: #N((#PC-$D34E)/$02).
+ $D3C8 DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3CA DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3CC DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3CE DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3D0 DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3D2 DEFW $CABB    ; Object: #N((#PC-$D34E)/$02).
+ $D3D4 DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3D6 DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3D8 DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3DA DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3DC DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3DE DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3E0 DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3E2 DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
+ $D3E4 DEFW $CACF    ; Object: #N((#PC-$D34E)/$02).
+ $D3E6 DEFW $CADE    ; Object: #N((#PC-$D34E)/$02).
+ $D3E8 DEFW $CADE    ; Object: #N((#PC-$D34E)/$02).
+ $D3EA DEFW $0000    ; Object: #N((#PC-$D34E)/$02).
 
 ; Table: Room Descriptions
 @label=Table_RoomDescriptions
@@ -6040,8 +6088,8 @@ g$D3EC DEFW $0000    ; N/A.
  $D4C4 DEFW $D1A7    ; Room
                      ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
 
-; Table: Object Descriptions
-@label=Table_ObjectDescriptions
+; Table: Object Descriptions?
+@label=Table_ObjectDescriptions_2
 g$D4C6 DEFW $D1B3    ; Object
                      ; #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
  $D4C8 DEFW $D1BB    ; Object
@@ -6775,14 +6823,31 @@ g$E8E9 DEFB $3F,$40,$41,$FF,$00,$01,$4C,$4D
  $E919 DEFB $3A,$3B,$3C,$3D,$3E,$48,$3F,$40
  $E921 DEFB $41,$42,$43,$44,$45,$46,$47,$49
  $E929 DEFB $64,$4B,$4C,$4D,$4E,$4F,$50,$51
- $E931 DEFB $5E,$52,$05,$06,$07,$FF,$20,$21
- $E939 DEFB $22,$FF,$25,$26,$27,$FF,$55,$56
- $E941 DEFB $57,$FF,$5C,$5D,$5E,$FF,$63,$64
- $E949 DEFB $65,$66,$67,$FF,$44,$45,$48,$4A
- $E951 DEFB $4B,$FF,$34,$36,$37,$38,$39,$3A
- $E959 DEFB $3B,$FF,$51,$FF,$03,$08,$09,$0A
- $E961 DEFB $6C,$3E,$6A,$1F,$28,$29,$2A,$52
- $E969 DEFB $62
+ $E931 DEFB $5E,$52
+
+; Game status buffer entry at E933
+g$E933 DEFB $05,$06,$07
+ $E936 DEFB $FF                         ; Terminator.
+ $E937 DEFB $20,$21,$22
+ $E93A DEFB $FF                         ; Terminator.
+ $E93B DEFB $25,$26,$27
+ $E93E DEFB $FF                         ; Terminator.
+ $E93F DEFB $55,$56,$57
+ $E942 DEFB $FF                         ; Terminator.
+ $E943 DEFB $5C,$5D,$5E
+ $E946 DEFB $FF                         ; Terminator.
+ $E947 DEFB $63,$64,$65,$66,$67
+ $E94C DEFB $FF                         ; Terminator.
+ $E94D DEFB $44,$45,$48,$4A,$4B
+ $E952 DEFB $FF                         ; Terminator.
+ $E953 DEFB $34,$36,$37,$38,$39,$3A,$3B
+ $E95A DEFB $FF                         ; Terminator.
+ $E95B DEFB $51
+ $E95C DEFB $FF                         ; Terminator.
+
+; Game status buffer entry at E95D
+g$E95D DEFB $03,$08,$09,$0A,$6C,$3E,$6A,$1F
+ $E965 DEFB $28,$29,$2A,$52,$62
 
 ; Data block at E96A
 w$E96A DEFW $E86E
@@ -8203,9 +8268,9 @@ c$F03A CALL $BAB1    ; Call #R$BAB1.
 *$F12B JP $F047      ; Jump to #R$F047.
  $F12E CALL $C470    ; Call #R$C470.
  $F131 RET C         ; Return if #REGa is less than #N$04.
- $F132 LD A,($BC98)  ; #REGa=*#R$BC98.
- $F135 AND A         ; Set flags.
- $F136 JP Z,$F04C    ; Jump to #R$F04C if #REGa is equal to #REGa.
+ $F132 LD A,($BC98)  ; {Jump to #R$F04C if *#R$BC98 is zero.
+ $F135 AND A         ;
+ $F136 JP Z,$F04C    ; }
  $F139 CALL $BA6D    ; Call #R$BA6D.
  $F13C CALL $BA89    ; Call #R$BA89.
 ; Print "#STR$BF4F,$08($b==$FF)".
@@ -9040,24 +9105,25 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $F94A LD HL,$EAB2   ; #REGhl=#R$EAB2.
  $F94D CALL $C37F    ; Call #R$C37F.
  $F950 JR NZ,$F960   ; Jump to #R$F960 if ?? is not equal to #N$0F.
- $F952 LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $F955 CP $04        ; Compare #REGa with #N$04.
- $F957 JP NZ,$F06F   ; Jump to #R$F06F if #REGa is not equal to #N$04.
+ $F952 LD A,($BCCB)  ; {Jump to #R$F06F if *#R$BCCB is not equal to #N$04.
+ $F955 CP $04        ;
+ $F957 JP NZ,$F06F   ; }
  $F95A LD A,$03      ; #REGa=#N$03.
  $F95C CALL $EF54    ; Call #R$EF54.
  $F95F RET           ; Return.
 *$F960 LD HL,$EAB5   ; #REGhl=#R$EAB5.
  $F963 CALL $C37F    ; Call #R$C37F.
  $F966 JR NZ,$F976   ; Jump to #R$F976 if #REGa is not equal to #N$03.
- $F968 LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $F96B CP $03        ; Compare #REGa with #N$03.
- $F96D JP NZ,$F06F   ; Jump to #R$F06F if #REGa is not equal to #N$03.
+ $F968 LD A,($BCCB)  ; {Jump to #R$F06F if *#R$BCCB is not equal to #N$03.
+ $F96B CP $03        ;
+ $F96D JP NZ,$F06F   ; }
  $F970 LD A,$04      ; #REGa=#N$04.
  $F972 CALL $EF54    ; Call #R$EF54.
  $F975 RET           ; Return.
 *$F976 LD HL,$EABC   ; #REGhl=#R$EABC.
  $F979 CALL $C37F    ; Call #R$C37F.
  $F97C JR NZ,$F984   ; Jump to #R$F984 if #REGa is not equal to #N$04.
+; Print "#STR$BED1,$08($b==$FF)".
  $F97E LD HL,$BED1   ; #REGhl=#R$BED1.
  $F981 JP $F03A      ; Jump to #R$F03A.
 *$F984 LD HL,$EA0D   ; #REGhl=#R$EA0D.
@@ -9115,8 +9181,9 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FA01 CALL $C426    ; Call #R$C426.
  $FA04 LD HL,$BC66   ; #REGhl=#R$BC66.
  $FA07 SET 2,(HL)    ; Set bit 2 of *#REGhl.
- $FA09 LD A,$06      ; #REGa=#N$06.
- $FA0B LD ($BC69),A  ; Write #REGa to *#R$BC69.
+ $FA09 LD A,$06      ; {Write #N$06 to *#R$BC69.
+ $FA0B LD ($BC69),A  ; }
+; Print "#STR$E238,$08($b==$FF)".
  $FA0E LD HL,$E238   ; #REGhl=#R$E238.
  $FA11 JP $F03A      ; Jump to #R$F03A.
 *$FA14 LD HL,$EABA   ; #REGhl=#R$EABA.
@@ -9127,8 +9194,10 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FA22 LD BC,$0004   ; #REGbc=#N($0004,$04,$04).
  $FA25 CPIR          ; CPIR.
  $FA27 JR Z,$FA2F    ; Jump to #R$FA2F if *#REGhl is equal to #N$06.
+; Print "#STR$E28E,$08($b==$FF)".
  $FA29 LD HL,$E28E   ; #REGhl=#R$E28E.
  $FA2C JP $F03A      ; Jump to #R$F03A.
+; Print "#STR$E2AC,$08($b==$FF)".
 *$FA2F LD HL,$E2AC   ; #REGhl=#R$E2AC.
  $FA32 JP $F03A      ; Jump to #R$F03A.
  $FA35 INC D         ; Increment #REGd by one.
@@ -9140,39 +9209,41 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FA43 CALL $C37F    ; Call #R$C37F.
  $FA46 JR NZ,$FA85   ; Jump to #R$FA85 if #REGd is not equal to #N$06.
  $FA48 LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $FA4B CP $61        ; Compare #REGa with #N$61.
- $FA4D JR Z,$FA53    ; Jump to #R$FA53 if #REGa is equal to #N$61.
- $FA4F CP $62        ; Compare #REGa with #N$62.
- $FA51 JR NZ,$FA85   ; Jump to #R$FA85 if #REGa is not equal to #N$62.
+ $FA4B CP $61        ; {Jump to #R$FA53 if #REGa is equal to #N$61.
+ $FA4D JR Z,$FA53    ; }
+ $FA4F CP $62        ; {Jump to #R$FA85 if #REGa is not equal to #N$62.
+ $FA51 JR NZ,$FA85   ; }
 *$FA53 LD HL,$E8CA   ; #REGhl=#R$E8CA.
  $FA56 CALL $C401    ; Call #R$C401.
- $FA59 CP $2E        ; Compare #REGa with #N$2E.
- $FA5B JR NZ,$FA63   ; Jump to #R$FA63 if #REGa is not equal to #N$2E.
+ $FA59 CP $2E        ; {Jump to #R$FA63 if #REGa is not equal to #N$2E.
+ $FA5B JR NZ,$FA63   ; }
+; Print "#STR$E2F1,$08($b==$FF)".
  $FA5D LD HL,$E2F1   ; #REGhl=#R$E2F1.
  $FA60 JP $F03A      ; Jump to #R$F03A.
-*$FA63 CP $2D        ; Compare #REGa with #N$2D.
- $FA65 JR Z,$FA6C    ; Jump to #R$FA6C if #REGa is equal to #N$2D.
- $FA67 CP $30        ; Compare #REGa with #N$30.
- $FA69 JP NZ,$F088   ; Jump to #R$F088 if #REGa is not equal to #N$30.
-*$FA6C LD BC,$2D2C   ; #REGbc=#N($2D2C,$04,$04).
+*$FA63 CP $2D        ; {Jump to #R$FA6C if #REGa is equal to #N$2D.
+ $FA65 JR Z,$FA6C    ; }
+ $FA67 CP $30        ; {Jump to #R$F088 if #REGa is not equal to #N$30.
+ $FA69 JP NZ,$F088   ; }
+*$FA6C LD BC,$2D2C   ; #REGbc=#N$2D2C.
  $FA6F CALL $C426    ; Call #R$C426.
- $FA72 LD BC,$302F   ; #REGbc=#N($302F,$04,$04).
+ $FA72 LD BC,$302F   ; #REGbc=#N$302F.
  $FA75 CALL $C426    ; Call #R$C426.
- $FA78 LD A,$62      ; #REGa=#N$62.
- $FA7A LD ($ED57),A  ; Write #REGa to *#R$ED57.
- $FA7D LD A,$61      ; #REGa=#N$61.
- $FA7F LD ($ED5C),A  ; Write #REGa to *#R$ED5C.
+ $FA78 LD A,$62      ; {Write #N$62 to *#R$ED57.
+ $FA7A LD ($ED57),A  ; }
+ $FA7D LD A,$61      ; {Write #N$61 to *#R$ED5C.
+ $FA7F LD ($ED5C),A  ; }
  $FA82 JP $F06A      ; Jump to #R$F06A.
 *$FA85 LD HL,$EAC0   ; #REGhl=#R$EAC0.
  $FA88 CALL $C37F    ; Call #R$C37F.
  $FA8B JR NZ,$FAA5   ; Jump to #R$FAA5 if #REGa is not equal to #N$61.
- $FA8D LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $FA90 CP $6A        ; Compare #REGa with #N$6A.
- $FA92 JR NZ,$FAA5   ; Jump to #R$FAA5 if #REGa is not equal to #N$6A.
+ $FA8D LD A,($BCCB)  ; {Jump to #R$FAA5 if *#R$BCCB is not equal to #N$6A.
+ $FA90 CP $6A        ;
+ $FA92 JR NZ,$FAA5   ; }
  $FA94 LD A,$31      ; #REGa=#N$31.
  $FA96 CALL $C35F    ; Call #R$C35F.
  $FA99 JP Z,$F088    ; Jump to #R$F088 if #REGa is equal to #N$31.
  $FA9C CALL $F06F    ; Call #R$F06F.
+; Print "#STR$E305,$08($b==$FF)".
  $FA9F LD HL,$E305   ; #REGhl=#R$E305.
  $FAA2 JP $F03A      ; Jump to #R$F03A.
 *$FAA5 JP $F06F      ; Jump to #R$F06F.
@@ -9182,39 +9253,41 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FAAF CALL $C37F    ; Call #R$C37F.
  $FAB2 JR NZ,$FAE5   ; Jump to #R$FAE5 if #REGa is not equal to #N$31.
  $FAB4 LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $FAB7 CP $61        ; Compare #REGa with #N$61.
- $FAB9 JR Z,$FABF    ; Jump to #R$FABF if #REGa is equal to #N$61.
- $FABB CP $62        ; Compare #REGa with #N$62.
- $FABD JR NZ,$FAE5   ; Jump to #R$FAE5 if #REGa is not equal to #N$62.
+ $FAB7 CP $61        ; {Jump to #R$FABF if #REGa is equal to #N$61.
+ $FAB9 JR Z,$FABF    ; }
+ $FABB CP $62        ; {Jump to #R$FAE5 if #REGa is not equal to #N$62.
+ $FABD JR NZ,$FAE5   ; }
 *$FABF LD HL,$E8CA   ; #REGhl=#R$E8CA.
  $FAC2 CALL $C401    ; Call #R$C401.
- $FAC5 CP $2D        ; Compare #REGa with #N$2D.
- $FAC7 JP Z,$F08D    ; Jump to #R$F08D if #REGa is equal to #N$2D.
- $FACA CP $30        ; Compare #REGa with #N$30.
- $FACC JP Z,$F08D    ; Jump to #R$F08D if #REGa is equal to #N$30.
- $FACF LD BC,$2C2D   ; #REGbc=#N($2C2D,$04,$04).
+ $FAC5 CP $2D        ; {Jump to #R$F08D if #REGa is equal to #N$2D.
+ $FAC7 JP Z,$F08D    ; }
+ $FACA CP $30        ; {Jump to #R$F08D if #REGa is equal to #N$30.
+ $FACC JP Z,$F08D    ; }
+ $FACF LD BC,$2C2D   ; #REGbc=#N$2C2D.
  $FAD2 CALL $C426    ; Call #R$C426.
- $FAD5 LD BC,$2F30   ; #REGbc=#N($2F30,$04,$04).
+ $FAD5 LD BC,$2F30   ; #REGbc=#N$2F30.
  $FAD8 CALL $C426    ; Call #R$C426.
- $FADB XOR A         ; #REGa=#N$00.
- $FADC LD ($ED57),A  ; Write #REGa to *#R$ED57.
- $FADF LD ($ED5C),A  ; Write #REGa to *#R$ED5C.
+ $FADB XOR A         ; {Write #N$00 to: #LIST { *#R$ED57 } { *#R$ED5C } LIST#
+ $FADC LD ($ED57),A  ;
+ $FADF LD ($ED5C),A  ; }
  $FAE2 JP $F06A      ; Jump to #R$F06A.
 *$FAE5 LD HL,$EAC0   ; #REGhl=#R$EAC0.
  $FAE8 CALL $C37F    ; Call #R$C37F.
  $FAEB JR NZ,$FB05   ; Jump to #R$FB05 if #REGa is not equal to #N$30.
- $FAED LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $FAF0 CP $6A        ; Compare #REGa with #N$6A.
- $FAF2 JR NZ,$FB05   ; Jump to #R$FB05 if #REGa is not equal to #N$6A.
+ $FAED LD A,($BCCB)  ; {Jump to #R$FB05 if *#R$BCCB is not equal to #N$6A.
+ $FAF0 CP $6A        ;
+ $FAF2 JR NZ,$FB05   ; }
  $FAF4 LD A,$32      ; #REGa=#N$32.
  $FAF6 CALL $C35F    ; Call #R$C35F.
  $FAF9 JP Z,$F08D    ; Jump to #R$F08D if #REGa is equal to #N$32.
  $FAFC CALL $F06F    ; Call #R$F06F.
+; Print "#STR$E305,$08($b==$FF)".
  $FAFF LD HL,$E305   ; #REGhl=#R$E305.
  $FB02 JP $F03A      ; Jump to #R$F03A.
 *$FB05 LD HL,$EAC5   ; #REGhl=#R$EAC5.
  $FB08 CALL $C37F    ; Call #R$C37F.
  $FB0B JR NZ,$FB13   ; Jump to #R$FB13 if #REGa is not equal to #N$32.
+; Print "#STR$E31A,$08($b==$FF)".
  $FB0D LD HL,$E31A   ; #REGhl=#R$E31A.
  $FB10 JP $F03A      ; Jump to #R$F03A.
 *$FB13 JP $F06F      ; Jump to #R$F06F.
@@ -9231,8 +9304,10 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FB31 JR Z,$FB43    ; Jump to #R$FB43 if #REGa is equal to #N$29.
  $FB33 LD HL,$EDD7   ; #REGhl=#R$EDD7.
  $FB36 EX (SP),HL    ; Exchange the *#REGsp with the #REGhl register.
+; Print "#STR$E333,$08($b==$FF)".
  $FB37 LD HL,$E333   ; #REGhl=#R$E333.
  $FB3A CALL $BAB1    ; Call #R$BAB1.
+; Print "#STR$E36A,$08($b==$FF)".
  $FB3D LD HL,$E36A   ; #REGhl=#R$E36A.
  $FB40 JP $F03E      ; Jump to #R$F03E.
 *$FB43 LD HL,$BC6F   ; #REGhl=#R$BC6F.
@@ -9241,14 +9316,16 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FB4A CALL $C3EA    ; Call #R$C3EA.
  $FB4D LD BC,$393A   ; #REGbc=#N($393A,$04,$04).
  $FB50 CALL $C426    ; Call #R$C426.
- $FB53 LD A,$2F      ; #REGa=#N$2F.
- $FB55 LD ($EC27),A  ; Write #REGa to *#R$EC27.
- $FB58 LD A,$30      ; #REGa=#N$30.
- $FB5A LD ($EC2A),A  ; Write #REGa to *#R$EC2A.
- $FB5D LD A,$31      ; #REGa=#N$31.
- $FB5F LD ($EC30),A  ; Write #REGa to *#R$EC30.
+ $FB53 LD A,$2F      ; {Write #N$2F to *#R$EC27.
+ $FB55 LD ($EC27),A  ; }
+ $FB58 LD A,$30      ; {Write #N$30 to *#R$EC2A.
+ $FB5A LD ($EC2A),A  ; }
+ $FB5D LD A,$31      ; {Write #N$31 to *#R$EC30.
+ $FB5F LD ($EC30),A  ; }
+; Print "#STR$E333,$08($b==$FF)".
  $FB62 LD HL,$E333   ; #REGhl=#R$E333.
  $FB65 CALL $BAB1    ; Call #R$BAB1.
+; Print "#STR$E384,$08($b==$FF)".
  $FB68 LD HL,$E384   ; #REGhl=#R$E384.
  $FB6B JP $F03E      ; Jump to #R$F03E.
 *$FB6E JP $F074      ; Jump to #R$F074.
@@ -9265,42 +9342,46 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FB8A BIT 2,(HL)    ; Test bit 2 of *#REGhl.
  $FB8C JR NZ,$FB96   ; Jump to #R$FB96 if #REGa is not equal to #N$31.
  $FB8E SET 2,(HL)    ; Set bit 2 of *#REGhl.
+; Print "#STR$E3A3,$08($b==$FF)".
  $FB90 LD HL,$E3A3   ; #REGhl=#R$E3A3.
  $FB93 JP $F03A      ; Jump to #R$F03A.
 *$FB96 BIT 3,(HL)    ; Test bit 3 of *#REGhl.
  $FB98 JR NZ,$FBA2   ; Jump to #R$FBA2 if #REGa is not equal to #N$31.
  $FB9A SET 3,(HL)    ; Set bit 3 of *#REGhl.
+; Print "#STR$E3B8,$08($b==$FF)".
  $FB9C LD HL,$E3B8   ; #REGhl=#R$E3B8.
  $FB9F JP $F03A      ; Jump to #R$F03A.
+; Print "#STR$E3F7,$08($b==$FF)".
 *$FBA2 LD HL,$E3F7   ; #REGhl=#R$E3F7.
  $FBA5 JP $F03A      ; Jump to #R$F03A.
  $FBA8 CALL $C47B    ; Call #R$C47B.
  $FBAB RET C         ; Return if #REGa is less than #N$31.
- $FBAC CP $02        ; Compare #REGa with #N$02.
- $FBAE JP NC,$F074   ; Jump to #R$F074 if #REGa is greater than #N$02.
+ $FBAC CP $02        ; {Jump to #R$F074 if #REGa is greater than #N$02.
+ $FBAE JP NC,$F074   ; }
  $FBB1 LD HL,$EACB   ; #REGhl=#R$EACB.
  $FBB4 CALL $C37F    ; Call #R$C37F.
  $FBB7 JR NZ,$FBD2   ; Jump to #R$FBD2 if #REGa is not equal to #N$02.
  $FBB9 LD A,$34      ; #REGa=#N$34.
  $FBBB CALL $C35F    ; Call #R$C35F.
  $FBBE JP Z,$F065    ; Jump to #R$F065 if #REGa is equal to #N$34.
- $FBC1 LD BC,$3B34   ; #REGbc=#N($3B34,$04,$04).
+ $FBC1 LD BC,$3B34   ; #REGbc=#N$3B34.
  $FBC4 CALL $C426    ; Call #R$C426.
- $FBC7 LD A,$60      ; #REGa=#N$60.
- $FBC9 LD ($ED4F),A  ; Write #REGa to *#R$ED4F.
+ $FBC7 LD A,$60      ; {Write #N$60 to *#R$ED4F.
+ $FBC9 LD ($ED4F),A  ; }
  $FBCC LD HL,$E40B   ; #REGhl=#R$E40B.
  $FBCF JP $F03A      ; Jump to #R$F03A.
 *$FBD2 JP $F06F      ; Jump to #R$F06F.
  $FBD5 CALL $C47B    ; Call #R$C47B.
  $FBD8 RET C         ; Return if #REGa is less than #N$60.
- $FBD9 CP $02        ; Compare #REGa with #N$02.
- $FBDB JP NC,$F074   ; Jump to #R$F074 if #REGa is greater than #N$02.
+ $FBD9 CP $02        ; {Jump to #R$F074 if #REGa is greater than #N$02.
+ $FBDB JP NC,$F074   ; }
  $FBDE LD HL,$E9F1   ; #REGhl=#R$E9F1.
  $FBE1 CALL $C37F    ; Call #R$C37F.
  $FBE4 JR NZ,$FC0A   ; Jump to #R$FC0A if #REGa is not equal to #N$02.
  $FBE6 LD A,$11      ; #REGa=#N$11.
  $FBE8 CALL $C35F    ; Call #R$C35F.
  $FBEB JR NZ,$FBF3   ; Jump to #R$FBF3 if #REGa is not equal to #N$11.
+; Print "#STR$E44C,$08($b==$FF)".
  $FBED LD HL,$E44C   ; #REGhl=#R$E44C.
  $FBF0 JP $F03A      ; Jump to #R$F03A.
 *$FBF3 LD A,$10      ; #REGa=#N$10.
@@ -9309,11 +9390,13 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FBFB LD BC,$1011   ; #REGbc=#N($1011,$04,$04).
  $FBFE CALL $C426    ; Call #R$C426.
  $FC01 CALL $F06A    ; Call #R$F06A.
+; Print "#STR$E467,$08($b==$FF)".
  $FC04 LD HL,$E467   ; #REGhl=#R$E467.
  $FC07 JP $F03A      ; Jump to #R$F03A.
 *$FC0A LD HL,$E9D3   ; #REGhl=#R$E9D3.
  $FC0D CALL $C37F    ; Call #R$C37F.
  $FC10 JR NZ,$FC18   ; Jump to #R$FC18 if #REGa is not equal to #N$10.
+; Print "#STR$E486,$08($b==$FF)".
  $FC12 LD HL,$E486   ; #REGhl=#R$E486.
  $FC15 JP $F03A      ; Jump to #R$F03A.
 *$FC18 LD HL,$E9DB   ; #REGhl=#R$E9DB.
@@ -9322,8 +9405,8 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FC21 JP $F092      ; Jump to #R$F092.
  $FC24 CALL $C47B    ; Call #R$C47B.
  $FC27 RET C         ; Return if #REGa is less than #N$10.
- $FC28 CP $02        ; Compare #REGa with #N$02.
- $FC2A JP NC,$F074   ; Jump to #R$F074 if #REGa is greater than #N$02.
+ $FC28 CP $02        ; {Jump to #R$F074 if #REGa is greater than #N$02.
+ $FC2A JP NC,$F074   ; }
  $FC2D LD HL,$E9E1   ; #REGhl=#R$E9E1.
  $FC30 CALL $C37F    ; Call #R$C37F.
  $FC33 JR NZ,$FC5E   ; Jump to #R$FC5E if #REGa is not equal to #N$02.
@@ -9333,31 +9416,31 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FC3D LD A,$02      ; #REGa=#N$02.
  $FC3F CALL $C3E4    ; Call #R$C3E4.
  $FC42 JP NZ,$F07E   ; Jump to #R$F07E if #REGa is not equal to #N$02.
- $FC45 LD BC,$0203   ; #REGbc=#N($0203,$04,$04).
+ $FC45 LD BC,$0203   ; #REGbc=#N$0203.
  $FC48 CALL $C426    ; Call #R$C426.
  $FC4B LD HL,$BC66   ; #REGhl=#R$BC66.
  $FC4E SET 6,(HL)    ; Set bit 6 of *#REGhl.
- $FC50 LD A,$06      ; #REGa=#N$06.
- $FC52 LD ($BC6D),A  ; Write #REGa to *#R$BC6D.
+ $FC50 LD A,$06      ; {Write #N$06 to *#R$BC6D.
+ $FC52 LD ($BC6D),A  ; }
  $FC55 CALL $F06A    ; Call #R$F06A.
  $FC58 LD HL,$E4D1   ; #REGhl=#R$E4D1.
  $FC5B JP $F03A      ; Jump to #R$F03A.
 *$FC5E JP $F06F      ; Jump to #R$F06F.
  $FC61 CALL $C47B    ; Call #R$C47B.
  $FC64 RET C         ; Return if #REGa is less than #N$06.
- $FC65 CP $02        ; Compare #REGa with #N$02.
- $FC67 JP NC,$F074   ; Jump to #R$F074 if #REGa is greater than #N$02.
+ $FC65 CP $02        ; {Jump to #R$F074 if #REGa is greater than #N$02.
+ $FC67 JP NC,$F074   ; }
  $FC6A LD HL,$EACD   ; #REGhl=#R$EACD.
  $FC6D CALL $C37F    ; Call #R$C37F.
  $FC70 JR NZ,$FC8C   ; Jump to #R$FC8C if #REGa is not equal to #N$02.
  $FC72 LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $FC75 CP $52        ; Compare #REGa with #N$52.
- $FC77 JP Z,$F079    ; Jump to #R$F079 if #REGa is equal to #N$52.
- $FC7A CP $3F        ; Compare #REGa with #N$3F.
- $FC7C JP Z,$F079    ; Jump to #R$F079 if #REGa is equal to #N$3F.
+ $FC75 CP $52        ; {Jump to #R$F079 if #REGa is equal to #N$52.
+ $FC77 JP Z,$F079    ; }
+ $FC7A CP $3F        ; {Jump to #R$F079 if #REGa is equal to #N$3F.
+ $FC7C JP Z,$F079    ; }
  $FC7F LD B,$3F      ; #REGb=#N$3F.
- $FC81 CP $3E        ; Compare #REGa with #N$3E.
- $FC83 JR Z,$FC87    ; Jump to #R$FC87 if #REGa is equal to #N$3E.
+ $FC81 CP $3E        ; {Jump to #R$FC87 if #REGa is equal to #N$3E.
+ $FC83 JR Z,$FC87    ; }
  $FC85 LD B,$52      ; #REGb=#N$52.
 *$FC87 LD A,B        ; #REGa=#REGb.
  $FC88 CALL $EF54    ; Call #R$EF54.
@@ -9371,6 +9454,7 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FC9C LD HL,$EAD8   ; #REGhl=#R$EAD8.
  $FC9F CALL $C37F    ; Call #R$C37F.
  $FCA2 JR NZ,$FCAA   ; Jump to #R$FCAA if #REGa is not equal to #N$52.
+; Print "#STR$E305,$08($b==$FF)".
  $FCA4 LD HL,$E305   ; #REGhl=#R$E305.
  $FCA7 JP $F03A      ; Jump to #R$F03A.
 *$FCAA LD HL,$EADD   ; #REGhl=#R$EADD.
@@ -9383,6 +9467,7 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FCBC CALL $C3F1    ; Call #R$C3F1.
  $FCBF LD A,$3B      ; #REGa=#N$3B.
  $FCC1 CALL $C3F1    ; Call #R$C3F1.
+; Print "#STR$E508,$08($b==$FF)".
  $FCC4 LD HL,$E508   ; #REGhl=#R$E508.
  $FCC7 JP $F03A      ; Jump to #R$F03A.
 *$FCCA JP $F074      ; Jump to #R$F074.
@@ -9391,15 +9476,16 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FCD1 LD HL,$EAE6   ; #REGhl=#R$EAE6.
  $FCD4 CALL $C37F    ; Call #R$C37F.
  $FCD7 JR NZ,$FCFF   ; Jump to #R$FCFF if #REGa is not equal to #N$3B.
- $FCD9 LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $FCDC CP $6A        ; Compare #REGa with #N$6A.
- $FCDE JP Z,$F06F    ; Jump to #R$F06F if #REGa is equal to #N$6A.
+ $FCD9 LD A,($BCCB)  ; {Jump to #R$F06F if *#R$BCCB is equal to #N$6A.
+ $FCDC CP $6A        ;
+ $FCDE JP Z,$F06F    ; }
  $FCE1 LD A,$2E      ; #REGa=#N$2E.
  $FCE3 CALL $C35F    ; Call #R$C35F.
  $FCE6 JP NZ,$F079   ; Jump to #R$F079 if #REGa is not equal to #N$2E.
  $FCE9 LD A,$1F      ; #REGa=#N$1F.
  $FCEB CALL $C3E4    ; Call #R$C3E4.
  $FCEE JR Z,$FCF6    ; Jump to #R$FCF6 if #REGa is equal to #N$1F.
+; Print "#STR$E604,$08($b==$FF)".
  $FCF0 LD HL,$E604   ; #REGhl=#R$E604.
  $FCF3 JP $F03A      ; Jump to #R$F03A.
 *$FCF6 LD BC,$2E2D   ; #REGbc=#N($2E2D,$04,$04).
@@ -9408,37 +9494,38 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
 *$FCFF JP $F06F      ; Jump to #R$F06F.
  $FD02 CALL $C4B7    ; Call #R$C4B7.
  $FD05 RET C         ; Return if #REGa is less than #N$1F.
- $FD06 CP $02        ; Compare #REGa with #N$02.
- $FD08 JP NC,$F074   ; Jump to #R$F074 if #REGa is greater than #N$02.
+ $FD06 CP $02        ; {Jump to #R$F074 if #REGa is greater than #N$02.
+ $FD08 JP NC,$F074   ; }
  $FD0B LD A,($BCCB)  ; #REGa=*#R$BCCB.
  $FD0E LD HL,$FD1E   ; #REGhl=#R$FD1E.
  $FD11 LD BC,$0003   ; #REGbc=#N($0003,$04,$04).
  $FD14 CPIR          ; CPIR.
  $FD16 JR Z,$FD21    ; Jump to #R$FD21 if #REGa is equal to #N$02.
+; Print "#STR$DC37,$08($b==$FF)".
  $FD18 LD HL,$DC37   ; #REGhl=#R$DC37.
  $FD1B JP $F03A      ; Jump to #R$F03A.
  $FD1E LD L,E        ; #REGl=#REGe.
  $FD1F INC B         ; Increment #REGb by one.
  $FD20 LD (BC),A     ; Write #REGa to *#REGbc.
-*$FD21 CP $02        ; Compare #REGa with #N$02.
- $FD23 JR NZ,$FD29   ; Jump to #R$FD29 if #REGa is not equal to #N$02.
+*$FD21 CP $02        ; {Jump to #R$FD29 if #REGa is not equal to #N$02.
+ $FD23 JR NZ,$FD29   ; }
  $FD25 CALL $EF54    ; Call #R$EF54.
  $FD28 RET           ; Return.
 *$FD29 LD HL,$EAEC   ; #REGhl=#R$EAEC.
  $FD2C CALL $C37F    ; Call #R$C37F.
  $FD2F JR NZ,$FD3F   ; Jump to #R$FD3F if #REGa is not equal to #N$02.
- $FD31 LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $FD34 CP $04        ; Compare #REGa with #N$04.
- $FD36 JP NZ,$F079   ; Jump to #R$F079 if #REGa is not equal to #N$04.
+ $FD31 LD A,($BCCB)  ; {Jump to #R$F079 if *#R$BCCB is not equal to #N$04.
+ $FD34 CP $04        ;
+ $FD36 JP NZ,$F079   ; }
  $FD39 LD A,$6B      ; #REGa=#N$6B.
  $FD3B CALL $EF54    ; Call #R$EF54.
  $FD3E RET           ; Return.
 *$FD3F LD HL,$EAF5   ; #REGhl=#R$EAF5.
  $FD42 CALL $C37F    ; Call #R$C37F.
  $FD45 JR NZ,$FD54   ; Jump to #R$FD54 if #REGa is not equal to #N$6B.
- $FD47 LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $FD4A CP $6B        ; Compare #REGa with #N$6B.
- $FD4C JR NZ,$FD67   ; Jump to #R$FD67 if #REGa is not equal to #N$6B.
+ $FD47 LD A,($BCCB)  ; {Jump to #R$FD67 if *#R$BCCB is not equal to #N$6B.
+ $FD4A CP $6B        ;
+ $FD4C JR NZ,$FD67   ; }
  $FD4E LD A,$04      ; #REGa=#N$04.
  $FD50 CALL $EF54    ; Call #R$EF54.
  $FD53 RET           ; Return.
@@ -9454,10 +9541,12 @@ c$F90A LD HL,$EAA2   ; #REGhl=#R$EAA2.
  $FD6C RET           ; Return.
  $FD6D CALL $C47B    ; Call #R$C47B.
  $FD70 RET C         ; Return if #REGa is less than #N$02.
- $FD71 CP $02        ; Compare #REGa with #N$02.
- $FD73 JP Z,$F074    ; Jump to #R$F074 if #REGa is equal to #N$02.
+ $FD71 CP $02        ; {Jump to #R$F074 if #REGa is equal to #N$02.
+ $FD73 JP Z,$F074    ; }
+; Print "#STR$DB5F,$08($b==$FF)".
  $FD76 LD HL,$DB5F   ; #REGhl=#R$DB5F.
  $FD79 JP $F03A      ; Jump to #R$F03A.
+; Print "#STR$E5A4,$08($b==$FF)".
  $FD7C LD HL,$E5A4   ; #REGhl=#R$E5A4.
  $FD7F JP $F03A      ; Jump to #R$F03A.
 
@@ -9585,77 +9674,83 @@ c$FEFA LD IX,$607C   ; #REGix=#R$607C.
  $FF36 CALL $BA5D    ; Call #R$BA5D.
  $FF39 RET           ; Return.
 
-; Data block at FF3A
-w$FF3A DEFW $F09C
- $FF3C DEFW $F12E
- $FF3E DEFW $F14B
- $FF40 DEFW $F155
- $FF42 DEFW $F159
- $FF44 DEFW $F15D
- $FF46 DEFW $F161
- $FF48 DEFW $F165
- $FF4A DEFW $F169
- $FF4C DEFW $F19D
- $FF4E DEFW $F236
- $FF50 DEFW $F23E
- $FF52 DEFW $F246
- $FF54 DEFW $F263
- $FF56 DEFW $F481
- $FF58 DEFW $F4D4
- $FF5A DEFW $F4D4
- $FF5C DEFW $F7AB
- $FF5E DEFW $F7D6
- $FF60 DEFW $F851
- $FF62 DEFW $F91B
- $FF64 DEFW $F946
- $FF66 DEFW $F999
- $FF68 DEFW $F9E4
- $FF6A DEFW $FA3C
- $FF6C DEFW $FAA8
- $FF6E DEFW $FB16
- $FF70 DEFW $FB71
- $FF72 DEFW $FB83
- $FF74 DEFW $FBA8
- $FF76 DEFW $FBD5
- $FF78 DEFW $FC24
- $FF7A DEFW $FC61
- $FF7C DEFW $FC98
- $FF7E DEFW $FCCD
- $FF80 DEFW $FD02
- $FF82 DEFW $FD6D
- $FF84 DEFW $FD7C
+; Jump Table:
+@label=JumpTable_
+g$FF3A DEFW $F09C    ; #N((#PC-$FF3A)/$02).
+ $FF3C DEFW $F12E    ; #N((#PC-$FF3A)/$02).
+ $FF3E DEFW $F14B    ; #N((#PC-$FF3A)/$02).
+ $FF40 DEFW $F155    ; #N((#PC-$FF3A)/$02).
+ $FF42 DEFW $F159    ; #N((#PC-$FF3A)/$02).
+ $FF44 DEFW $F15D    ; #N((#PC-$FF3A)/$02).
+ $FF46 DEFW $F161    ; #N((#PC-$FF3A)/$02).
+ $FF48 DEFW $F165    ; #N((#PC-$FF3A)/$02).
+ $FF4A DEFW $F169    ; #N((#PC-$FF3A)/$02).
+ $FF4C DEFW $F19D    ; #N((#PC-$FF3A)/$02).
+ $FF4E DEFW $F236    ; #N((#PC-$FF3A)/$02).
+ $FF50 DEFW $F23E    ; #N((#PC-$FF3A)/$02).
+ $FF52 DEFW $F246    ; #N((#PC-$FF3A)/$02).
+ $FF54 DEFW $F263    ; #N((#PC-$FF3A)/$02).
+ $FF56 DEFW $F481    ; #N((#PC-$FF3A)/$02).
+ $FF58 DEFW $F4D4    ; #N((#PC-$FF3A)/$02).
+ $FF5A DEFW $F4D4    ; #N((#PC-$FF3A)/$02).
+ $FF5C DEFW $F7AB    ; #N((#PC-$FF3A)/$02).
+ $FF5E DEFW $F7D6    ; #N((#PC-$FF3A)/$02).
+ $FF60 DEFW $F851    ; #N((#PC-$FF3A)/$02).
+ $FF62 DEFW $F91B    ; #N((#PC-$FF3A)/$02).
+ $FF64 DEFW $F946    ; #N((#PC-$FF3A)/$02).
+ $FF66 DEFW $F999    ; #N((#PC-$FF3A)/$02).
+ $FF68 DEFW $F9E4    ; #N((#PC-$FF3A)/$02).
+ $FF6A DEFW $FA3C    ; #N((#PC-$FF3A)/$02).
+ $FF6C DEFW $FAA8    ; #N((#PC-$FF3A)/$02).
+ $FF6E DEFW $FB16    ; #N((#PC-$FF3A)/$02).
+ $FF70 DEFW $FB71    ; #N((#PC-$FF3A)/$02).
+ $FF72 DEFW $FB83    ; #N((#PC-$FF3A)/$02).
+ $FF74 DEFW $FBA8    ; #N((#PC-$FF3A)/$02).
+ $FF76 DEFW $FBD5    ; #N((#PC-$FF3A)/$02).
+ $FF78 DEFW $FC24    ; #N((#PC-$FF3A)/$02).
+ $FF7A DEFW $FC61    ; #N((#PC-$FF3A)/$02).
+ $FF7C DEFW $FC98    ; #N((#PC-$FF3A)/$02).
+ $FF7E DEFW $FCCD    ; #N((#PC-$FF3A)/$02).
+ $FF80 DEFW $FD02    ; #N((#PC-$FF3A)/$02).
+ $FF82 DEFW $FD6D    ; #N((#PC-$FF3A)/$02).
+ $FF84 DEFW $FD7C    ; #N((#PC-$FF3A)/$02).
 
-; Data block at FF86
-w$FF86 DEFW $EE00
- $FF88 DEFW $EE11
- $FF8A DEFW $EE22
- $FF8C DEFW $EE40
- $FF8E DEFW $EE51
- $FF90 DEFW $EE63
- $FF92 DEFW $EE74
- $FF94 DEFW $EE90
- $FF96 DEFW $EEA9
- $FF98 DEFW $EEBB
- $FF9A DEFW $EECD
- $FF9C DEFW $EEDF
- $FF9E DEFW $EEDF
- $FFA0 DEFW $EEDF
- $FFA2 DEFW $EEFC
- $FFA4 DEFW $EF32
- $FFA6 DEFW $EEDF
- $FFA8 DEFW $FEFA
- $FFAA DEFW $FF00
- $FFAC DEFW $FF00
- $FFAE DEFW $FF00
- $FFB0 DEFW $FF06
- $FFB2 DEFW $FF0C
- $FFB4 DEFW $FF12
- $FFB6 DEFW $FF18
- $FFB8 DEFW $FF1E
- $FFBA DEFW $FF1E
- $FFBC DEFW $FF1E
- $FFBE DEFW $FF24
- $FFC0 DEFW $FF2A
+; Jump Table: Events
+@label=JumpTable_Events
+g$FF86 DEFW $EE00    ; #N((#PC-$FF86)/$02).
+ $FF88 DEFW $EE11    ; #N((#PC-$FF86)/$02).
+ $FF8A DEFW $EE22    ; #N((#PC-$FF86)/$02).
+ $FF8C DEFW $EE40    ; #N((#PC-$FF86)/$02).
+ $FF8E DEFW $EE51    ; #N((#PC-$FF86)/$02).
+ $FF90 DEFW $EE63    ; #N((#PC-$FF86)/$02).
+ $FF92 DEFW $EE74    ; #N((#PC-$FF86)/$02).
+ $FF94 DEFW $EE90    ; #N((#PC-$FF86)/$02).
+@label=JumpTable_ScenicEvents
+ $FF96 DEFW $EEA9    ; #N((#PC-$FF86)/$02).
+ $FF98 DEFW $EEBB    ; #N((#PC-$FF86)/$02).
+ $FF9A DEFW $EECD    ; #N((#PC-$FF86)/$02).
+ $FF9C DEFW $EEDF    ; #N((#PC-$FF86)/$02).
+ $FF9E DEFW $EEDF    ; #N((#PC-$FF86)/$02).
+ $FFA0 DEFW $EEDF    ; #N((#PC-$FF86)/$02).
+ $FFA2 DEFW $EEFC    ; #N((#PC-$FF86)/$02).
+ $FFA4 DEFW $EF32    ; #N((#PC-$FF86)/$02).
+ $FFA6 DEFW $EEDF    ; #N((#PC-$FF86)/$02).
+
+; Table: Location Graphics
+@label=Table_LocationGraphics
+g$FFA8 DEFW $FEFA    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFAA DEFW $FF00    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFAC DEFW $FF00    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFAE DEFW $FF00    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFB0 DEFW $FF06    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFB2 DEFW $FF0C    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFB4 DEFW $FF12    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFB6 DEFW $FF18    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFB8 DEFW $FF1E    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFBA DEFW $FF1E    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFBC DEFW $FF1E    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFBE DEFW $FF24    ; Location Slot: #N((#PC-$FFA8)/$02).
+ $FFC0 DEFW $FF2A    ; Location Slot: #N((#PC-$FFA8)/$02).
 
 ; Unused
 u$FFC2 DEFB $00,$00,$00,$00,$00,$00,$00,$00
