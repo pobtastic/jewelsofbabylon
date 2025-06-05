@@ -33,7 +33,7 @@ Next: <a href="C21E.html">C21E</a>
 </td>
 </tr>
 </table>
-<div class="description">C1FF: Print Room Objects</div>
+<div class="description">C1FF: Print Objects</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,10 +42,19 @@ Next: <a href="C21E.html">C21E</a>
 Used by the routines at <a href="C26A.html">Handler_RoomExits</a> and <a href="F03A.html">F03A</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">01 for inventory items, or room number for room objects</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label">PrintRoomObjects</td>
+<td class="asm-label">PrintObjects</td>
 <td class="address-2"><span id="c1ff"></span>C1FF</td>
 <td class="instruction">LD HL,$BBF0</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BBF0.html">Table_ObjectLocations</a>.</td>
@@ -57,40 +66,40 @@ Used by the routines at <a href="C26A.html">Handler_RoomExits</a> and <a href="F
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD28.html">NumberObjects</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">PrintRoomObjects_0</td>
+<td class="asm-label">FindObject_Loop</td>
 <td class="address-2"><span id="c206"></span>C206</td>
 <td class="instruction">CPIR</td>
-<td class="comment-1" rowspan="1">CPIR.</td>
+<td class="comment-1" rowspan="1">Search for matching objects.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c208"></span>C208</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1">Return if ?? is not equal to 00.</td>
+<td class="comment-1" rowspan="1">Return if no objects were found.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c209"></span>C209</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">HL</span> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the current place in <a href="BBF0.html">Table_ObjectLocations</a> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c20a"></span>C20A</td>
-<td class="instruction">CALL <a href="C456.html">$C456</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C456.html">C456</a>.</td>
+<td class="instruction">CALL <a href="C456.html">ValidateObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C456.html">ValidateObject</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c20d"></span>C20D</td>
-<td class="instruction">JR Z,<a href="C1FF.html#c216">PrintRoomObjects_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C1FF.html#c216">PrintRoomObjects_1</a> if ?? is equal to 00.</td>
+<td class="instruction">JR Z,<a href="C1FF.html#c216">FindObject_Next</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C1FF.html#c216">FindObject_Next</a> if the object is invalid.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c20f"></span>C20F</td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-1" rowspan="2">Stash <span class="register">AF</span> and <span class="register">BC</span> on the stack.</td>
+<td class="comment-1" rowspan="2">Temporarily stash the object type and object counter on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -107,7 +116,7 @@ Used by the routines at <a href="C26A.html">Handler_RoomExits</a> and <a href="F
 <td class="asm-label"></td>
 <td class="address-1"><span id="c214"></span>C214</td>
 <td class="instruction">POP BC</td>
-<td class="comment-1" rowspan="2">Restore <span class="register">BC</span> and <span class="register">AF</span> from the stack.</td>
+<td class="comment-1" rowspan="2">Restore the object counter and object type from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -115,40 +124,39 @@ Used by the routines at <a href="C26A.html">Handler_RoomExits</a> and <a href="F
 <td class="instruction">POP AF</td>
 </tr>
 <tr>
-<td class="asm-label">PrintRoomObjects_1</td>
+<td class="asm-label">FindObject_Next</td>
 <td class="address-2"><span id="c216"></span>C216</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Temporarily hold the object type in <span class="register">E</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c217"></span>C217</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the current place in <a href="BBF0.html">Table_ObjectLocations</a> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c218"></span>C218</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">B</span>.</td>
+<td class="comment-1" rowspan="2">Test if all objects have been checked...</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c219"></span>C219</td>
 <td class="instruction">OR C</td>
-<td class="comment-1" rowspan="1">Set the bits from <span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c21a"></span>C21A</td>
 <td class="instruction">LD A,E</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">E</span>.</td>
+<td class="comment-1" rowspan="1">Restore the object type to <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c21b"></span>C21B</td>
-<td class="instruction">JR NZ,<a href="C1FF.html#c206">PrintRoomObjects_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C1FF.html#c206">PrintRoomObjects_0</a> if ?? is not equal to <span class="register">C</span>.</td>
+<td class="instruction">JR NZ,<a href="C1FF.html#c206">FindObject_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C1FF.html#c206">FindObject_Loop</a> until all objects in the table have been checked.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

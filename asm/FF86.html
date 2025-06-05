@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Jewels of Babylon: Data at FF86</title>
+<title>Jewels of Babylon: Game status buffer entry at FF86</title>
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
@@ -15,11 +15,11 @@ gtag('js', new Date());
 gtag('config', 'G-75RERFCHBG');
 </script>
 </head>
-<body class="Asm-w">
+<body class="Asm-g">
 <table class="header">
 <tr>
 <td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
-<td class="page-header">Data</td>
+<td class="page-header">Game status buffer</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -29,11 +29,11 @@ Prev: <a href="FF3A.html">FF3A</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#ff86">Map</a></td>
 <td class="next">
-Next: <a href="FFC2.html">FFC2</a>
+Next: <a href="FFA8.html">FFA8</a>
 </td>
 </tr>
 </table>
-<div class="description">FF86: Data block at FF86</div>
+<div class="description">FF86: Jump Table: Events</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,154 +42,106 @@ Next: <a href="FFC2.html">FFC2</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">JumpTable_Events</td>
 <td class="address-1"><span id="ff86"></span>FF86</td>
 <td class="instruction">DEFW <a href="EE00.html">Event_Crab</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">00.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff88"></span>FF88</td>
 <td class="instruction">DEFW <a href="EE00.html#ee11">Event_Tentacle</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">01.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff8a"></span>FF8A</td>
 <td class="instruction">DEFW <a href="EE00.html#ee22">Event_Rum</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">02.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff8c"></span>FF8C</td>
 <td class="instruction">DEFW <a href="EE00.html#ee40">Event_Lion</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">03.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff8e"></span>FF8E</td>
 <td class="instruction">DEFW <a href="EE00.html#ee51">Event_Crocodile</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">04.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff90"></span>FF90</td>
 <td class="instruction">DEFW <a href="EE00.html#ee63">Event_Cannibals</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">05.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff92"></span>FF92</td>
 <td class="instruction">DEFW <a href="EE00.html#ee74">Event_Match</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">06.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff94"></span>FF94</td>
 <td class="instruction">DEFW <a href="EE00.html#ee90">Event_Wave</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">07.</td>
 </tr>
 <tr>
+<td class="asm-label">JumpTable_ScenicEvents</td>
 <td class="address-1"><span id="ff96"></span>FF96</td>
 <td class="instruction">DEFW <a href="EEA9.html">Event_Seagull</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">08.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff98"></span>FF98</td>
 <td class="instruction">DEFW <a href="EEA9.html#eebb">Event_Rat</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">09.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff9a"></span>FF9A</td>
 <td class="instruction">DEFW <a href="EEA9.html#eecd">Event_Deer</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">0A.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff9c"></span>FF9C</td>
 <td class="instruction">DEFW <a href="EEA9.html#eedf">Event_Pirate</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">0B.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ff9e"></span>FF9E</td>
 <td class="instruction">DEFW <a href="EEA9.html#eedf">Event_Pirate</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">0C.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ffa0"></span>FFA0</td>
 <td class="instruction">DEFW <a href="EEA9.html#eedf">Event_Pirate</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">0D.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ffa2"></span>FFA2</td>
 <td class="instruction">DEFW <a href="EEA9.html#eefc">Event_WaterSnake</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">0E.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ffa4"></span>FFA4</td>
 <td class="instruction">DEFW <a href="EEA9.html#ef32">Event_Spider</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">0F.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ffa6"></span>FFA6</td>
 <td class="instruction">DEFW <a href="EEA9.html#eedf">Event_Pirate</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffa8"></span>FFA8</td>
-<td class="instruction">DEFW <a href="FEFA.html">DisplayGraphic_Boat</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffaa"></span>FFAA</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff00">DisplayGraphic_SandDunes</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffac"></span>FFAC</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff00">DisplayGraphic_SandDunes</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffae"></span>FFAE</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff00">DisplayGraphic_SandDunes</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffb0"></span>FFB0</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff06">DisplayGraphic_Bridge</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffb2"></span>FFB2</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff0c">DisplayGraphic_Cave</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffb4"></span>FFB4</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff12">DisplayGraphic_Door</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffb6"></span>FFB6</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff18">DisplayGraphic_Huts</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffb8"></span>FFB8</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff1e">DisplayGraphic_Cliffs</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffba"></span>FFBA</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff1e">DisplayGraphic_Cliffs</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffbc"></span>FFBC</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff1e">DisplayGraphic_Cliffs</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffbe"></span>FFBE</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff24">DisplayGraphic_Cavern</a></td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="address-1"><span id="ffc0"></span>FFC0</td>
-<td class="instruction">DEFW <a href="FEFA.html#ff2a">DisplayGraphic_Treasure</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">10.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -199,7 +151,7 @@ Prev: <a href="FF3A.html">FF3A</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#ff86">Map</a></td>
 <td class="next">
-Next: <a href="FFC2.html">FFC2</a>
+Next: <a href="FFA8.html">FFA8</a>
 </td>
 </tr>
 </table>

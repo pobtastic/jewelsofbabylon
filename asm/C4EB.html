@@ -47,117 +47,116 @@ Used by the routine at <a href="EDC4.html">GameLoop</a>.
 <tr>
 <td class="address-2"><span id="c4eb"></span>C4EB</td>
 <td class="instruction">LD HL,$BC78</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html#bc78">BC78</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c4ee"></span>C4EE</td>
 <td class="instruction">LD BC,($BD30)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD2E.html#bd30">BD30</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c4f2"></span>C4F2</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">RoomNumber</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c4f5"></span>C4F5</td>
 <td class="instruction">CPIR</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">CPIR.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c4f7"></span>C4F7</td>
 <td class="instruction">JR NZ,<a href="C4EB.html#c51f">$C51F</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C4EB.html#c51f">C51F</a> if <span class="register">HL</span> is not equal to FF.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c4f9"></span>C4F9</td>
 <td class="instruction">LD ($BD7D),HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="BD71.html#bd7d">BD7D</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c4fc"></span>C4FC</td>
 <td class="instruction">LD ($BD7F),BC</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Write <span class="register">BC</span> to *<a href="BD71.html#bd7f">BD7F</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c500"></span>C500</td>
 <td class="instruction">INC BC</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Increment <span class="register">BC</span> by one.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c501"></span>C501</td>
 <td class="instruction">LD HL,($BD30)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BD2E.html#bd30">BD30</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c504"></span>C504</td>
 <td class="instruction">AND A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>-=<span class="register">BC</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c505"></span>C505</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="c507"></span>C507</td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Exchange the <span class="register">DE</span> and <span class="register">HL</span> registers.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c508"></span>C508</td>
 <td class="instruction">LD IX,($BD24)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="BD24.html">Pointer_ScenicEvents_Jump</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c50c"></span>C50C</td>
-<td class="instruction">CALL <a href="C1F0.html">$C1F0</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">CALL <a href="C1F0.html">GetTableEntry</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C1F0.html">GetTableEntry</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c50f"></span>C50F</td>
 <td class="instruction">LD DE,$C514</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="C4EB.html#c514">C514</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c512"></span>C512</td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Stash <span class="register">DE</span> on the stack.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c513"></span>C513</td>
 <td class="instruction">JP (HL)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c514"></span>C514</td>
 <td class="instruction">LD HL,($BD7D)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BD71.html#bd7d">BD7D</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c517"></span>C517</td>
 <td class="instruction">LD BC,($BD7F)</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD71.html#bd7f">BD7F</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c51b"></span>C51B</td>
 <td class="instruction">XOR A</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c51c"></span>C51C</td>
 <td class="instruction">OR C</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Set the bits from <span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c51d"></span>C51D</td>
 <td class="instruction">JR NZ,<a href="C4EB.html#c4f2">$C4F2</a></td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C4EB.html#c4f2">C4F2</a> if <span class="register">A</span> is not equal to <span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="c51f"></span>C51F</td>
 <td class="instruction">RET</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

@@ -850,17 +850,15 @@ Print "Now you're really lost.".
 <tr>
 <td class="address-1"><span id="f132"></span>F132</td>
 <td class="instruction">LD A,($BC98)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BC54.html#bc98">BC98</a>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="F03A.html#f04c">F04C</a> if *<a href="BC54.html#bc98">BC98</a> is zero.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f135"></span>F135</td>
 <td class="instruction">AND A</td>
-<td class="comment-1" rowspan="1">Set flags.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f136"></span>F136</td>
 <td class="instruction">JP Z,<a href="F03A.html#f04c">$F04C</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f04c">F04C</a> if <span class="register">A</span> is equal to <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f139"></span>F139</td>
@@ -899,8 +897,8 @@ Print "You are carrying:-".
 </tr>
 <tr>
 <td class="address-1"><span id="f147"></span>F147</td>
-<td class="instruction">CALL <a href="C1FF.html">PrintRoomObjects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C1FF.html">PrintRoomObjects</a>.</td>
+<td class="instruction">CALL <a href="C1FF.html">PrintObjects</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C1FF.html">PrintObjects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f14a"></span>F14A</td>
