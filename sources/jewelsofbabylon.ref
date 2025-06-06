@@ -38,6 +38,67 @@ GameStatusBuffer
 Locations
 
 [Expand]
+#DEF(#ROOM(id)
+  #IF($id>$01)(
+    #SIM(start=$C1F0,stop=$C1FE,ix=$D3EC,de=$id)
+    #R({sim[HL]})(#MAP({sim[HL]})(
+      UNKNOWN,
+      51974:The Open Sea,
+      52010:Your Ship,
+      52070:In A Rowing Boat,
+      52088:Long Sandy Beach,
+      52110:The Dunes,
+      52161:By The Palm Trees,
+      52244:The Hillside Path,
+      52263:The Pool Of Water,
+      52300:The Narrow Gulley,
+      52367:The Hilltop,
+      52413:The Waterfall,
+      52465:The Narrow Path,
+      52504:The Thicket,
+      52563:The Cannibals' Village,
+      52587:The Woodland Path,
+      52606:The Woodland Clearing,
+      52671:The High Ridge,
+      52687:The Valley,
+      52752:The Fruit Grove,
+      52769:The Cliff Path,
+      52785:The Clifftop,
+      52820:The Rocky Path,
+      52836:Bottom Of The Rocky Slope,
+      52865:The Canyon,
+      52918:The Secluded Beach,
+      52938:The Rockpool,
+      52990:Wreckers' Cove,
+      53006:The Jungle,
+      53058:The Grassy Slope,
+      53093:The Rocky Beach,
+      53110:The Cave Mouth,
+      53137:The Cave,
+      53188:A Dead End,
+      53200:The Mossy Path,
+      53243:The Swamp,
+      53294:The Ravine,
+      53330:The Cliffs,
+      53373:The Cliff Bottom,
+      53391:The Harbour Beach,
+      53430:The Vast Cavern,
+      53447:The Passages,
+      53471:The Narrow Passage,
+      53491:The Dusty Corridor,
+      53511:The Pirate Treasure Chamber,
+      53540:The Damp Passage,
+      53589:The Wide Pit,
+      53603:The Pit Bottom,
+      53619:The Southern Side of the Pit,
+      53649:The Mighty Rock Door,
+      53671:The Bridge)),
+    N/A))
+
+#DEF(#OBJECT(id)
+  #MAP($id)(
+    UNKNOWN))
+
 #DEF(#COLOUR(id)
   #LET(ink=$id&$07)#IF({ink}>=$00)(INK:
     #MAP({ink})(

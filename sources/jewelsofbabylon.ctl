@@ -407,8 +407,23 @@ g $BBF0 Table: Object Locations
 B $BBF0
 
 b $BC54
-  $BC66
-  $BC67
+
+g $BC66 Flags: Event States
+@ $BC66 label=Flag_EventState
+D $BC66 #TABLE(default,centre,centre)
+. { =h Bit | =h Relating To }
+. { #N$00 | Crab }
+. { #N$01 | Tentacle }
+. { #N$02 | Rum }
+. { #N$03 | Lion }
+. { #N$04 | Crocodile }
+. { #N$05 | Cannibals }
+. { #N$06 | Match }
+. { #N$07 | Wave }
+. TABLE#
+B $BC66,$01
+
+b $BC67
   $BC68
   $BC69
   $BC6A
@@ -491,7 +506,12 @@ W $BD2C,$02
 
 g $BD2E
 W $BD2E,$02
+
+g $BD30 Number Of Scenic Events?
+@ $BD30 label=NumberScenicEvents
 W $BD30,$02
+
+g $BD32
 W $BD32,$02
 
 g $BD34 Command Buffer
@@ -511,8 +531,16 @@ B $BD70,$01
 g $BD71
 
   $BD75
-  $BD7F
-  $BD81
+
+g $BD7D Temporary Storage Table Pointer
+@ $BD7D label=TempStore_TablePointer
+W $BD7D,$02
+
+g $BD7F Temporary Storage Table Index
+@ $BD7F label=TempStore_TableIndex
+W $BD7F,$02
+
+g $BD81
 
 t $BD85 Messaging: > 
   $BD85,$02 "#STR$BD85,$08($b==$FF)".
@@ -1105,12 +1133,14 @@ M $C302,$06 Load the *#R$BCCB into #REGde.
   $C30F,$05 Add the result to the base address *#R$BD10, stored in #REGhl.
   $C314,$01 Return.
 
-c $C315
+c $C315 Print Room Description
+@ $C315 label=Print_RoomDescription
+R $C315 A Line number to begin printing
   $C315,$03 Write #REGa to *#R$BD70.
   $C318,$03 Call #R$BA89.
   $C31B,$03 #REGa=*#R$BCCB.
   $C31E,$04 #REGix=*#R$BD18.
-  $C322,$01 #REGe=#REGa.
+  $C322,$01 Copy the room number into #REGe.
   $C323,$03 Call #R$C1F0.
   $C326,$03 Call #R$BAB1.
   $C329,$01 Return.
@@ -1387,28 +1417,33 @@ c $C4C7
   $C4E8,$02 Decrease counter by one and loop back to #R$C4CC until counter is zero.
   $C4EA,$01 Return.
 
-c $C4EB
+c $C4EB Handler: Scenic Events
+@ $C4EB label=Handler_ScenicEvents
   $C4EB,$03 #REGhl=#R$BC78.
   $C4EE,$04 #REGbc=*#R$BD30.
+@ $C4F2 label=Handler_ScenicEvents_Loop
   $C4F2,$03 #REGa=*#R$BCCB.
-  $C4F5,$02 CPIR.
-  $C4F7,$02 Jump to #R$C51F if #REGhl is not equal to #N$FF.
-  $C4F9,$03 Write #REGhl to *#R$BD7D.
-  $C4FC,$04 Write #REGbc to *#R$BD7F.
-  $C500,$01 Increment #REGbc by one.
+  $C4F5,$02 Search for matching room.
+  $C4F7,$02 Jump to #R$C51F if no event was found.
+N $C4F9 An event was found to be processed!
+  $C4F9,$03 Write the table position to *#R$BD7D.
+  $C4FC,$04 Write the counter to *#R$BD7F.
+N $C500 Calculate the event index and get the event handler.
+  $C500,$01 Adjust the counter for the sum.
   $C501,$03 #REGhl=*#R$BD30.
-  $C504,$03 #REGhl-=#REGbc.
-  $C507,$01 Exchange the #REGde and #REGhl registers.
+  $C504,$03 Calculate the index.
+  $C507,$01 Move the index into #REGde (as #R$C1F0 uses #REGe).
   $C508,$04 #REGix=*#R$BD24.
   $C50C,$03 Call #R$C1F0.
-  $C50F,$03 #REGde=#R$C514.
-  $C512,$01 Stash #REGde on the stack.
-  $C513,$01 Jump to *#REGhl.
-  $C514,$03 #REGhl=*#R$BD7D.
-  $C517,$04 #REGbc=*#R$BD7F.
-  $C51B,$01 #REGa=#N$00.
-  $C51C,$01 Set the bits from #REGc.
-  $C51D,$02 Jump to #R$C4F2 if #REGa is not equal to #REGc.
+  $C50F,$04 Push #R$C514 onto the stack (as the return address).
+  $C513,$01 Jump to the event handler held by #REGhl.
+N $C514 This is the return point after the handler has finished executing.
+@ $C514 label=ScenicEvents_PostProcessing
+  $C514,$03 Restore *#R$BD7D to #REGhl.
+  $C517,$04 Restore *#R$BD7F to #REGbc.
+  $C51B,$01 Reset #REGa to #N$00.
+  $C51C,$03 Jump to #R$C4F2 if there are any further events to process.
+@ $C51F label=ScenicEvents_Return
   $C51F,$01 Return.
 
 c $C520
@@ -2531,19 +2566,57 @@ t $E61D
 
 b $E83E
 
-b $E86E
+g $E86E
+  $E86E
+  $E871
+  $E875
+  $E877
+  $E87A
+  $E87E
+  $E881
+  $E883
+  $E885
+  $E888
+  $E88B
+  $E88E
+  $E890
+  $E892
+  $E895
+  $E898
+  $E89A
+  $E89C
+  $E89E
+  $E8A0
+  $E8A3
+  $E8A6
+  $E8AB
+  $E8AF
+  $E8B2
+  $E8BC
+  $E8BF
+  $E8C1
+  $E8C4
+  $E8C6
+  $E8C8
+  $E8CA
+  $E8D2
+  $E8D4
+  $E8D6
+  $E8D8
+  $E8DC
+  $E8DF
+  $E8E2
+  $E8E4
+  $E8E9
+  $E8ED
+  $E8F2
+  $E8F5
+  $E8F7
+  $E8FE
+  $E900
+  $E902
 
-g $E87A
-
-g $E895
-
-g $E8B2
-
-g $E8C1
-
-g $E8CA
-
-g $E8E9
+g $E90D
 
 g $E933
 B $E933,$03
@@ -2559,9 +2632,13 @@ B $E95C,$01 Terminator.
 
 g $E95D
 
-w $E96A
+g $E96A
+@ $E96A label=gfgdfg
+W $E96A,$02 #N((#PC-$E96A)/$02).
+L $E96A,$02,$30
 
 g $E9CA
+W $E9CA,$02
 
 g $E9CC
   $E9D3
@@ -2598,13 +2675,13 @@ g $E9CC
 
 g $EB10 Table: Room Map
 @ $EB10 label=Table_RoomMap
-N $EB10 Room: #N((#PC-$EB10)/$06).
-B $EB10,$01 #IF(#PEEK(#PC)>$00)(North to room: #N(#PEEK(#PC)),N/A).
-B $EB11,$01 #IF(#PEEK(#PC)>$00)(South to room: #N(#PEEK(#PC)),N/A).
-B $EB12,$01 #IF(#PEEK(#PC)>$00)(East to room: #N(#PEEK(#PC)),N/A).
-B $EB13,$01 #IF(#PEEK(#PC)>$00)(West to room: #N(#PEEK(#PC)),N/A).
-B $EB14,$01 #IF(#PEEK(#PC)>$00)(Up to room: #N(#PEEK(#PC)),N/A).
-B $EB15,$01 #IF(#PEEK(#PC)>$00)(Down to room: #N(#PEEK(#PC)),N/A).
+N $EB10 Room #N((#PC-$EB10)/$06): #ROOM((#PC-$EB10)/$06).
+B $EB10,$01 #IF(#PEEK(#PC)>$00)(North to room: #R($EB10+#PEEK(#PC)*$06)(#N(#PEEK(#PC))),N/A).
+B $EB11,$01 #IF(#PEEK(#PC)>$00)(South to room: #R($EB10+#PEEK(#PC)*$06)(#N(#PEEK(#PC))),N/A).
+B $EB12,$01 #IF(#PEEK(#PC)>$00)(East to room: #R($EB10+#PEEK(#PC)*$06)(#N(#PEEK(#PC))),N/A).
+B $EB13,$01 #IF(#PEEK(#PC)>$00)(West to room: #R($EB10+#PEEK(#PC)*$06)(#N(#PEEK(#PC))),N/A).
+B $EB14,$01 #IF(#PEEK(#PC)>$00)(Up to room: #R($EB10+#PEEK(#PC)*$06)(#N(#PEEK(#PC))),N/A).
+B $EB15,$01 #IF(#PEEK(#PC)>$00)(Down to room: #R($EB10+#PEEK(#PC)*$06)(#N(#PEEK(#PC))),N/A).
 L $EB10,$06,$6D
 
 w $ED9E
@@ -2631,16 +2708,18 @@ c $EDF2 Game Complete
 @ $EDF2 label=GameComplete
 N $EDF8 Print "#STR$D526,$08($b==$FF)".
 
-c $EE00 Events
+c $EE00 Events: Crab
 @ $EE00 label=Event_Crab
   $EE00,$03 #REGhl=#R$BC66.
-  $EE03,$02 Reset bit 0 of *#REGhl.
+  $EE03,$02 Clear bit 0 (which relates to the crab).
   $EE05,$02 #REGa=#N$29.
   $EE07,$03 Call #R$C35F.
   $EE0A,$01 Return if ?? is not equal to #N$29.
 N $EE0B Print "#STR$D5B0,$08($b==$FF)".
   $EE0B,$03 #REGhl=#R$D5B0.
   $EE0E,$03 Jump to #R$EE9B.
+
+c $EE11 Events: Tentacle
 @ $EE11 label=Event_Tentacle
   $EE11,$03 #REGhl=#R$BC66.
   $EE14,$02 Reset bit 1 of *#REGhl.
@@ -2650,6 +2729,8 @@ N $EE0B Print "#STR$D5B0,$08($b==$FF)".
 N $EE1C Print "#STR$D5F6,$08($b==$FF)".
   $EE1C,$03 #REGhl=#R$D5F6.
   $EE1F,$03 Jump to #R$EE9B.
+
+c $EE22 Events: Rum
 @ $EE22 label=Event_Rum
   $EE22,$03 #REGhl=#R$BC66.
   $EE25,$02 Reset bit 2 of *#REGhl.
@@ -2662,6 +2743,8 @@ N $EE33 Print "#STR$D629,$08($b==$FF)".
   $EE33,$03 #REGhl=#R$D629.
   $EE36,$03 Jump to #R$EE9B.
 B $EE39,$07
+
+c $EE40 Events: Lion
 @ $EE40 label=Event_Lion
   $EE40,$03 #REGhl=#R$BC66.
   $EE43,$02 Reset bit 3 of *#REGhl.
@@ -2671,6 +2754,8 @@ B $EE39,$07
 N $EE4B Print "#STR$D66E,$08($b==$FF)".
   $EE4B,$03 #REGhl=#R$D66E.
   $EE4E,$03 Jump to #R$EE9B.
+
+c $EE51 Events: Crocodile
 @ $EE51 label=Event_Crocodile
   $EE51,$03 #REGhl=#R$BC66.
   $EE54,$02 Reset bit 4 of *#REGhl.
@@ -2680,6 +2765,8 @@ N $EE4B Print "#STR$D66E,$08($b==$FF)".
 N $EE5D Print "#STR$D6A0,$08($b==$FF)".
   $EE5D,$03 #REGhl=#R$D6A0.
   $EE60,$03 Jump to #R$EE9B.
+
+c $EE63 Events: Cannibals
 @ $EE63 label=Event_Cannibals
   $EE63,$03 #REGhl=#R$BC66.
   $EE66,$02 Reset bit 5 of *#REGhl.
@@ -2688,6 +2775,8 @@ N $EE5D Print "#STR$D6A0,$08($b==$FF)".
   $EE6D,$01 Return if #REGh is not equal to #N$18.
   $EE6E,$03 #REGhl=#R$D931.
   $EE71,$03 Jump to #R$EE9B.
+
+c $EE74 Events: Match
 @ $EE74 label=Event_Match
   $EE74,$03 #REGhl=#R$BC66.
   $EE77,$02 Reset bit 6 of *#REGhl.
@@ -2702,12 +2791,16 @@ N $EE84 Print "#STR$DB91,$08($b==$FF)".
   $EE8A,$02 #REGa=#N$03.
   $EE8C,$03 Call #R$C3EA.
   $EE8F,$01 Return.
+
+c $EE90 Events: Wave
 @ $EE90 label=Event_Wave
   $EE90,$03 #REGhl=#R$BC66.
   $EE93,$02 Reset bit 7 of *#REGhl.
 N $EE95 Print "#STR$E567,$08($b==$FF)".
   $EE95,$03 #REGhl=#R$E567.
   $EE98,$03 Jump to #R$EE9B.
+
+c $EE9B Events: Game Over
 @ $EE9B label=Events_GameOver
 N $EE9B Force a newline to be "printed".
   $EE9B,$02 #REGa=#N$0D.
@@ -2717,7 +2810,7 @@ N $EEA3 Tidy up the stack.
   $EEA3,$03 Restore #REGhl, #REGhl and #REGhl from the stack.
   $EEA6,$03 Jump to #R$EDD7.
 
-c $EEA9 Events
+c $EEA9 Events: Seagull
 @ $EEA9 label=Event_Seagull
 N $EEA9 Print "#STR$D6EA,$08($b==$FF)".
   $EEA9,$03 #REGhl=#R$D6EA.
@@ -2728,6 +2821,8 @@ N $EEAF Print "#STR$D716,$08($b==$FF)".
   $EEB5,$02 #REGa=#N$80.
   $EEB7,$03 Call #R$C3EA.
   $EEBA,$01 Return.
+
+c $EEBB Events: Rat
 @ $EEBB label=Event_Rat
 N $EEBB Print "#STR$D73C,$08($b==$FF)".
   $EEBB,$03 #REGhl=#R$D73C.
@@ -2738,6 +2833,8 @@ N $EEC1 Print "#STR$D76E,$08($b==$FF)".
   $EEC7,$02 #REGa=#N$81.
   $EEC9,$03 Call #R$C3EA.
   $EECC,$01 Return.
+
+c $EECD Events: Deer
 @ $EECD label=Event_Deer
 N $EECD Print "#STR$D797,$08($b==$FF)".
   $EECD,$03 #REGhl=#R$D797.
@@ -2748,6 +2845,8 @@ N $EED3 Print "#STR$D7AA,$08($b==$FF)".
   $EED9,$02 #REGa=#N$82.
   $EEDB,$03 Call #R$C3EA.
   $EEDE,$01 Return.
+
+c $EEDF Events: Pirate
 @ $EEDF label=Event_Pirate
 N $EEDF Print "#STR$D7C5,$08($b==$FF)".
   $EEDF,$03 #REGhl=#R$D7C5.
@@ -2765,6 +2864,8 @@ N $EEF5 Print "#STR$D7DE,$08($b==$FF)".
 @ $EEF8 label=Event_Pirate_PrintAndReturn
   $EEF8,$03 Call #R$C579.
   $EEFB,$01 Return.
+
+c $EEFC Events: Water Snake
 @ $EEFC label=Event_WaterSnake
 N $EEFC Print "#STR$D821,$08($b==$FF)".
   $EEFC,$03 #REGhl=#R$D821.
@@ -2797,6 +2898,8 @@ N $EF24 Print "#STR$D88C,$08($b==$FF)".
 @ $EF2E label=WaterSnake_PrintAndReturn
   $EF2E,$03 Call #R$C579.
   $EF31,$01 Return.
+
+c $EF32 Events: Spider
 @ $EF32 label=Event_Spider
 N $EF32 Print "#STR$D8D8,$08($b==$FF)".
   $EF32,$03 #REGhl=#R$D8D8.
