@@ -38,6 +38,9 @@ Next: <a href="61234.html">61234</a>
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This event handles the water snake.
+</div>
 </div>
 </td>
 </tr>
@@ -67,24 +70,26 @@ Print "A long water snakeslithers toward you...".
 <td class="asm-label"></td>
 <td class="address-1"><span id="61186"></span>61186</td>
 <td class="instruction">LD A,4</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=4.</td>
+<td class="comment-1" rowspan="2">Call <a href="50562.html">GenerateRandomNumber</a> with a maximum value of 4.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61188"></span>61188</td>
 <td class="instruction">CALL <a href="50562.html">GenerateRandomNumber</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50562.html">GenerateRandomNumber</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61191"></span>61191</td>
 <td class="instruction">JR NZ,<a href="61180.html#61215">Event_WaterSnake_Safe_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61180.html#61215">Event_WaterSnake_Safe_1</a> if the random generator returns a non-zero response..</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61180.html#61215">Event_WaterSnake_Safe_1</a> if the random generator returns a non-zero response.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="61193"></span>
 <div class="comments">
+<div class="paragraph">
+Bad luck #1!
+</div>
 <div class="paragraph">
 Print "It suddenly strikes at you...".
 </div>
@@ -107,13 +112,12 @@ Print "It suddenly strikes at you...".
 <td class="asm-label"></td>
 <td class="address-1"><span id="61199"></span>61199</td>
 <td class="instruction">LD A,20</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=20.</td>
+<td class="comment-1" rowspan="2">Call <a href="50562.html">GenerateRandomNumber</a> with a maximum value of 20.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61201"></span>61201</td>
 <td class="instruction">CALL <a href="50562.html">GenerateRandomNumber</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50562.html">GenerateRandomNumber</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -122,10 +126,20 @@ Print "It suddenly strikes at you...".
 <td class="comment-1" rowspan="1">Jump to <a href="61180.html#61220">Event_WaterSnake_Safe_2</a> if the random generator returns a non-zero response.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="61206"></span>
+<div class="comments">
+<div class="paragraph">
+Bad luck #2!
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61206"></span>61206</td>
 <td class="instruction">LD HL,60887</td>
-<td class="comment-1" rowspan="2">Push <a href="60887.html">GameOver</a> onto the *<span class="register">SP</span>.</td>
+<td class="comment-1" rowspan="2">Switch <a href="60887.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -159,6 +173,9 @@ Print "The venomous fangs sinkinto you.".
 <span id="61215"></span>
 <div class="comments">
 <div class="paragraph">
+Handle that the water snake just doesn't mess with you.
+</div>
+<div class="paragraph">
 Print "It regards you for a moment,then slips away.".
 </div>
 </div>
@@ -180,6 +197,9 @@ Print "It regards you for a moment,then slips away.".
 <td class="routine-comment" colspan="5">
 <span id="61220"></span>
 <div class="comments">
+<div class="paragraph">
+Handle that the water snake has terrible eyesight.
+</div>
 <div class="paragraph">
 Print "But it misses and slips away.".
 </div>

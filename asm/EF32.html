@@ -38,6 +38,9 @@ Next: <a href="EF54.html">EF54</a>
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This event handles the poisonous spider.
+</div>
 </div>
 </td>
 </tr>
@@ -55,7 +58,7 @@ Print "A poisonous spider drops on you.".
 <td class="asm-label">Event_Spider</td>
 <td class="address-2"><span id="ef32"></span>EF32</td>
 <td class="instruction">LD HL,$D8D8</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D8D8.html">D8D8</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D8D8.html">Messaging_PoisonousSpiderDropsOnYou</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -67,13 +70,12 @@ Print "A poisonous spider drops on you.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef38"></span>EF38</td>
 <td class="instruction">LD A,$0A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0A.</td>
+<td class="comment-1" rowspan="2">Call <a href="C582.html">GenerateRandomNumber</a> with a maximum value of 0A.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef3a"></span>EF3A</td>
 <td class="instruction">CALL <a href="C582.html">GenerateRandomNumber</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C582.html">GenerateRandomNumber</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -82,10 +84,20 @@ Print "A poisonous spider drops on you.".
 <td class="comment-1" rowspan="1">Jump to <a href="EF32.html#ef48">Event_Spider_Safe</a> if the random generator returns a non-zero response.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ef3f"></span>
+<div class="comments">
+<div class="paragraph">
+Bad luck!
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef3f"></span>EF3F</td>
 <td class="instruction">LD HL,$EDD7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EDD7.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="1">Switch <a href="EDD7.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -107,13 +119,23 @@ Print "It stings you.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef43"></span>EF43</td>
 <td class="instruction">LD HL,$D922</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D922.html">D922</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D922.html">Messaging_PoisonousSpiderStingsYou</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef46"></span>EF46</td>
 <td class="instruction">JR <a href="EF32.html#ef50">Event_Spider_PrintAndReturn</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="EF32.html#ef50">Event_Spider_PrintAndReturn</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ef48"></span>
+<div class="comments">
+<div class="paragraph">
+Handle that the poisonous spider didn't sting you.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Event_Spider_Safe</td>
@@ -141,7 +163,7 @@ Print "It lingers a moment,then scuttles off.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef4d"></span>EF4D</td>
 <td class="instruction">LD HL,$D8FA</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D8FA.html">D8FA</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="D8FA.html">Messaging_PoisonousSpiderScuttlesOff</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Event_Spider_PrintAndReturn</td>

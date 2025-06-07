@@ -33,7 +33,7 @@ Next: <a href="47953.html">47953</a>
 </td>
 </tr>
 </table>
-<div class="description">47938: Clear Location Image</div>
+<div class="description">47938: Clear Room Image</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -54,7 +54,7 @@ Copies a given attribute byte to the 512 bytes where the location image attribut
 </td>
 </tr>
 <tr>
-<td class="asm-label">ClearLocationImage</td>
+<td class="asm-label">ClearRoomImage</td>
 <td class="address-2"><span id="47938"></span>47938</td>
 <td class="instruction">LD BC,512</td>
 <td class="comment-1" rowspan="1">Set a counter in <span class="register">BC</span> of 512 bytes.</td>
@@ -72,7 +72,7 @@ Copies a given attribute byte to the 512 bytes where the location image attribut
 <td class="comment-1" rowspan="1">Copy the attribute byte into the <span class="register">E</span> register.</td>
 </tr>
 <tr>
-<td class="asm-label">ClearLocationImage_Loop</td>
+<td class="asm-label">ClearRoomImage_Loop</td>
 <td class="address-2"><span id="47945"></span>47945</td>
 <td class="instruction">LD (HL),E</td>
 <td class="comment-1" rowspan="1">Write the byte to the attribute buffer.</td>
@@ -87,13 +87,13 @@ Copies a given attribute byte to the 512 bytes where the location image attribut
 <td class="asm-label"></td>
 <td class="address-1"><span id="47947"></span>47947</td>
 <td class="instruction">DEC BC</td>
-<td class="comment-1" rowspan="1">Decrease the location image byte counter by one.</td>
+<td class="comment-1" rowspan="1">Decrease the room image byte counter by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="47948"></span>47948</td>
 <td class="instruction">LD A,B</td>
-<td class="comment-1" rowspan="3">Jump back to <a href="47938.html#47945">ClearLocationImage_Loop</a> until the whole location image has been covered.</td>
+<td class="comment-1" rowspan="3">Jump back to <a href="47938.html#47945">ClearRoomImage_Loop</a> until the whole room image has been covered.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -103,7 +103,7 @@ Copies a given attribute byte to the 512 bytes where the location image attribut
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="47950"></span>47950</td>
-<td class="instruction">JR NZ,<a href="47938.html#47945">ClearLocationImage_Loop</a></td>
+<td class="instruction">JR NZ,<a href="47938.html#47945">ClearRoomImage_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

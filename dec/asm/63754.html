@@ -81,8 +81,8 @@ Print "It's already dead.".
 </tr>
 <tr>
 <td class="address-2"><span id="63768"></span>63768</td>
-<td class="instruction">JP <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63771"></span>63771</td>
@@ -212,7 +212,9 @@ Print "It's already dead.".
 <tr>
 <td class="address-1"><span id="63826"></span>63826</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61498.html#61551">61551</a> if *<a href="48331.html">RoomNumber</a> is not equal to 4.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61498.html#61551">Print_YouCant</a> if *<a href="48331.html">RoomNumber</a> is not room 4: "
+
+<a href="52070.html">In A Rowing Boat</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63829"></span>63829</td>
@@ -220,7 +222,7 @@ Print "It's already dead.".
 </tr>
 <tr>
 <td class="address-1"><span id="63831"></span>63831</td>
-<td class="instruction">JP NZ,<a href="61498.html#61551">61551</a></td>
+<td class="instruction">JP NZ,<a href="61498.html#61551">Print_YouCant</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63834"></span>63834</td>
@@ -255,7 +257,9 @@ Print "It's already dead.".
 <tr>
 <td class="address-1"><span id="63848"></span>63848</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61498.html#61551">61551</a> if *<a href="48331.html">RoomNumber</a> is not equal to 3.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61498.html#61551">Print_YouCant</a> if *<a href="48331.html">RoomNumber</a> is not room 3: "
+
+<a href="52010.html">Your Ship</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63851"></span>63851</td>
@@ -263,7 +267,7 @@ Print "It's already dead.".
 </tr>
 <tr>
 <td class="address-1"><span id="63853"></span>63853</td>
-<td class="instruction">JP NZ,<a href="61498.html#61551">61551</a></td>
+<td class="instruction">JP NZ,<a href="61498.html#61551">Print_YouCant</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63856"></span>63856</td>
@@ -347,8 +351,8 @@ Print "Please be more specific.".
 </tr>
 <tr>
 <td class="address-1"><span id="63894"></span>63894</td>
-<td class="instruction">JP <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63897"></span>63897</td>
@@ -408,7 +412,7 @@ Print "Please be more specific.".
 <tr>
 <td class="address-1"><span id="63922"></span>63922</td>
 <td class="instruction">LD HL,48280</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48231.html#48280">48280</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48280.html">CounterMatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63925"></span>63925</td>
@@ -577,8 +581,8 @@ Print "You eat the fish.It was quite tasty.".
 </tr>
 <tr>
 <td class="address-1"><span id="63998"></span>63998</td>
-<td class="instruction">JP NZ,<a href="61498.html#61566">61566</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61566">61566</a> if *<span class="register">HL</span> is not equal to 13.</td>
+<td class="instruction">JP NZ,<a href="61498.html#61566">Print_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61566">Print_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 13.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64001"></span>64001</td>
@@ -716,8 +720,8 @@ Print "You take a refreshing drink.".
 </tr>
 <tr>
 <td class="address-2"><span id="64057"></span>64057</td>
-<td class="instruction">JP <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64060"></span>64060</td>
@@ -752,7 +756,9 @@ Print "You take a refreshing drink.".
 <tr>
 <td class="address-1"><span id="64075"></span>64075</td>
 <td class="instruction">CP 97</td>
-<td class="comment-1" rowspan="2">Jump to <a href="63754.html#64083">64083</a> if <span class="register">A</span> is equal to 97.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="63754.html#64083">64083</a> if <span class="register">A</span> is room 97: "
+
+<a href="53491.html">The Dusty Corridor</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64077"></span>64077</td>
@@ -761,7 +767,9 @@ Print "You take a refreshing drink.".
 <tr>
 <td class="address-1"><span id="64079"></span>64079</td>
 <td class="instruction">CP 98</td>
-<td class="comment-1" rowspan="2">Jump to <a href="63754.html#64133">64133</a> if <span class="register">A</span> is not equal to 98.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="63754.html#64133">64133</a> if <span class="register">A</span> is not room 98: "
+
+<a href="53511.html">The Pirate Treasure Chamber</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64081"></span>64081</td>
@@ -864,8 +872,8 @@ Print "The door is locked.".
 </tr>
 <tr>
 <td class="address-1"><span id="64130"></span>64130</td>
-<td class="instruction">JP <a href="61498.html#61546">61546</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">61546</a>.</td>
+<td class="instruction">JP <a href="61498.html#61546">Print_OK</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">Print_OK</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="64133"></span>64133</td>
@@ -885,7 +893,9 @@ Print "The door is locked.".
 <tr>
 <td class="address-1"><span id="64141"></span>64141</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="63754.html#64165">64165</a> if *<a href="48331.html">RoomNumber</a> is not equal to 106.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63754.html#64165">64165</a> if *<a href="48331.html">RoomNumber</a> is not room 106: "
+
+<a href="53649.html">The Mighty Rock Door</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64144"></span>64144</td>
@@ -912,8 +922,8 @@ Print "The door is locked.".
 </tr>
 <tr>
 <td class="address-1"><span id="64156"></span>64156</td>
-<td class="instruction">CALL <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">CALL <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -937,8 +947,8 @@ Print "It's much too heavy.".
 </tr>
 <tr>
 <td class="address-2"><span id="64165"></span>64165</td>
-<td class="instruction">JP <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64168"></span>64168</td>
@@ -968,12 +978,13 @@ Print "It's much too heavy.".
 <tr>
 <td class="address-1"><span id="64180"></span>64180</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48331.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63754.html#64191">64191</a> if *<a href="48331.html">RoomNumber</a> is room 97: "
+
+<a href="53491.html">The Dusty Corridor</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64183"></span>64183</td>
 <td class="instruction">CP 97</td>
-<td class="comment-1" rowspan="2">Jump to <a href="63754.html#64191">64191</a> if <span class="register">A</span> is equal to 97.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64185"></span>64185</td>
@@ -982,7 +993,9 @@ Print "It's much too heavy.".
 <tr>
 <td class="address-1"><span id="64187"></span>64187</td>
 <td class="instruction">CP 98</td>
-<td class="comment-1" rowspan="2">Jump to <a href="63754.html#64229">64229</a> if <span class="register">A</span> is not equal to 98.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="63754.html#64229">64229</a> if *<a href="48331.html">RoomNumber</a> is not room 98: "
+
+<a href="53511.html">The Pirate Treasure Chamber</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64189"></span>64189</td>
@@ -1054,8 +1067,8 @@ Print "It's much too heavy.".
 </tr>
 <tr>
 <td class="address-1"><span id="64226"></span>64226</td>
-<td class="instruction">JP <a href="61498.html#61546">61546</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">61546</a>.</td>
+<td class="instruction">JP <a href="61498.html#61546">Print_OK</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">Print_OK</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="64229"></span>64229</td>
@@ -1075,7 +1088,9 @@ Print "It's much too heavy.".
 <tr>
 <td class="address-1"><span id="64237"></span>64237</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="63754.html#64261">64261</a> if *<a href="48331.html">RoomNumber</a> is not equal to 106.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63754.html#64261">64261</a> if *<a href="48331.html">RoomNumber</a> is not room 106: "
+
+<a href="53649.html">The Mighty Rock Door</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64240"></span>64240</td>
@@ -1102,8 +1117,8 @@ Print "It's much too heavy.".
 </tr>
 <tr>
 <td class="address-1"><span id="64252"></span>64252</td>
-<td class="instruction">CALL <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">CALL <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1162,8 +1177,8 @@ Print "No. I can't be bothered.".
 </tr>
 <tr>
 <td class="address-2"><span id="64275"></span>64275</td>
-<td class="instruction">JP <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64278"></span>64278</td>
@@ -1172,8 +1187,8 @@ Print "No. I can't be bothered.".
 </tr>
 <tr>
 <td class="address-1"><span id="64281"></span>64281</td>
-<td class="instruction">JP NZ,<a href="61498.html#61556">61556</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">61556</a> if <span class="register">A</span> is not equal to 50.</td>
+<td class="instruction">JP NZ,<a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a> if <span class="register">A</span> is not equal to 50.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64284"></span>64284</td>
@@ -1202,8 +1217,8 @@ Print "No. I can't be bothered.".
 </tr>
 <tr>
 <td class="address-1"><span id="64297"></span>64297</td>
-<td class="instruction">JP NZ,<a href="61498.html#61546">61546</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">61546</a> if <span class="register">A</span> is not equal to 57.</td>
+<td class="instruction">JP NZ,<a href="61498.html#61546">Print_OK</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">Print_OK</a> if <span class="register">A</span> is not equal to 57.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64300"></span>64300</td>
@@ -1369,8 +1384,8 @@ Print "It falls and crushes the crab.".
 </tr>
 <tr>
 <td class="address-2"><span id="64366"></span>64366</td>
-<td class="instruction">JP <a href="61498.html#61556">61556</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">61556</a>.</td>
+<td class="instruction">JP <a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64369"></span>64369</td>
@@ -1404,8 +1419,8 @@ Print "It falls and crushes the crab.".
 </tr>
 <tr>
 <td class="address-2"><span id="64384"></span>64384</td>
-<td class="instruction">JP <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64387"></span>64387</td>
@@ -1525,11 +1540,11 @@ Print "I didn't hear that!".
 <tr>
 <td class="address-1"><span id="64428"></span>64428</td>
 <td class="instruction">CP 2</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">61556</a> if <span class="register">A</span> is greater than 2.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a> if <span class="register">A</span> is greater than 2.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64430"></span>64430</td>
-<td class="instruction">JP NC,<a href="61498.html#61556">61556</a></td>
+<td class="instruction">JP NC,<a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="64433"></span>64433</td>
@@ -1558,8 +1573,8 @@ Print "I didn't hear that!".
 </tr>
 <tr>
 <td class="address-1"><span id="64446"></span>64446</td>
-<td class="instruction">JP Z,<a href="61498.html#61541">61541</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61541">61541</a> if <span class="register">A</span> is equal to 52.</td>
+<td class="instruction">JP Z,<a href="61498.html#61541">Print_IDontSeeThePoint</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61541">Print_IDontSeeThePoint</a> if <span class="register">A</span> is equal to 52.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64449"></span>64449</td>
@@ -1592,8 +1607,8 @@ Print "I didn't hear that!".
 </tr>
 <tr>
 <td class="address-2"><span id="64466"></span>64466</td>
-<td class="instruction">JP <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64469"></span>64469</td>
@@ -1608,11 +1623,11 @@ Print "I didn't hear that!".
 <tr>
 <td class="address-1"><span id="64473"></span>64473</td>
 <td class="instruction">CP 2</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">61556</a> if <span class="register">A</span> is greater than 2.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a> if <span class="register">A</span> is greater than 2.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64475"></span>64475</td>
-<td class="instruction">JP NC,<a href="61498.html#61556">61556</a></td>
+<td class="instruction">JP NC,<a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="64478"></span>64478</td>
@@ -1676,8 +1691,8 @@ Print "You're wearing it already.".
 </tr>
 <tr>
 <td class="address-1"><span id="64504"></span>64504</td>
-<td class="instruction">JP NZ,<a href="61498.html#61566">61566</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61566">61566</a> if <span class="register">A</span> is not equal to 16.</td>
+<td class="instruction">JP NZ,<a href="61498.html#61566">Print_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61566">Print_YoureNotCarryingIt</a> if <span class="register">A</span> is not equal to 16.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64507"></span>64507</td>
@@ -1691,8 +1706,8 @@ Print "You're wearing it already.".
 </tr>
 <tr>
 <td class="address-1"><span id="64513"></span>64513</td>
-<td class="instruction">CALL <a href="61498.html#61546">61546</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61498.html#61546">61546</a>.</td>
+<td class="instruction">CALL <a href="61498.html#61546">Print_OK</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61498.html#61546">Print_OK</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1761,8 +1776,8 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 </tr>
 <tr>
 <td class="address-1"><span id="64542"></span>64542</td>
-<td class="instruction">JP Z,<a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a> if <span class="register">A</span> is equal to 16.</td>
+<td class="instruction">JP Z,<a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a> if <span class="register">A</span> is equal to 16.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64545"></span>64545</td>
@@ -1782,11 +1797,11 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 <tr>
 <td class="address-1"><span id="64552"></span>64552</td>
 <td class="instruction">CP 2</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">61556</a> if <span class="register">A</span> is greater than 2.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a> if <span class="register">A</span> is greater than 2.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64554"></span>64554</td>
-<td class="instruction">JP NC,<a href="61498.html#61556">61556</a></td>
+<td class="instruction">JP NC,<a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="64557"></span>64557</td>
@@ -1815,8 +1830,8 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 </tr>
 <tr>
 <td class="address-1"><span id="64570"></span>64570</td>
-<td class="instruction">JP Z,<a href="61498.html#61561">61561</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61561">61561</a> if <span class="register">A</span> is equal to 3.</td>
+<td class="instruction">JP Z,<a href="61498.html#61561">Print_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61561">Print_YouveDoneThatAlready</a> if <span class="register">A</span> is equal to 3.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64573"></span>64573</td>
@@ -1830,8 +1845,8 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 </tr>
 <tr>
 <td class="address-1"><span id="64578"></span>64578</td>
-<td class="instruction">JP NZ,<a href="61498.html#61566">61566</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61566">61566</a> if <span class="register">A</span> is not equal to 2.</td>
+<td class="instruction">JP NZ,<a href="61498.html#61566">Print_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61566">Print_YoureNotCarryingIt</a> if <span class="register">A</span> is not equal to 2.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64581"></span>64581</td>
@@ -1864,8 +1879,8 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 </tr>
 <tr>
 <td class="address-1"><span id="64597"></span>64597</td>
-<td class="instruction">CALL <a href="61498.html#61546">61546</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61498.html#61546">61546</a>.</td>
+<td class="instruction">CALL <a href="61498.html#61546">Print_OK</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61498.html#61546">Print_OK</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64600"></span>64600</td>
@@ -1879,8 +1894,8 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 </tr>
 <tr>
 <td class="address-2"><span id="64606"></span>64606</td>
-<td class="instruction">JP <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64609"></span>64609</td>
@@ -1895,11 +1910,11 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 <tr>
 <td class="address-1"><span id="64613"></span>64613</td>
 <td class="instruction">CP 2</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">61556</a> if <span class="register">A</span> is greater than 2.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a> if <span class="register">A</span> is greater than 2.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64615"></span>64615</td>
-<td class="instruction">JP NC,<a href="61498.html#61556">61556</a></td>
+<td class="instruction">JP NC,<a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="64618"></span>64618</td>
@@ -1919,25 +1934,28 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 <tr>
 <td class="address-1"><span id="64626"></span>64626</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48331.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61498.html#61561">Print_YouveDoneThatAlready</a> if *<a href="48331.html">RoomNumber</a> is room 82: "
+
+<a href="53430.html">The Vast Cavern</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64629"></span>64629</td>
 <td class="instruction">CP 82</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61561">61561</a> if <span class="register">A</span> is equal to 82.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64631"></span>64631</td>
-<td class="instruction">JP Z,<a href="61498.html#61561">61561</a></td>
+<td class="instruction">JP Z,<a href="61498.html#61561">Print_YouveDoneThatAlready</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="64634"></span>64634</td>
 <td class="instruction">CP 63</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61561">61561</a> if <span class="register">A</span> is equal to 63.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61561">Print_YouveDoneThatAlready</a> if *<a href="48331.html">RoomNumber</a> is room 63: "
+
+<a href="53137.html">The Cave</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64636"></span>64636</td>
-<td class="instruction">JP Z,<a href="61498.html#61561">61561</a></td>
+<td class="instruction">JP Z,<a href="61498.html#61561">Print_YouveDoneThatAlready</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="64639"></span>64639</td>
@@ -1985,13 +2003,13 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 </tr>
 <tr>
 <td class="address-1"><span id="64658"></span>64658</td>
-<td class="instruction">JP Z,<a href="61498.html#61556">61556</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">61556</a> if <span class="register">A</span> is equal to 82.</td>
+<td class="instruction">JP Z,<a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a> if <span class="register">A</span> is equal to 82.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64661"></span>64661</td>
-<td class="instruction">JP <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64664"></span>64664</td>
@@ -2065,8 +2083,8 @@ Print "It's much too heavy.".
 </tr>
 <tr>
 <td class="address-1"><span id="64695"></span>64695</td>
-<td class="instruction">JP Z,<a href="61498.html#61561">61561</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61561">61561</a> if <span class="register">A</span> is equal to 74.</td>
+<td class="instruction">JP Z,<a href="61498.html#61561">Print_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61561">Print_YouveDoneThatAlready</a> if <span class="register">A</span> is equal to 74.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64698"></span>64698</td>
@@ -2110,8 +2128,8 @@ Print "Using the crowbar as a lever,You slowly move the stoneand uncover a rin
 </tr>
 <tr>
 <td class="address-2"><span id="64714"></span>64714</td>
-<td class="instruction">JP <a href="61498.html#61556">61556</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">61556</a>.</td>
+<td class="instruction">JP <a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64717"></span>64717</td>
@@ -2141,7 +2159,9 @@ Print "Using the crowbar as a lever,You slowly move the stoneand uncover a rin
 <tr>
 <td class="address-1"><span id="64729"></span>64729</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61498.html#61551">61551</a> if *<a href="48331.html">RoomNumber</a> is equal to 106.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61498.html#61551">Print_YouCant</a> if *<a href="48331.html">RoomNumber</a> is room 106: "
+
+<a href="53649.html">The Mighty Rock Door</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64732"></span>64732</td>
@@ -2149,7 +2169,7 @@ Print "Using the crowbar as a lever,You slowly move the stoneand uncover a rin
 </tr>
 <tr>
 <td class="address-1"><span id="64734"></span>64734</td>
-<td class="instruction">JP Z,<a href="61498.html#61551">61551</a></td>
+<td class="instruction">JP Z,<a href="61498.html#61551">Print_YouCant</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="64737"></span>64737</td>
@@ -2163,8 +2183,8 @@ Print "Using the crowbar as a lever,You slowly move the stoneand uncover a rin
 </tr>
 <tr>
 <td class="address-1"><span id="64742"></span>64742</td>
-<td class="instruction">JP NZ,<a href="61498.html#61561">61561</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61561">61561</a> if <span class="register">A</span> is not equal to 46.</td>
+<td class="instruction">JP NZ,<a href="61498.html#61561">Print_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61561">Print_YouveDoneThatAlready</a> if <span class="register">A</span> is not equal to 46.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64745"></span>64745</td>
@@ -2213,13 +2233,13 @@ Print "You haven't got the key.".
 </tr>
 <tr>
 <td class="address-1"><span id="64764"></span>64764</td>
-<td class="instruction">JP <a href="61498.html#61546">61546</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">61546</a>.</td>
+<td class="instruction">JP <a href="61498.html#61546">Print_OK</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">Print_OK</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="64767"></span>64767</td>
-<td class="instruction">JP <a href="61498.html#61551">61551</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">61551</a>.</td>
+<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64770"></span>64770</td>
@@ -2234,11 +2254,11 @@ Print "You haven't got the key.".
 <tr>
 <td class="address-1"><span id="64774"></span>64774</td>
 <td class="instruction">CP 2</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">61556</a> if <span class="register">A</span> is greater than 2.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a> if <span class="register">A</span> is greater than 2.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64776"></span>64776</td>
-<td class="instruction">JP NC,<a href="61498.html#61556">61556</a></td>
+<td class="instruction">JP NC,<a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="64779"></span>64779</td>
@@ -2337,7 +2357,9 @@ Print "You're not in the boat.".
 <tr>
 <td class="address-1"><span id="64817"></span>64817</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61498.html#61561">61561</a> if *<a href="48331.html">RoomNumber</a> is not equal to 4.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61498.html#61561">Print_YouveDoneThatAlready</a> if *<a href="48331.html">RoomNumber</a> is not room 4: "
+
+<a href="52070.html">In A Rowing Boat</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64820"></span>64820</td>
@@ -2345,7 +2367,7 @@ Print "You're not in the boat.".
 </tr>
 <tr>
 <td class="address-1"><span id="64822"></span>64822</td>
-<td class="instruction">JP NZ,<a href="61498.html#61561">61561</a></td>
+<td class="instruction">JP NZ,<a href="61498.html#61561">Print_YouveDoneThatAlready</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="64825"></span>64825</td>
@@ -2380,7 +2402,9 @@ Print "You're not in the boat.".
 <tr>
 <td class="address-1"><span id="64839"></span>64839</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="63754.html#64871">64871</a> if *<a href="48331.html">RoomNumber</a> is not equal to 107.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63754.html#64871">64871</a> if *<a href="48331.html">RoomNumber</a> is not room 107: "
+
+<a href="52070.html">In A Rowing Boat</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64842"></span>64842</td>
@@ -2437,8 +2461,8 @@ Print "You're not in the boat.".
 </tr>
 <tr>
 <td class="address-1"><span id="64868"></span>64868</td>
-<td class="instruction">JP <a href="61498.html#61556">61556</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">61556</a>.</td>
+<td class="instruction">JP <a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="64871"></span>64871</td>
@@ -2468,11 +2492,11 @@ Print "You're not in the boat.".
 <tr>
 <td class="address-1"><span id="64881"></span>64881</td>
 <td class="instruction">CP 2</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">61556</a> if <span class="register">A</span> is equal to 2.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a> if <span class="register">A</span> is equal to 2.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="64883"></span>64883</td>
-<td class="instruction">JP Z,<a href="61498.html#61556">61556</a></td>
+<td class="instruction">JP Z,<a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

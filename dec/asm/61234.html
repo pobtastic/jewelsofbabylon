@@ -38,6 +38,9 @@ Next: <a href="61268.html">61268</a>
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This event handles the poisonous spider.
+</div>
 </div>
 </td>
 </tr>
@@ -55,7 +58,7 @@ Print "A poisonous spider drops on you.".
 <td class="asm-label">Event_Spider</td>
 <td class="address-2"><span id="61234"></span>61234</td>
 <td class="instruction">LD HL,55512</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="55512.html">55512</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="55512.html">Messaging_PoisonousSpiderDropsOnYou</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -67,13 +70,12 @@ Print "A poisonous spider drops on you.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="61240"></span>61240</td>
 <td class="instruction">LD A,10</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=10.</td>
+<td class="comment-1" rowspan="2">Call <a href="50562.html">GenerateRandomNumber</a> with a maximum value of 10.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61242"></span>61242</td>
 <td class="instruction">CALL <a href="50562.html">GenerateRandomNumber</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50562.html">GenerateRandomNumber</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -82,10 +84,20 @@ Print "A poisonous spider drops on you.".
 <td class="comment-1" rowspan="1">Jump to <a href="61234.html#61256">Event_Spider_Safe</a> if the random generator returns a non-zero response.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="61247"></span>
+<div class="comments">
+<div class="paragraph">
+Bad luck!
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61247"></span>61247</td>
 <td class="instruction">LD HL,60887</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="60887.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="1">Switch <a href="60887.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -107,13 +119,23 @@ Print "It stings you.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="61251"></span>61251</td>
 <td class="instruction">LD HL,55586</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="55586.html">55586</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="55586.html">Messaging_PoisonousSpiderStingsYou</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61254"></span>61254</td>
 <td class="instruction">JR <a href="61234.html#61264">Event_Spider_PrintAndReturn</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="61234.html#61264">Event_Spider_PrintAndReturn</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="61256"></span>
+<div class="comments">
+<div class="paragraph">
+Handle that the poisonous spider didn't sting you.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Event_Spider_Safe</td>
@@ -141,7 +163,7 @@ Print "It lingers a moment,then scuttles off.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="61261"></span>61261</td>
 <td class="instruction">LD HL,55546</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="55546.html">55546</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="55546.html">Messaging_PoisonousSpiderScuttlesOff</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Event_Spider_PrintAndReturn</td>

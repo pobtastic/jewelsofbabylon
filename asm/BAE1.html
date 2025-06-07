@@ -33,19 +33,19 @@ Next: <a href="BB2F.html">BB2F</a>
 </td>
 </tr>
 </table>
-<div class="description">BAE1: Print Location Graphic</div>
+<div class="description">BAE1: Print Room Graphic</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="BB3B.html">Print_LocationImage</a>.
+Used by the routine at <a href="BB3B.html">Print_RoomImage</a>.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">Print_LocationGraphic</td>
+<td class="asm-label">Print_RoomGraphic</td>
 <td class="address-2"><span id="bae1"></span>BAE1</td>
 <td class="instruction">CALL <a href="BA96.html">SwitchScreenUpper</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BA96.html">SwitchScreenUpper</a>.</td>
@@ -143,7 +143,7 @@ Reset graphic display area.
 <td class="comment-1" rowspan="1">Set a byte counter in <span class="register">BC</span> of 0200.</td>
 </tr>
 <tr>
-<td class="asm-label">Print_LocationGraphic_Loop</td>
+<td class="asm-label">Print_RoomGraphic_Loop</td>
 <td class="address-2"><span id="bafc"></span>BAFC</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-1" rowspan="1">Stash the byte counter on the stack.</td>
@@ -175,17 +175,17 @@ Reset graphic display area.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="bb07"></span>BB07</td>
-<td class="instruction">JR <a href="BAE1.html#bb0a">Print_LocationGraphic_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="BAE1.html#bb0a">Print_LocationGraphic_1</a>.</td>
+<td class="instruction">JR <a href="BAE1.html#bb0a">Print_RoomGraphic_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="BAE1.html#bb0a">Print_RoomGraphic_1</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Print_LocationGraphic_0</td>
+<td class="asm-label">Print_RoomGraphic_0</td>
 <td class="address-2"><span id="bb09"></span>BB09</td>
 <td class="instruction">INC HL</td>
 <td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
 </tr>
 <tr>
-<td class="asm-label">Print_LocationGraphic_1</td>
+<td class="asm-label">Print_RoomGraphic_1</td>
 <td class="address-2"><span id="bb0a"></span>BB0A</td>
 <td class="instruction">SRL C</td>
 <td class="comment-1" rowspan="1">Shift <span class="register">C</span> right.</td>
@@ -193,8 +193,8 @@ Reset graphic display area.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="bb0c"></span>BB0C</td>
-<td class="instruction">JR NC,<a href="BAE1.html#bb15">Print_LocationGraphic_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="BAE1.html#bb15">Print_LocationGraphic_2</a> if <span class="register">HL</span> is greater than or equal to <span class="register">B</span>.</td>
+<td class="instruction">JR NC,<a href="BAE1.html#bb15">Print_RoomGraphic_2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="BAE1.html#bb15">Print_RoomGraphic_2</a> if <span class="register">HL</span> is greater than or equal to <span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -211,17 +211,17 @@ Reset graphic display area.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="bb13"></span>BB13</td>
-<td class="instruction">JR <a href="BAE1.html#bb16">Print_LocationGraphic_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="BAE1.html#bb16">Print_LocationGraphic_3</a>.</td>
+<td class="instruction">JR <a href="BAE1.html#bb16">Print_RoomGraphic_3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="BAE1.html#bb16">Print_RoomGraphic_3</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Print_LocationGraphic_2</td>
+<td class="asm-label">Print_RoomGraphic_2</td>
 <td class="address-2"><span id="bb15"></span>BB15</td>
 <td class="instruction">XOR A</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
 </tr>
 <tr>
-<td class="asm-label">Print_LocationGraphic_3</td>
+<td class="asm-label">Print_RoomGraphic_3</td>
 <td class="address-2"><span id="bb16"></span>BB16</td>
 <td class="instruction">LD (HL),A</td>
 <td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<span class="register">HL</span>.</td>
@@ -229,8 +229,8 @@ Reset graphic display area.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="bb17"></span>BB17</td>
-<td class="instruction">DJNZ <a href="BAE1.html#bb09">Print_LocationGraphic_0</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="BAE1.html#bb09">Print_LocationGraphic_0</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="BAE1.html#bb09">Print_RoomGraphic_0</a></td>
+<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="BAE1.html#bb09">Print_RoomGraphic_0</a> until counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -272,7 +272,7 @@ Reset graphic display area.
 <td class="asm-label"></td>
 <td class="address-1"><span id="bb27"></span>BB27</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="3">Jump back to <a href="BAE1.html#bafc">Print_LocationGraphic_Loop</a> until the byte counter is zero.</td>
+<td class="comment-1" rowspan="3">Jump back to <a href="BAE1.html#bafc">Print_RoomGraphic_Loop</a> until the byte counter is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -282,7 +282,7 @@ Reset graphic display area.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="bb29"></span>BB29</td>
-<td class="instruction">JR NZ,<a href="BAE1.html#bafc">Print_LocationGraphic_Loop</a></td>
+<td class="instruction">JR NZ,<a href="BAE1.html#bafc">Print_RoomGraphic_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

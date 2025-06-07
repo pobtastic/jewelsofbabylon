@@ -39,6 +39,18 @@ gtag('config', 'G-75RERFCHBG');
 </td>
 </tr>
 <tr>
+<td class="map-g"><span id="bc5c"></span><a href="../asm/BC5C.html">BC5C</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BC5C.html">Table: Already Seen Room Images</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Used by the routine at <a href="../asm/C21E.html">Handler_DisplayRoomImage</a> but uses the bit index from <a href="../asm/E95D.html">Table_RoomsWithImages</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="map-g"><span id="bc66"></span><a href="../asm/BC66.html">BC66</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
@@ -83,6 +95,18 @@ gtag('config', 'G-75RERFCHBG');
 <td class="centre" colspan="1" rowspan="1">Wave</td>
 </tr>
 </table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="bc98"></span><a href="../asm/BC98.html">BC98</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BC98.html">Match Counter</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+The duration the match burns for before burning you.
 </div>
 </div>
 </td>
@@ -154,7 +178,7 @@ gtag('config', 'G-75RERFCHBG');
 <td class="map-g"><span id="bd14"></span><a href="../asm/BD14.html">BD14</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD14.html">Game status buffer entry at BD14</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD14.html">Pointer: Rooms With Images Table</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -163,7 +187,7 @@ gtag('config', 'G-75RERFCHBG');
 <td class="map-g"><span id="bd16"></span><a href="../asm/BD16.html">BD16</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD16.html">Game status buffer entry at BD16</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD16.html">Pointer: Room Image Jump Table</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -271,7 +295,7 @@ gtag('config', 'G-75RERFCHBG');
 <td class="map-g"><span id="bd2e"></span><a href="../asm/BD2E.html">BD2E</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD2E.html">Game status buffer entry at BD2E</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD2E.html">Number Of Rooms With Images</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -289,7 +313,7 @@ gtag('config', 'G-75RERFCHBG');
 <td class="map-g"><span id="bd32"></span><a href="../asm/BD32.html">BD32</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD32.html">Game status buffer entry at BD32</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD32.html">Number Of "Configurable Exits"</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -433,8 +457,11 @@ gtag('config', 'G-75RERFCHBG');
 <td class="map-g"><span id="e95d"></span><a href="../asm/E95D.html">E95D</a></td>
 <td class="map-length">13</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E95D.html">Game status buffer entry at E95D</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E95D.html">Table: Rooms With Images</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+See <a href="../asm/FFA8.html">JumpTable_RoomImages</a>.
+</div>
 </div>
 </td>
 </tr>
@@ -475,6 +502,15 @@ gtag('config', 'G-75RERFCHBG');
 </td>
 </tr>
 <tr>
+<td class="map-g"><span id="ed9e"></span><a href="../asm/ED9E.html">ED9E</a></td>
+<td class="map-length">38</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/ED9E.html">Table: Configurable Exits</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
 <td class="map-g"><span id="fdb5"></span><a href="../asm/FDB5.html">FDB5</a></td>
 <td class="map-length">324</td>
 <td class="map-g-desc">
@@ -505,8 +541,11 @@ gtag('config', 'G-75RERFCHBG');
 <td class="map-g"><span id="ffa8"></span><a href="../asm/FFA8.html">FFA8</a></td>
 <td class="map-length">26</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/FFA8.html">Table: Location Graphics</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/FFA8.html">Jump Table: Room Images</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+See <a href="../asm/E95D.html">Table_RoomsWithImages</a>.
+</div>
 </div>
 </td>
 </tr>

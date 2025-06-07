@@ -66,16 +66,26 @@ Used by the routine at <a href="50578.html">GameStart_Alias</a>.
 <td class="instruction">LDIR</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="64909"></span>
+<div class="comments">
+<div class="paragraph">
+Remove a bunch of room exits (as actions in the game will open them back up).
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64909"></span>64909</td>
 <td class="instruction">LD IX,60830</td>
-<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="60830.html">60830</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="60830.html">Table_ConfigurableExits</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64913"></span>64913</td>
 <td class="instruction">LD A,(48434)</td>
-<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="48434.html">48434</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">B</span>=*<a href="48434.html">Count_ConfigurableExits</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -86,7 +96,7 @@ Used by the routine at <a href="50578.html">GameStart_Alias</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="64917"></span>64917</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+<td class="comment-1" rowspan="1">Set <span class="register">A</span> to 0 which "removes" the exit.</td>
 </tr>
 <tr>
 <td class="asm-label">GameStart_Loop</td>
@@ -110,7 +120,7 @@ Used by the routine at <a href="50578.html">GameStart_Alias</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="64925"></span>64925</td>
 <td class="instruction">INC IX</td>
-<td class="comment-1" rowspan="2">Increment <span class="register">IX</span> by two.</td>
+<td class="comment-1" rowspan="2">Move to the next address in the table.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -121,13 +131,25 @@ Used by the routine at <a href="50578.html">GameStart_Alias</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="64929"></span>64929</td>
 <td class="instruction">DJNZ <a href="64898.html#64918">GameStart_Loop</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="64898.html#64918">GameStart_Loop</a> until counter is zero.</td>
+<td class="comment-1" rowspan="1">Decrease the exits counter by one and loop back to <a href="64898.html#64918">GameStart_Loop</a> until all the room exits have been cleared.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="64931"></span>
+<div class="comments">
+<div class="paragraph">
+Ensure two exits are "open" (as they can become blocked in the game).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64931"></span>64931</td>
 <td class="instruction">LD A,47</td>
-<td class="comment-1" rowspan="2">Write 47 to *<a href="60176.html#60455">60455</a>.</td>
+<td class="comment-1" rowspan="2">Enable the exit "west to room <a href="60176.html#60455">47</a>" for 
+
+<a href="52865.html">The Canyon</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -138,7 +160,9 @@ Used by the routine at <a href="50578.html">GameStart_Alias</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="64936"></span>64936</td>
 <td class="instruction">LD A,48</td>
-<td class="comment-1" rowspan="2">Write 48 to *<a href="60176.html#60458">60458</a>.</td>
+<td class="comment-1" rowspan="2">Enable the exit "north to room <a href="60176.html#60458">48</a>" for 
+
+<a href="52918.html">The Secluded Beach</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
