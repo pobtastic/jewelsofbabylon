@@ -170,8 +170,8 @@ c $BA89 Set Screen Position
 @ $BA89 label=SetScreenPosition
   $BA89,$03 Call #R$BA96.
   $BA8C,$04 #REGb=*#R$BD70.
-  $BA90,$02 #REGc=#N$21.
-  $BA92,$03 #HTML(Call <a rel="noopener nofollow" href="https://skoolkid.github.io/rom/asm/0DD9.html">CL_SET</a>.)
+  $BA90,$05 #HTML(Call <a rel="noopener nofollow" href="https://skoolkid.github.io/rom/asm/0DD9.html">CL_SET</a>
+. with column number #N$21.)
   $BA95,$01 Return.
 
 c $BA96 Switch To Upper Screen
@@ -468,7 +468,9 @@ L $BCCC,$02,$09
 
 g $BCDE
 
-g $BD0C
+g $BD0C Pointer: Vocabulary Table
+@ $BD0C label=Pointer_Vocabulary
+W $BD0C,$02
 
 g $BD0E Pointer: Events Jump Table
 @ $BD0E label=Pointer_Events_Jump
@@ -497,14 +499,15 @@ W $BD18,$02
 g $BD1A
 W $BD1A,$02
 
-g $BD1C
+g $BD1C Pointer: Object Noun Phrases
+@ $BD1C label=Pointer_ObjectNounPhrases
 W $BD1C,$02
 
 g $BD1E
 W $BD1E,$02
 
 g $BD20 Pointer: Jump Table
-@ $BD20 label=Pointer_ JumpTable
+@ $BD20 label=Pointer_JumpTable
 W $BD20,$02
 
 g $BD22
@@ -568,78 +571,97 @@ W $BD7F,$02
 g $BD81
 
 t $BD85 Messaging: > 
+@ $BD85 label=Messaging_Prompt
   $BD85,$02 "#STR$BD85,$08($b==$FF)".
 B $BD87,$01 Terminator.
 
 t $BD88 Messaging: <BS> <BS>
+@ $BD88 label=Messaging_BackspaceX2
   $BD88,$03 "#STR$BD88,$08($b==$FF)".
 B $BD8B,$01 Terminator.
 
 t $BD8C Messaging: The 
+@ $BD8C label=Messaging_The
   $BD8C,$04 "#STR$BD8C,$08($b==$FF)".
 B $BD90,$01 Terminator.
 
 t $BD91 Messaging: I Don't Understand
+@ $BD91 label=Messaging_IDontUnderstand
   $BD91,$13 "#STR$BD91,$08($b==$FF)".
 B $BDA4,$01 Terminator.
 
 t $BDA5 Messaging: I Don't Know The Word
+@ $BDA5 label=Messaging_IDontKnowTheWord
   $BDA5,$17 "#STR$BDA5,$08($b==$FF)".
 B $BDBC,$01 Terminator.
 
 t $BDBD Messaging: Nothing
+@ $BDBD label=Messaging_Nothing
   $BDBD,$08 "#STR$BDBD,$08($b==$FF)".
 B $BDC5,$01 Terminator.
 
 t $BDC6 Messaging: You Can See
+@ $BDC6 label=Messaging_YouCanSee
   $BDC6,$0E "#STR$BDC6,$08($b==$FF)".
 B $BDD4,$01 Terminator.
 
 t $BDD5 Messaging: Ampersand 
+@ $BDD5 label=Messaging_Ampersand
   $BDD5,$03 "#STR$BDD5,$08($b==$FF)".
 B $BDD8,$01 Terminator.
 
 t $BDD9 Messaging: There Are Exits
+@ $BDD9 label=Messaging_ThereAreExits
   $BDD9,$12 "#STR$BDD9,$08($b==$FF)".
 B $BDEB,$01 Terminator.
 
 t $BDEC Messaging: There Is An Exit 
+@ $BDEC label=Messaging_ThereIsAnExit
   $BDEC,$12 "#STR$BDEC,$08($b==$FF)".
 B $BDFE,$01 Terminator.
 
 t $BDFF Messaging: North
+@ $BDFF label=Messaging_North
   $BDFF,$05 "#STR$BDFF,$08($b==$FF)".
 B $BE04,$01 Terminator.
 
 t $BE05 Messaging: South
+@ $BE05 label=Messaging_South
   $BE05,$05 "#STR$BE05,$08($b==$FF)".
 B $BE0A,$01 Terminator.
 
 t $BE0B Messaging: East
+@ $BE0B label=Messaging_East
   $BE0B,$04 "#STR$BE0B,$08($b==$FF)".
 B $BE0F,$01 Terminator.
 
 t $BE10 Messaging: West
+@ $BE10 label=Messaging_West
   $BE10,$04 "#STR$BE10,$08($b==$FF)".
 B $BE14,$01 Terminator.
 
 t $BE15 Messaging: Up
+@ $BE15 label=Messaging_Up
   $BE15,$02 "#STR$BE15,$08($b==$FF)".
 B $BE17,$01 Terminator.
 
 t $BE18 Messaging: Down
+@ $BE18 label=Messaging_Down
   $BE18,$04 "#STR$BE18,$08($b==$FF)".
 B $BE1C,$01 Terminator.
 
 t $BE1D Messaging: I Can't See 
+@ $BE1D label=Messaging_ICantSee
   $BE1D,$0C "#STR$BE1D,$08($b==$FF)".
 B $BE29,$01 Terminator.
 
 t $BE2A Messaging:  Here
+@ $BE2A label=Messaging_Here
   $BE2A,$06 "#STR$BE2A,$08($b==$FF)".
 B $BE30,$01 Terminator.
 
 t $BE31 Messaging: You Are Dead
+@ $BE31 label=Messaging_YouAreDead
   $BE31,$0D "#STR$BE31,$08($b==$FF)".
 B $BE3E,$01 Terminator.
 
@@ -1044,7 +1066,7 @@ N $C23C The player can view it manually by typing "LOOK" (or just "L").
 N $C240 Only two bytes hold the data for all #N$0C rooms with images so first -
 . find the correct byte which references this room.
   $C240,$04 Jump to #R$C249 if the room index is less than #N$08.
-  $C244,$02 Subtract #N$08 from the room index.
+  $C244,$02 Subtract #N$08 (number of bits in a byte) from the room index.
   $C246,$01 Increment the "image already seen" table pointer by one.
   $C247,$02 Jump back to #R$C240.
 @ $C249 label=FoundAlreadySeenByte
@@ -1224,6 +1246,8 @@ N $C357 Print "#STR$BE2A,$08($b==$FF)".
   $C35E,$01 Return.
 
 c $C35F
+@ $C35F label=Handler_Objects
+R $C35F A Object ID
   $C35F,$02 Stash #REGhl and #REGde on the stack.
   $C361,$01 #REGe=#REGa.
   $C362,$02 #REGd=#N$00.
@@ -2199,9 +2223,9 @@ W $D3EE,$02 N/A.
 W $D3F0,$02 Room #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D3EC)/$02)).
 L $D3F0,$02,$6B
 
-g $D4C6 Table: Object Descriptions?
-@ $D4C6 label=Table_ObjectDescriptions_2
-W $D4C6,$02 Object #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)).
+g $D4C6 Table: Object Noun Phrases
+@ $D4C6 label=Table_ObjectNounPhrases
+W $D4C6,$02 Object #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)): #OBJECT((#PC-$D4C6)/$02).
 L $D4C6,$02,$30
 
 t $D526 Messaging: Congratulations!!<CR>Your Quest Has Been Successful.<CR>You Weigh Anchor And Then Sail<CR>Off Into The Sunset With The<CR>Fabulous Jewels Of Babylon.
@@ -2615,10 +2639,62 @@ t $E604 Messaging: You Haven't Got The Key.
   $E604,$18 "#STR$E604,$08($b==$FF)".
 B $E61C,$01 Terminator.
 
-t $E61D
-  $E61D,$220,$04
+t $E61D Table: Vocabulary
+@ $E61D label=Table_Vocabulary
+  $E61D,$04 Object #N((#PC-$E61D)/$04): #OBJECT((#PC-$E61D)/$04).
+L $E61D,$04,$08
+  $E63D,$09 Object #N((#PC-$E61D)/$04): #OBJECT((#PC-$E61D)/$04).
+  $E646,$09 Object #N((#PC-$E621)/$04): #OBJECT((#PC-$E621)/$04).
+  $E64F,$04 Object #N((#PC-$E625)/$04): #OBJECT((#PC-$E625)/$04).
+L $E64F,$04,$04
+  $E65F,$09 Object #N((#PC-$E625)/$04): #OBJECT((#PC-$E625)/$04).
+  $E668,$04 Object #N((#PC-$E629)/$04): #OBJECT((#PC-$E629)/$04).
+L $E668,$04,$08
+  $E688,$09 Object #N((#PC-$E629)/$04): #OBJECT((#PC-$E629)/$04).
+  $E691,$04 Object #N((#PC-$E631)/$04): #OBJECT((#PC-$E631)/$04).
+L $E691,$04,$16
+  $E6E9,$09
+  $E6F2,$09
+  $E6FB,$09
+  $E704,$09
+  $E70D,$09
+  $E716,$09
+  $E71F,$09
+  $E728,$09
+  $E731,$09
+  $E73A,$04
+L $E73A,$04,$08
+  $E75A,$0E
+  $E768,$04
+L $E768,$04,$06
+  $E780,$09
+  $E789,$04
+L $E789,$04,$06
+  $E7A1,$09
+  $E7AA,$04
+L $E7AA,$04,$07
+  $E7C6,$09
+  $E7CF,$04
+L $E7CF,$04,$02
+  $E7D7,$09
+  $E7E0,$04
+  $E7E4,$09
+  $E7ED,$04
+L $E7ED,$04,$03
+  $E7F9,$0E
+  $E807,$04
+L $E807,$04,$05
+  $E81B,$09
+  $E824,$04
+L $E824,$04,$02
+  $E82C,$09
+  $E835,$04
+L $E835,$04,$02
+B $E83D,$01 Terminator.
 
-b $E83E
+g $E83E
+B $E83E,$01 Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+L $E83E,$01,$30
 
 g $E86E
   $E86E
@@ -2671,6 +2747,8 @@ g $E86E
   $E902
 
 g $E90D
+B $E90D,$01 Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+L $E90D,$01,$26
 
 g $E933
 B $E933,$03
@@ -4250,12 +4328,16 @@ N $FA0E Print "#STR$E238,$08($b==$FF)".
 N $FA29 Print "#STR$E28E,$08($b==$FF)".
   $FA29,$03 #REGhl=#R$E28E.
   $FA2C,$03 Jump to #R$F03A.
-
+@ $FA2F label=Action_DrinkFreshWater
 N $FA2F Print "#STR$E2AC,$08($b==$FF)".
   $FA2F,$03 #REGhl=#R$E2AC.
   $FA32,$03 Jump to #R$F03A.
-  $FA35,$01 Increment #REGd by one.
-  $FA36,$03 #REGde=#N$6412.
+@ $FA35 label=Table_RoomsFreshWater
+N $FA35 Any room ID which contains fresh, drinkable water.
+B $FA35,$01 Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+L $FA35,$01,$04,$02
+@ $FA39 label=Action_CantDrinkWater
+N $FA39 Tried to drink water where there is none.
   $FA39,$03 Jump to #R$F06F.
   $FA3C,$03 Call #R$C47B.
   $FA3F,$01 Return if #REGd is less than #N$06.
@@ -4528,9 +4610,10 @@ N $FCF0 Print "#STR$E604,$08($b==$FF)".
 N $FD18 Print "#STR$DC37,$08($b==$FF)".
   $FD18,$03 #REGhl=#R$DC37.
   $FD1B,$03 Jump to #R$F03A.
-  $FD1E,$01 #REGl=#REGe.
-  $FD1F,$01 Increment #REGb by one.
-  $FD20,$01 Write #REGa to *#REGbc.
+@ $FD1E label=Table_RoomsRowingBoat
+N $FD1E Any room ID in which, you're in the rowing boat.
+B $FD1E,$01 Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+L $FD1E,$01,$03,$02
   $FD21,$04 Jump to #R$FD29 if #REGa is not equal to #N$02.
   $FD25,$03 Call #R$EF54.
   $FD28,$01 Return.
