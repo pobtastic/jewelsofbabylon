@@ -42,94 +42,122 @@ Next: <a href="C37F.html">C37F</a>
 Used by the routines at <a href="C32A.html">C32A</a>, <a href="C3FA.html">C3FA</a>, <a href="EE00.html">Event_Crab</a>, <a href="EE11.html">Event_Tentacle</a>, <a href="EE40.html">Event_Lion</a>, <a href="EE63.html">Event_Cannibals</a>, <a href="EF54.html">EF54</a>, <a href="F03A.html">F03A</a>, <a href="F155.html">F155</a> and <a href="F90A.html">F90A</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Object ID</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Handler_Objects</td>
 <td class="address-2"><span id="c35f"></span>C35F</td>
 <td class="instruction">PUSH HL</td>
 <td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">DE</span> on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c360"></span>C360</td>
 <td class="instruction">PUSH DE</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c361"></span>C361</td>
 <td class="instruction">LD E,A</td>
 <td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">A</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c362"></span>C362</td>
 <td class="instruction">LD D,$00</td>
 <td class="comment-1" rowspan="1"><span class="register">D</span>=00.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c364"></span>C364</td>
 <td class="instruction">BIT 7,E</td>
 <td class="comment-1" rowspan="1">Test bit 7 of <span class="register">E</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c366"></span>C366</td>
-<td class="instruction">JR NZ,<a href="C35F.html#c36d">$C36D</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C35F.html#c36d">C36D</a> if ?? is not equal to 00.</td>
+<td class="instruction">JR NZ,<a href="C35F.html#c36d">Handler_Objects_0</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C35F.html#c36d">Handler_Objects_0</a> if ?? is not equal to 00.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c368"></span>C368</td>
 <td class="instruction">LD HL,$BBF0</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BBF0.html">Table_ObjectLocations</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c36b"></span>C36B</td>
-<td class="instruction">JR <a href="C35F.html#c372">$C372</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C35F.html#c372">C372</a>.</td>
+<td class="instruction">JR <a href="C35F.html#c372">Handler_Objects_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C35F.html#c372">Handler_Objects_1</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Handler_Objects_0</td>
 <td class="address-2"><span id="c36d"></span>C36D</td>
 <td class="instruction">RES 7,E</td>
 <td class="comment-1" rowspan="1">Reset bit 7 of <span class="register">E</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c36f"></span>C36F</td>
 <td class="instruction">LD HL,$BC78</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC67.html#bc78">BC78</a>.</td>
 </tr>
 <tr>
+<td class="asm-label">Handler_Objects_1</td>
 <td class="address-2"><span id="c372"></span>C372</td>
 <td class="instruction">ADD HL,DE</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c373"></span>C373</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="C35F.html#c37c">C37C</a> if *<a href="BCCB.html">RoomNumber</a> is equal to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="C35F.html#c37c">Handler_Objects_2</a> if *<a href="BCCB.html">RoomNumber</a> is equal to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c376"></span>C376</td>
 <td class="instruction">CP (HL)</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c377"></span>C377</td>
-<td class="instruction">JR Z,<a href="C35F.html#c37c">$C37C</a></td>
+<td class="instruction">JR Z,<a href="C35F.html#c37c">Handler_Objects_2</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c379"></span>C379</td>
 <td class="instruction">LD A,$01</td>
 <td class="comment-1" rowspan="2">Compare 01 with *<span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c37b"></span>C37B</td>
 <td class="instruction">CP (HL)</td>
 </tr>
 <tr>
+<td class="asm-label">Handler_Objects_2</td>
 <td class="address-2"><span id="c37c"></span>C37C</td>
 <td class="instruction">POP DE</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c37d"></span>C37D</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c37e"></span>C37E</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
