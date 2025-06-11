@@ -42,22 +42,31 @@ Next: <a href="EE63.html">EE63</a>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ee51"></span>
+<div class="comments">
+<div class="paragraph">
+Make the crocodile inactive.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Event_Crocodile</td>
 <td class="address-2"><span id="ee51"></span>EE51</td>
 <td class="instruction">LD HL,$BC66</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC66.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Reset bit 4 of *<a href="BC66.html">Flag_EventState</a> which relates to the crocodile being active.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee54"></span>EE54</td>
 <td class="instruction">RES 4,(HL)</td>
-<td class="comment-1" rowspan="1">Reset bit 4 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee56"></span>EE56</td>
 <td class="instruction">LD HL,$E8C1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8c1">E8C1</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8c1">Data_ObjectRoom_27</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -69,7 +78,7 @@ Next: <a href="EE63.html">EE63</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee5c"></span>EE5C</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1">Return if <span class="register">H</span> is not equal to 2A.</td>
+<td class="comment-1" rowspan="1">Return if the crocodile is not in the current room.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

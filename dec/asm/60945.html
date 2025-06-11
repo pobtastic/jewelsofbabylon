@@ -42,34 +42,42 @@ Next: <a href="60962.html">60962</a>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="60945"></span>
+<div class="comments">
+<div class="paragraph">
+Make the tentacle inactive.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Event_Tentacle</td>
 <td class="address-2"><span id="60945"></span>60945</td>
 <td class="instruction">LD HL,48230</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48230.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Reset bit 1 of *<a href="48230.html">Flag_EventState</a> which relates to the tentacle being active.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60948"></span>60948</td>
 <td class="instruction">RES 1,(HL)</td>
-<td class="comment-1" rowspan="1">Reset bit 1 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60950"></span>60950</td>
 <td class="instruction">LD A,43</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=43.</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> using item: "A giant octopus".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60952"></span>60952</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60955"></span>60955</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1">Return if ?? is not equal to 43.</td>
+<td class="comment-1" rowspan="1">Return if the tentacle is not in the current room.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

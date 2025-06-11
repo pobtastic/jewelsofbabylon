@@ -141,13 +141,13 @@ Handle that the poisonous spider didn't sting you.
 <td class="asm-label">Event_Spider_Safe</td>
 <td class="address-2"><span id="ef48"></span>EF48</td>
 <td class="instruction">LD A,$87</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=87.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=87 (event ID: 07).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef4a"></span>EF4A</td>
-<td class="instruction">CALL <a href="C3EA.html">$C3EA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">C3EA</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

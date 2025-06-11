@@ -42,34 +42,42 @@ Next: <a href="EE11.html">EE11</a>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ee00"></span>
+<div class="comments">
+<div class="paragraph">
+Make the crab inactive.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Event_Crab</td>
 <td class="address-2"><span id="ee00"></span>EE00</td>
 <td class="instruction">LD HL,$BC66</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC66.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Reset bit 0 of *<a href="BC66.html">Flag_EventState</a> which relates to the crab being active.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee03"></span>EE03</td>
 <td class="instruction">RES 0,(HL)</td>
-<td class="comment-1" rowspan="1">Clear bit 0 (which relates to the crab).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee05"></span>EE05</td>
 <td class="instruction">LD A,$29</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=29.</td>
+<td class="comment-1" rowspan="2">Call <a href="C35F.html">Handler_Objects</a> using item: "A giant crab".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee07"></span>EE07</td>
 <td class="instruction">CALL <a href="C35F.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C35F.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee0a"></span>EE0A</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1">Return if ?? is not equal to 29.</td>
+<td class="comment-1" rowspan="1">Return if the crab is not in the current room.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

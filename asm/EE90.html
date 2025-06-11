@@ -42,16 +42,25 @@ Next: <a href="EE9B.html">EE9B</a>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ee90"></span>
+<div class="comments">
+<div class="paragraph">
+Make the wave inactive.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Event_Wave</td>
 <td class="address-2"><span id="ee90"></span>EE90</td>
 <td class="instruction">LD HL,$BC66</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC66.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Reset bit 7 of *<a href="BC66.html">Flag_EventState</a> which relates to the wave.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee93"></span>EE93</td>
 <td class="instruction">RES 7,(HL)</td>
-<td class="comment-1" rowspan="1">Reset bit 7 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

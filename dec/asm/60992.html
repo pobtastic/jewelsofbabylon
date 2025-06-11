@@ -42,34 +42,42 @@ Next: <a href="61009.html">61009</a>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="60992"></span>
+<div class="comments">
+<div class="paragraph">
+Make the lion inactive.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Event_Lion</td>
 <td class="address-2"><span id="60992"></span>60992</td>
 <td class="instruction">LD HL,48230</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48230.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Reset bit 3 of *<a href="48230.html">Flag_EventState</a> which relates to the lion being active.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60995"></span>60995</td>
 <td class="instruction">RES 3,(HL)</td>
-<td class="comment-1" rowspan="1">Reset bit 3 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60997"></span>60997</td>
 <td class="instruction">LD A,42</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=42.</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> using item: "A lion".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60999"></span>60999</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61002"></span>61002</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1">Return if <span class="register">H</span> is not equal to 42.</td>
+<td class="comment-1" rowspan="1">Return if the lion is not in the current room.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

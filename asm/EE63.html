@@ -42,34 +42,52 @@ Next: <a href="EE74.html">EE74</a>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ee63"></span>
+<div class="comments">
+<div class="paragraph">
+Make the cannibals inactive.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Event_Cannibals</td>
 <td class="address-2"><span id="ee63"></span>EE63</td>
 <td class="instruction">LD HL,$BC66</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC66.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Reset bit 5 of *<a href="BC66.html">Flag_EventState</a> which relates to the natives being active.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee66"></span>EE66</td>
 <td class="instruction">RES 5,(HL)</td>
-<td class="comment-1" rowspan="1">Reset bit 5 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee68"></span>EE68</td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=18.</td>
+<td class="comment-1" rowspan="2">Call <a href="C35F.html">Handler_Objects</a> using item: "Surrounded by natives".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee6a"></span>EE6A</td>
 <td class="instruction">CALL <a href="C35F.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C35F.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee6d"></span>EE6D</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1">Return if <span class="register">H</span> is not equal to 18.</td>
+<td class="comment-1" rowspan="1">Return if the cannibals are not in the current room.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ee6e"></span>
+<div class="comments">
+<div class="paragraph">
+Print "The natives close in.You struggle bravely butthey overwhelm you.".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

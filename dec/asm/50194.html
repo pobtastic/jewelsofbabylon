@@ -33,68 +33,123 @@ Next: <a href="50214.html">50214</a>
 </td>
 </tr>
 </table>
-<div class="description">50194: Routine at C412</div>
+<div class="description">50194: Handler: Update Object Location</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="50154.html">50154</a>, <a href="50161.html">50161</a>, <a href="50170.html">50170</a>, <a href="50214.html">50214</a>, <a href="61268.html">61268</a> and <a href="61781.html">61781</a>.
+Used by the routines at <a href="50154.html">Handler_DestroyObject</a>, <a href="50161.html">50161</a>, <a href="50170.html">50170</a>, <a href="50214.html">TransformItem</a>, <a href="61268.html">61268</a> and <a href="61781.html">61781</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Object/ event ID</td>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="register-desc">Room ID for the update (can also be 0)</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_UpdateObjectLocation</td>
+<td class="address-2"><span id="50194"></span>50194</td>
+<td class="instruction">BIT 7,B</td>
+<td class="comment-1" rowspan="2">Jump to <a href="50194.html#50205">UpdateObjectLocation_NonScenic</a> if this is a normal object/ event.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="50196"></span>50196</td>
+<td class="instruction">JR Z,<a href="50194.html#50205">UpdateObjectLocation_NonScenic</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="50198"></span>
+<div class="comments">
+<div class="paragraph">
+Handle non-scenic events.
+</div>
+<div class="paragraph">
+Prepare object/ event ID for use.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="50194"></span>50194</td>
-<td class="instruction">BIT 7,B</td>
-<td class="comment-1" rowspan="1">Test bit 7 of <span class="register">B</span>.</td>
-</tr>
-<tr>
-<td class="address-1"><span id="50196"></span>50196</td>
-<td class="instruction">JR Z,<a href="50194.html#50205">50205</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="50194.html#50205">50205</a> if <span class="register">A</span> is equal to <span class="register">A</span>.</td>
-</tr>
-<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50198"></span>50198</td>
 <td class="instruction">RES 7,B</td>
-<td class="comment-1" rowspan="1">Reset bit 7 of <span class="register">B</span>.</td>
+<td class="comment-1" rowspan="1">Clear the scenic flag.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50200"></span>50200</td>
 <td class="instruction">LD HL,48248</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48231.html#48248">48248</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48248.html">Table_ScenicEventLocations</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50203"></span>50203</td>
-<td class="instruction">JR <a href="50194.html#50208">50208</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="50194.html#50208">50208</a>.</td>
+<td class="instruction">JR <a href="50194.html#50208">UpdateObjectLocation</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="50194.html#50208">UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="50205"></span>
+<div class="comments">
+<div class="paragraph">
+Handle non-scenic events.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">UpdateObjectLocation_NonScenic</td>
 <td class="address-2"><span id="50205"></span>50205</td>
 <td class="instruction">LD HL,48112</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48112.html">Table_ObjectLocations</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="50208"></span>
+<div class="comments">
+<div class="paragraph">
+Both object/ event types continue from here.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">UpdateObjectLocation</td>
 <td class="address-2"><span id="50208"></span>50208</td>
 <td class="instruction">LD D,0</td>
-<td class="comment-1" rowspan="1"><span class="register">D</span>=0.</td>
+<td class="comment-1" rowspan="2">Load the event ID into <span class="register">DE</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50210"></span>50210</td>
 <td class="instruction">LD E,B</td>
-<td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">B</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50211"></span>50211</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="1">Add the event ID to the event locations table.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50212"></span>50212</td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-1" rowspan="1">Write <span class="register">C</span> to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Update the table with the new room ID in <span class="register">C</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50213"></span>50213</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

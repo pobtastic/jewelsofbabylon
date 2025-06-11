@@ -236,7 +236,7 @@ Next: <a href="63705.html">63705</a>
 <tr>
 <td class="address-1"><span id="61862"></span>61862</td>
 <td class="instruction">LD HL,59850</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html">59850</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html">Data_Bottle</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61865"></span>61865</td>
@@ -251,7 +251,7 @@ Next: <a href="63705.html">63705</a>
 <tr>
 <td class="address-1"><span id="61870"></span>61870</td>
 <td class="instruction">LD HL,59514</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">59514</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">Data_ObjectRoom_04</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61873"></span>61873</td>
@@ -270,12 +270,11 @@ Next: <a href="63705.html">63705</a>
 <tr>
 <td class="address-1"><span id="61880"></span>61880</td>
 <td class="instruction">LD BC,2828</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=2828.</td>
+<td class="comment-1" rowspan="2">Call <a href="50214.html">TransformItem</a> to transform item 11 ("A bottle") into item 12 ("A bottle of rum").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61883"></span>61883</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -300,7 +299,7 @@ Print "It's full of rum!".
 <tr>
 <td class="address-2"><span id="61892"></span>61892</td>
 <td class="instruction">LD HL,59852</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html">59852</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59852">Data_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61895"></span>61895</td>
@@ -315,12 +314,11 @@ Print "It's full of rum!".
 <tr>
 <td class="address-1"><span id="61900"></span>61900</td>
 <td class="instruction">LD A,27</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=27.</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A strangely coloured fish".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61902"></span>61902</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61905"></span>61905</td>
@@ -330,12 +328,11 @@ Print "It's full of rum!".
 <tr>
 <td class="address-1"><span id="61907"></span>61907</td>
 <td class="instruction">LD BC,6940</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=6940.</td>
+<td class="comment-1" rowspan="2">Call <a href="50214.html">TransformItem</a> to transform item 27 ("A strangely coloured fish") into item 28 ("A red herring").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61910"></span>61910</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -360,7 +357,7 @@ Print "It's a red herring!".
 <tr>
 <td class="address-2"><span id="61919"></span>61919</td>
 <td class="instruction">LD HL,59857</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59857">59857</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59857">Data_Watch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61922"></span>61922</td>
@@ -395,7 +392,7 @@ Print "It appears to work.".
 <tr>
 <td class="address-2"><span id="61933"></span>61933</td>
 <td class="instruction">LD HL,59859</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59859">59859</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59859">Data_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61936"></span>61936</td>
@@ -420,7 +417,7 @@ Print "It appears to work.".
 <tr>
 <td class="address-2"><span id="61947"></span>61947</td>
 <td class="instruction">LD HL,59861</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59861">59861</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59861">Data_Rod</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61950"></span>61950</td>
@@ -455,7 +452,7 @@ Print "It has a circular cross-section.".
 <tr>
 <td class="address-2"><span id="61961"></span>61961</td>
 <td class="instruction">LD HL,59863</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59863">59863</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59863">Data_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61964"></span>61964</td>
@@ -490,7 +487,7 @@ Print "It looks delicious.".
 <tr>
 <td class="address-2"><span id="61975"></span>61975</td>
 <td class="instruction">LD HL,59865</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59865">59865</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59865">Data_Bridge</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61978"></span>61978</td>
@@ -525,7 +522,7 @@ Print "Be careful.It won't carry much weight.".
 <tr>
 <td class="address-2"><span id="61989"></span>61989</td>
 <td class="instruction">LD HL,59867</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59867">59867</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59867">Data_Jewel</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61992"></span>61992</td>
@@ -692,8 +689,8 @@ Print "Want to save the game? Y/N.".
 </tr>
 <tr>
 <td class="address-2"><span id="62058"></span>62058</td>
-<td class="instruction">CALL <a href="50148.html">50148</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50148.html">50148</a>.</td>
+<td class="instruction">CALL <a href="50148.html">CheckObjectInInventory</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50148.html">CheckObjectInInventory</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62061"></span>62061</td>
@@ -847,8 +844,8 @@ Print "You can't carry any more.".
 </tr>
 <tr>
 <td class="address-1"><span id="62110"></span>62110</td>
-<td class="instruction">CALL <a href="50194.html">50194</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50194.html">50194</a>.</td>
+<td class="instruction">CALL <a href="50194.html">Handler_UpdateObjectLocation</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50194.html">Handler_UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62113"></span>62113</td>
@@ -868,7 +865,7 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-2"><span id="62120"></span>62120</td>
 <td class="instruction">LD HL,59879</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59879">59879</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59879">Data_BottleOfRum</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62123"></span>62123</td>
@@ -883,7 +880,7 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="62128"></span>62128</td>
 <td class="instruction">LD HL,59514</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">59514</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">Data_ObjectRoom_04</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62131"></span>62131</td>
@@ -903,7 +900,7 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-2"><span id="62140"></span>62140</td>
 <td class="instruction">LD HL,59852</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html">59852</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59852">Data_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62143"></span>62143</td>
@@ -918,7 +915,7 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="62148"></span>62148</td>
 <td class="instruction">LD HL,59541</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">59541</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">Data_ObjectRoom_14</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62151"></span>62151</td>
@@ -938,7 +935,7 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-2"><span id="62160"></span>62160</td>
 <td class="instruction">LD HL,59857</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59857">59857</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59857">Data_Watch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62163"></span>62163</td>
@@ -953,7 +950,7 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="62168"></span>62168</td>
 <td class="instruction">LD A,25</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=25.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=25 (event ID: 25).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62170"></span>62170</td>
@@ -1003,7 +1000,7 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-2"><span id="62189"></span>62189</td>
 <td class="instruction">LD HL,59859</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59859">59859</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59859">Data_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62192"></span>62192</td>
@@ -1033,7 +1030,7 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-2"><span id="62205"></span>62205</td>
 <td class="instruction">LD HL,59863</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59863">59863</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59863">Data_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62208"></span>62208</td>
@@ -1063,7 +1060,7 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-2"><span id="62221"></span>62221</td>
 <td class="instruction">LD HL,59861</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59861">59861</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59861">Data_Rod</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62224"></span>62224</td>
@@ -1108,32 +1105,31 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="62243"></span>62243</td>
 <td class="instruction">LD BC,2569</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=2569.</td>
+<td class="comment-1" rowspan="2">Call <a href="50214.html">TransformItem</a> to transform item 10 ("A hole with a rod inserted to the side of the door") into item 9 ("A small round hole to the side of the door").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62246"></span>62246</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="62249"></span>62249</td>
 <td class="instruction">LD BC,12594</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=12594.</td>
+<td class="comment-1" rowspan="2">Call <a href="50214.html">TransformItem</a> to transform item 49 ("The door is open") into item 50 ("The door is closed").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62252"></span>62252</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="62255"></span>62255</td>
 <td class="instruction">LD BC,13077</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=13077.</td>
+<td class="comment-1" rowspan="2">Call <a href="50194.html">Handler_UpdateObjectLocation</a> using item "A slab of rock" to create it in 
+
+<a href="52465.html">The Narrow Path</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62258"></span>62258</td>
-<td class="instruction">CALL <a href="50194.html">50194</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50194.html">50194</a>.</td>
+<td class="instruction">CALL <a href="50194.html">Handler_UpdateObjectLocation</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="62261"></span>62261</td>
@@ -1184,7 +1180,7 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="62279"></span>62279</td>
 <td class="instruction">LD HL,59867</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59867">59867</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59867">Data_Jewel</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62282"></span>62282</td>
@@ -1214,7 +1210,7 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="62295"></span>62295</td>
 <td class="instruction">LD HL,59873</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59873">59873</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59873">Data_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62298"></span>62298</td>
@@ -1229,7 +1225,7 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="62303"></span>62303</td>
 <td class="instruction">LD HL,59502</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">59502</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_ObjectRoom_00</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62306"></span>62306</td>
@@ -1249,7 +1245,7 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="62315"></span>62315</td>
 <td class="instruction">LD HL,59875</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59875">59875</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59875">Data_Plank</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62318"></span>62318</td>
@@ -1264,7 +1260,7 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="62323"></span>62323</td>
 <td class="instruction">LD HL,59505</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59505">59505</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59505">Data_ObjectRoom_01</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62326"></span>62326</td>
@@ -1293,22 +1289,22 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="62338"></span>62338</td>
 <td class="instruction">LD A,5</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=5.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=5 (event ID: 5).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62340"></span>62340</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62343"></span>62343</td>
 <td class="instruction">LD A,6</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=6.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=6 (event ID: 6).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62345"></span>62345</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62348"></span>62348</td>
@@ -1339,7 +1335,7 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="62360"></span>62360</td>
 <td class="instruction">LD HL,59877</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59877">59877</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59877">Data_Coconut</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62363"></span>62363</td>
@@ -1369,7 +1365,7 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="62376"></span>62376</td>
 <td class="instruction">LD HL,59887</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59887">59887</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59887">Data_Gun</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62379"></span>62379</td>
@@ -1394,7 +1390,7 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="62389"></span>62389</td>
 <td class="instruction">LD A,39</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=39.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=39 (event ID: 39).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62391"></span>62391</td>
@@ -1409,12 +1405,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="62396"></span>62396</td>
 <td class="instruction">LD A,34</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=34.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=34 (event ID: 34).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62398"></span>62398</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62401"></span>62401</td>
@@ -1469,7 +1465,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62421"></span>62421</td>
 <td class="instruction">LD HL,59889</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59889">59889</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59889">Data_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62424"></span>62424</td>
@@ -1484,7 +1480,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62429"></span>62429</td>
 <td class="instruction">LD HL,59525</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59525">59525</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59525">Data_ObjectRoom_08</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62432"></span>62432</td>
@@ -1504,7 +1500,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62441"></span>62441</td>
 <td class="instruction">LD HL,59891</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59891">59891</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59891">Data_KegGunPowder</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62444"></span>62444</td>
@@ -1519,7 +1515,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62449"></span>62449</td>
 <td class="instruction">LD HL,59528</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59528">59528</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59528">Data_ObjectRoom_09</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62452"></span>62452</td>
@@ -1554,7 +1550,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62467"></span>62467</td>
 <td class="instruction">LD HL,59899</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59899">59899</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59899">Data_Sextant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62470"></span>62470</td>
@@ -1584,7 +1580,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62483"></span>62483</td>
 <td class="instruction">LD HL,59901</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59901">59901</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59901">Data_Crowbar</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62486"></span>62486</td>
@@ -1614,7 +1610,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62499"></span>62499</td>
 <td class="instruction">LD HL,59903</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59903">59903</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59903">Data_Key</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62502"></span>62502</td>
@@ -1644,7 +1640,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62515"></span>62515</td>
 <td class="instruction">LD HL,59905</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59905">59905</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59905">Data_Skull</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62518"></span>62518</td>
@@ -1674,7 +1670,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62531"></span>62531</td>
 <td class="instruction">LD HL,59910</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59910">59910</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59910">Data_Spear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62534"></span>62534</td>
@@ -1689,7 +1685,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62539"></span>62539</td>
 <td class="instruction">LD HL,59552</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59552">59552</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59552">Data_ObjectRoom_19</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62542"></span>62542</td>
@@ -1724,7 +1720,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62557"></span>62557</td>
 <td class="instruction">LD HL,59912</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59912">59912</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59912">Data_Parrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62560"></span>62560</td>
@@ -1739,7 +1735,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62565"></span>62565</td>
 <td class="instruction">LD HL,59580</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59580">59580</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59580">Data_ObjectRoom_25</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62568"></span>62568</td>
@@ -1814,7 +1810,7 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62597"></span>62597</td>
 <td class="instruction">LD HL,59917</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59917">59917</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59917">Data_IntoBoat</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62600"></span>62600</td>
@@ -1920,7 +1916,7 @@ Print "You're in it already.".
 <tr>
 <td class="address-2"><span id="62636"></span>62636</td>
 <td class="instruction">LD HL,59933</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59933">59933</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59933">Data_OutOfBoat</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62639"></span>62639</td>
@@ -2040,8 +2036,8 @@ Print "You're not in the boat.".
 </tr>
 <tr>
 <td class="address-2"><span id="62682"></span>62682</td>
-<td class="instruction">CALL <a href="50148.html">50148</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50148.html">50148</a>.</td>
+<td class="instruction">CALL <a href="50148.html">CheckObjectInInventory</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50148.html">CheckObjectInInventory</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62685"></span>62685</td>
@@ -2150,8 +2146,8 @@ Print "them.".
 </tr>
 <tr>
 <td class="address-1"><span id="62721"></span>62721</td>
-<td class="instruction">CALL <a href="50194.html">50194</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50194.html">50194</a>.</td>
+<td class="instruction">CALL <a href="50194.html">Handler_UpdateObjectLocation</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50194.html">Handler_UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62724"></span>62724</td>
@@ -2171,7 +2167,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62731"></span>62731</td>
 <td class="instruction">LD HL,59879</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59879">59879</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59879">Data_BottleOfRum</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62734"></span>62734</td>
@@ -2186,7 +2182,7 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="62739"></span>62739</td>
 <td class="instruction">LD HL,59514</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">59514</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">Data_ObjectRoom_04</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62742"></span>62742</td>
@@ -2201,7 +2197,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62748"></span>62748</td>
 <td class="instruction">LD HL,59852</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html">59852</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59852">Data_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62751"></span>62751</td>
@@ -2216,7 +2212,7 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="62756"></span>62756</td>
 <td class="instruction">LD HL,59541</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">59541</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">Data_ObjectRoom_14</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62759"></span>62759</td>
@@ -2231,7 +2227,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62765"></span>62765</td>
 <td class="instruction">LD HL,59857</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59857">59857</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59857">Data_Watch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62768"></span>62768</td>
@@ -2256,7 +2252,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62778"></span>62778</td>
 <td class="instruction">LD HL,59859</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59859">59859</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59859">Data_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62781"></span>62781</td>
@@ -2281,7 +2277,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62791"></span>62791</td>
 <td class="instruction">LD HL,59861</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59861">59861</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59861">Data_Rod</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62794"></span>62794</td>
@@ -2306,7 +2302,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62804"></span>62804</td>
 <td class="instruction">LD HL,59863</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59863">59863</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59863">Data_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62807"></span>62807</td>
@@ -2331,7 +2327,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62817"></span>62817</td>
 <td class="instruction">LD HL,59867</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59867">59867</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59867">Data_Jewel</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62820"></span>62820</td>
@@ -2356,7 +2352,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62830"></span>62830</td>
 <td class="instruction">LD HL,59873</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59873">59873</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59873">Data_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62833"></span>62833</td>
@@ -2371,7 +2367,7 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="62838"></span>62838</td>
 <td class="instruction">LD HL,59502</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">59502</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_ObjectRoom_00</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62841"></span>62841</td>
@@ -2386,7 +2382,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62847"></span>62847</td>
 <td class="instruction">LD HL,59875</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59875">59875</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59875">Data_Plank</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62850"></span>62850</td>
@@ -2411,7 +2407,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62860"></span>62860</td>
 <td class="instruction">LD HL,59877</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59877">59877</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59877">Data_Coconut</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62863"></span>62863</td>
@@ -2436,7 +2432,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62873"></span>62873</td>
 <td class="instruction">LD HL,59887</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59887">59887</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59887">Data_Gun</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62876"></span>62876</td>
@@ -2461,7 +2457,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62886"></span>62886</td>
 <td class="instruction">LD HL,59889</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59889">59889</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59889">Data_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62889"></span>62889</td>
@@ -2476,7 +2472,7 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="62894"></span>62894</td>
 <td class="instruction">LD HL,59525</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59525">59525</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59525">Data_ObjectRoom_08</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62897"></span>62897</td>
@@ -2495,12 +2491,11 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="62905"></span>62905</td>
 <td class="instruction">LD BC,4368</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=4368.</td>
+<td class="comment-1" rowspan="2">Call <a href="50214.html">TransformItem</a> to transform item 17 ("An eyepatch (worn)") into item 16 ("An eyepatch").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62908"></span>62908</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="62911"></span>62911</td>
@@ -2515,7 +2510,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62916"></span>62916</td>
 <td class="instruction">LD HL,59891</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59891">59891</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59891">Data_KegGunPowder</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62919"></span>62919</td>
@@ -2540,7 +2535,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62929"></span>62929</td>
 <td class="instruction">LD HL,59899</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59899">59899</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59899">Data_Sextant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62932"></span>62932</td>
@@ -2565,7 +2560,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62942"></span>62942</td>
 <td class="instruction">LD HL,59901</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59901">59901</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59901">Data_Crowbar</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62945"></span>62945</td>
@@ -2590,7 +2585,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62955"></span>62955</td>
 <td class="instruction">LD HL,59903</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59903">59903</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59903">Data_Key</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62958"></span>62958</td>
@@ -2615,7 +2610,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62968"></span>62968</td>
 <td class="instruction">LD HL,59905</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59905">59905</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59905">Data_Skull</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62971"></span>62971</td>
@@ -2640,7 +2635,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62981"></span>62981</td>
 <td class="instruction">LD HL,59910</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59910">59910</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59910">Data_Spear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62984"></span>62984</td>
@@ -2665,7 +2660,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62994"></span>62994</td>
 <td class="instruction">LD HL,59912</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59912">59912</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59912">Data_Parrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62997"></span>62997</td>
@@ -2690,7 +2685,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="63007"></span>63007</td>
 <td class="instruction">LD HL,59942</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59942">59942</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59942">Data_PlankAcrossPit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63010"></span>63010</td>
@@ -2727,8 +2722,8 @@ Print "them.".
 </tr>
 <tr>
 <td class="address-2"><span id="63029"></span>63029</td>
-<td class="instruction">CALL <a href="50148.html">50148</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50148.html">50148</a>.</td>
+<td class="instruction">CALL <a href="50148.html">CheckObjectInInventory</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50148.html">CheckObjectInInventory</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63032"></span>63032</td>
@@ -2751,8 +2746,8 @@ Print "them.".
 </tr>
 <tr>
 <td class="address-1"><span id="63038"></span>63038</td>
-<td class="instruction">CALL <a href="50194.html">50194</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50194.html">50194</a>.</td>
+<td class="instruction">CALL <a href="50194.html">Handler_UpdateObjectLocation</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50194.html">Handler_UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63041"></span>63041</td>
@@ -2772,7 +2767,7 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="63046"></span>63046</td>
 <td class="instruction">LD HL,59946</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59946">59946</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59946">Data_SpearAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63049"></span>63049</td>
@@ -2817,7 +2812,7 @@ Print "You fling the spear,but thelion easily avoids it.".
 <tr>
 <td class="address-2"><span id="63065"></span>63065</td>
 <td class="instruction">LD HL,59950</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59950">59950</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59950">Data_CoconutAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63068"></span>63068</td>
@@ -2862,7 +2857,7 @@ Print "The coconut bounces offthe lion's head.He shakes hislong mane in anger.
 <tr>
 <td class="address-2"><span id="63084"></span>63084</td>
 <td class="instruction">LD HL,59954</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59954">59954</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59954">Data_FruitAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63087"></span>63087</td>
@@ -2907,7 +2902,7 @@ Print "He sniffs the fruit butotherwise ignores it.".
 <tr>
 <td class="address-2"><span id="63103"></span>63103</td>
 <td class="instruction">LD HL,59958</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59958">59958</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59958">Data_FishAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63106"></span>63106</td>
@@ -2922,7 +2917,7 @@ Print "He sniffs the fruit butotherwise ignores it.".
 <tr>
 <td class="address-2"><span id="63111"></span>63111</td>
 <td class="instruction">LD HL,59541</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">59541</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">Data_ObjectRoom_14</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63114"></span>63114</td>
@@ -2941,18 +2936,18 @@ Print "He sniffs the fruit butotherwise ignores it.".
 </tr>
 <tr>
 <td class="address-1"><span id="63121"></span>63121</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63124"></span>63124</td>
 <td class="instruction">LD A,42</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=42.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=42 (event ID: 42).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63126"></span>63126</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63129"></span>63129</td>
@@ -2986,7 +2981,7 @@ Print "The lion takes the fish inhis massive jaws and thendisappears into the 
 <tr>
 <td class="address-2"><span id="63140"></span>63140</td>
 <td class="instruction">LD HL,59967</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59967">59967</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59967">Data_FruitAtParrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63143"></span>63143</td>
@@ -3001,7 +2996,7 @@ Print "The lion takes the fish inhis massive jaws and thendisappears into the 
 <tr>
 <td class="address-2"><span id="63148"></span>63148</td>
 <td class="instruction">LD A,14</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=14.</td>
+<td class="comment-1" rowspan="1">Load "Some fruit" into <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63150"></span>63150</td>
@@ -3011,22 +3006,21 @@ Print "The lion takes the fish inhis massive jaws and thendisappears into the 
 <tr>
 <td class="address-1"><span id="63153"></span>63153</td>
 <td class="instruction">LD BC,10024</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=10024.</td>
+<td class="comment-1" rowspan="1">Call <a href="50214.html">TransformItem</a> to transform item 39 ("A parrot (alive)") into item 40 ("A dead parrot").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63156"></span>63156</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63159"></span>63159</td>
 <td class="instruction">LD A,14</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=14.</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "Some fruit" (as the parrot ate it).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63161"></span>63161</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -3051,7 +3045,7 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-2"><span id="63170"></span>63170</td>
 <td class="instruction">LD HL,59971</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59971">59971</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59971">Data_WatchAtCannibals</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63173"></span>63173</td>
@@ -3066,12 +3060,11 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-2"><span id="63178"></span>63178</td>
 <td class="instruction">LD A,23</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=23.</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A watch".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63180"></span>63180</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63183"></span>63183</td>
@@ -3081,7 +3074,7 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-1"><span id="63186"></span>63186</td>
 <td class="instruction">LD A,23</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=23.</td>
+<td class="comment-1" rowspan="1">Load "A watch" into <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63188"></span>63188</td>
@@ -3091,27 +3084,29 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-1"><span id="63191"></span>63191</td>
 <td class="instruction">LD BC,6169</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=6169.</td>
+<td class="comment-1" rowspan="2">Call <a href="50214.html">TransformItem</a> to transform item 24 ("Surrounded by natives") into item 25 ("The distracted natives").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63194"></span>63194</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63197"></span>63197</td>
 <td class="instruction">LD BC,5914</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=5914.</td>
+<td class="comment-1" rowspan="2">Call <a href="50214.html">TransformItem</a> to transform item 23 ("A watch") into item 26 ("A spear").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63200"></span>63200</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63203"></span>63203</td>
 <td class="instruction">LD A,29</td>
-<td class="comment-1" rowspan="2">Write 29 to *<a href="60176.html#60365">60365</a>.</td>
+<td class="comment-1" rowspan="2">Write 29 to *<a href="60176.html#60365">60365</a> to open up westbound access to 
+
+<a href="52504.html">The Thicket</a> from 
+
+<a href="52563.html">The Cannibals' Village</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63205"></span>63205</td>
@@ -3120,7 +3115,11 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-1"><span id="63208"></span>63208</td>
 <td class="instruction">LD A,32</td>
-<td class="comment-1" rowspan="2">Write 32 to *<a href="60176.html#60363">60363</a>.</td>
+<td class="comment-1" rowspan="2">Write 32 to *<a href="60176.html#60363">60363</a> to open up southbound access to 
+
+<a href="52587.html">The Woodland Path</a> from 
+
+<a href="52563.html">The Cannibals' Village</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63210"></span>63210</td>
@@ -3129,7 +3128,11 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-1"><span id="63213"></span>63213</td>
 <td class="instruction">LD A,33</td>
-<td class="comment-1" rowspan="2">Write 33 to *<a href="60176.html#60364">60364</a>.</td>
+<td class="comment-1" rowspan="2">Write 33 to *<a href="60176.html#60364">60364</a> to open up eastbound access to 
+
+<a href="52587.html">The Woodland Path</a> from 
+
+<a href="52563.html">The Cannibals' Village</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63215"></span>63215</td>
@@ -3138,11 +3141,25 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-1"><span id="63218"></span>63218</td>
 <td class="instruction">LD A,35</td>
-<td class="comment-1" rowspan="2">Write 35 to *<a href="60176.html#60362">60362</a>.</td>
+<td class="comment-1" rowspan="2">Write 35 to *<a href="60176.html#60362">60362</a> to open up northbound access to 
+
+<a href="52671.html">The High Ridge</a> from 
+
+<a href="52563.html">The Cannibals' Village</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63220"></span>63220</td>
 <td class="instruction">LD (60362),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="63223"></span>
+<div class="comments">
+<div class="paragraph">
+Print "The cannibal drops the spearand takes the watch.He examines it briefly andplaces it to his ear. Theother natives gather round himand lose all interest in you.".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63223"></span>63223</td>
@@ -3157,7 +3174,7 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-2"><span id="63229"></span>63229</td>
 <td class="instruction">LD HL,59975</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59975">59975</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59975">Data_SpearAtOctopus</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63232"></span>63232</td>
@@ -3172,37 +3189,38 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-1"><span id="63237"></span>63237</td>
 <td class="instruction">LD A,26</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=26.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#63029">63029</a> using "A spear".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63239"></span>63239</td>
 <td class="instruction">CALL <a href="61781.html#63029">63029</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#63029">63029</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63242"></span>63242</td>
 <td class="instruction">LD A,43</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=43.</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A giant octopus".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63244"></span>63244</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63247"></span>63247</td>
 <td class="instruction">LD A,26</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=26.</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A spear".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63249"></span>63249</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63252"></span>63252</td>
 <td class="instruction">LD A,64</td>
-<td class="comment-1" rowspan="2">Write 64 to *<a href="60176.html#60554">60554</a>.</td>
+<td class="comment-1" rowspan="2">Write 64 to *<a href="60176.html#60554">60554</a> to open up northbound access to 
+
+<a href="53188.html">A Dead End</a> from 
+
+<a href="53137.html">The Cave</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63254"></span>63254</td>
@@ -3211,7 +3229,11 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-1"><span id="63257"></span>63257</td>
 <td class="instruction">LD A,65</td>
-<td class="comment-1" rowspan="2">Write 65 to *<a href="60176.html#60555">60555</a>.</td>
+<td class="comment-1" rowspan="2">Write 65 to *<a href="60176.html#60555">60555</a> to open up southbound access to 
+
+<a href="53188.html">A Dead End</a> from 
+
+<a href="53137.html">The Cave</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63259"></span>63259</td>
@@ -3220,7 +3242,11 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <tr>
 <td class="address-1"><span id="63262"></span>63262</td>
 <td class="instruction">LD A,66</td>
-<td class="comment-1" rowspan="2">Write 66 to *<a href="60176.html#60556">60556</a>.</td>
+<td class="comment-1" rowspan="2">Write 66 to *<a href="60176.html#60556">60556</a> to open up eastbound access to 
+
+<a href="53188.html">A Dead End</a> from 
+
+<a href="53137.html">The Cave</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63264"></span>63264</td>
@@ -3249,7 +3275,7 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 <tr>
 <td class="address-2"><span id="63273"></span>63273</td>
 <td class="instruction">LD HL,59984</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59984">59984</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59984">Data_KegAtCrocodile</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63276"></span>63276</td>
@@ -3264,7 +3290,7 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 <tr>
 <td class="address-1"><span id="63281"></span>63281</td>
 <td class="instruction">LD A,18</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=18.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=18 (event ID: 18).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63283"></span>63283</td>
@@ -3289,22 +3315,21 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 <tr>
 <td class="address-1"><span id="63294"></span>63294</td>
 <td class="instruction">LD A,18</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=18.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=18 (event ID: 18).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63296"></span>63296</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63299"></span>63299</td>
 <td class="instruction">LD BC,4884</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=4884.</td>
+<td class="comment-1" rowspan="2">Call <a href="50214.html">TransformItem</a> to transform item 19 ("A crocodile") into item 20 ("A crocodile (with the keg in its mouth)").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63302"></span>63302</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -3329,7 +3354,7 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 <tr>
 <td class="address-2"><span id="63311"></span>63311</td>
 <td class="instruction">LD HL,59998</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59998">59998</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59998">Data_MatchAtKeg</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63314"></span>63314</td>
@@ -3344,12 +3369,11 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 <tr>
 <td class="address-1"><span id="63319"></span>63319</td>
 <td class="instruction">LD A,18</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=18.</td>
+<td class="comment-1" rowspan="2">Call <a href="50148.html">CheckObjectInInventory</a> with "A keg of gunpowder".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63321"></span>63321</td>
-<td class="instruction">CALL <a href="50148.html">50148</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50148.html">50148</a>.</td>
+<td class="instruction">CALL <a href="50148.html">CheckObjectInInventory</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63324"></span>63324</td>
@@ -3359,7 +3383,7 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 <tr>
 <td class="address-1"><span id="63327"></span>63327</td>
 <td class="instruction">LD HL,59502</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">59502</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_ObjectRoom_00</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63330"></span>63330</td>
@@ -3374,12 +3398,11 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 <tr>
 <td class="address-1"><span id="63336"></span>63336</td>
 <td class="instruction">LD A,18</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=18.</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A keg of gunpowder".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63338"></span>63338</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63341"></span>63341</td>
@@ -3389,12 +3412,11 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 <tr>
 <td class="address-2"><span id="63344"></span>63344</td>
 <td class="instruction">LD A,2</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=2.</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A match".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63346"></span>63346</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63349"></span>63349</td>
@@ -3404,27 +3426,29 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 <tr>
 <td class="address-1"><span id="63352"></span>63352</td>
 <td class="instruction">LD A,3</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=3.</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A lighted match".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63354"></span>63354</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63357"></span>63357</td>
 <td class="instruction">LD A,20</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=20.</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A crocodile (with the keg in its mouth)".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63359"></span>63359</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63362"></span>63362</td>
 <td class="instruction">LD A,78</td>
-<td class="comment-1" rowspan="2">Write 78 to *<a href="60176.html#60604">60604</a>.</td>
+<td class="comment-1" rowspan="2">Write 78 to *<a href="60176.html#60604">60604</a> to open up eastbound access to 
+
+<a href="53294.html">The Ravine</a> from 
+
+<a href="53243.html">The Swamp</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63364"></span>63364</td>
@@ -3453,7 +3477,7 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-2"><span id="63373"></span>63373</td>
 <td class="instruction">LD HL,60012</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#60012">60012</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60012">Data_MatchAtCrocodile</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63376"></span>63376</td>
@@ -3468,7 +3492,7 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63381"></span>63381</td>
 <td class="instruction">LD HL,59502</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">59502</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_ObjectRoom_00</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63384"></span>63384</td>
@@ -3483,12 +3507,11 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63390"></span>63390</td>
 <td class="instruction">LD A,20</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=20.</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A crocodile (with the keg in its mouth)".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63392"></span>63392</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63395"></span>63395</td>
@@ -3518,7 +3541,7 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63407"></span>63407</td>
 <td class="instruction">LD HL,59954</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59954">59954</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59954">Data_FruitAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63410"></span>63410</td>
@@ -3533,7 +3556,7 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63416"></span>63416</td>
 <td class="instruction">LD HL,59958</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59958">59958</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59958">Data_FishAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63419"></span>63419</td>
@@ -3548,7 +3571,7 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63425"></span>63425</td>
 <td class="instruction">LD HL,59967</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59967">59967</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59967">Data_FruitAtParrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63428"></span>63428</td>
@@ -3563,7 +3586,7 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63434"></span>63434</td>
 <td class="instruction">LD HL,59971</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59971">59971</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59971">Data_WatchAtCannibals</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63437"></span>63437</td>
@@ -3593,7 +3616,7 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63450"></span>63450</td>
 <td class="instruction">LD HL,59942</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#59942">59942</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59942">Data_PlankAcrossPit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63453"></span>63453</td>
@@ -3608,7 +3631,7 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63458"></span>63458</td>
 <td class="instruction">LD A,4</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=4.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=4 (event ID: 4).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63460"></span>63460</td>
@@ -3633,12 +3656,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63471"></span>63471</td>
 <td class="instruction">LD A,4</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=4.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=4 (event ID: 4).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63473"></span>63473</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63476"></span>63476</td>
@@ -3647,8 +3670,8 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 </tr>
 <tr>
 <td class="address-1"><span id="63479"></span>63479</td>
-<td class="instruction">CALL <a href="50194.html">50194</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50194.html">50194</a>.</td>
+<td class="instruction">CALL <a href="50194.html">Handler_UpdateObjectLocation</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50194.html">Handler_UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63482"></span>63482</td>
@@ -3657,8 +3680,8 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 </tr>
 <tr>
 <td class="address-1"><span id="63485"></span>63485</td>
-<td class="instruction">CALL <a href="50194.html">50194</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50194.html">50194</a>.</td>
+<td class="instruction">CALL <a href="50194.html">Handler_UpdateObjectLocation</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50194.html">Handler_UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63488"></span>63488</td>
@@ -3706,7 +3729,7 @@ Print "The plank now spans the pit.".
 <tr>
 <td class="address-2"><span id="63507"></span>63507</td>
 <td class="instruction">LD HL,60016</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#60016">60016</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60016">Data_RodInHole</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63510"></span>63510</td>
@@ -3731,12 +3754,11 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-2"><span id="63515"></span>63515</td>
 <td class="instruction">LD A,8</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=8.</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A rod".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63517"></span>63517</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63520"></span>63520</td>
@@ -3746,57 +3768,56 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-1"><span id="63523"></span>63523</td>
 <td class="instruction">LD A,8</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=8.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#63029">63029</a> with "A rod".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63525"></span>63525</td>
 <td class="instruction">CALL <a href="61781.html#63029">63029</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#63029">63029</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63528"></span>63528</td>
 <td class="instruction">LD A,8</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=8.</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A rod".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63530"></span>63530</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63533"></span>63533</td>
 <td class="instruction">LD BC,2314</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=2314.</td>
+<td class="comment-1" rowspan="2">Call <a href="50214.html">TransformItem</a> to transform item 9 ("A small round hole to the side of the door") into item 10 ("A hole with a rod inserted to the side of the door").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63536"></span>63536</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63539"></span>63539</td>
 <td class="instruction">LD BC,12849</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=12849.</td>
+<td class="comment-1" rowspan="2">Call <a href="50214.html">TransformItem</a> to transform item 50 ("The door is closed") into item 49 ("The door is open").</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63542"></span>63542</td>
-<td class="instruction">CALL <a href="50214.html">50214</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50214.html">50214</a>.</td>
+<td class="instruction">CALL <a href="50214.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63545"></span>63545</td>
 <td class="instruction">LD A,51</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=51.</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A slab of rock".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63547"></span>63547</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63550"></span>63550</td>
 <td class="instruction">LD A,106</td>
-<td class="comment-1" rowspan="2">Write 106 to *<a href="60176.html#60304">60304</a>.</td>
+<td class="comment-1" rowspan="2">Write 106 to *<a href="60176.html#60304">60304</a> to open up bound access to 
+
+<a href="53649.html">The Mighty Rock Door</a> from 
+
+<a href="52465.html">The Narrow Path</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63552"></span>63552</td>
@@ -3805,7 +3826,11 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-1"><span id="63555"></span>63555</td>
 <td class="instruction">LD A,21</td>
-<td class="comment-1" rowspan="2">Write 21 to *<a href="60176.html#60813">60813</a>.</td>
+<td class="comment-1" rowspan="2">Write 21 to *<a href="60176.html#60813">60813</a> to open up bound access to 
+
+<a href="52465.html">The Narrow Path</a> from 
+
+<a href="53619.html">The Southern Side of the Pit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63557"></span>63557</td>
@@ -3849,7 +3874,7 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="63573"></span>63573</td>
 <td class="instruction">LD HL,60045</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#60045">60045</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60045">Data_OctopusWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63576"></span>63576</td>
@@ -3864,12 +3889,11 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="63581"></span>63581</td>
 <td class="instruction">LD A,26</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=26.</td>
+<td class="comment-1" rowspan="2">Call <a href="50148.html">CheckObjectInInventory</a> with "A spear".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63583"></span>63583</td>
-<td class="instruction">CALL <a href="50148.html">50148</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50148.html">50148</a>.</td>
+<td class="instruction">CALL <a href="50148.html">CheckObjectInInventory</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63586"></span>63586</td>
@@ -3879,22 +3903,20 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="63589"></span>63589</td>
 <td class="instruction">LD A,26</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=26.</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A spear".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63591"></span>63591</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63594"></span>63594</td>
 <td class="instruction">LD A,43</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=43.</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A giant octopus".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63596"></span>63596</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63599"></span>63599</td>
@@ -3909,7 +3931,11 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="63603"></span>63603</td>
 <td class="instruction">LD A,64</td>
-<td class="comment-1" rowspan="2">Write 64 to *<a href="60176.html#60554">60554</a>.</td>
+<td class="comment-1" rowspan="2">Write 64 to *<a href="60176.html#60554">60554</a> to open up bound access to 
+
+<a href="53188.html">A Dead End</a> from 
+
+<a href="53137.html">The Cave</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63605"></span>63605</td>
@@ -3918,7 +3944,11 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="63608"></span>63608</td>
 <td class="instruction">LD A,65</td>
-<td class="comment-1" rowspan="2">Write 65 to *<a href="60176.html#60555">60555</a>.</td>
+<td class="comment-1" rowspan="2">Write 65 to *<a href="60176.html#60555">60555</a> to open up bound access to 
+
+<a href="53188.html">A Dead End</a> from 
+
+<a href="53137.html">The Cave</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63610"></span>63610</td>
@@ -3927,7 +3957,11 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="63613"></span>63613</td>
 <td class="instruction">LD A,66</td>
-<td class="comment-1" rowspan="2">Write 66 to *<a href="60176.html#60556">60556</a>.</td>
+<td class="comment-1" rowspan="2">Write 66 to *<a href="60176.html#60556">60556</a> to open up bound access to 
+
+<a href="53188.html">A Dead End</a> from 
+
+<a href="53137.html">The Cave</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63615"></span>63615</td>
@@ -3956,7 +3990,7 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 <tr>
 <td class="address-2"><span id="63624"></span>63624</td>
 <td class="instruction">LD HL,60054</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#60054">60054</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60054">Data_LionWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63627"></span>63627</td>
@@ -3971,12 +4005,11 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 <tr>
 <td class="address-1"><span id="63632"></span>63632</td>
 <td class="instruction">LD A,26</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=26.</td>
+<td class="comment-1" rowspan="2">Call <a href="50148.html">CheckObjectInInventory</a> with "A spear".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63634"></span>63634</td>
-<td class="instruction">CALL <a href="50148.html">50148</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50148.html">50148</a>.</td>
+<td class="instruction">CALL <a href="50148.html">CheckObjectInInventory</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63637"></span>63637</td>
@@ -4006,7 +4039,7 @@ Print "You stab at the lionbut the beast easily avoids it.".
 <tr>
 <td class="address-2"><span id="63646"></span>63646</td>
 <td class="instruction">LD HL,60058</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#60058">60058</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60058">Data_CannibalsWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63649"></span>63649</td>
@@ -4021,12 +4054,11 @@ Print "You stab at the lionbut the beast easily avoids it.".
 <tr>
 <td class="address-1"><span id="63654"></span>63654</td>
 <td class="instruction">LD A,26</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=26.</td>
+<td class="comment-1" rowspan="2">Call <a href="50148.html">CheckObjectInInventory</a> with "A spear".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63656"></span>63656</td>
-<td class="instruction">CALL <a href="50148.html">50148</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50148.html">50148</a>.</td>
+<td class="instruction">CALL <a href="50148.html">CheckObjectInInventory</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63659"></span>63659</td>
@@ -4066,7 +4098,7 @@ Print "The cannibals turn on you.They quickly overwhelm you.".
 <tr>
 <td class="address-2"><span id="63672"></span>63672</td>
 <td class="instruction">LD HL,60062</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59852.html#60062">60062</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60062">Data_PirateWithGun</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63675"></span>63675</td>
@@ -4081,12 +4113,11 @@ Print "The cannibals turn on you.They quickly overwhelm you.".
 <tr>
 <td class="address-1"><span id="63680"></span>63680</td>
 <td class="instruction">LD A,15</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=15.</td>
+<td class="comment-1" rowspan="2">Call <a href="50148.html">CheckObjectInInventory</a> with "A gun".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63682"></span>63682</td>
-<td class="instruction">CALL <a href="50148.html">50148</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50148.html">50148</a>.</td>
+<td class="instruction">CALL <a href="50148.html">CheckObjectInInventory</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63685"></span>63685</td>
@@ -4106,7 +4137,7 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-2"><span id="63688"></span>63688</td>
 <td class="instruction">LD HL,59570</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59570">59570</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59570">Data_ObjectRoom_24</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63691"></span>63691</td>

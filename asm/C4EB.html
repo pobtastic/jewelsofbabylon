@@ -41,6 +41,9 @@ Next: <a href="C520.html">C520</a>
 <div class="paragraph">
 Used by the routine at <a href="EDC4.html">GameLoop</a>.
 </div>
+<div class="paragraph">
+Handles checking if a scenic event should occur ... and also, handles jumping to the correct related scenic event routine to action it.
+</div>
 </div>
 </td>
 </tr>
@@ -48,25 +51,25 @@ Used by the routine at <a href="EDC4.html">GameLoop</a>.
 <td class="asm-label">Handler_ScenicEvents</td>
 <td class="address-2"><span id="c4eb"></span>C4EB</td>
 <td class="instruction">LD HL,$BC78</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC67.html#bc78">BC78</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC78.html">Table_ScenicEventLocations</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c4ee"></span>C4EE</td>
 <td class="instruction">LD BC,($BD30)</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD30.html">Count_ScenicEvents</a>.</td>
+<td class="comment-1" rowspan="1">Set a counter in <span class="register">BC</span> for *<a href="BD30.html">Count_ScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_ScenicEvents_Loop</td>
 <td class="address-2"><span id="c4f2"></span>C4F2</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="1">Load *<a href="BCCB.html">RoomNumber</a> into <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c4f5"></span>C4F5</td>
 <td class="instruction">CPIR</td>
-<td class="comment-1" rowspan="1">Search for matching room.</td>
+<td class="comment-1" rowspan="1">Search for the matching room.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -139,7 +142,7 @@ Calculate the event index and get the event handler.
 <td class="asm-label"></td>
 <td class="address-1"><span id="c508"></span>C508</td>
 <td class="instruction">LD IX,($BD24)</td>
-<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="BD24.html">Pointer_ScenicEvents_Jump</a>.</td>
+<td class="comment-1" rowspan="1">Load <span class="register">IX</span> with *<a href="BD24.html">Pointer_ScenicEvents_Jump</a> which contains a pointer to the scenic event rountines jump table.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

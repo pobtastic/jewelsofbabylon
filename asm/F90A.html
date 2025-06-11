@@ -48,7 +48,7 @@ Used by the routine at <a href="F155.html">F155</a>.
 <td class="asm-label"></td>
 <td class="address-2"><span id="f90a"></span>F90A</td>
 <td class="instruction">LD HL,$EAA2</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eaa2">EAA2</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eaa2">Data_ParrotWithGun</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -106,19 +106,18 @@ Print "It's already dead.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="f91f"></span>F91F</td>
 <td class="instruction">LD A,$0F</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0F.</td>
+<td class="comment-1" rowspan="2">Call <a href="C3E4.html">CheckObjectInInventory</a> with item: "A gun".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f921"></span>F921</td>
-<td class="instruction">CALL <a href="C3E4.html">$C3E4</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3E4.html">C3E4</a>.</td>
+<td class="instruction">CALL <a href="C3E4.html">CheckObjectInInventory</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f924"></span>F924</td>
-<td class="instruction">JR Z,<a href="F90A.html#f92c">$F92C</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F90A.html#f92c">F92C</a> if ?? is equal to 0F.</td>
+<td class="instruction">JR Z,<a href="F90A.html#f92c">PlayerHasGun</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F90A.html#f92c">PlayerHasGun</a> if the player has the gun in their inventory.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -143,10 +142,10 @@ Print "You haven't got a gun.".
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="asm-label">PlayerHasGun</td>
 <td class="address-2"><span id="f92c"></span>F92C</td>
 <td class="instruction">LD HL,$EAA6</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eaa6">EAA6</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eaa6">Data_PirateWithGun_2</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -164,7 +163,7 @@ Print "You haven't got a gun.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="f935"></span>F935</td>
 <td class="instruction">LD HL,$EAAC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eaac">EAAC</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eaac">Data_ParrotWithGun_2</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -222,7 +221,7 @@ Print "It's already dead.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="f94a"></span>F94A</td>
 <td class="instruction">LD HL,$EAB2</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eab2">EAB2</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eab2">Data_UpLadder</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -276,7 +275,7 @@ Print "It's already dead.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="f960"></span>F960</td>
 <td class="instruction">LD HL,$EAB5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eab5">EAB5</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eab5">Data_DownLadder</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -330,7 +329,7 @@ Print "It's already dead.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="f976"></span>F976</td>
 <td class="instruction">LD HL,$EABC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eabc">EABC</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eabc">Data_Ladder</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -370,7 +369,7 @@ Print "Please be more specific.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="f984"></span>F984</td>
 <td class="instruction">LD HL,$EA0D</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#ea0d">EA0D</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea0d">Data_IntoBoat</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -388,7 +387,7 @@ Print "Please be more specific.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="f98d"></span>F98D</td>
 <td class="instruction">LD HL,$EA1D</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#ea1d">EA1D</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea1d">Data_OutOfBoat</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -424,7 +423,7 @@ Print "Please be more specific.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="f99d"></span>F99D</td>
 <td class="instruction">LD HL,$E9CC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html">E9CC</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9cc">Data_Fish</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -442,7 +441,7 @@ Print "Please be more specific.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9a5"></span>F9A5</td>
 <td class="instruction">LD HL,$E895</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e895">E895</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e895">Data_ObjectRoom_14</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -465,8 +464,8 @@ Print "Please be more specific.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9ad"></span>F9AD</td>
-<td class="instruction">CALL <a href="C3E4.html">$C3E4</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3E4.html">C3E4</a>.</td>
+<td class="instruction">CALL <a href="C3E4.html">CheckObjectInInventory</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3E4.html">CheckObjectInInventory</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -501,8 +500,8 @@ Print "Please be more specific.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9b8"></span>F9B8</td>
-<td class="instruction">CALL <a href="C3EA.html">$C3EA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">C3EA</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -530,7 +529,7 @@ Print "You eat the fish.It was quite tasty.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="f9c1"></span>F9C1</td>
 <td class="instruction">LD HL,$E9D7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#e9d7">E9D7</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d7">Data_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -572,7 +571,7 @@ Print "You eat the fish.It was quite tasty.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="f9d3"></span>F9D3</td>
 <td class="instruction">LD HL,$E9E5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#e9e5">E9E5</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e5">Data_Coconut</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -620,7 +619,7 @@ Print "You eat the fish.It was quite tasty.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9e8"></span>F9E8</td>
 <td class="instruction">LD HL,$EAB8</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eab8">EAB8</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eab8">Data_Rum</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -631,14 +630,14 @@ Print "You eat the fish.It was quite tasty.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9ee"></span>F9EE</td>
-<td class="instruction">JR NZ,<a href="F90A.html#fa14">$FA14</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F90A.html#fa14">FA14</a> if *<span class="register">HL</span> is not equal to 04.</td>
+<td class="instruction">JR NZ,<a href="F90A.html#fa14">Handler_DrinkWater</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F90A.html#fa14">Handler_DrinkWater</a> if *<span class="register">HL</span> is not equal to 04.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9f0"></span>F9F0</td>
 <td class="instruction">LD HL,$E87A</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e87a">E87A</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e87a">Data_ObjectRoom_04</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -667,8 +666,8 @@ Print "You eat the fish.It was quite tasty.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9fa"></span>F9FA</td>
-<td class="instruction">CALL <a href="C3E4.html">$C3E4</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3E4.html">C3E4</a>.</td>
+<td class="instruction">CALL <a href="C3E4.html">CheckObjectInInventory</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3E4.html">CheckObjectInInventory</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -685,8 +684,8 @@ Print "You eat the fish.It was quite tasty.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fa01"></span>FA01</td>
-<td class="instruction">CALL <a href="C426.html">$C426</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C426.html">C426</a>.</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C426.html">TransformItem</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -734,10 +733,20 @@ Print "You drink the golden liquid.It was delicious..hic..You feel decidedly l
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="routine-comment" colspan="5">
+<span id="fa14"></span>
+<div class="comments">
+<div class="paragraph">
+Handle drinking water.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_DrinkWater</td>
 <td class="address-2"><span id="fa14"></span>FA14</td>
 <td class="instruction">LD HL,$EABA</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eaba">EABA</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eaba">Data_Water</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -749,7 +758,17 @@ Print "You drink the golden liquid.It was delicious..hic..You feel decidedly l
 <td class="asm-label"></td>
 <td class="address-1"><span id="fa1a"></span>FA1A</td>
 <td class="instruction">JR NZ,<a href="F90A.html#fa39">Action_CantDrinkWater</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F90A.html#fa39">Action_CantDrinkWater</a> if *<span class="register">HL</span> is not equal to 06.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F90A.html#fa39">Action_CantDrinkWater</a> if the player can't drink water at this time.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="fa1c"></span>
+<div class="comments">
+<div class="paragraph">
+The player can drink water but determine what type of water...
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -779,12 +798,15 @@ Print "You drink the golden liquid.It was delicious..hic..You feel decidedly l
 <td class="asm-label"></td>
 <td class="address-1"><span id="fa27"></span>FA27</td>
 <td class="instruction">JR Z,<a href="F90A.html#fa2f">Action_DrinkFreshWater</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F90A.html#fa2f">Action_DrinkFreshWater</a> if *<span class="register">HL</span> is equal to 06.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F90A.html#fa2f">Action_DrinkFreshWater</a> if the current room contains fresh water.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="fa29"></span>
 <div class="comments">
+<div class="paragraph">
+Else it must be salt water - so report this.
+</div>
 <div class="paragraph">
 Print "You can't.That's salt water.".
 </div>
@@ -899,7 +921,7 @@ Tried to drink water where there is none.
 <td class="asm-label"></td>
 <td class="address-1"><span id="fa40"></span>FA40</td>
 <td class="instruction">LD HL,$EABE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eabe">EABE</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eabe">Data_Door</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -949,7 +971,7 @@ Tried to drink water where there is none.
 <td class="asm-label"></td>
 <td class="address-2"><span id="fa53"></span>FA53</td>
 <td class="instruction">LD HL,$E8CA</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8ca">E8CA</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8ca">Data_ObjectRoom_31</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1016,25 +1038,23 @@ Print "The door is locked.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="fa6c"></span>FA6C</td>
 <td class="instruction">LD BC,$2D2C</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=2D2C.</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 2C ("An open door") into item 2D ("A closed door").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fa6f"></span>FA6F</td>
-<td class="instruction">CALL <a href="C426.html">$C426</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C426.html">C426</a>.</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fa72"></span>FA72</td>
 <td class="instruction">LD BC,$302F</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=302F.</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 2F ("An open door") into item 30 ("A closed door").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fa75"></span>FA75</td>
-<td class="instruction">CALL <a href="C426.html">$C426</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C426.html">C426</a>.</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1068,7 +1088,7 @@ Print "The door is locked.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="fa85"></span>FA85</td>
 <td class="instruction">LD HL,$EAC0</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eac0">EAC0</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eac0">Data_RockDoor</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1104,7 +1124,7 @@ Print "The door is locked.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fa94"></span>FA94</td>
 <td class="instruction">LD A,$31</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=31.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=31 (event ID: 31).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1168,7 +1188,7 @@ Print "It's much too heavy.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="faac"></span>FAAC</td>
 <td class="instruction">LD HL,$EABE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eabe">EABE</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eabe">Data_Door</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1217,7 +1237,7 @@ Print "It's much too heavy.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="fabf"></span>FABF</td>
 <td class="instruction">LD HL,$E8CA</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8ca">E8CA</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8ca">Data_ObjectRoom_31</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1251,25 +1271,23 @@ Print "It's much too heavy.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="facf"></span>FACF</td>
 <td class="instruction">LD BC,$2C2D</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=2C2D.</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 2D ("A closed door") into item 2C ("An open door").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fad2"></span>FAD2</td>
-<td class="instruction">CALL <a href="C426.html">$C426</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C426.html">C426</a>.</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fad5"></span>FAD5</td>
 <td class="instruction">LD BC,$2F30</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=2F30.</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 30 ("A closed door") into item 2F ("An open door").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fad8"></span>FAD8</td>
-<td class="instruction">CALL <a href="C426.html">$C426</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C426.html">C426</a>.</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1300,7 +1318,7 @@ Print "It's much too heavy.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="fae5"></span>FAE5</td>
 <td class="instruction">LD HL,$EAC0</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eac0">EAC0</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eac0">Data_RockDoor</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1336,7 +1354,7 @@ Print "It's much too heavy.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="faf4"></span>FAF4</td>
 <td class="instruction">LD A,$32</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=32.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=32 (event ID: 32).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1382,7 +1400,7 @@ Print "It's much too heavy.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="fb05"></span>FB05</td>
 <td class="instruction">LD HL,$EAC5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eac5">EAC5</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eac5">Data_TrapDoor</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1440,7 +1458,7 @@ Print "No. I can't be bothered.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb1c"></span>FB1C</td>
 <td class="instruction">LD HL,$EAC7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eac7">EAC7</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eac7">Data_XXXX</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1458,7 +1476,7 @@ Print "No. I can't be bothered.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb24"></span>FB24</td>
 <td class="instruction">LD A,$39</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=39.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=39 (event ID: 39).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1476,7 +1494,7 @@ Print "No. I can't be bothered.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb2c"></span>FB2C</td>
 <td class="instruction">LD A,$29</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=29.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=29 (event ID: 29).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1562,31 +1580,34 @@ Print "It falls and crushes you.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb48"></span>FB48</td>
 <td class="instruction">LD A,$29</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=29.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=29 (event ID: 29).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb4a"></span>FB4A</td>
-<td class="instruction">CALL <a href="C3EA.html">$C3EA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">C3EA</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb4d"></span>FB4D</td>
 <td class="instruction">LD BC,$393A</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=393A.</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 3A ("A boulder") into item 39 ("A boulder on the brink of a ledge").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb50"></span>FB50</td>
-<td class="instruction">CALL <a href="C426.html">$C426</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C426.html">C426</a>.</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb53"></span>FB53</td>
 <td class="instruction">LD A,$2F</td>
-<td class="comment-1" rowspan="2">Write 2F to *<a href="EB10.html#ec27">EC27</a>.</td>
+<td class="comment-1" rowspan="2">Write 2F to *<a href="EB10.html#ec27">EC27</a> to open up westbound access to 
+
+<a href="CEB6.html">The Secluded Beach</a> from 
+
+<a href="CE81.html">The Canyon</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1597,7 +1618,11 @@ Print "It falls and crushes you.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb58"></span>FB58</td>
 <td class="instruction">LD A,$30</td>
-<td class="comment-1" rowspan="2">Write 30 to *<a href="EB10.html#ec2a">EC2A</a>.</td>
+<td class="comment-1" rowspan="2">Write 30 to *<a href="EB10.html#ec2a">EC2A</a> to open up northbound access to 
+
+<a href="CECA.html">The Rockpool</a> from 
+
+<a href="CEB6.html">The Secluded Beach</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1608,7 +1633,11 @@ Print "It falls and crushes you.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb5d"></span>FB5D</td>
 <td class="instruction">LD A,$31</td>
-<td class="comment-1" rowspan="2">Write 31 to *<a href="EB10.html#ec30">EC30</a>.</td>
+<td class="comment-1" rowspan="2">Write 31 to *<a href="EB10.html#ec30">EC30</a> to open up northbound access to 
+
+<a href="CEFE.html">Wreckers' Cove</a> from 
+
+<a href="CECA.html">The Rockpool</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1681,7 +1710,7 @@ Print "It falls and crushes the crab.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb75"></span>FB75</td>
 <td class="instruction">LD HL,$EA70</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#ea70">EA70</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea70">Data_RodInHole</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1854,7 +1883,7 @@ Print "I didn't hear that!".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbb1"></span>FBB1</td>
 <td class="instruction">LD HL,$EACB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eacb">EACB</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eacb">Data_Ring</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1872,7 +1901,7 @@ Print "I didn't hear that!".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbb9"></span>FBB9</td>
 <td class="instruction">LD A,$34</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=34.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=34 (event ID: 34).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1890,13 +1919,12 @@ Print "I didn't hear that!".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbc1"></span>FBC1</td>
 <td class="instruction">LD BC,$3B34</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=3B34.</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 34 ("An open trapdoor") into item 3B ("A ring in the floor").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbc4"></span>FBC4</td>
-<td class="instruction">CALL <a href="C426.html">$C426</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C426.html">C426</a>.</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1954,7 +1982,7 @@ Print "I didn't hear that!".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbde"></span>FBDE</td>
 <td class="instruction">LD HL,$E9F1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#e9f1">E9F1</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f1">Data_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1972,7 +2000,7 @@ Print "I didn't hear that!".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbe6"></span>FBE6</td>
 <td class="instruction">LD A,$11</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=11.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=11 (event ID: 11).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2017,8 +2045,8 @@ Print "You're wearing it already.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbf5"></span>FBF5</td>
-<td class="instruction">CALL <a href="C3E4.html">$C3E4</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3E4.html">C3E4</a>.</td>
+<td class="instruction">CALL <a href="C3E4.html">CheckObjectInInventory</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3E4.html">CheckObjectInInventory</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2030,13 +2058,12 @@ Print "You're wearing it already.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbfb"></span>FBFB</td>
 <td class="instruction">LD BC,$1011</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=1011.</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 11 ("An eyepatch (worn)") into item 10 ("An eyepatch").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbfe"></span>FBFE</td>
-<td class="instruction">CALL <a href="C426.html">$C426</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C426.html">C426</a>.</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2070,7 +2097,7 @@ Print "I think you look quite stupid.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="fc0a"></span>FC0A</td>
 <td class="instruction">LD HL,$E9D3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#e9d3">E9D3</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d3">Data_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2110,7 +2137,7 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="fc18"></span>FC18</td>
 <td class="instruction">LD HL,$E9DB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#e9db">E9DB</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9db">Data_Jewel</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2157,7 +2184,7 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc2d"></span>FC2D</td>
 <td class="instruction">LD HL,$E9E1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#e9e1">E9E1</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e1">Data_Match</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2175,61 +2202,57 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc35"></span>FC35</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=03.</td>
+<td class="comment-1" rowspan="2">Call <a href="C35F.html">Handler_Objects</a> using item: "A lighted match".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc37"></span>FC37</td>
 <td class="instruction">CALL <a href="C35F.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C35F.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc3a"></span>FC3A</td>
 <td class="instruction">JP Z,<a href="F03A.html#f079">Print_YouveDoneThatAlready</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f079">Print_YouveDoneThatAlready</a> if <span class="register">A</span> is equal to 03.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f079">Print_YouveDoneThatAlready</a> if the lit match is already in the players possession.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc3d"></span>FC3D</td>
 <td class="instruction">LD A,$02</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=02.</td>
+<td class="comment-1" rowspan="2">Call <a href="C3E4.html">CheckObjectInInventory</a> using item: "A match".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc3f"></span>FC3F</td>
-<td class="instruction">CALL <a href="C3E4.html">$C3E4</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3E4.html">C3E4</a>.</td>
+<td class="instruction">CALL <a href="C3E4.html">CheckObjectInInventory</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc42"></span>FC42</td>
 <td class="instruction">JP NZ,<a href="F03A.html#f07e">Print_YoureNotCarryingIt</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f07e">Print_YoureNotCarryingIt</a> if <span class="register">A</span> is not equal to 02.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f07e">Print_YoureNotCarryingIt</a> if the player is not holding the (unlit) match.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc45"></span>FC45</td>
 <td class="instruction">LD BC,$0203</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0203.</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 02 ("A match") into item 03 ("A lighted match").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc48"></span>FC48</td>
-<td class="instruction">CALL <a href="C426.html">$C426</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C426.html">C426</a>.</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc4b"></span>FC4B</td>
 <td class="instruction">LD HL,$BC66</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC66.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Set bit 6 of *<a href="BC66.html">Flag_EventState</a> which activates lighting the match.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc4e"></span>FC4E</td>
 <td class="instruction">SET 6,(HL)</td>
-<td class="comment-1" rowspan="1">Set bit 6 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2247,6 +2270,16 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 <td class="address-1"><span id="fc55"></span>FC55</td>
 <td class="instruction">CALL <a href="F03A.html#f06a">Print_OK</a></td>
 <td class="comment-1" rowspan="1">Call <a href="F03A.html#f06a">Print_OK</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="fc58"></span>
+<div class="comments">
+<div class="paragraph">
+Print "The match flares into life.Hurry it will go out soon.".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2293,7 +2326,7 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc6a"></span>FC6A</td>
 <td class="instruction">LD HL,$EACD</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eacd">EACD</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eacd">Data_Cave</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2383,7 +2416,7 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="fc8c"></span>FC8C</td>
 <td class="instruction">LD HL,$EACF</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eacf">EACF</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eacf">Data_Boat</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2419,7 +2452,7 @@ Print "No!I'm not letting you hop around,with one shoe on.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fc9c"></span>FC9C</td>
 <td class="instruction">LD HL,$EAD8</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#ead8">EAD8</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ead8">Data_Stone</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2459,7 +2492,7 @@ Print "It's much too heavy.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="fcaa"></span>FCAA</td>
 <td class="instruction">LD HL,$EADD</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eadd">EADD</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eadd">Data_StoneWithCrowbar</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2477,7 +2510,7 @@ Print "It's much too heavy.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="fcb2"></span>FCB2</td>
 <td class="instruction">LD A,$4A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=4A.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=4A (event ID: 4A).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2559,7 +2592,7 @@ Print "Using the crowbar as a lever,You slowly move the stoneand uncover a rin
 <td class="asm-label"></td>
 <td class="address-1"><span id="fcd1"></span>FCD1</td>
 <td class="instruction">LD HL,$EAE6</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eae6">EAE6</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eae6">Data_Door_2</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2595,7 +2628,7 @@ Print "Using the crowbar as a lever,You slowly move the stoneand uncover a rin
 <td class="asm-label"></td>
 <td class="address-1"><span id="fce1"></span>FCE1</td>
 <td class="instruction">LD A,$2E</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=2E.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=2E (event ID: 2E).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2618,8 +2651,8 @@ Print "Using the crowbar as a lever,You slowly move the stoneand uncover a rin
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fceb"></span>FCEB</td>
-<td class="instruction">CALL <a href="C3E4.html">$C3E4</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3E4.html">C3E4</a>.</td>
+<td class="instruction">CALL <a href="C3E4.html">CheckObjectInInventory</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3E4.html">CheckObjectInInventory</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2653,13 +2686,12 @@ Print "You haven't got the key.".
 <td class="asm-label"></td>
 <td class="address-2"><span id="fcf6"></span>FCF6</td>
 <td class="instruction">LD BC,$2E2D</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=2E2D.</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 2D ("A closed door") into item 2E ("A closed door").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fcf9"></span>FCF9</td>
-<td class="instruction">CALL <a href="C426.html">$C426</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C426.html">C426</a>.</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2809,7 +2841,7 @@ Any room ID in which, you're in the rowing boat.
 <td class="asm-label"></td>
 <td class="address-2"><span id="fd29"></span>FD29</td>
 <td class="instruction">LD HL,$EAEC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eaec">EAEC</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eaec">Data_North</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2863,7 +2895,7 @@ Any room ID in which, you're in the rowing boat.
 <td class="asm-label"></td>
 <td class="address-2"><span id="fd3f"></span>FD3F</td>
 <td class="instruction">LD HL,$EAF5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eaf5">EAF5</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eaf5">Data_South</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2917,7 +2949,7 @@ Any room ID in which, you're in the rowing boat.
 <td class="asm-label"></td>
 <td class="address-2"><span id="fd54"></span>FD54</td>
 <td class="instruction">LD HL,$EAFE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eafe">EAFE</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eafe">Data_East</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2935,7 +2967,7 @@ Any room ID in which, you're in the rowing boat.
 <td class="asm-label"></td>
 <td class="address-1"><span id="fd5c"></span>FD5C</td>
 <td class="instruction">LD HL,$EB07</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CC.html#eb07">EB07</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eb07">Data_West</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

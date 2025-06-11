@@ -33,7 +33,7 @@ Next: <a href="C3EA.html">C3EA</a>
 </td>
 </tr>
 </table>
-<div class="description">C3E4: Routine at C3E4</div>
+<div class="description">C3E4: Is Object In Inventory?</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,19 +42,50 @@ Next: <a href="C3EA.html">C3EA</a>
 Used by the routines at <a href="EE74.html">Event_Match</a>, <a href="F155.html">F155</a> and <a href="F90A.html">F90A</a>.
 </div>
 </div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Object ID</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z flag set if object is in the players inventory</td>
+</tr>
+</table>
 </td>
 </tr>
 <tr>
-<td class="address-2"><span id="c3e4"></span>C3E4</td>
-<td class="instruction">CALL <a href="C3D0.html">$C3D0</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3D0.html">C3D0</a>.</td>
+<td class="routine-comment" colspan="5">
+<span id="c3e4"></span>
+<div class="comments">
+<div class="paragraph">
+The <a href="C3D0.html">ObjectEventLocator</a> routine returns with <span class="register">A</span> containing the room ID of the requested object.
+</div>
+</div>
+</td>
 </tr>
 <tr>
+<td class="asm-label">CheckObjectInInventory</td>
+<td class="address-2"><span id="c3e4"></span>C3E4</td>
+<td class="instruction">CALL <a href="C3D0.html">ObjectEventLocator</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3D0.html">ObjectEventLocator</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3e7"></span>C3E7</td>
 <td class="instruction">CP $01</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 01.</td>
+<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 01 (inventory).</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3e9"></span>C3E9</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

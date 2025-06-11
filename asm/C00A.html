@@ -61,6 +61,16 @@ Reset the screen position to defaults.
 <td class="comment-1" rowspan="1">Call <a href="BA7F.html">SetDefaultScreenPosition</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="c00d"></span>
+<div class="comments">
+<div class="paragraph">
+Clear down the command buffer which will hold the users input.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c00d"></span>C00D</td>
 <td class="instruction">LD HL,$BD34</td>
@@ -97,6 +107,16 @@ Reset the screen position to defaults.
 <td class="comment-1" rowspan="1">Decrease the command buffer counter by one and loop back to <a href="C00A.html#c014">EmptyCommandBuffer_Loop</a> until the whole buffer is cleared.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="c018"></span>
+<div class="comments">
+<div class="paragraph">
+Now print the prompt icon "&gt;".
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c018"></span>C018</td>
 <td class="instruction">CALL <a href="BBD4.html">PrintInputPrompt</a></td>
@@ -109,7 +129,7 @@ Reset the screen position to defaults.
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD34.html">CommandBuffer</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Handler_UserInput_Loop</td>
+<td class="asm-label">UserInput_Loop</td>
 <td class="address-2"><span id="c01e"></span>C01E</td>
 <td class="instruction">CALL <a href="BA5D.html">GetUserInput</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BA5D.html">GetUserInput</a>.</td>
@@ -118,12 +138,12 @@ Reset the screen position to defaults.
 <td class="asm-label"></td>
 <td class="address-1"><span id="c021"></span>C021</td>
 <td class="instruction">CP $0C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C00A.html#c041">Handler_UserInput_0</a> if <span class="register">A</span> is equal to 0C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C00A.html#c041">UserInput_Delete</a> if "DELETE" was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c023"></span>C023</td>
-<td class="instruction">JR Z,<a href="C00A.html#c041">Handler_UserInput_0</a></td>
+<td class="instruction">JR Z,<a href="C00A.html#c041">UserInput_Delete</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -140,12 +160,12 @@ Reset the screen position to defaults.
 <td class="asm-label"></td>
 <td class="address-1"><span id="c029"></span>C029</td>
 <td class="instruction">CP $20</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C00A.html#c01e">Handler_UserInput_Loop</a> if <span class="register">A</span> is less than 20.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C00A.html#c01e">UserInput_Loop</a> if <span class="register">A</span> is less than 20.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c02b"></span>C02B</td>
-<td class="instruction">JR C,<a href="C00A.html#c01e">Handler_UserInput_Loop</a></td>
+<td class="instruction">JR C,<a href="C00A.html#c01e">UserInput_Loop</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -179,8 +199,8 @@ Reset the screen position to defaults.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c035"></span>C035</td>
-<td class="instruction">JR Z,<a href="C00A.html#c01e">Handler_UserInput_Loop</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C00A.html#c01e">Handler_UserInput_Loop</a> if <span class="register">A</span> is equal to <span class="register">A</span>.</td>
+<td class="instruction">JR Z,<a href="C00A.html#c01e">UserInput_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C00A.html#c01e">UserInput_Loop</a> if <span class="register">A</span> is equal to <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -209,11 +229,21 @@ Reset the screen position to defaults.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c03f"></span>C03F</td>
-<td class="instruction">JR <a href="C00A.html#c01e">Handler_UserInput_Loop</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C00A.html#c01e">Handler_UserInput_Loop</a>.</td>
+<td class="instruction">JR <a href="C00A.html#c01e">UserInput_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C00A.html#c01e">UserInput_Loop</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Handler_UserInput_0</td>
+<td class="routine-comment" colspan="5">
+<span id="c041"></span>
+<div class="comments">
+<div class="paragraph">
+Handles the user pressing delete.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">UserInput_Delete</td>
 <td class="address-2"><span id="c041"></span>C041</td>
 <td class="instruction">EX DE,HL</td>
 <td class="comment-1" rowspan="1">Exchange the <span class="register">DE</span> and <span class="register">HL</span> registers.</td>
@@ -244,8 +274,8 @@ Reset the screen position to defaults.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c049"></span>C049</td>
-<td class="instruction">JR Z,<a href="C00A.html#c01e">Handler_UserInput_Loop</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C00A.html#c01e">Handler_UserInput_Loop</a> if <span class="register">HL</span> is equal to <span class="register">A</span>.</td>
+<td class="instruction">JR Z,<a href="C00A.html#c01e">UserInput_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C00A.html#c01e">UserInput_Loop</a> if <span class="register">HL</span> is equal to <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -296,8 +326,8 @@ Print " ".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c056"></span>C056</td>
-<td class="instruction">JR <a href="C00A.html#c01e">Handler_UserInput_Loop</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C00A.html#c01e">Handler_UserInput_Loop</a>.</td>
+<td class="instruction">JR <a href="C00A.html#c01e">UserInput_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C00A.html#c01e">UserInput_Loop</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

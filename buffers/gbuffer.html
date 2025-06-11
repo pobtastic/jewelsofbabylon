@@ -35,6 +35,9 @@ gtag('config', 'G-75RERFCHBG');
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BBF0.html">Table: Object Locations</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+When the object is in the players inventory, the room ID changes to 01.
+</div>
 </div>
 </td>
 </tr>
@@ -72,7 +75,7 @@ Used by the routine at <a href="../asm/C21E.html">Handler_DisplayRoomImage</a> b
 </tr>
 <tr>
 <td class="centre" colspan="1" rowspan="1">02</td>
-<td class="centre" colspan="1" rowspan="1">Rum</td>
+<td class="centre" colspan="1" rowspan="1">Drunk</td>
 </tr>
 <tr>
 <td class="centre" colspan="1" rowspan="1">03</td>
@@ -96,6 +99,33 @@ Used by the routine at <a href="../asm/C21E.html">Handler_DisplayRoomImage</a> b
 </tr>
 </table>
 </div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="bc67"></span><a href="../asm/BC67.html">BC67</a></td>
+<td class="map-length">17</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BC67.html">Game status buffer entry at BC67</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="bc78"></span><a href="../asm/BC78.html">BC78</a></td>
+<td class="map-length">9</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BC78.html">Table: Scenic Event Locations</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="bc81"></span><a href="../asm/BC81.html">BC81</a></td>
+<td class="map-length">23</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BC81.html">Game status buffer entry at BC81</a></div>
+<div class="map-entry-desc">
 </div>
 </td>
 </tr>
@@ -124,7 +154,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="bccc"></span><a href="../asm/BCCC.html">BCCC</a></td>
 <td class="map-length">18</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BCCC.html">Game status buffer entry at BCCC</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BCCC.html">Table: Scenic Event Rooms</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -205,7 +235,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="bd1a"></span><a href="../asm/BD1A.html">BD1A</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD1A.html">Game status buffer entry at BD1A</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD1A.html">Pointer: Object Rooms Table</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -223,7 +253,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="bd1e"></span><a href="../asm/BD1E.html">BD1E</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD1E.html">Game status buffer entry at BD1E</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD1E.html">Pointer: Object List Table</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -241,7 +271,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="bd22"></span><a href="../asm/BD22.html">BD22</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD22.html">Game status buffer entry at BD22</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD22.html">Pointer: Configurable Exits Table</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -268,7 +298,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="bd28"></span><a href="../asm/BD28.html">BD28</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD28.html">Number Of Objects?</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD28.html">Number Of Items?</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -277,7 +307,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="bd2a"></span><a href="../asm/BD2A.html">BD2A</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD2A.html">Game status buffer entry at BD2A</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD2A.html">Number Of Objects?</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -329,18 +359,9 @@ The duration the match burns for before burning you.
 </tr>
 <tr>
 <td class="map-g"><span id="bd66"></span><a href="../asm/BD66.html">BD66</a></td>
-<td class="map-length">1</td>
+<td class="map-length">10</td>
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD66.html">Game status buffer entry at BD66</a></div>
-<div class="map-entry-desc">
-</div>
-</td>
-</tr>
-<tr>
-<td class="map-g"><span id="bd67"></span><a href="../asm/BD67.html">BD67</a></td>
-<td class="map-length">9</td>
-<td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD67.html">Game status buffer entry at BD67</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -403,7 +424,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="d34e"></span><a href="../asm/D34E.html">D34E</a></td>
 <td class="map-length">158</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/D34E.html">Table: Object Descriptions?</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/D34E.html">Table: Item Descriptions</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -430,7 +451,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="e83e"></span><a href="../asm/E83E.html">E83E</a></td>
 <td class="map-length">48</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E83E.html">Game status buffer entry at E83E</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E83E.html">Table: Object List?</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -439,7 +460,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="e86e"></span><a href="../asm/E86E.html">E86E</a></td>
 <td class="map-length">159</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E86E.html">Game status buffer entry at E86E</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E86E.html">Data: Object Rooms</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -457,7 +478,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="e933"></span><a href="../asm/E933.html">E933</a></td>
 <td class="map-length">42</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E933.html">Game status buffer entry at E933</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E933.html">Data: Scenic Event Rooms</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -478,26 +499,20 @@ See <a href="../asm/FFA8.html">JumpTable_RoomImages</a>.
 <td class="map-g"><span id="e96a"></span><a href="../asm/E96A.html">E96A</a></td>
 <td class="map-length">96</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E96A.html">Game status buffer entry at E96A</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E96A.html">Table: Object Rooms</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
 </tr>
 <tr>
 <td class="map-g"><span id="e9ca"></span><a href="../asm/E9CA.html">E9CA</a></td>
-<td class="map-length">2</td>
+<td class="map-length">326</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E9CA.html">Game status buffer entry at E9CA</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E9CA.html">Data: Phrase Tokens</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+The user input is broken down into tokens which represent the words they've entered. These tokens are then compared against these token patterns to determine the outcome the player was trying to communicate.
 </div>
-</td>
-</tr>
-<tr>
-<td class="map-g"><span id="e9cc"></span><a href="../asm/E9CC.html">E9CC</a></td>
-<td class="map-length">324</td>
-<td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E9CC.html">Game status buffer entry at E9CC</a></div>
-<div class="map-entry-desc">
 </div>
 </td>
 </tr>

@@ -42,34 +42,52 @@ Next: <a href="61072.html">61072</a>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="61044"></span>
+<div class="comments">
+<div class="paragraph">
+Make the match inactive.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Event_Match</td>
 <td class="address-2"><span id="61044"></span>61044</td>
 <td class="instruction">LD HL,48230</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48230.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Reset bit 6 of *<a href="48230.html">Flag_EventState</a> which relates to the match being active.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61047"></span>61047</td>
 <td class="instruction">RES 6,(HL)</td>
-<td class="comment-1" rowspan="1">Reset bit 6 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61049"></span>61049</td>
 <td class="instruction">LD A,3</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=3.</td>
+<td class="comment-1" rowspan="2">Call <a href="50148.html">CheckObjectInInventory</a> using item: "A lighted match".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61051"></span>61051</td>
-<td class="instruction">CALL <a href="50148.html">50148</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50148.html">50148</a>.</td>
+<td class="instruction">CALL <a href="50148.html">CheckObjectInInventory</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61054"></span>61054</td>
-<td class="instruction">JR NZ,<a href="61044.html#61066">Event_Match_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61044.html#61066">Event_Match_0</a> if <span class="register">H</span> is not equal to 3.</td>
+<td class="instruction">JR NZ,<a href="61044.html#61066">Event_Match_Return</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61044.html#61066">Event_Match_Return</a> if the match is not in the players inventory.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="61056"></span>
+<div class="comments">
+<div class="paragraph">
+The player is holding the lit match, and it's burned away so handle the messaging.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -106,16 +124,25 @@ Print "Ouch!!The match has burned away,scorching your fingers.".
 <td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Event_Match_0</td>
+<td class="routine-comment" colspan="5">
+<span id="61066"></span>
+<div class="comments">
+<div class="paragraph">
+The match can no longer be used, so destroy it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_Match_Return</td>
 <td class="address-2"><span id="61066"></span>61066</td>
 <td class="instruction">LD A,3</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=3.</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> using item: "A lighted match".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61068"></span>61068</td>
-<td class="instruction">CALL <a href="50154.html">50154</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">50154</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

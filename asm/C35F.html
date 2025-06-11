@@ -50,6 +50,10 @@ Used by the routines at <a href="C32A.html">C32A</a>, <a href="C3FA.html">C3FA</
 <td class="register">A</td>
 <td class="register-desc">Object ID</td>
 </tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z flag set if the object is available</td>
+</tr>
 </table>
 </td>
 </tr>
@@ -68,25 +72,33 @@ Used by the routines at <a href="C32A.html">C32A</a>, <a href="C3FA.html">C3FA</
 <td class="asm-label"></td>
 <td class="address-1"><span id="c361"></span>C361</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="2">Store the object ID in <span class="register">DE</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c362"></span>C362</td>
 <td class="instruction">LD D,$00</td>
-<td class="comment-1" rowspan="1"><span class="register">D</span>=00.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c364"></span>C364</td>
 <td class="instruction">BIT 7,E</td>
-<td class="comment-1" rowspan="1">Test bit 7 of <span class="register">E</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C35F.html#c36d">Objects_UseScenicTable</a> if this is a scenic object.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c366"></span>C366</td>
-<td class="instruction">JR NZ,<a href="C35F.html#c36d">Handler_Objects_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C35F.html#c36d">Handler_Objects_0</a> if ?? is not equal to 00.</td>
+<td class="instruction">JR NZ,<a href="C35F.html#c36d">Objects_UseScenicTable</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="c368"></span>
+<div class="comments">
+<div class="paragraph">
+Else check the regular objects.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -97,32 +109,52 @@ Used by the routines at <a href="C32A.html">C32A</a>, <a href="C3FA.html">C3FA</
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c36b"></span>C36B</td>
-<td class="instruction">JR <a href="C35F.html#c372">Handler_Objects_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C35F.html#c372">Handler_Objects_1</a>.</td>
+<td class="instruction">JR <a href="C35F.html#c372">Objects_CheckLocation</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C35F.html#c372">Objects_CheckLocation</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Handler_Objects_0</td>
+<td class="routine-comment" colspan="5">
+<span id="c36d"></span>
+<div class="comments">
+<div class="paragraph">
+Prepare object ID for use.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Objects_UseScenicTable</td>
 <td class="address-2"><span id="c36d"></span>C36D</td>
 <td class="instruction">RES 7,E</td>
-<td class="comment-1" rowspan="1">Reset bit 7 of <span class="register">E</span>.</td>
+<td class="comment-1" rowspan="1">Clear the scenic flag.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c36f"></span>C36F</td>
 <td class="instruction">LD HL,$BC78</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC67.html#bc78">BC78</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC78.html">Table_ScenicEventLocations</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Handler_Objects_1</td>
+<td class="routine-comment" colspan="5">
+<span id="c372"></span>
+<div class="comments">
+<div class="paragraph">
+Both object types continue from here.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Objects_CheckLocation</td>
 <td class="address-2"><span id="c372"></span>C372</td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="1">Add the object ID to the object/ event locations table.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c373"></span>C373</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="C35F.html#c37c">Handler_Objects_2</a> if *<a href="BCCB.html">RoomNumber</a> is equal to *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="C35F.html#c37c">Handler_Objects_Return</a> if the object/ event table states that it's located in *<a href="BCCB.html">the current room</a>. Note also sets/ unsets the Z flag accordingly.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -132,13 +164,23 @@ Used by the routines at <a href="C32A.html">C32A</a>, <a href="C3FA.html">C3FA</
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c377"></span>C377</td>
-<td class="instruction">JR Z,<a href="C35F.html#c37c">Handler_Objects_2</a></td>
+<td class="instruction">JR Z,<a href="C35F.html#c37c">Handler_Objects_Return</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="c379"></span>
+<div class="comments">
+<div class="paragraph">
+Check the players inventory, as an object can still be used if it's being held.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c379"></span>C379</td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-1" rowspan="2">Compare 01 with *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="2">Lastly, set the Z flag if the item is in the players inventory.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -146,7 +188,17 @@ Used by the routines at <a href="C32A.html">C32A</a>, <a href="C3FA.html">C3FA</
 <td class="instruction">CP (HL)</td>
 </tr>
 <tr>
-<td class="asm-label">Handler_Objects_2</td>
+<td class="routine-comment" colspan="5">
+<span id="c37c"></span>
+<div class="comments">
+<div class="paragraph">
+Housekeeping; restore <span class="register">DE</span> and <span class="register">HL</span> to their previous values.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Objects_Return</td>
 <td class="address-2"><span id="c37c"></span>C37C</td>
 <td class="instruction">POP DE</td>
 <td class="comment-1" rowspan="2">Restore <span class="register">DE</span> and <span class="register">HL</span> from the stack.</td>

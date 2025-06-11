@@ -33,7 +33,7 @@ Next: <a href="EE40.html">EE40</a>
 </td>
 </tr>
 </table>
-<div class="description">EE22: Fatal Events: Rum</div>
+<div class="description">EE22: Fatal Events: Drunk</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,51 +42,63 @@ Next: <a href="EE40.html">EE40</a>
 </td>
 </tr>
 <tr>
-<td class="asm-label">Event_Rum</td>
+<td class="routine-comment" colspan="5">
+<span id="ee22"></span>
+<div class="comments">
+<div class="paragraph">
+Make the drunkenness inactive.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_Drunk</td>
 <td class="address-2"><span id="ee22"></span>EE22</td>
 <td class="instruction">LD HL,$BC66</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC66.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Reset bit 2 of *<a href="BC66.html">Flag_EventState</a> which relates to the player being drunk.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee25"></span>EE25</td>
 <td class="instruction">RES 2,(HL)</td>
-<td class="comment-1" rowspan="1">Reset bit 2 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee27"></span>EE27</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="1">Load *<a href="BCCB.html">RoomNumber</a> into <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee2a"></span>EE2A</td>
 <td class="instruction">LD BC,$0007</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0007.</td>
+<td class="comment-1" rowspan="1">Set the length of the high places table in <span class="register">BC</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee2d"></span>EE2D</td>
 <td class="instruction">LD HL,$EE39</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EE22.html#ee39">EE39</a>.</td>
+<td class="comment-1" rowspan="1">Set a pointer in <span class="register">HL</span> at <a href="EE22.html#ee39">Table_HighPlaces</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee30"></span>EE30</td>
 <td class="instruction">CPIR</td>
-<td class="comment-1" rowspan="1">CPIR.</td>
+<td class="comment-1" rowspan="1">Search for the current room in the high places table.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee32"></span>EE32</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="1">Return if ?? is not equal to 2B.</td>
+<td class="comment-1" rowspan="1">Return if the player is not currently in any rooms in the table.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="ee33"></span>
 <div class="comments">
+<div class="paragraph">
+The player is both drunk, and in a listed "high place". Uh oh...
+</div>
 <div class="paragraph">
 Print "You drank too much rum.You stumble and slipand fall over the edge.".
 </div>
@@ -106,10 +118,70 @@ Print "You drank too much rum.You stumble and slipand fall over the edge.".
 <td class="comment-1" rowspan="1">Jump to <a href="EE9B.html">Events_GameOver</a>.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
+<td class="routine-comment" colspan="5">
+<span id="ee39"></span>
+<div class="comments">
+<div class="paragraph">
+All locations where a drunken player could potentially fall from a great height.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Table_HighPlaces</td>
 <td class="address-1"><span id="ee39"></span>EE39</td>
-<td class="instruction">DEFB $28,$29,$2A,$2B,$23,$24,$4F</td>
-<td class="comment-1" rowspan="1"></td>
+<td class="instruction">DEFB $28</td>
+<td class="comment-1" rowspan="1">Room 28: 
+
+<a href="CE21.html">The Cliff Path</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ee3a"></span>EE3A</td>
+<td class="instruction">DEFB $29</td>
+<td class="comment-1" rowspan="1">Room 29: 
+
+<a href="CE21.html">The Cliff Path</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ee3b"></span>EE3B</td>
+<td class="instruction">DEFB $2A</td>
+<td class="comment-1" rowspan="1">Room 2A: 
+
+<a href="CE21.html">The Cliff Path</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ee3c"></span>EE3C</td>
+<td class="instruction">DEFB $2B</td>
+<td class="comment-1" rowspan="1">Room 2B: 
+
+<a href="CE31.html">The Clifftop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ee3d"></span>EE3D</td>
+<td class="instruction">DEFB $23</td>
+<td class="comment-1" rowspan="1">Room 23: 
+
+<a href="CDBF.html">The High Ridge</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ee3e"></span>EE3E</td>
+<td class="instruction">DEFB $24</td>
+<td class="comment-1" rowspan="1">Room 24: 
+
+<a href="CDBF.html">The High Ridge</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ee3f"></span>EE3F</td>
+<td class="instruction">DEFB $4F</td>
+<td class="comment-1" rowspan="1">Room 4F: 
+
+<a href="D052.html">The Cliffs</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
