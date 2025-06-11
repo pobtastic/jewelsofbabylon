@@ -139,6 +139,7 @@ c $BA50 Game Entry Point
 
 c $BA5D Get User Input
 @ $BA5D label=GetUserInput
+R $BA5D O:A The keypress value
   $BA5D,$03 #HTML(#REGa=*<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C3B.html">FLAGS</a>.)
   $BA60,$04 Jump back to #R$BA5D until a new key is pressed.
   $BA64,$02 Reset the "new key has been pressed" flag in #REGa.
@@ -403,7 +404,10 @@ N $BBE9 Print "#STR$BD85,$08($b==$FF)".
 
 g $BBF0 Table: Object Locations
 @ $BBF0 label=Table_ObjectLocations
-B $BBF0
+D $BBF0 When the object is in the players inventory, the room ID changes to
+. #N$01.
+B $BBF0,$01 Object #N(#PC-$BBF0)? in room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+L $BBF0,$01,$30
 
 b $BC54
 
@@ -430,7 +434,7 @@ D $BC66 #TABLE(default,centre,centre)
 . { =h Bit | =h Relating To }
 . { #N$00 | Crab }
 . { #N$01 | Tentacle }
-. { #N$02 | Rum }
+. { #N$02 | Drunk }
 . { #N$03 | Lion }
 . { #N$04 | Crocodile }
 . { #N$05 | Cannibals }
@@ -439,17 +443,15 @@ D $BC66 #TABLE(default,centre,centre)
 . TABLE#
 B $BC66,$01
 
-b $BC67
-  $BC68
-  $BC69
-  $BC6A
-  $BC6B
-  $BC6C
-  $BC6D
-  $BC6E
-  $BC6F
-  $BC70
-  $BC78
+g $BC67
+B $BC67,$11,$01
+
+g $BC78 Table: Scenic Event Locations
+@ $BC78 label=Table_ScenicEventLocations
+B $BC78,$01 Event #N(#PC-$BC78) in room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+L $BC78,$01,$09
+
+g $BC81
 
 g $BC98 Match Counter
 @ $BC98 label=CounterMatch
@@ -460,9 +462,10 @@ b $BC99
 
 g $BCCB Room Number
 @ $BCCB label=RoomNumber
-B $BCCB,$01
+B $BCCB,$01 Default/ Starting Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
 
-g $BCCC
+g $BCCC Table: Scenic Event Rooms
+@ $BCCC label=Table_ScenicEventRooms
 W $BCCC,$02
 L $BCCC,$02,$09
 
@@ -496,21 +499,24 @@ g $BD18 Pointer: Room Description Table
 @ $BD18 label=Pointer_RoomDescriptions
 W $BD18,$02
 
-g $BD1A
+g $BD1A Pointer: Object Rooms Table
+@ $BD1A label=Pointer_ObjectRooms
 W $BD1A,$02
 
 g $BD1C Pointer: Object Noun Phrases
 @ $BD1C label=Pointer_ObjectNounPhrases
 W $BD1C,$02
 
-g $BD1E
+g $BD1E Pointer: Object List Table
+@ $BD1E label=Pointer_ObjectList
 W $BD1E,$02
 
 g $BD20 Pointer: Jump Table
 @ $BD20 label=Pointer_JumpTable
 W $BD20,$02
 
-g $BD22
+g $BD22 Pointer: Configurable Exits Table
+@ $BD22 label=Pointer_ConfigurableExits
 W $BD22,$02
 
 g $BD24 Pointer: Scenic Events Jump Table
@@ -520,11 +526,12 @@ W $BD24,$02
 g $BD26
 W $BD26,$02
 
-g $BD28 Number Of Objects?
-@ $BD28 label=Count_Objects
+g $BD28 Number Of Items?
+@ $BD28 label=Count_Items
 W $BD28,$02
 
-g $BD2A
+g $BD2A Number Of Objects?
+@ $BD2A label=Count_Objects
 W $BD2A,$02
 
 g $BD2C
@@ -549,8 +556,8 @@ B $BD34,$32
   $BD65
 
 g $BD66
-
-g $BD67
+B $BD66,$01
+L $BD66,$01,$0A
 
 g $BD70 Line Number
 @ $BD70 label=LineNumber
@@ -772,6 +779,7 @@ c $C00A Handler: User Input
 @ $C00A label=Handler_UserInput
 N $C00A Reset the screen position to defaults.
   $C00A,$03 Call #R$BA7F.
+N $C00D Clear down the command buffer which will hold the users input.
   $C00D,$03 #REGhl=#R$BD34.
   $C010,$02 Store the ASCII code for "SPACE" ("#CHR$20") into #REGa.
   $C012,$02 Set a counter in #REGb for the size of the command buffer (#N$32
@@ -781,11 +789,12 @@ N $C00A Reset the screen position to defaults.
   $C015,$01 Increment #REGhl by one.
   $C016,$02 Decrease the command buffer counter by one and loop back to #R$C014
 . until the whole buffer is cleared.
+N $C018 Now print the prompt icon ">".
   $C018,$03 Call #R$BBD4.
   $C01B,$03 #REGhl=#R$BD34.
-@ $C01E label=Handler_UserInput_Loop
+@ $C01E label=UserInput_Loop
   $C01E,$03 Call #R$BA5D.
-  $C021,$04 Jump to #R$C041 if #REGa is equal to #N$0C.
+  $C021,$04 Jump to #R$C041 if "DELETE" was pressed.
   $C025,$04 Jump to #R$C058 if "ENTER" was pressed.
   $C029,$04 Jump to #R$C01E if #REGa is less than #N$20.
   $C02D,$01 Exchange the #REGde and #REGhl registers.
@@ -798,6 +807,8 @@ N $C00A Reset the screen position to defaults.
   $C03B,$03 Call #R$BAC3.
   $C03E,$01 Increment #REGhl by one.
   $C03F,$02 Jump to #R$C01E.
+@ $C041 label=UserInput_Delete
+N $C041 Handles the user pressing delete.
   $C041,$01 Exchange the #REGde and #REGhl registers.
   $C042,$03 #REGhl=#R$BD34.
   $C045,$03 #REGhl-=#REGde (with carry).
@@ -1220,9 +1231,7 @@ R $C315 A Line number to begin printing
 
 c $C32A
   $C32A,$01 Increment #REGbc by one.
-  $C32B,$03 #REGa=*#R$BD2A.
-  $C32E,$01 #REGa-=#REGc.
-  $C32F,$01 #REGe=#REGa.
+  $C32B,$05 #REGe=*#R$BD2A-#REGc.
   $C330,$01 Stash #REGde on the stack.
   $C331,$04 #REGix=*#R$BD1A.
   $C335,$03 Call #R$C1F0.
@@ -1248,18 +1257,27 @@ N $C357 Print "#STR$BE2A,$08($b==$FF)".
 c $C35F
 @ $C35F label=Handler_Objects
 R $C35F A Object ID
+R $C35F F Z flag set if the object is available
   $C35F,$02 Stash #REGhl and #REGde on the stack.
-  $C361,$01 #REGe=#REGa.
-  $C362,$02 #REGd=#N$00.
-  $C364,$02 Test bit 7 of #REGe.
-  $C366,$02 Jump to #R$C36D if ?? is not equal to #N$00.
+  $C361,$03 Store the object ID in #REGde.
+  $C364,$04 Jump to #R$C36D if this is a scenic object.
+N $C368 Else check the regular objects.
   $C368,$03 #REGhl=#R$BBF0.
   $C36B,$02 Jump to #R$C372.
-  $C36D,$02 Reset bit 7 of #REGe.
+N $C36D Prepare object ID for use.
+@ $C36D label=Objects_UseScenicTable
+  $C36D,$02 Clear the scenic flag.
   $C36F,$03 #REGhl=#R$BC78.
-  $C372,$01 #REGhl+=#REGde.
-  $C373,$06 Jump to #R$C37C if *#R$BCCB is equal to *#REGhl.
-  $C379,$03 Compare #N$01 with *#REGhl.
+N $C372 Both object types continue from here.
+@ $C372 label=Objects_CheckLocation
+  $C372,$01 Add the object ID to the object/ event locations table.
+  $C373,$06 Jump to #R$C37C if the object/ event table states that it's located
+. in *#R$BCCB(the current room). Note also sets/ unsets the Z flag accordingly.
+N $C379 Check the players inventory, as an object can still be used if it's
+. being held.
+  $C379,$03 Lastly, set the Z flag if the item is in the players inventory.
+@ $C37C label=Handler_Objects_Return
+N $C37C Housekeeping; restore #REGde and #REGhl to their previous values.
   $C37C,$02 Restore #REGde and #REGhl from the stack.
   $C37E,$01 Return.
 
@@ -1308,27 +1326,39 @@ c $C3AE
   $C3CE,$01 Set the bits from #REGe.
   $C3CF,$01 Return.
 
-c $C3D0
-  $C3D0,$01 #REGe=#REGa.
-  $C3D1,$02 #REGd=#N$00.
-  $C3D3,$02 Test bit 7 of #REGa.
-  $C3D5,$02 Jump to #R$C3DC if ?? is not equal to #N$00.
+c $C3D0 Object/ Event Locator
+@ $C3D0 label=ObjectEventLocator
+R $C3D0 A Object/ event ID
+R $C3D0 O:A Room ID where the object is located
+  $C3D0,$03 Load the event ID into #REGde.
+  $C3D3,$04 Jump to #R$C3DC if this is a scenic object/ event.
+N $C416 Handle non-scenic events.
   $C3D7,$03 #REGhl=#R$BBF0.
   $C3DA,$02 Jump to #R$C3E1.
+@ $C3DC label=ObjectEventLocator_ScenicEvents
   $C3DC,$03 #REGhl=#R$BC78.
-  $C3DF,$02 Reset bit 7 of #REGe.
-  $C3E1,$01 #REGhl+=#REGde.
+N $C3DF Prepare object/ event ID for use.
+  $C3DF,$02 Clear the scenic flag.
+@ $C3E1 label=ObjectEventLocator_Return
+  $C3E1,$01 Add the event ID to the event locations table.
   $C3E2,$01 #REGa=*#REGhl.
   $C3E3,$01 Return.
 
-c $C3E4
+c $C3E4 Is Object In Inventory?
+@ $C3E4 label=CheckObjectInInventory
+R $C3E4 A Object ID
+R $C3E4 O:F Z flag set if object is in the players inventory
+N $C3E4 The #R$C3D0 routine returns with #REGa containing the room ID of the
+. requested object.
   $C3E4,$03 Call #R$C3D0.
-  $C3E7,$02 Compare #REGa with #N$01.
+  $C3E7,$02 Compare #REGa with #N$01 (inventory).
   $C3E9,$01 Return.
 
-c $C3EA
-  $C3EA,$01 #REGb=#REGa.
-  $C3EB,$02 #REGc=#N$00.
+c $C3EA Handler: Destroy Object
+@ $C3EA label=Handler_DestroyObject
+R $C3EA A Object ID
+  $C3EA,$01 Load the object ID into #REGb.
+  $C3EB,$02 Set the room ID to #N$00 which will deactivate the object.
   $C3ED,$03 Call #R$C412.
   $C3F0,$01 Return.
 
@@ -1353,20 +1383,40 @@ c $C3FA
   $C410,$01 Set flags.
   $C411,$01 Return.
 
-c $C412
-  $C412,$02 Test bit 7 of #REGb.
-  $C414,$02 Jump to #R$C41D if #REGa is equal to #REGa.
-  $C416,$02 Reset bit 7 of #REGb.
+c $C412 Handler: Update Object Location
+@ $C412 label=Handler_UpdateObjectLocation
+R $C412 B Object/ event ID
+R $C412 C Room ID for the update (can also be #N$00)
+  $C412,$04 Jump to #R$C41D if this is a normal object/ event.
+N $C416 Prepare object/ event ID for use.
+  $C416,$02 Clear the scenic flag.
   $C418,$03 #REGhl=#R$BC78.
   $C41B,$02 Jump to #R$C420.
+@ $C41D label=UpdateObjectLocation_NonScenic
+N $C41D Handle non-scenic events.
   $C41D,$03 #REGhl=#R$BBF0.
-  $C420,$02 #REGd=#N$00.
-  $C422,$01 #REGe=#REGb.
-  $C423,$01 #REGhl+=#REGde.
-  $C424,$01 Write #REGc to *#REGhl.
+N $C420 Both object/ event types continue from here.
+@ $C420 label=UpdateObjectLocation
+  $C420,$03 Load the event ID into #REGde.
+  $C423,$01 Add the event ID to the event locations table.
+  $C424,$01 Update the table with the new room ID in #REGc.
   $C425,$01 Return.
 
-c $C426
+c $C426 Transform Item
+@ $C426 label=TransformItem
+R $C426 B From item ID
+R $C426 C To item ID
+D $C426 Rather than use item properties, the game just has separate objects
+. that don't exist until an action is performed.
+.
+. An example is:
+. #TABLE(default,centre,centre)
+. { =h Item ID | =h Item Name }
+. { #N$02 | #ITEM$02 }
+. { #N$03 | #ITEM$03 }
+. TABLE#
+. When the match is lit by the player; item #N$02 is destroyed and replaced
+. with item #N$03.
   $C426,$01 #REGa=#REGb.
   $C427,$03 Call #R$C3D0.
   $C42A,$02 Stash #REGbc and #REGaf on the stack.
@@ -1494,11 +1544,13 @@ c $C4C7
 
 c $C4EB Handler: Scenic Events
 @ $C4EB label=Handler_ScenicEvents
+D $C4EB Handles checking if a scenic event should occur ... and also, handles
+. jumping to the correct related scenic event routine to action it.
   $C4EB,$03 #REGhl=#R$BC78.
-  $C4EE,$04 #REGbc=*#R$BD30.
+  $C4EE,$04 Set a counter in #REGbc for *#R$BD30.
 @ $C4F2 label=Handler_ScenicEvents_Loop
-  $C4F2,$03 #REGa=*#R$BCCB.
-  $C4F5,$02 Search for matching room.
+  $C4F2,$03 Load *#R$BCCB into #REGa.
+  $C4F5,$02 Search for the matching room.
   $C4F7,$02 Jump to #R$C51F if no event was found.
 N $C4F9 An event was found to be processed!
   $C4F9,$03 Write the table position to *#R$BD7D.
@@ -1508,7 +1560,8 @@ N $C500 Calculate the event index and get the event handler.
   $C501,$03 #REGhl=*#R$BD30.
   $C504,$03 Calculate the index.
   $C507,$01 Move the index into #REGde (as #R$C1F0 uses #REGe).
-  $C508,$04 #REGix=*#R$BD24.
+  $C508,$04 Load #REGix with *#R$BD24 which contains a pointer to the scenic
+. event rountines jump table.
   $C50C,$03 Call #R$C1F0.
   $C50F,$04 Push #R$C514 onto the stack (as the return address).
   $C513,$01 Jump to the event handler held by #REGhl.
@@ -2211,9 +2264,9 @@ t $D344 Messaging: Any Water
   $D344,$09 "#STR$D344,$08($b==$FF)".
 B $D34D,$01 Terminator.
 
-g $D34E Table: Object Descriptions?
-@ $D34E label=Table_ObjectDescriptions_1
-W $D34E,$02 Object: #N((#PC-$D34E)/$02).
+g $D34E Table: Item Descriptions
+@ $D34E label=Table_ItemDescriptions
+W $D34E,$02 Item #N((#PC-$D34E)/$02): #ITEM((#PC-$D34E)/$02).
 L $D34E,$02,$4F
 
 g $D3EC Table: Room Descriptions
@@ -2641,126 +2694,130 @@ B $E61C,$01 Terminator.
 
 t $E61D Table: Vocabulary
 @ $E61D label=Table_Vocabulary
-  $E61D,$04 Object #N((#PC-$E61D)/$04): #OBJECT((#PC-$E61D)/$04).
+  $E61D,$04 Command #N((#PC-$E61D)/$04): #OBJECT((#PC-$E61D)/$04).
 L $E61D,$04,$08
-  $E63D,$09 Object #N((#PC-$E61D)/$04): #OBJECT((#PC-$E61D)/$04).
-  $E646,$09 Object #N((#PC-$E621)/$04): #OBJECT((#PC-$E621)/$04).
-  $E64F,$04 Object #N((#PC-$E625)/$04): #OBJECT((#PC-$E625)/$04).
+  $E63D,$09 Command #N((#PC-$E61D)/$04): #OBJECT((#PC-$E61D)/$04).
+  $E646,$09 Command #N((#PC-$E621)/$04): #OBJECT((#PC-$E621)/$04).
+  $E64F,$04 Command #N((#PC-$E625)/$04): #OBJECT((#PC-$E625)/$04).
 L $E64F,$04,$04
-  $E65F,$09 Object #N((#PC-$E625)/$04): #OBJECT((#PC-$E625)/$04).
-  $E668,$04 Object #N((#PC-$E629)/$04): #OBJECT((#PC-$E629)/$04).
+  $E65F,$09 Command #N((#PC-$E625)/$04): #OBJECT((#PC-$E625)/$04).
+  $E668,$04 Command #N((#PC-$E629)/$04): #OBJECT((#PC-$E629)/$04).
 L $E668,$04,$08
-  $E688,$09 Object #N((#PC-$E629)/$04): #OBJECT((#PC-$E629)/$04).
-  $E691,$04 Object #N((#PC-$E631)/$04): #OBJECT((#PC-$E631)/$04).
+  $E688,$09 Command #N((#PC-$E629)/$04): #OBJECT((#PC-$E629)/$04).
+  $E691,$04 Command #N((#PC-$E631)/$04): #OBJECT((#PC-$E631)/$04).
 L $E691,$04,$16
-  $E6E9,$09
-  $E6F2,$09
-  $E6FB,$09
-  $E704,$09
-  $E70D,$09
-  $E716,$09
-  $E71F,$09
-  $E728,$09
-  $E731,$09
-  $E73A,$04
+  $E6E9,$09 Command #N$2E.
+  $E6F2,$09 Command #N$2F.
+  $E6FB,$09 Command #N$30.
+  $E704,$09 Command #N$31.
+  $E70D,$09 Command #N$32.
+  $E716,$09 Command #N$33.
+  $E71F,$09 Command #N$34.
+  $E728,$09 Command #N$35.
+  $E731,$09 Command #N$36.
+  $E73A,$04 Command #N((#PC-$E65E)/$04).
 L $E73A,$04,$08
-  $E75A,$0E
-  $E768,$04
+  $E75A,$0E Command #N$3F.
+  $E768,$04 Command #N((#PC-$E668)/$04).
 L $E768,$04,$06
-  $E780,$09
-  $E789,$04
+  $E780,$09 Command #N$46.
+  $E789,$04 Command #N((#PC-$E66D)/$04).
 L $E789,$04,$06
-  $E7A1,$09
-  $E7AA,$04
+  $E7A1,$09 Command #N$4D.
+  $E7AA,$04 Command #N((#PC-$E672)/$04).
 L $E7AA,$04,$07
-  $E7C6,$09
-  $E7CF,$04
+  $E7C6,$09 Command #N$55.
+  $E7CF,$04 Command #N((#PC-$E677)/$04).
 L $E7CF,$04,$02
-  $E7D7,$09
-  $E7E0,$04
-  $E7E4,$09
-  $E7ED,$04
+  $E7D7,$09 Command #N$58.
+  $E7E0,$04 Command #N$59.
+  $E7E4,$09 Command #N$5A.
+  $E7ED,$04 Command #N((#PC-$E681)/$04).
 L $E7ED,$04,$03
-  $E7F9,$0E
-  $E807,$04
+  $E7F9,$0E Command #N$5E.
+  $E807,$04 Command #N((#PC-$E68B)/$04).
 L $E807,$04,$05
-  $E81B,$09
-  $E824,$04
+  $E81B,$09 Command #N$64.
+  $E824,$04 Command #N((#PC-$E690)/$04).
 L $E824,$04,$02
-  $E82C,$09
-  $E835,$04
+  $E82C,$09 Command #N$67.
+  $E835,$04 Command #N((#PC-$E695)/$04).
 L $E835,$04,$02
 B $E83D,$01 Terminator.
 
-g $E83E
-B $E83E,$01 Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+g $E83E Table: Object List?
+@ $E83E label=Table_ObjectList
+B $E83E,$01 Object #N(#PEEK(#PC)): #OBJECT(#PEEK(#PC)).
 L $E83E,$01,$30
 
-g $E86E
-  $E86E
-  $E871
-  $E875
-  $E877
-  $E87A
-  $E87E
-  $E881
-  $E883
-  $E885
-  $E888
-  $E88B
-  $E88E
-  $E890
-  $E892
-  $E895
-  $E898
-  $E89A
-  $E89C
-  $E89E
-  $E8A0
-  $E8A3
-  $E8A6
-  $E8AB
-  $E8AF
-  $E8B2
-  $E8BC
-  $E8BF
-  $E8C1
-  $E8C4
-  $E8C6
-  $E8C8
-  $E8CA
-  $E8D2
-  $E8D4
-  $E8D6
-  $E8D8
-  $E8DC
-  $E8DF
-  $E8E2
-  $E8E4
-  $E8E9
-  $E8ED
-  $E8F2
-  $E8F5
-  $E8F7
-  $E8FE
-  $E900
-  $E902
+g $E86E Data: Object Rooms
+@ $E86E label=Data_ObjectRoom_00
+@ $E871 label=Data_ObjectRoom_01
+@ $E875 label=Data_ObjectRoom_02
+@ $E877 label=Data_ObjectRoom_03
+@ $E87A label=Data_ObjectRoom_04
+@ $E87E label=Data_ObjectRoom_05
+@ $E881 label=Data_ObjectRoom_06
+@ $E883 label=Data_ObjectRoom_07
+@ $E885 label=Data_ObjectRoom_08
+@ $E888 label=Data_ObjectRoom_09
+@ $E88B label=Data_ObjectRoom_10
+@ $E88E label=Data_ObjectRoom_11
+@ $E890 label=Data_ObjectRoom_12
+@ $E892 label=Data_ObjectRoom_13
+@ $E895 label=Data_ObjectRoom_14
+@ $E898 label=Data_ObjectRoom_15
+@ $E89A label=Data_ObjectRoom_16
+@ $E89C label=Data_ObjectRoom_17
+@ $E89E label=Data_ObjectRoom_18
+@ $E8A0 label=Data_ObjectRoom_19
+@ $E8A3 label=Data_ObjectRoom_20
+@ $E8A6 label=Data_ObjectRoom_21
+@ $E8AB label=Data_ObjectRoom_22
+@ $E8AF label=Data_ObjectRoom_23
+@ $E8B2 label=Data_ObjectRoom_24
+@ $E8BC label=Data_ObjectRoom_25
+@ $E8BF label=Data_ObjectRoom_26
+@ $E8C1 label=Data_ObjectRoom_27
+@ $E8C4 label=Data_ObjectRoom_28
+@ $E8C6 label=Data_ObjectRoom_29
+@ $E8C8 label=Data_ObjectRoom_30
+@ $E8CA label=Data_ObjectRoom_31
+@ $E8D2 label=Data_ObjectRoom_32
+@ $E8D4 label=Data_ObjectRoom_33
+@ $E8D6 label=Data_ObjectRoom_34
+@ $E8D8 label=Data_ObjectRoom_35
+@ $E8DC label=Data_ObjectRoom_36
+@ $E8DF label=Data_ObjectRoom_37
+@ $E8E2 label=Data_ObjectRoom_38
+@ $E8E4 label=Data_ObjectRoom_39
+@ $E8E9 label=Data_ObjectRoom_40
+@ $E8ED label=Data_ObjectRoom_41
+@ $E8F2 label=Data_ObjectRoom_42
+@ $E8F5 label=Data_ObjectRoom_43
+@ $E8F7 label=Data_ObjectRoom_44
+@ $E8FE label=Data_ObjectRoom_45
+@ $E900 label=Data_ObjectRoom_46
+@ $E902 label=Data_ObjectRoom_47
+B $E86E,$01 #IF(#PEEK(#PC)==$FF)(Terminator,Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC))).
+L $E86E,$01,$9F
 
 g $E90D
 B $E90D,$01 Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
 L $E90D,$01,$26
 
-g $E933
-B $E933,$03
-B $E936,$01 Terminator.
-L $E933,$04,$05
-B $E947,$05
-B $E94C,$01 Terminator.
-L $E947,$06,$02
-B $E953,$07
-B $E95A,$01 Terminator.
-B $E95B,$01
-B $E95C,$01 Terminator.
+g $E933 Data: Scenic Event Rooms
+@ $E933 label=Data_ScenicEvents_01
+@ $E937 label=Data_ScenicEvents_02
+@ $E93B label=Data_ScenicEvents_03
+@ $E93F label=Data_ScenicEvents_04
+@ $E943 label=Data_ScenicEvents_05
+@ $E947 label=Data_ScenicEvents_06
+@ $E94D label=Data_ScenicEvents_07
+@ $E953 label=Data_ScenicEvents_08
+@ $E95B label=Data_ScenicEvents_09
+B $E933,$01 #IF(#PEEK(#PC)==$FF)(Terminator,Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC))).
+L $E933,$01,$2A
 
 g $E95D Table: Rooms With Images
 @ $E95D label=Table_RoomsWithImages
@@ -2768,72 +2825,164 @@ D $E95D See #R$FFA8.
 B $E95D,$01 Location Slot: #N(#PC-$E95D) - room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
 L $E95D,$01,$0D
 
-g $E96A
-@ $E96A label=gfgdfg
-W $E96A,$02 #N((#PC-$E96A)/$02).
+g $E96A Table: Object Rooms
+@ $E96A label=Table_ObjectRooms
+W $E96A,$02 Object #N((#PC-$E96A)/$02): #OBJECT((#PC-$E96A)/$02).
 L $E96A,$02,$30
 
-g $E9CA
-W $E9CA,$02
-
-g $E9CC
-  $E9D1
-  $E9D3
-  $E9D5
-  $E9D7
-  $E9D9
-  $E9DB
-  $E9E1
-  $E9E3
-  $E9E5
-  $E9E7
-  $E9EF
-  $E9F1
-  $E9F3
-  $E9FD
-  $E9FF
-  $EA01
-  $EA06
-  $EA08
-  $EA0D
-  $EA26
-  $EA2A
-  $EA2E
-  $EA32
-  $EA36
-  $EA3F
-  $EA43
-  $EA47
-  $EA50
-  $EA5E
-  $EA6C
-  $EA70
-  $EA8D
-  $EA96
-  $EA9A
-  $EA9E
-  $EAA2
-  $EAA6
-  $EAAC
-  $EAB2
-  $EAB5
-  $EAB8
-  $EABA
-  $EABC
-  $EABE
-  $EAC0
-  $EAC5
-  $EAC7
-  $EACB
-  $EACD
-  $EACF
-  $EAD8
-  $EADD
-  $EAE6
-  $EAEC
-  $EAF5
-  $EAFE
-  $EB07
+g $E9CA Data: Phrase Tokens
+D $E9CA The user input is broken down into tokens which represent the words
+. they've entered. These tokens are then compared against these token patterns
+. to determine the outcome the player was trying to communicate.
+N $E9CA Matches e.g. "bottle".
+@ $E9CA label=Data_Bottle
+N $E9CC Matches e.g. "fish", "herring", "red fish", "red herring", "coloured fish",
+. "coloured herring".
+@ $E9CC label=Data_Fish
+N $E9D1 Matches e.g. "watch".
+@ $E9D1 label=Data_Watch
+N $E9D3 Matches e.g. "shoe".
+@ $E9D3 label=Data_Shoe
+N $E9D5 Matches e.g. "rod".
+@ $E9D5 label=Data_Rod
+N $E9D7 Matches e.g. "fruit".
+@ $E9D7 label=Data_Fruit
+N $E9D9 Matches e.g. "bridge".
+@ $E9D9 label=Data_Bridge
+N $E9DB Matches e.g. "jewels", "jewels of babylon".
+@ $E9DB label=Data_Jewel
+N $E9E1 Matches e.g. "match".
+@ $E9E1 label=Data_Match
+N $E9E3 Matches e.g. "plank".
+@ $E9E3 label=Data_Plank
+N $E9E5 Matches e.g. "coconut".
+@ $E9E5 label=Data_Coconut
+N $E9E7 Matches e.g. "bottle", "rum", "bottle of rum".
+@ $E9E7 label=Data_BottleOfRum
+N $E9EF Matches e.g. "gun".
+@ $E9EF label=Data_Gun
+N $E9F1 Matches e.g. "eyepatch", "patch".
+@ $E9F1 label=Data_Eyepatch
+N $E9F3 Matches e.g. "gunpowder", "powder", "keg", "keg of gunpowder",
+. "keg of powder".
+@ $E9F3 label=Data_KegGunPowder
+N $E9FB Matches e.g. "sextant".
+@ $E9FB label=Data_Sextant
+N $E9FD Matches e.g. "crowbar".
+@ $E9FD label=Data_Crowbar
+N $E9FF Matches e.g. "key".
+@ $E9FF label=Data_Key
+N $EA01 Matches e.g. "skull", "human skull".
+@ $EA01 label=Data_Skull
+N $EA06 Matches e.g. "spear".
+@ $EA06 label=Data_Spear
+N $EA08 Matches e.g. "parrot", "dead parrot".
+@ $EA08 label=Data_Parrot
+N $EA0D Matches e.g. "into boat", "in to boat", "in at boat", "into rowing boat",
+. "in to rowing boat", "in at rowing boat".
+@ $EA0D label=Data_IntoBoat
+N $EA1D Matches e.g. "out of boat", "out of rowing boat".
+@ $EA1D label=Data_OutOfBoat
+N $EA26 Matches e.g. "plank across pit", "plank over pit".
+@ $EA26 label=Data_PlankAcrossPit
+N $EA2A Matches e.g. "spear to lion", "spear at lion".
+@ $EA2A label=Data_SpearAtLion
+N $EA2E Matches e.g. "coconut to lion", "coconut at lion".
+@ $EA2E label=Data_CoconutAtLion
+N $EA32 Matches e.g. "fruit to lion", "fruit at lion".
+@ $EA32 label=Data_FruitAtLion
+N $EA36 Matches e.g. "fish to lion", "fish at lion", "herring to lion",
+. "herring at lion", "red fish to lion", "red fish at lion",
+. "red herring to lion", "red herring at lion",
+. "coloured fish to lion", "coloured fish at lion",
+. "coloured herring to lion", "coloured herring at lion".
+@ $EA36 label=Data_FishAtLion
+N $EA3F Matches e.g. "fruit to parrot", "fruit at parrot".
+@ $EA3F label=Data_FruitAtParrot
+N $EA43 Matches e.g. "watch to cannibals", "watch at cannibals",
+. "watch to natives", "watch at natives".
+@ $EA43 label=Data_WatchAtCannibals
+N $EA47 Matches e.g. "spear to octopus", "spear at octopus",
+. "spear to giant octopus", "spear at giant octopus".
+@ $EA47 label=Data_SpearAtOctopus
+N $EA50 Matches e.g. "gunpowder to crocodile", "gunpowder at crocodile",
+. "powder to crocodile", "powder at crocodile", "keg to crocodile",
+. "keg at crocodile", "keg of gunpowder to crocodile",
+. "keg of gunpowder at crocodile", "keg of powder to crocodile",
+. "keg of powder at crocodile".
+@ $EA50 label=Data_KegAtCrocodile
+N $EA5E Matches e.g. "match to keg", "match at keg", "match to gunpowder",
+. "match at gunpowder", "match to powder", "match at powder",
+. "match to keg of gunpowder", "match at keg of gunpowder",
+. "match to keg of powder", "match at keg of powder".
+@ $EA5E label=Data_MatchAtKeg
+N $EA6C Matches e.g. "match to crocodile", "match at crocodile".
+@ $EA6C label=Data_MatchAtCrocodile
+N $EA70 Matches e.g. "rod in hole", "rod in round hole", "rod into hole",
+. "rod into round hole", "rod in to hole", "rod in at hole",
+. "rod in to round hole", "rod in at round hole".
+@ $EA70 label=Data_RodInHole
+N $EA8D Matches e.g. "octopus with spear", "octopus using spear",
+. "giant octopus with spear", "giant octopus using spear".
+@ $EA8D label=Data_OctopusWithSpear
+N $EA96 Matches e.g. "lion with spear", "lion using spear".
+@ $EA96 label=Data_LionWithSpear
+N $EA9A Matches e.g. "cannibals with spear", "cannibals using spear",
+. "natives with spear", "natives using spear".
+@ $EA9A label=Data_CannibalsWithSpear
+N $EA9E Matches e.g. "pirate with gun", "pirate using gun".
+@ $EA9E label=Data_PirateWithGun
+N $EAA2 Matches e.g. "parrot with gun", "parrot using gun".
+@ $EAA2 label=Data_ParrotWithGun
+N $EAA6 Matches e.g. "pirate", "pirate with gun", "pirate using gun".
+@ $EAA6 label=Data_PirateWithGun_2
+N $EAAC Matches e.g. "parrot", "parrot with gun", "parrot using gun".
+@ $EAAC label=Data_ParrotWithGun_2
+N $EAB2 Matches e.g. "u ladder", "up ladder".
+@ $EAB2 label=Data_UpLadder
+N $EAB5 Matches e.g. "d ladder", "down ladder".
+@ $EAB5 label=Data_DownLadder
+N $EAB8 Matches e.g. "rum".
+@ $EAB8 label=Data_Rum
+N $EABA Matches e.g. "water".
+@ $EABA label=Data_Water
+N $EABC Matches e.g. "ladder".
+@ $EABC label=Data_Ladder
+N $EABE Matches e.g. "door".
+@ $EABE label=Data_Door
+N $EAC0 Matches e.g. "rock door", "door".
+@ $EAC0 label=Data_RockDoor
+N $EAC5 Matches e.g. "trapdoor".
+@ $EAC5 label=Data_TrapDoor
+N $EAC7 Matches e.g. "????", "loud".
+@ $EAC7 label=Data_XXXX
+N $EACB Matches e.g. "ring".
+@ $EACB label=Data_Ring
+N $EACD Matches e.g. "cave".
+@ $EACD label=Data_Cave
+N $EACF Matches e.g. "boat", "rowing boat", "ship", "pit".
+@ $EACF label=Data_Boat
+N $EAD8 Matches e.g. "stone", "large stone".
+@ $EAD8 label=Data_Stone
+N $EADD Matches e.g. "stone with crowbar", "stone using crowbar",
+. "large stone with crowbar", "large stone using crowbar".
+@ $EADD label=Data_StoneWithCrowbar
+N $EAE6 Matches e.g. "door", "door with key", "door using key".
+@ $EAE6 label=Data_Door_2
+N $EAEC Matches e.g. "n", "north", "boat n", "boat north", "rowing boat n"
+. "rowing boat north".
+@ $EAEC label=Data_North
+N $EAF5 Matches e.g. "s", "south", "boat s", "boat south", "rowing boat s",
+. "rowing boat south".
+@ $EAF5 label=Data_South
+N $EAFE Matches e.g. "e", "east", "boat e", "boat east", "rowing boat e",
+. "rowing boat east".
+@ $EAFE label=Data_East
+N $EB07 Matches e.g. "w", "west", "boat w", "boat west", "rowing boat w",
+. "rowing boat west".
+@ $EB07 label=Data_West
+B $E9CA,$01 #TOKEN(#PEEK(#PC)).
+L $E9CA,$01,$146,$02
 
 g $EB10 Table: Room Map
 @ $EB10 label=Table_RoomMap
@@ -2875,92 +3024,97 @@ N $EDF8 Print "#STR$D526,$08($b==$FF)".
 
 c $EE00 Fatal Events: Crab
 @ $EE00 label=Event_Crab
-  $EE00,$03 #REGhl=#R$BC66.
-  $EE03,$02 Clear bit 0 (which relates to the crab).
-  $EE05,$02 #REGa=#N$29.
-  $EE07,$03 Call #R$C35F.
-  $EE0A,$01 Return if ?? is not equal to #N$29.
+N $EE00 Make the crab inactive.
+  $EE00,$05 Reset bit 0 of *#R$BC66 which relates to the crab being active.
+  $EE05,$05 Call #R$C35F using item: #ITEM$29.
+  $EE0A,$01 Return if the crab is not in the current room.
 N $EE0B Print "#STR$D5B0,$08($b==$FF)".
   $EE0B,$03 #REGhl=#R$D5B0.
   $EE0E,$03 Jump to #R$EE9B.
 
 c $EE11 Fatal Events: Tentacle
 @ $EE11 label=Event_Tentacle
-  $EE11,$03 #REGhl=#R$BC66.
-  $EE14,$02 Reset bit 1 of *#REGhl.
-  $EE16,$02 #REGa=#N$2B.
-  $EE18,$03 Call #R$C35F.
-  $EE1B,$01 Return if ?? is not equal to #N$2B.
+N $EE11 Make the tentacle inactive.
+  $EE11,$05 Reset bit 1 of *#R$BC66 which relates to the tentacle being active.
+  $EE16,$05 Call #R$C35F using item: #ITEM$2B.
+  $EE1B,$01 Return if the tentacle is not in the current room.
 N $EE1C Print "#STR$D5F6,$08($b==$FF)".
   $EE1C,$03 #REGhl=#R$D5F6.
   $EE1F,$03 Jump to #R$EE9B.
 
-c $EE22 Fatal Events: Rum
-@ $EE22 label=Event_Rum
-  $EE22,$03 #REGhl=#R$BC66.
-  $EE25,$02 Reset bit 2 of *#REGhl.
-  $EE27,$03 #REGa=*#R$BCCB.
-  $EE2A,$03 #REGbc=#N($0007,$04,$04).
-  $EE2D,$03 #REGhl=#R$EE39.
-  $EE30,$02 CPIR.
-  $EE32,$01 Return if ?? is not equal to #N$2B.
+c $EE22 Fatal Events: Drunk
+@ $EE22 label=Event_Drunk
+N $EE22 Make the drunkenness inactive.
+  $EE22,$05 Reset bit 2 of *#R$BC66 which relates to the player being drunk.
+  $EE27,$03 Load *#R$BCCB into #REGa.
+  $EE2A,$03 Set the length of the high places table in #REGbc.
+  $EE2D,$03 Set a pointer in #REGhl at #R$EE39.
+  $EE30,$02 Search for the current room in the high places table.
+  $EE32,$01 Return if the player is not currently in any rooms in the table.
+N $EE33 The player is both drunk, and in a listed "high place". Uh oh...
 N $EE33 Print "#STR$D629,$08($b==$FF)".
   $EE33,$03 #REGhl=#R$D629.
   $EE36,$03 Jump to #R$EE9B.
-B $EE39,$07
+@ $EE39 label=Table_HighPlaces
+N $EE39 All locations where a drunken player could potentially fall from a
+. great height.
+B $EE39,$01 Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+L $EE39,$01,$07,$02
 
 c $EE40 Fatal Events: Lion
 @ $EE40 label=Event_Lion
-  $EE40,$03 #REGhl=#R$BC66.
-  $EE43,$02 Reset bit 3 of *#REGhl.
-  $EE45,$02 #REGa=#N$2A.
-  $EE47,$03 Call #R$C35F.
-  $EE4A,$01 Return if #REGh is not equal to #N$2A.
+N $EE40 Make the lion inactive.
+  $EE40,$05 Reset bit 3 of *#R$BC66 which relates to the lion being active.
+  $EE45,$05 Call #R$C35F using item: #ITEM$2A.
+  $EE4A,$01 Return if the lion is not in the current room.
 N $EE4B Print "#STR$D66E,$08($b==$FF)".
   $EE4B,$03 #REGhl=#R$D66E.
   $EE4E,$03 Jump to #R$EE9B.
 
 c $EE51 Fatal Events: Crocodile
 @ $EE51 label=Event_Crocodile
-  $EE51,$03 #REGhl=#R$BC66.
-  $EE54,$02 Reset bit 4 of *#REGhl.
+N $EE51 Make the crocodile inactive.
+  $EE51,$05 Reset bit 4 of *#R$BC66 which relates to the crocodile being
+. active.
   $EE56,$03 #REGhl=#R$E8C1.
   $EE59,$03 Call #R$C401.
-  $EE5C,$01 Return if #REGh is not equal to #N$2A.
+  $EE5C,$01 Return if the crocodile is not in the current room.
 N $EE5D Print "#STR$D6A0,$08($b==$FF)".
   $EE5D,$03 #REGhl=#R$D6A0.
   $EE60,$03 Jump to #R$EE9B.
 
 c $EE63 Fatal Events: Cannibals
 @ $EE63 label=Event_Cannibals
-  $EE63,$03 #REGhl=#R$BC66.
-  $EE66,$02 Reset bit 5 of *#REGhl.
-  $EE68,$02 #REGa=#N$18.
-  $EE6A,$03 Call #R$C35F.
-  $EE6D,$01 Return if #REGh is not equal to #N$18.
+N $EE63 Make the cannibals inactive.
+  $EE63,$05 Reset bit 5 of *#R$BC66 which relates to the natives being active.
+  $EE68,$05 Call #R$C35F using item: #ITEM$18.
+  $EE6D,$01 Return if the cannibals are not in the current room.
+N $EE6E Print "#STR$D931,$08($b==$FF)".
   $EE6E,$03 #REGhl=#R$D931.
   $EE71,$03 Jump to #R$EE9B.
 
 c $EE74 Events: Match
 @ $EE74 label=Event_Match
-  $EE74,$03 #REGhl=#R$BC66.
-  $EE77,$02 Reset bit 6 of *#REGhl.
-  $EE79,$02 #REGa=#N$03.
-  $EE7B,$03 Call #R$C3E4.
-  $EE7E,$02 Jump to #R$EE8A if #REGh is not equal to #N$03.
+N $EE74 Make the match inactive.
+  $EE74,$05 Reset bit 6 of *#R$BC66 which relates to the match being active.
+  $EE79,$05 Call #R$C3E4 using item: #ITEM$03.
+  $EE7E,$02 Jump to #R$EE8A if the match is not in the players inventory.
+N $EE80 The player is holding the lit match, and it's burned away so handle the
+. messaging.
   $EE80,$03 #REGhl=#R$BC98.
   $EE83,$01 Decrease *#REGhl by one.
 N $EE84 Print "#STR$DB91,$08($b==$FF)".
   $EE84,$03 #REGhl=#R$DB91.
   $EE87,$03 Call #R$BAB1.
-  $EE8A,$02 #REGa=#N$03.
-  $EE8C,$03 Call #R$C3EA.
+N $EE8A The match can no longer be used, so destroy it.
+@ $EE8A label=Event_Match_Return
+  $EE8A,$05 Call #R$C3EA using item: #ITEM$03.
   $EE8F,$01 Return.
 
 c $EE90 Fatal Events: Wave
 @ $EE90 label=Event_Wave
-  $EE90,$03 #REGhl=#R$BC66.
-  $EE93,$02 Reset bit 7 of *#REGhl.
+N $EE90 Make the wave inactive.
+  $EE90,$05 Reset bit 7 of *#R$BC66 which relates to the wave.
 N $EE95 Print "#STR$E567,$08($b==$FF)".
   $EE95,$03 #REGhl=#R$E567.
   $EE98,$03 Jump to #R$EE9B.
@@ -2984,8 +3138,7 @@ N $EEA9 Print "#STR$D6EA,$08($b==$FF)".
 N $EEAF Print "#STR$D716,$08($b==$FF)".
   $EEAF,$03 #REGhl=#R$D716.
   $EEB2,$03 Call #R$C579.
-  $EEB5,$02 #REGa=#N$80.
-  $EEB7,$03 Call #R$C3EA.
+  $EEB5,$05 Call #R$C3EA using scenic event: #R$BC78(#N$00).
   $EEBA,$01 Return.
 
 c $EEBB Events: Rat
@@ -2997,7 +3150,7 @@ N $EEBB Print "#STR$D73C,$08($b==$FF)".
 N $EEC1 Print "#STR$D76E,$08($b==$FF)".
   $EEC1,$03 #REGhl=#R$D76E.
   $EEC4,$03 Call #R$C579.
-  $EEC7,$02 #REGa=#N$81.
+  $EEC7,$02 #REGa=#N$81 (event ID: #N($81&$7F)).
   $EEC9,$03 Call #R$C3EA.
   $EECC,$01 Return.
 
@@ -3010,7 +3163,7 @@ N $EECD Print "#STR$D797,$08($b==$FF)".
 N $EED3 Print "#STR$D7AA,$08($b==$FF)".
   $EED3,$03 #REGhl=#R$D7AA.
   $EED6,$03 Call #R$C579.
-  $EED9,$02 #REGa=#N$82.
+  $EED9,$02 #REGa=#N$82 (event ID: #N($82&$7F)).
   $EEDB,$03 Call #R$C3EA.
   $EEDE,$01 Return.
 
@@ -3070,7 +3223,7 @@ N $EF24 Print "#STR$D88C,$08($b==$FF)".
   $EF24,$03 #REGhl=#R$D88C.
 @ $EF27 label=WaterSnake_Safe_Continue
   $EF27,$01 Stash #REGhl on the stack.
-  $EF28,$02 #REGa=#N$86.
+  $EF28,$02 #REGa=#N$86 (event ID: #N($86&$7F)).
   $EF2A,$03 Call #R$C3EA.
   $EF2D,$01 Restore #REGhl from the stack.
 @ $EF2E label=WaterSnake_PrintAndReturn
@@ -3095,7 +3248,7 @@ N $EF43 Print "#STR$D922,$08($b==$FF)".
   $EF46,$02 Jump to #R$EF50.
 N $EF48 Handle that the poisonous spider didn't sting you.
 @ $EF48 label=Event_Spider_Safe
-  $EF48,$02 #REGa=#N$87.
+  $EF48,$02 #REGa=#N$87 (event ID: #N($87&$7F)).
   $EF4A,$03 Call #R$C3EA.
 N $EF4D Print "#STR$D8FA,$08($b==$FF)".
   $EF4D,$03 #REGhl=#R$D8FA.
@@ -3122,7 +3275,7 @@ c $EF54
   $EF7E,$02 #REGe=#N$00.
   $EF80,$03 Call #R$C21E.
   $EF83,$07 Jump to #R$EFA7 if *#R$BCCB is not room #N$30: "#ROOM$30".
-  $EF8A,$02 #REGa=#N$29.
+  $EF8A,$02 #REGa=#N$29 (event ID: #N($29&$7F)).
   $EF8C,$03 Call #R$C35F.
   $EF8F,$02 Jump to #R$EFA7 if #REGa is not equal to #N$29.
   $EF91,$03 #REGhl=#R$BC6F.
@@ -3131,13 +3284,13 @@ c $EF54
   $EF9D,$03 #REGhl=#R$BC66.
   $EFA0,$02 Set bit 0 of *#REGhl.
   $EFA2,$05 Write #N$06 to *#R$BC67.
-  $EFA7,$02 #REGa=#N$2B.
+  $EFA7,$02 #REGa=#N$2B (event ID: #N($2B&$7F)).
   $EFA9,$03 Call #R$C35F.
   $EFAC,$02 Jump to #R$EFB8 if #REGa is not equal to #N$2B.
   $EFAE,$03 #REGhl=#R$BC66.
   $EFB1,$02 Set bit 1 of *#REGhl.
   $EFB3,$05 Write #N$05 to *#R$BC68.
-  $EFB8,$02 #REGa=#N$2A.
+  $EFB8,$02 #REGa=#N$2A (event ID: #N($2A&$7F)).
   $EFBA,$03 Call #R$C35F.
   $EFBD,$02 Jump to #R$EFC9 if #REGa is not equal to #N$2A.
   $EFBF,$03 #REGhl=#R$BC66.
@@ -3149,14 +3302,14 @@ c $EF54
   $EFD1,$03 #REGhl=#R$BC66.
   $EFD4,$02 Set bit 4 of *#REGhl.
   $EFD6,$05 Write #N$0B to *#R$BC6B.
-  $EFDB,$02 #REGa=#N$18.
+  $EFDB,$02 #REGa=#N$18 (event ID: #N($18&$7F)).
   $EFDD,$03 Call #R$C35F.
   $EFE0,$02 Jump to #R$EFEC if #REGa is not equal to #N$18.
   $EFE2,$03 #REGhl=#R$BC66.
   $EFE5,$02 Set bit 5 of *#REGhl.
   $EFE7,$05 Write #N$09 to *#R$BC6C.
   $EFEC,$07 Jump to #R$EFFF if *#R$BCCB is not room #N$03: "#ROOM$03".
-  $EFF3,$02 #REGa=#N$1D.
+  $EFF3,$02 #REGa=#N$1D (event ID: #N($1D&$7F)).
   $EFF5,$03 Call #R$C35F.
   $EFF8,$02 Jump to #R$EFFF if #REGa is not equal to #N$1D.
   $EFFA,$02 Restore #REGhl and #REGhl from the stack.
@@ -3170,7 +3323,7 @@ c $EF54
   $F012,$02 Set bit 7 of *#REGhl.
   $F014,$05 Write #N$05 to *#R$BC6E.
   $F019,$07 Jump to #R$F039 if *#R$BCCB is not room #N$6C: "#ROOM$6C".
-  $F020,$02 #REGa=#N$1D.
+  $F020,$02 #REGa=#N$1D (event ID: #N($1D&$7F)).
   $F022,$03 Call #R$C35F.
   $F025,$02 Jump to #R$F039 if #REGa is not equal to #N$1D.
 N $F027 Print "#STR$E5CF,$08($b==$FF)".
@@ -3273,7 +3426,7 @@ N $F097 Print "#STR$E5B4,$08($b==$FF)".
 
   $F09C,$03 Call #R$C470.
   $F09F,$01 Return if ?? is less than #N$00.
-  $F0A0,$02 #REGa=#N$18.
+  $F0A0,$02 #REGa=#N$18 (event ID: #N($18&$7F)).
   $F0A2,$03 Call #R$C35F.
   $F0A5,$02 Jump to #R$F0C2 if ?? is not equal to #N$18.
   $F0A7,$03 #REGhl=#R$BC54.
@@ -3289,31 +3442,31 @@ N $F0B6 Print "#STR$D993,$08($b==$FF)".
 N $F0BC Print "#STR$D9B4,$08($b==$FF)".
   $F0BC,$03 #REGhl=#R$D9B4.
   $F0BF,$03 Jump to #R$F03E.
-  $F0C2,$02 #REGa=#N$39.
+  $F0C2,$02 #REGa=#N$39 (event ID: #N($39&$7F)).
   $F0C4,$03 Call #R$C35F.
   $F0C7,$02 Jump to #R$F0CF if ?? is not equal to #N$39.
 N $F0C9 Print "#STR$D9CA,$08($b==$FF)".
   $F0C9,$03 #REGhl=#R$D9CA.
   $F0CC,$03 Jump to #R$F03A.
-  $F0CF,$02 #REGa=#N$13.
+  $F0CF,$02 #REGa=#N$13 (event ID: #N($13&$7F)).
   $F0D1,$03 Call #R$C35F.
   $F0D4,$02 Jump to #R$F0DC if ?? is not equal to #N$13.
 N $F0D6 Print "#STR$D9DF,$08($b==$FF)".
   $F0D6,$03 #REGhl=#R$D9DF.
   $F0D9,$03 Jump to #R$F03A.
-  $F0DC,$02 #REGa=#N$14.
+  $F0DC,$02 #REGa=#N$14 (event ID: #N($14&$7F)).
   $F0DE,$03 Call #R$C35F.
   $F0E1,$03 Jump to #R$F042 if ?? is equal to #N$14.
-  $F0E4,$02 #REGa=#N$2B.
+  $F0E4,$02 #REGa=#N$2B (event ID: #N($2B&$7F)).
   $F0E6,$03 Call #R$C35F.
   $F0E9,$03 Jump to #R$F042 if ?? is equal to #N$2B.
-  $F0EC,$02 #REGa=#N$2A.
+  $F0EC,$02 #REGa=#N$2A (event ID: #N($2A&$7F)).
   $F0EE,$03 Call #R$C35F.
   $F0F1,$02 Jump to #R$F0F9 if ?? is not equal to #N$2A.
 N $F0F3 Print "#STR$DA27,$08($b==$FF)".
   $F0F3,$03 #REGhl=#R$DA27.
   $F0F6,$03 Jump to #R$F03A.
-  $F0F9,$02 #REGa=#N$27.
+  $F0F9,$02 #REGa=#N$27 (event ID: #N($27&$7F)).
   $F0FB,$03 Call #R$C35F.
   $F0FE,$02 Jump to #R$F106 if ?? is not equal to #N$27.
 N $F100 Print "#STR$DA33,$08($b==$FF)".
@@ -3323,16 +3476,17 @@ N $F100 Print "#STR$DA33,$08($b==$FF)".
 N $F10D Print "#STR$DA41,$08($b==$FF)".
   $F10D,$03 #REGhl=#R$DA41.
   $F110,$03 Jump to #R$F03A.
-  $F113,$02 #REGa=#N$32.
+  $F113,$02 #REGa=#N$32 (event ID: #N($32&$7F)).
   $F115,$03 Call #R$C35F.
   $F118,$03 Jump to #R$F042 if #REGa is equal to #N$32.
   $F11B,$03 #REGhl=#R$E8E9.
   $F11E,$03 Call #R$C401.
   $F121,$02 Jump to #R$F12B if #REGa is not equal to #N$32.
-  $F123,$02 #REGa=#N$04.
+  $F123,$02 #REGa=#N$04 (event ID: #N($04&$7F)).
   $F125,$03 Call #R$C35F.
   $F128,$03 Jump to #R$F042 if #REGa is equal to #N$04.
   $F12B,$03 Jump to #R$F047.
+
   $F12E,$03 Call #R$C470.
   $F131,$01 Return if #REGa is less than #N$04.
   $F132,$07 Jump to #R$F04C if *#R$BC98 is zero.
@@ -3393,8 +3547,8 @@ c $F155
   $F1AE,$03 #REGhl=#R$E87A.
   $F1B1,$03 Call #R$C401.
   $F1B4,$04 Jump to #R$F1C4 if #REGa is not equal to #N$0B.
-  $F1B8,$03 #REGbc=#N$0B0C.
-  $F1BB,$03 Call #R$C426.
+  $F1B8,$06 Call #R$C426 to transform item #N$0B (#ITEM$0B) into item #N$0C
+. (#ITEM$0C).
 N $F1BE Print "#STR$DA73,$08($b==$FF)".
   $F1BE,$03 #REGhl=#R$DA73.
   $F1C1,$03 Jump to #R$F03A.
@@ -3402,11 +3556,10 @@ N $F1BE Print "#STR$DA73,$08($b==$FF)".
   $F1C4,$03 #REGhl=#R$E9CC.
   $F1C7,$03 Call #R$C37F.
   $F1CA,$02 Jump to #R$F1DF if #REGa is not equal to #N$0B.
-  $F1CC,$02 #REGa=#N$1B.
-  $F1CE,$03 Call #R$C35F.
+  $F1CC,$05 Call #R$C35F with #ITEM$1B.
   $F1D1,$02 Jump to #R$F1DF if #REGa is not equal to #N$1B.
-  $F1D3,$03 #REGbc=#N$1B1C.
-  $F1D6,$03 Call #R$C426.
+  $F1D3,$06 Call #R$C426 to transform item #N$1B (#ITEM$1B) into item #N$1C
+. (#ITEM$1C).
 N $F1D9 Print "#STR$DA85,$08($b==$FF)".
   $F1D9,$03 #REGhl=#R$DA85.
   $F1DC,$03 Jump to #R$F03A.
@@ -3532,7 +3685,7 @@ B $F29B,$01
   $F2D0,$03 #REGhl=#R$E9D1.
   $F2D3,$03 Call #R$C37F.
   $F2D6,$02 Jump to #R$F2ED if *#REGhl is not equal to #N$01.
-  $F2D8,$02 #REGa=#N$19.
+  $F2D8,$02 #REGa=#N$19 (event ID: #N($19&$7F)).
   $F2DA,$03 Call #R$C35F.
   $F2DD,$02 Jump to #R$F2E5 if *#REGhl is not equal to #N$19.
 N $F2DF Print "#STR$DB5F,$08($b==$FF)".
@@ -3566,12 +3719,11 @@ N $F2DF Print "#STR$DB5F,$08($b==$FF)".
   $F31B,$03 Call #R$C35F.
   $F31E,$02 #REGb=#N$08.
   $F320,$03 Jump to #R$F29C if *#REGhl is equal to #N$08.
-  $F323,$03 #REGbc=#N$0A09.
-  $F326,$03 Call #R$C426.
-  $F329,$03 #REGbc=#N$3132.
-  $F32C,$03 Call #R$C426.
-  $F32F,$03 #REGbc=#N$3315.
-  $F332,$03 Call #R$C412.
+  $F323,$06 Call #R$C426 to transform item #N$0A (#ITEM$0A) into item #N$09
+. (#ITEM$09).
+  $F329,$06 Call #R$C426 to transform item #N$31 (#ITEM$31) into item #N$32
+. (#ITEM$32).
+  $F32F,$06 Call #R$C412 using item #ITEM$33 to create it in #ROOM$15.
   $F335,$07 Write #N$00 to: #LIST { *#R$EB90 } { *#R$ED8D } LIST#
   $F33C,$02 #REGb=#N$08.
   $F33E,$03 Call #R$F29C.
@@ -3602,9 +3754,9 @@ N $F341 Print "#STR$DB7C,$08($b==$FF)".
   $F379,$03 Call #R$F26A.
   $F37C,$01 #REGa=#REGb.
   $F37D,$05 Jump to #R$F29C if #REGa is equal to #N$04.
-  $F382,$02 #REGa=#N$05.
+  $F382,$02 #REGa=#N$05 (event ID: #N($05&$7F)).
   $F384,$03 Call #R$C3EA.
-  $F387,$02 #REGa=#N$06.
+  $F387,$02 #REGa=#N$06 (event ID: #N($06&$7F)).
   $F389,$03 Call #R$C3EA.
   $F38C,$02 #REGb=#N$04.
   $F38E,$07 Write #N$00 to: #LIST { *#R$ED75 } { *#R$ED80 } LIST#
@@ -3622,10 +3774,10 @@ N $F341 Print "#STR$DB7C,$08($b==$FF)".
   $F3AE,$02 Jump to #R$F3D5 if #REGa is not equal to #N$07.
   $F3B0,$02 #REGa=#N$0F.
   $F3B2,$03 Call #R$F26A.
-  $F3B5,$02 #REGa=#N$27.
+  $F3B5,$02 #REGa=#N$27 (event ID: #N($27&$7F)).
   $F3B7,$03 Call #R$C35F.
   $F3BA,$02 Jump to #R$F3CB if #REGa is equal to #N$27.
-  $F3BC,$02 #REGa=#N$22.
+  $F3BC,$02 #REGa=#N$22 (event ID: #N($22&$7F)).
   $F3BE,$03 Call #R$C3EA.
   $F3C1,$02 #REGa=#N$88.
   $F3C3,$03 Call #R$C3FA.
@@ -3857,8 +4009,8 @@ N $F4F6 Print "#STR$BF2F,$08($b==$FF)".
   $F5AE,$03 #REGhl=#R$E885.
   $F5B1,$03 Call #R$C401.
   $F5B4,$05 Jump to #R$F4DA if #REGa is not equal to #N$11.
-  $F5B9,$03 #REGbc=#N$1110.
-  $F5BC,$03 Call #R$C426.
+  $F5B9,$06 Call #R$C426 to transform item #N$11 (#ITEM$11) into item #N$10
+. (#ITEM$10).
   $F5BF,$02 #REGa=#N$10.
   $F5C1,$03 Jump to #R$F4DA.
 
@@ -3955,7 +4107,7 @@ N $F679 Print "#STR$DCED,$08($b==$FF)".
   $F68D,$03 Call #R$F635.
   $F690,$01 #REGa=#REGe.
   $F691,$03 Call #R$C3EA.
-  $F694,$02 #REGa=#N$2A.
+  $F694,$02 #REGa=#N$2A (event ID: #N($2A&$7F)).
   $F696,$03 Call #R$C3EA.
   $F699,$05 Write #N$3C to *#R$EC3F.
 N $F69E Print "#STR$DD1B,$08($b==$FF)".
@@ -3965,12 +4117,11 @@ N $F69E Print "#STR$DD1B,$08($b==$FF)".
   $F6A4,$03 #REGhl=#R$EA3F.
   $F6A7,$03 Call #R$C37F.
   $F6AA,$02 Jump to #R$F6C2 if *#REGhl is not equal to #N$3C.
-  $F6AC,$02 #REGa=#N$0E.
+  $F6AC,$02 Load #ITEM$0E into #REGa.
   $F6AE,$03 Call #R$F635.
-  $F6B1,$03 #REGbc=#N$2728.
-  $F6B4,$03 Call #R$C426.
-  $F6B7,$02 #REGa=#N$0E.
-  $F6B9,$03 Call #R$C3EA.
+  $F6B1,$03 Call #R$C426 to transform item #N$27 (#ITEM$27) into item #N$28
+. (#ITEM$28).
+  $F6B7,$05 Call #R$C3EA with #ITEM$0E (as the parrot ate it).
 N $F6BC Print "#STR$DD6C,$08($b==$FF)".
   $F6BC,$03 #REGhl=#R$DD6C.
   $F6BF,$03 Jump to #R$F03A.
@@ -3978,49 +4129,53 @@ N $F6BC Print "#STR$DD6C,$08($b==$FF)".
   $F6C2,$03 #REGhl=#R$EA43.
   $F6C5,$03 Call #R$C37F.
   $F6C8,$02 Jump to #R$F6FD if *#REGhl is not equal to #N$0E.
-  $F6CA,$02 #REGa=#N$17.
-  $F6CC,$03 Call #R$C35F.
+  $F6CA,$05 Call #R$C35F with #ITEM$17.
   $F6CF,$03 Jump to #R$F079 if *#REGhl is not equal to #N$17.
-  $F6D2,$02 #REGa=#N$17.
+  $F6D2,$02 Load #ITEM$17 into #REGa.
   $F6D4,$03 Call #R$F635.
-  $F6D7,$03 #REGbc=#N$1819.
-  $F6DA,$03 Call #R$C426.
-  $F6DD,$03 #REGbc=#N$171A.
-  $F6E0,$03 Call #R$C426.
-  $F6E3,$05 Write #N$1D to *#R$EBCD.
-  $F6E8,$05 Write #N$20 to *#R$EBCB.
-  $F6ED,$05 Write #N$21 to *#R$EBCC.
-  $F6F2,$05 Write #N$23 to *#R$EBCA.
+  $F6D7,$06 Call #R$C426 to transform item #N$18 (#ITEM$18) into item #N$19
+. (#ITEM$19).
+  $F6DD,$06 Call #R$C426 to transform item #N$17 (#ITEM$17) into item #N$1A
+. (#ITEM$1A).
+  $F6E3,$05 Write #N$1D to *#R$EBCD to open up westbound access to #ROOM$1D
+. from #ROOM$1F.
+  $F6E8,$05 Write #N$20 to *#R$EBCB to open up southbound access to #ROOM$20
+. from #ROOM$1F.
+  $F6ED,$05 Write #N$21 to *#R$EBCC to open up eastbound access to #ROOM$21
+. from #ROOM$1F.
+  $F6F2,$05 Write #N$23 to *#R$EBCA to open up northbound access to #ROOM$23
+. from #ROOM$1F.
+N $F6F7 Print "#STR$DDDD,$08($b==$FF)".
   $F6F7,$03 #REGhl=#R$DDDD.
   $F6FA,$03 Jump to #R$F03A.
 
   $F6FD,$03 #REGhl=#R$EA47.
   $F700,$03 Call #R$C37F.
   $F703,$02 Jump to #R$F729 if *#REGhl is not equal to #N$23.
-  $F705,$02 #REGa=#N$1A.
-  $F707,$03 Call #R$F635.
-  $F70A,$02 #REGa=#N$2B.
-  $F70C,$03 Call #R$C3EA.
-  $F70F,$02 #REGa=#N$1A.
-  $F711,$03 Call #R$C3EA.
-  $F714,$05 Write #N$40 to *#R$EC8A.
-  $F719,$05 Write #N$41 to *#R$EC8B.
-  $F71E,$05 Write #N$42 to *#R$EC8C.
+  $F705,$05 Call #R$F635 using #ITEM$1A.
+  $F70A,$05 Call #R$C3EA with #ITEM$2B.
+  $F70F,$05 Call #R$C3EA with #ITEM$1A.
+  $F714,$05 Write #N$40 to *#R$EC8A to open up northbound access to #ROOM$40
+. from #ROOM$3F.
+  $F719,$05 Write #N$41 to *#R$EC8B to open up southbound access to #ROOM$41
+. from #ROOM$3F.
+  $F71E,$05 Write #N$42 to *#R$EC8C to open up eastbound access to #ROOM$42
+. from #ROOM$3F.
 N $F723 Print "#STR$DE81,$08($b==$FF)".
   $F723,$03 #REGhl=#R$DE81.
   $F726,$03 Jump to #R$F03A.
   $F729,$03 #REGhl=#R$EA50.
   $F72C,$03 Call #R$C37F.
   $F72F,$02 Jump to #R$F74F if *#REGhl is not equal to #N$42.
-  $F731,$02 #REGa=#N$12.
+  $F731,$02 #REGa=#N$12 (event ID: #N($12&$7F)).
   $F733,$03 Call #R$C35F.
   $F736,$03 Jump to #R$F079 if *#REGhl is not equal to #N$12.
   $F739,$02 #REGa=#N$12.
   $F73B,$03 Call #R$F635.
-  $F73E,$02 #REGa=#N$12.
+  $F73E,$02 #REGa=#N$12 (event ID: #N($12&$7F)).
   $F740,$03 Call #R$C3EA.
-  $F743,$03 #REGbc=#N$1314.
-  $F746,$03 Call #R$C426.
+  $F743,$06 Call #R$C426 to transform item #N$13 (#ITEM$13) into item #N$14
+. (#ITEM$14).
 N $F749 Print "#STR$DF15,$08($b==$FF)".
   $F749,$03 #REGhl=#R$DF15.
   $F74C,$03 Jump to #R$F03A.
@@ -4028,23 +4183,19 @@ N $F749 Print "#STR$DF15,$08($b==$FF)".
   $F74F,$03 #REGhl=#R$EA5E.
   $F752,$03 Call #R$C37F.
   $F755,$02 Jump to #R$F78D if *#REGhl is not equal to #N$12.
-  $F757,$02 #REGa=#N$12.
-  $F759,$03 Call #R$C3E4.
+  $F757,$05 Call #R$C3E4 with #ITEM$12.
   $F75C,$03 Jump to #R$F06F if *#REGhl is equal to #N$12.
   $F75F,$03 #REGhl=#R$E86E.
   $F762,$03 Call #R$C401.
   $F765,$03 Call #R$F635.
-  $F768,$02 #REGa=#N$12.
-  $F76A,$03 Call #R$C35F.
+  $F768,$05 Call #R$C35F with #ITEM$12.
   $F76D,$03 Jump to #R$F06A if *#REGhl is equal to #N$12.
-  $F770,$02 #REGa=#N$02.
-  $F772,$03 Call #R$C35F.
+  $F770,$05 Call #R$C35F with #ITEM$02.
   $F775,$03 Jump to #R$F06A if *#REGhl is equal to #N$02.
-  $F778,$02 #REGa=#N$03.
-  $F77A,$03 Call #R$C3EA.
-  $F77D,$02 #REGa=#N$14.
-  $F77F,$03 Call #R$C3EA.
-  $F782,$05 Write #N$4E to *#R$ECBC.
+  $F778,$05 Call #R$C3EA with #ITEM$03.
+  $F77D,$05 Call #R$C3EA with #ITEM$14.
+  $F782,$05 Write #N$4E to *#R$ECBC to open up eastbound access to #ROOM$4E
+. from #ROOM$47.
 N $F787 Print "#STR$DF8E,$08($b==$FF)".
   $F787,$03 #REGhl=#R$DF8E.
   $F78A,$03 Jump to #R$F03A.
@@ -4055,8 +4206,7 @@ N $F787 Print "#STR$DF8E,$08($b==$FF)".
   $F795,$03 #REGhl=#R$E86E.
   $F798,$03 Call #R$C401.
   $F79B,$03 Call #R$F635.
-  $F79E,$02 #REGa=#N$14.
-  $F7A0,$03 Call #R$C35F.
+  $F79E,$05 Call #R$C35F with #ITEM$14.
   $F7A3,$02 Jump to #R$F770 if *#REGhl is equal to #N$14.
   $F7A5,$03 Jump to #R$F06A.
   $F7A8,$03 Jump to #R$F065.
@@ -4082,12 +4232,12 @@ N $F787 Print "#STR$DF8E,$08($b==$FF)".
   $F7DA,$03 #REGhl=#R$EA26.
   $F7DD,$03 Call #R$C37F.
   $F7E0,$02 Jump to #R$F813 if *#REGhl is not equal to #N$14.
-  $F7E2,$02 #REGa=#N$04.
+  $F7E2,$02 #REGa=#N$04 (event ID: #N($04&$7F)).
   $F7E4,$03 Call #R$C35F.
   $F7E7,$03 Jump to #R$F079 if *#REGhl is not equal to #N$04.
   $F7EA,$02 #REGa=#N$04.
   $F7EC,$03 Call #R$F635.
-  $F7EF,$02 #REGa=#N$04.
+  $F7EF,$02 #REGa=#N$04 (event ID: #N($04&$7F)).
   $F7F1,$03 Call #R$C3EA.
   $F7F4,$03 #REGbc=#N$0566.
   $F7F7,$03 Call #R$C412.
@@ -4103,21 +4253,19 @@ N $F80D Print "#STR$E00C,$08($b==$FF)".
   $F813,$03 #REGhl=#R$EA70.
   $F816,$03 Call #R$C37F.
   $F819,$02 Jump to #R$F84E if *#REGhl is not equal to #N$66.
-  $F81B,$02 #REGa=#N$08.
-  $F81D,$03 Call #R$C35F.
+  $F81B,$05 Call #R$C35F with #ITEM$08.
   $F820,$03 Jump to #R$F079 if *#REGhl is not equal to #N$08.
-  $F823,$02 #REGa=#N$08.
-  $F825,$03 Call #R$F635.
-  $F828,$02 #REGa=#N$08.
-  $F82A,$03 Call #R$C3EA.
-  $F82D,$03 #REGbc=#N$090A.
-  $F830,$03 Call #R$C426.
-  $F833,$03 #REGbc=#N$3231.
-  $F836,$03 Call #R$C426.
-  $F839,$02 #REGa=#N$33.
-  $F83B,$03 Call #R$C3EA.
-  $F83E,$05 Write #N$6A to *#R$EB90.
-  $F843,$05 Write #N$15 to *#R$ED8D.
+  $F823,$05 Call #R$F635 with #ITEM$08.
+  $F828,$05 Call #R$C3EA with #ITEM$08.
+  $F82D,$06 Call #R$C426 to transform item #N$09 (#ITEM$09) into item #N$0A
+. (#ITEM$0A).
+  $F833,$06 Call #R$C426 to transform item #N$32 (#ITEM$32) into item #N$31
+. (#ITEM$31).
+  $F839,$05 Call #R$C3EA with #ITEM$33.
+  $F83E,$05 Write #N$6A to *#R$EB90 to open up bound access to #ROOM$6A
+. from #ROOM$15.
+  $F843,$05 Write #N$15 to *#R$ED8D to open up bound access to #ROOM$15
+. from #ROOM$68.
 N $F848 Print "#STR$E029,$08($b==$FF)".
   $F848,$03 #REGhl=#R$E029.
   $F84B,$03 Jump to #R$F03A.
@@ -4128,18 +4276,18 @@ N $F848 Print "#STR$E029,$08($b==$FF)".
   $F855,$03 #REGhl=#R$EA8D.
   $F858,$03 Call #R$C37F.
   $F85B,$02 Jump to #R$F888 if *#REGhl is not equal to #N$15.
-  $F85D,$02 #REGa=#N$1A.
-  $F85F,$03 Call #R$C3E4.
+  $F85D,$05 Call #R$C3E4 with #ITEM$1A.
   $F862,$03 Jump to #R$F07E if *#REGhl is not equal to #N$1A.
-  $F865,$02 #REGa=#N$1A.
-  $F867,$03 Call #R$C3EA.
-  $F86A,$02 #REGa=#N$2B.
-  $F86C,$03 Call #R$C3EA.
+  $F865,$05 Call #R$C3EA with #ITEM$1A.
+  $F86A,$05 Call #R$C3EA with #ITEM$2B.
   $F86F,$03 #REGhl=#R$BC98.
   $F872,$01 Decrease *#REGhl by one.
-  $F873,$05 Write #N$40 to *#R$EC8A.
-  $F878,$05 Write #N$41 to *#R$EC8B.
-  $F87D,$05 Write #N$42 to *#R$EC8C.
+  $F873,$05 Write #N$40 to *#R$EC8A to open up bound access to #ROOM$40
+. from #ROOM$3F.
+  $F878,$05 Write #N$41 to *#R$EC8B to open up bound access to #ROOM$41
+. from #ROOM$3F.
+  $F87D,$05 Write #N$42 to *#R$EC8C to open up bound access to #ROOM$42
+. from #ROOM$3F.
 N $F882 Print "#STR$DE81,$08($b==$FF)".
   $F882,$03 #REGhl=#R$DE81.
   $F885,$03 Jump to #R$F03A.
@@ -4147,8 +4295,7 @@ N $F882 Print "#STR$DE81,$08($b==$FF)".
   $F888,$03 #REGhl=#R$EA96.
   $F88B,$03 Call #R$C37F.
   $F88E,$02 Jump to #R$F89E if *#REGhl is not equal to #N$42.
-  $F890,$02 #REGa=#N$1A.
-  $F892,$03 Call #R$C3E4.
+  $F890,$05 Call #R$C3E4 with #ITEM$1A.
   $F895,$03 Jump to #R$F07E if *#REGhl is not equal to #N$1A.
 N $F898 Print "#STR$E07F,$08($b==$FF)".
   $F898,$03 #REGhl=#R$E07F.
@@ -4157,8 +4304,7 @@ N $F898 Print "#STR$E07F,$08($b==$FF)".
   $F89E,$03 #REGhl=#R$EA9A.
   $F8A1,$03 Call #R$C37F.
   $F8A4,$02 Jump to #R$F8B8 if *#REGhl is not equal to #N$1A.
-  $F8A6,$02 #REGa=#N$1A.
-  $F8A8,$03 Call #R$C3E4.
+  $F8A6,$05 Call #R$C3E4 with #ITEM$1A.
   $F8AB,$03 Jump to #R$F07E if *#REGhl is not equal to #N$1A.
   $F8AE,$03 #REGhl=#R$EDD7.
   $F8B1,$01 Exchange the *#REGsp with the #REGhl register.
@@ -4170,8 +4316,7 @@ N $F8B2 Print "#STR$E0B4,$08($b==$FF)".
   $F8B8,$03 #REGhl=#R$EA9E.
   $F8BB,$03 Call #R$C37F.
   $F8BE,$02 Jump to #R$F90A if ?? is not equal to #N$00.
-  $F8C0,$02 #REGa=#N$0F.
-  $F8C2,$03 Call #R$C3E4.
+  $F8C0,$05 Call #R$C3E4 with #ITEM$0F.
   $F8C5,$03 Jump to #R$F07E if ?? is not equal to #N$0F.
   $F8C8,$03 #REGhl=#R$E8B2.
   $F8CB,$03 Call #R$C401.
@@ -4220,12 +4365,12 @@ N $F912 Print "#STR$E14B,$08($b==$FF)".
   $F918,$03 Jump to #R$F06F.
   $F91B,$03 Call #R$C47B.
   $F91E,$01 Return if ?? is less than #N$00.
-  $F91F,$02 #REGa=#N$0F.
-  $F921,$03 Call #R$C3E4.
-  $F924,$02 Jump to #R$F92C if ?? is equal to #N$0F.
+  $F91F,$05 Call #R$C3E4 with item: #ITEM$0F.
+  $F924,$02 Jump to #R$F92C if the player has the gun in their inventory.
 N $F926 Print "#STR$E15E,$08($b==$FF)".
   $F926,$03 #REGhl=#R$E15E.
   $F929,$03 Jump to #R$F03A.
+@ $F92C label=PlayerHasGun
   $F92C,$03 #REGhl=#R$EAA6.
   $F92F,$03 Call #R$C37F.
   $F932,$03 Jump to #R$F8C8 if ?? is equal to #N$0F.
@@ -4317,14 +4462,18 @@ N $F9BB Print "#STR$E175,$08($b==$FF)".
 N $FA0E Print "#STR$E238,$08($b==$FF)".
   $FA0E,$03 #REGhl=#R$E238.
   $FA11,$03 Jump to #R$F03A.
+N $FA14 Handle drinking water.
+@ $FA14 label=Handler_DrinkWater
   $FA14,$03 #REGhl=#R$EABA.
   $FA17,$03 Call #R$C37F.
-  $FA1A,$02 Jump to #R$FA39 if *#REGhl is not equal to #N$06.
+  $FA1A,$02 Jump to #R$FA39 if the player can't drink water at this time.
+N $FA1C The player can drink water but determine what type of water...
   $FA1C,$03 #REGa=*#R$BCCB.
   $FA1F,$03 #REGhl=#R$FA35.
   $FA22,$03 #REGbc=#N($0004,$04,$04).
   $FA25,$02 CPIR.
-  $FA27,$02 Jump to #R$FA2F if *#REGhl is equal to #N$06.
+  $FA27,$02 Jump to #R$FA2F if the current room contains fresh water.
+N $FA29 Else it must be salt water - so report this.
 N $FA29 Print "#STR$E28E,$08($b==$FF)".
   $FA29,$03 #REGhl=#R$E28E.
   $FA2C,$03 Jump to #R$F03A.
@@ -4356,10 +4505,10 @@ N $FA5D Print "#STR$E2F1,$08($b==$FF)".
 
   $FA63,$04 Jump to #R$FA6C if #REGa is equal to #N$2D.
   $FA67,$05 Jump to #R$F088 if #REGa is not equal to #N$30.
-  $FA6C,$03 #REGbc=#N$2D2C.
-  $FA6F,$03 Call #R$C426.
-  $FA72,$03 #REGbc=#N$302F.
-  $FA75,$03 Call #R$C426.
+  $FA6C,$06 Call #R$C426 to transform item #N$2C (#ITEM$2C) into item #N$2D
+. (#ITEM$2D).
+  $FA72,$06 Call #R$C426 to transform item #N$2F (#ITEM$2F) into item #N$30
+. (#ITEM$30).
   $FA78,$05 Write #N$62 to *#R$ED57.
   $FA7D,$05 Write #N$61 to *#R$ED5C.
   $FA82,$03 Jump to #R$F06A.
@@ -4367,7 +4516,7 @@ N $FA5D Print "#STR$E2F1,$08($b==$FF)".
   $FA88,$03 Call #R$C37F.
   $FA8B,$02 Jump to #R$FAA5 if #REGa is not equal to #N$61.
   $FA8D,$07 Jump to #R$FAA5 if *#R$BCCB is not room #N$6A: "#ROOM$6A".
-  $FA94,$02 #REGa=#N$31.
+  $FA94,$02 #REGa=#N$31 (event ID: #N($31&$7F)).
   $FA96,$03 Call #R$C35F.
   $FA99,$03 Jump to #R$F088 if #REGa is equal to #N$31.
   $FA9C,$03 Call #R$F06F.
@@ -4386,17 +4535,17 @@ N $FA9F Print "#STR$E305,$08($b==$FF)".
   $FAC2,$03 Call #R$C401.
   $FAC5,$05 Jump to #R$F08D if #REGa is equal to #N$2D.
   $FACA,$05 Jump to #R$F08D if #REGa is equal to #N$30.
-  $FACF,$03 #REGbc=#N$2C2D.
-  $FAD2,$03 Call #R$C426.
-  $FAD5,$03 #REGbc=#N$2F30.
-  $FAD8,$03 Call #R$C426.
+  $FACF,$06 Call #R$C426 to transform item #N$2D (#ITEM$2D) into item #N$2C
+. (#ITEM$2C).
+  $FAD5,$06 Call #R$C426 to transform item #N$30 (#ITEM$30) into item #N$2F
+. (#ITEM$2F).
   $FADB,$07 Write #N$00 to: #LIST { *#R$ED57 } { *#R$ED5C } LIST#
   $FAE2,$03 Jump to #R$F06A.
   $FAE5,$03 #REGhl=#R$EAC0.
   $FAE8,$03 Call #R$C37F.
   $FAEB,$02 Jump to #R$FB05 if #REGa is not equal to #N$30.
   $FAED,$07 Jump to #R$FB05 if *#R$BCCB is not room #N$6A: "#ROOM$6A".
-  $FAF4,$02 #REGa=#N$32.
+  $FAF4,$02 #REGa=#N$32 (event ID: #N($32&$7F)).
   $FAF6,$03 Call #R$C35F.
   $FAF9,$03 Jump to #R$F08D if #REGa is equal to #N$32.
   $FAFC,$03 Call #R$F06F.
@@ -4415,10 +4564,10 @@ N $FB0D Print "#STR$E31A,$08($b==$FF)".
   $FB1C,$03 #REGhl=#R$EAC7.
   $FB1F,$03 Call #R$C37F.
   $FB22,$02 Jump to #R$FB6E if #REGa is not equal to #N$32.
-  $FB24,$02 #REGa=#N$39.
+  $FB24,$02 #REGa=#N$39 (event ID: #N($39&$7F)).
   $FB26,$03 Call #R$C35F.
   $FB29,$03 Jump to #R$F06A if #REGa is not equal to #N$39.
-  $FB2C,$02 #REGa=#N$29.
+  $FB2C,$02 #REGa=#N$29 (event ID: #N($29&$7F)).
   $FB2E,$03 Call #R$C35F.
   $FB31,$02 Jump to #R$FB43 if #REGa is equal to #N$29.
   $FB33,$03 #REGhl=#R$EDD7.
@@ -4432,13 +4581,16 @@ N $FB3D Print "#STR$E36A,$08($b==$FF)".
 
   $FB43,$03 #REGhl=#R$BC6F.
   $FB46,$02 Reset bit 0 of *#REGhl.
-  $FB48,$02 #REGa=#N$29.
+  $FB48,$02 #REGa=#N$29 (event ID: #N($29&$7F)).
   $FB4A,$03 Call #R$C3EA.
-  $FB4D,$03 #REGbc=#N($393A,$04,$04).
-  $FB50,$03 Call #R$C426.
-  $FB53,$05 Write #N$2F to *#R$EC27.
-  $FB58,$05 Write #N$30 to *#R$EC2A.
-  $FB5D,$05 Write #N$31 to *#R$EC30.
+  $FB4D,$06 Call #R$C426 to transform item #N$3A (#ITEM$3A) into item #N$39
+. (#ITEM$39).
+  $FB53,$05 Write #N$2F to *#R$EC27 to open up westbound access to #ROOM$2F
+. from #ROOM$2E.
+  $FB58,$05 Write #N$30 to *#R$EC2A to open up northbound access to #ROOM$30
+. from #ROOM$2F.
+  $FB5D,$05 Write #N$31 to *#R$EC30 to open up northbound access to #ROOM$31
+. from #ROOM$30.
 N $FB62 Print "#STR$E333,$08($b==$FF)".
   $FB62,$03 #REGhl=#R$E333.
   $FB65,$03 Call #R$BAB1.
@@ -4477,11 +4629,11 @@ N $FBA2 Print "#STR$E3F7,$08($b==$FF)".
   $FBB1,$03 #REGhl=#R$EACB.
   $FBB4,$03 Call #R$C37F.
   $FBB7,$02 Jump to #R$FBD2 if #REGa is not equal to #N$02.
-  $FBB9,$02 #REGa=#N$34.
+  $FBB9,$02 #REGa=#N$34 (event ID: #N($34&$7F)).
   $FBBB,$03 Call #R$C35F.
   $FBBE,$03 Jump to #R$F065 if #REGa is equal to #N$34.
-  $FBC1,$03 #REGbc=#N$3B34.
-  $FBC4,$03 Call #R$C426.
+  $FBC1,$06 Call #R$C426 to transform item #N$34 (#ITEM$34) into item #N$3B
+. (#ITEM$3B).
   $FBC7,$05 Write #N$60 to *#R$ED4F.
   $FBCC,$03 #REGhl=#R$E40B.
   $FBCF,$03 Jump to #R$F03A.
@@ -4492,7 +4644,7 @@ N $FBA2 Print "#STR$E3F7,$08($b==$FF)".
   $FBDE,$03 #REGhl=#R$E9F1.
   $FBE1,$03 Call #R$C37F.
   $FBE4,$02 Jump to #R$FC0A if #REGa is not equal to #N$02.
-  $FBE6,$02 #REGa=#N$11.
+  $FBE6,$02 #REGa=#N$11 (event ID: #N($11&$7F)).
   $FBE8,$03 Call #R$C35F.
   $FBEB,$02 Jump to #R$FBF3 if #REGa is not equal to #N$11.
 N $FBED Print "#STR$E44C,$08($b==$FF)".
@@ -4502,8 +4654,8 @@ N $FBED Print "#STR$E44C,$08($b==$FF)".
   $FBF3,$02 #REGa=#N$10.
   $FBF5,$03 Call #R$C3E4.
   $FBF8,$03 Jump to #R$F07E if #REGa is not equal to #N$10.
-  $FBFB,$03 #REGbc=#N($1011,$04,$04).
-  $FBFE,$03 Call #R$C426.
+  $FBFB,$06 Call #R$C426 to transform item #N$11 (#ITEM$11) into item #N$10
+. (#ITEM$10).
   $FC01,$03 Call #R$F06A.
 N $FC04 Print "#STR$E467,$08($b==$FF)".
   $FC04,$03 #REGhl=#R$E467.
@@ -4524,18 +4676,17 @@ N $FC12 Print "#STR$E486,$08($b==$FF)".
   $FC2D,$03 #REGhl=#R$E9E1.
   $FC30,$03 Call #R$C37F.
   $FC33,$02 Jump to #R$FC5E if #REGa is not equal to #N$02.
-  $FC35,$02 #REGa=#N$03.
-  $FC37,$03 Call #R$C35F.
-  $FC3A,$03 Jump to #R$F079 if #REGa is equal to #N$03.
-  $FC3D,$02 #REGa=#N$02.
-  $FC3F,$03 Call #R$C3E4.
-  $FC42,$03 Jump to #R$F07E if #REGa is not equal to #N$02.
-  $FC45,$03 #REGbc=#N$0203.
-  $FC48,$03 Call #R$C426.
-  $FC4B,$03 #REGhl=#R$BC66.
-  $FC4E,$02 Set bit 6 of *#REGhl.
+  $FC35,$05 Call #R$C35F using item: #ITEM$03.
+  $FC3A,$03 Jump to #R$F079 if the lit match is already in the players
+. possession.
+  $FC3D,$05 Call #R$C3E4 using item: #ITEM$02.
+  $FC42,$03 Jump to #R$F07E if the player is not holding the (unlit) match.
+  $FC45,$06 Call #R$C426 to transform item #N$02 (#ITEM$02) into item #N$03
+. (#ITEM$03).
+  $FC4B,$05 Set bit 6 of *#R$BC66 which activates lighting the match.
   $FC50,$05 Write #N$06 to *#R$BC6D.
   $FC55,$03 Call #R$F06A.
+N $FC58 Print "#STR$E4D1,$08($b==$FF)".
   $FC58,$03 #REGhl=#R$E4D1.
   $FC5B,$03 Jump to #R$F03A.
   $FC5E,$03 Jump to #R$F06F.
@@ -4569,7 +4720,7 @@ N $FCA4 Print "#STR$E305,$08($b==$FF)".
   $FCAA,$03 #REGhl=#R$EADD.
   $FCAD,$03 Call #R$C37F.
   $FCB0,$02 Jump to #R$FCCA if #REGa is not equal to #N$52.
-  $FCB2,$02 #REGa=#N$4A.
+  $FCB2,$02 #REGa=#N$4A (event ID: #N($4A&$7F)).
   $FCB4,$03 Call #R$C35F.
   $FCB7,$03 Jump to #R$F079 if #REGa is equal to #N$4A.
   $FCBA,$02 #REGa=#N$4A.
@@ -4586,7 +4737,7 @@ N $FCC4 Print "#STR$E508,$08($b==$FF)".
   $FCD4,$03 Call #R$C37F.
   $FCD7,$02 Jump to #R$FCFF if #REGa is not equal to #N$3B.
   $FCD9,$08 Jump to #R$F06F if *#R$BCCB is room #N$6A: "#ROOM$6A".
-  $FCE1,$02 #REGa=#N$2E.
+  $FCE1,$02 #REGa=#N$2E (event ID: #N($2E&$7F)).
   $FCE3,$03 Call #R$C35F.
   $FCE6,$03 Jump to #R$F079 if #REGa is not equal to #N$2E.
   $FCE9,$02 #REGa=#N$1F.
@@ -4595,8 +4746,8 @@ N $FCC4 Print "#STR$E508,$08($b==$FF)".
 N $FCF0 Print "#STR$E604,$08($b==$FF)".
   $FCF0,$03 #REGhl=#R$E604.
   $FCF3,$03 Jump to #R$F03A.
-  $FCF6,$03 #REGbc=#N($2E2D,$04,$04).
-  $FCF9,$03 Call #R$C426.
+  $FCF6,$06 Call #R$C426 to transform item #N$2D (#ITEM$2D) into item #N$2E
+. (#ITEM$2E).
   $FCFC,$03 Jump to #R$F06A.
   $FCFF,$03 Jump to #R$F06F.
   $FD02,$03 Call #R$C4B7.
@@ -4734,8 +4885,10 @@ L $FF3A,$02,$26
 g $FF86 Jump Table: Events
 @ $FF86 label=JumpTable_Events
 @ $FF96 label=JumpTable_ScenicEvents
-W $FF86,$02 #N((#PC-$FF86)/$02).
-L $FF86,$02,$11
+W $FF86,$02 Event #N((#PC-$FF86)/$02).
+L $FF86,$02,$08
+W $FF96,$02 Scenic event #N((#PC-$FF96)/$02).
+L $FF96,$02,$09
 
 g $FFA8 Jump Table: Room Images
 @ $FFA8 label=JumpTable_RoomImages
