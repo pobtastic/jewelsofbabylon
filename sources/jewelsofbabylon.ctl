@@ -184,8 +184,12 @@ c $BA96 Switch To Upper Screen
 
 c $BAA4 Print String
 @ $BAA4 label=PrintString
+D $BAA4 Standard printing loop, which prints the fetched character byte and
+. loops until the termination byte is reached (#N$FF).
 R $BAA4 HL Pointer to string to be printed
   $BAA4,$03 Call #R$BA96.
+N $BAA7 Just keep looping and printing the fetched character until the
+. termination byte is reached (#N$FF).
 @ $BAA7 label=PrintString_Loop
   $BAA7,$01 Load a character from the string pointer into #REGa.
   $BAA8,$01 Move the string pointer to the next character.
@@ -193,8 +197,8 @@ R $BAA4 HL Pointer to string to be printed
 . reached.
   $BAAC,$03 Call #R$BAC3.
   $BAAF,$02 Jump to #R$BAA7.
-N $BAB1 Shortcut print routine which auto-scrolls after it's done.
-@ $BAB1 label=PrintStringAndScroll
+N $BAB1 Shortcut print routine which prints a newline after it's done.
+@ $BAB1 label=PrintStringAndNewline
   $BAB1,$03 Call #R$BAA4.
 N $BAB4 Force a newline to be "printed".
   $BAB4,$02 Load a "newline" character into #REGa (#N$0D).
@@ -402,35 +406,41 @@ N $BBE9 Print "#STR$BD85,$08($b==$FF)".
   $BBEC,$03 Call #R$BAA4.
   $BBEF,$01 Return.
 
-g $BBF0 Table: Object Locations
-@ $BBF0 label=Table_ObjectLocations
-D $BBF0 When the object is in the players inventory, the room ID changes to
+g $BBF0 Table: Item Locations
+@ $BBF0 label=Table_ItemLocations
+D $BBF0 A table where the index is the item ID, and the value is the room it
+. resides in (#N$00 for "currently inactive").
+D $BBF0 When the item is in the players inventory, the room ID changes to
 . #N$01.
-B $BBF0,$01 Object #N(#PC-$BBF0)? in room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
-L $BBF0,$01,$30
+B $BBF0,$01 Item #N(#PC-$BBF0) #ITEM(#PC-$BBF0) in room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+L $BBF0,$01,$4F
 
 b $BC54
 
 g $BC5C Table: Already Seen Room Images
 @ $BC5C label=Table_RoomImagesAlreadySeen
-D $BC5C Used by the routine at #R$C21E but uses the bit index from #R$E95D.
-N $BC5C Corresponds to whether the player has already seen (bit is set)
-. the image for the following rooms:
-B $BC5C,b,$01 #TABLE(default,centre,centre)
+D $BC5C Corresponds to whether the player has already seen the image for the following rooms:
+.
+. #TABLE(default,centre,centre)
 . { =h Bit | =h Room ID | =h Room Name }
 . #FOR$E95D,$E964,,1(n,{ #N(n-$E95D) | #N(#PEEKn) | #ROOM(#PEEKn) })
 . TABLE#
-B $BC5D,b,$01 #TABLE(default,centre,centre)
+. #TABLE(default,centre,centre)
 . { =h Bit | =h Room ID | =h Room Name }
 . #FOR$E965,$E969,,1(n,{ #N(n-$E965) | #N(#PEEKn) | #ROOM(#PEEKn) })
 . #FOR$05,$07,,1(n,{ #Nn | N/A | N/A })
 . TABLE#
+D $BC5C Used by the routine at #R$C21E but uses the bit index from #R$E95D.
+B $BC5C,b,$01
+B $BC5D,b,$01
 
 b $BC5E
 
-g $BC66 Flags: Event States
-@ $BC66 label=Flag_EventState
-D $BC66 #TABLE(default,centre,centre)
+g $BC66 Flags: Turn-Based Event States
+@ $BC66 label=Flag_TurnBasedEventState
+D $BC66 Holds a single byte, where each bit relates to a turn-based event as
+. follows:
+. #TABLE(default,centre,centre)
 . { =h Bit | =h Relating To }
 . { #N$00 | Crab }
 . { #N$01 | Tentacle }
@@ -441,13 +451,52 @@ D $BC66 #TABLE(default,centre,centre)
 . { #N$06 | Match }
 . { #N$07 | Wave }
 . TABLE#
+. When the bit is set, this starts a turn counter (see #R$BC67).
 B $BC66,$01
 
-g $BC67
-B $BC67,$11,$01
+g $BC67 Turn-Based Event Counters
+N $BC67 Initialised to #N$06.
+@ $BC67 label=Counter_Crab
+N $BC68 Initialised to #N$05 by #R$EFA7.
+@ $BC68 label=Counter_Tentacle
+N $BC69 Initialised to #N$06.
+@ $BC69 label=Counter_Drunk
+N $BC6A Initialised to #N$07.
+@ $BC6A label=Counter_Lion
+N $BC6B Initialised to #N$0B.
+@ $BC6B label=Counter_Crocodile
+N $BC6C Initialised to #N$09.
+@ $BC6C label=Counter_Cannibals
+N $BC6D Initialised to #N$06.
+@ $BC6D label=Counter_Match
+N $BC6E Initialised to #N$05 by #R$EFFF.
+@ $BC6E label=Counter_Wave
+B $BC67,$08,$01
+
+g $BC6F Flags: Event States
+@ $BC6F label=Flag_EventState
+D $BC6F Holds a single byte, where each bit relates to an event as follows:
+. #TABLE(default,centre,centre)
+. { =h Bit | =h Relating To }
+. { #N$00 | Crab }
+. { #N$01 | Tentacle }
+. { #N$02 | Drunk }
+. { #N$03 | Lion }
+. { #N$04 | Crocodile }
+. { #N$05 | Cannibals }
+. { #N$06 | Match }
+. { #N$07 | Wave }
+. TABLE#
+. When the bit is set, this indicates that a turn-based event has started.
+B $BC6F,$01
+
+g $BC70
+  $BC70,$08,$01
 
 g $BC78 Table: Scenic Event Locations
 @ $BC78 label=Table_ScenicEventLocations
+D $BC78 A table where the index is the event ID, and the value is the room it
+. resides in (#N$00 for "currently inactive"). See #R$BD30 for the count.
 B $BC78,$01 Event #N(#PC-$BC78) in room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
 L $BC78,$01,$09
 
@@ -460,47 +509,58 @@ B $BC98,$01
 
 b $BC99
 
-g $BCCB Room Number
-@ $BCCB label=RoomNumber
-B $BCCB,$01 Default/ Starting Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+g $BCCB Current Room ID
+@ $BCCB label=CurrentRoom
+D $BCCB The room the player starts the game in is room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
+B $BCCB,$01 Current room ID.
 
 g $BCCC Table: Scenic Event Rooms
 @ $BCCC label=Table_ScenicEventRooms
-W $BCCC,$02
+D $BCCC Pointer to the table containing groups of room IDs that an event could
+. occur in.
+W $BCCC,$02 Event #N((#PC-$BCCC)/$02).
 L $BCCC,$02,$09
 
 g $BCDE
 
 g $BD0C Pointer: Vocabulary Table
 @ $BD0C label=Pointer_Vocabulary
+D $BD0C Pointer to the table containing the game vocabulary.
 W $BD0C,$02
 
-g $BD0E Pointer: Events Jump Table
-@ $BD0E label=Pointer_Events_Jump
+g $BD0E Pointer: Turn-Based Events Jump Table
+@ $BD0E label=Pointer_TurnBasedEvents_Jump
+D $BD0E Pointer to the jump table containing turn-based events.
 W $BD0E,$02
 
 g $BD10 Pointer: Room Map Table
 @ $BD10 label=Pointer_RoomMap
+D $BD10 Pointer to the table containing the relationships between rooms.
 W $BD10,$02
 
-g $BD12 Pointer: Object Description Table
-@ $BD12 label=Pointer_ObjectDescriptions
+g $BD12 Pointer: Item Description Table
+@ $BD12 label=Pointer_ItemDescriptions
+D $BD12 Pointer to the table containing item descriptions.
 W $BD12,$02
 
 g $BD14 Pointer: Rooms With Images Table
 @ $BD14 label=Pointer_RoomsWithImages
+D $BD14 Pointer to the table containing all the rooms which have an image to
+. display.
 W $BD14,$02
 
 g $BD16 Pointer: Room Image Jump Table
 @ $BD16 label=Pointer_RoomImage
+D $BD16 Pointer to the jump table for displaying an image relating to a room.
 W $BD16,$02
 
 g $BD18 Pointer: Room Description Table
 @ $BD18 label=Pointer_RoomDescriptions
+D $BD18 Pointer to the table containing room descriptions.
 W $BD18,$02
 
-g $BD1A Pointer: Object Rooms Table
-@ $BD1A label=Pointer_ObjectRooms
+g $BD1A Pointer: Item Grouping Table
+@ $BD1A label=Pointer_ItemGroupingTable
 W $BD1A,$02
 
 g $BD1C Pointer: Object Noun Phrases
@@ -526,12 +586,14 @@ W $BD24,$02
 g $BD26
 W $BD26,$02
 
-g $BD28 Number Of Items?
+g $BD28 Number Of Items
 @ $BD28 label=Count_Items
+D $BD28 The total number of items in the game.
 W $BD28,$02
 
-g $BD2A Number Of Objects?
+g $BD2A Number Of Objects
 @ $BD2A label=Count_Objects
+D $BD2A The total number of objects in the game.
 W $BD2A,$02
 
 g $BD2C
@@ -539,10 +601,12 @@ W $BD2C,$02
 
 g $BD2E Number Of Rooms With Images
 @ $BD2E label=Count_RoomsWithImages
+D $BD2E The total number of rooms which have related images in the game.
 W $BD2E,$02
 
-g $BD30 Number Of Scenic Events?
+g $BD30 Number Of Scenic Events
 @ $BD30 label=Count_ScenicEvents
+E $BD30 The total number of scenic events in the game, see #R$BC78.
 W $BD30,$02
 
 g $BD32 Number Of "Configurable Exits"
@@ -577,187 +641,209 @@ W $BD7F,$02
 
 g $BD81
 
-t $BD85 Messaging: > 
+t $BD85 Messaging: "> "
 @ $BD85 label=Messaging_Prompt
   $BD85,$02 "#STR$BD85,$08($b==$FF)".
 B $BD87,$01 Terminator.
 
-t $BD88 Messaging: <BS> <BS>
+t $BD88 Messaging: "<BS> <BS>"
 @ $BD88 label=Messaging_BackspaceX2
   $BD88,$03 "#STR$BD88,$08($b==$FF)".
 B $BD8B,$01 Terminator.
 
-t $BD8C Messaging: The 
+t $BD8C Messaging: "The "
 @ $BD8C label=Messaging_The
   $BD8C,$04 "#STR$BD8C,$08($b==$FF)".
 B $BD90,$01 Terminator.
 
-t $BD91 Messaging: I Don't Understand
+t $BD91 Messaging: "I Don't Understand"
 @ $BD91 label=Messaging_IDontUnderstand
   $BD91,$13 "#STR$BD91,$08($b==$FF)".
 B $BDA4,$01 Terminator.
 
-t $BDA5 Messaging: I Don't Know The Word
+t $BDA5 Messaging: "I Don't Know The Word"
 @ $BDA5 label=Messaging_IDontKnowTheWord
   $BDA5,$17 "#STR$BDA5,$08($b==$FF)".
 B $BDBC,$01 Terminator.
 
-t $BDBD Messaging: Nothing
+t $BDBD Messaging: "Nothing"
 @ $BDBD label=Messaging_Nothing
   $BDBD,$08 "#STR$BDBD,$08($b==$FF)".
 B $BDC5,$01 Terminator.
 
-t $BDC6 Messaging: You Can See
+t $BDC6 Messaging: "You Can See"
 @ $BDC6 label=Messaging_YouCanSee
   $BDC6,$0E "#STR$BDC6,$08($b==$FF)".
 B $BDD4,$01 Terminator.
 
-t $BDD5 Messaging: Ampersand 
+t $BDD5 Messaging: "Ampersand "
 @ $BDD5 label=Messaging_Ampersand
   $BDD5,$03 "#STR$BDD5,$08($b==$FF)".
 B $BDD8,$01 Terminator.
 
-t $BDD9 Messaging: There Are Exits
+t $BDD9 Messaging: "There Are Exits"
 @ $BDD9 label=Messaging_ThereAreExits
   $BDD9,$12 "#STR$BDD9,$08($b==$FF)".
 B $BDEB,$01 Terminator.
 
-t $BDEC Messaging: There Is An Exit 
+t $BDEC Messaging: "There Is An Exit "
 @ $BDEC label=Messaging_ThereIsAnExit
   $BDEC,$12 "#STR$BDEC,$08($b==$FF)".
 B $BDFE,$01 Terminator.
 
-t $BDFF Messaging: North
+t $BDFF Messaging: "North"
 @ $BDFF label=Messaging_North
   $BDFF,$05 "#STR$BDFF,$08($b==$FF)".
 B $BE04,$01 Terminator.
 
-t $BE05 Messaging: South
+t $BE05 Messaging: "South"
 @ $BE05 label=Messaging_South
   $BE05,$05 "#STR$BE05,$08($b==$FF)".
 B $BE0A,$01 Terminator.
 
-t $BE0B Messaging: East
+t $BE0B Messaging: "East"
 @ $BE0B label=Messaging_East
   $BE0B,$04 "#STR$BE0B,$08($b==$FF)".
 B $BE0F,$01 Terminator.
 
-t $BE10 Messaging: West
+t $BE10 Messaging: "West"
 @ $BE10 label=Messaging_West
   $BE10,$04 "#STR$BE10,$08($b==$FF)".
 B $BE14,$01 Terminator.
 
-t $BE15 Messaging: Up
+t $BE15 Messaging: "Up"
 @ $BE15 label=Messaging_Up
   $BE15,$02 "#STR$BE15,$08($b==$FF)".
 B $BE17,$01 Terminator.
 
-t $BE18 Messaging: Down
+t $BE18 Messaging: "Down"
 @ $BE18 label=Messaging_Down
   $BE18,$04 "#STR$BE18,$08($b==$FF)".
 B $BE1C,$01 Terminator.
 
-t $BE1D Messaging: I Can't See 
+t $BE1D Messaging: "I Can't See "
 @ $BE1D label=Messaging_ICantSee
   $BE1D,$0C "#STR$BE1D,$08($b==$FF)".
 B $BE29,$01 Terminator.
 
-t $BE2A Messaging:  Here
+t $BE2A Messaging: " Here"
 @ $BE2A label=Messaging_Here
   $BE2A,$06 "#STR$BE2A,$08($b==$FF)".
 B $BE30,$01 Terminator.
 
-t $BE31 Messaging: You Are Dead
+t $BE31 Messaging: "You Are Dead"
 @ $BE31 label=Messaging_YouAreDead
   $BE31,$0D "#STR$BE31,$08($b==$FF)".
 B $BE3E,$01 Terminator.
 
-t $BE3F Messaging: Want Another Game? Y/N
+t $BE3F Messaging: "Want Another Game? Y/N"
+@ $BE3F label=Messaging_WantAnotherGame
   $BE3F,$17 "#STR$BE3F,$08($b==$FF)".
 B $BE56,$01 Terminator.
 
-t $BE57 Messaging: Loading. Start Tape
+t $BE57 Messaging: "Loading. Start Tape"
+@ $BE57 label=Messaging_LoadingStartTape
   $BE57,$14 "#STR$BE57,$08($b==$FF)".
 B $BE6B,$01 Terminator.
 
-t $BE6C Messaging: Tape Error
+t $BE6C Messaging: "Tape Error"
+@ $BE6C label=Messaging_TapeError
   $BE6C,$0B "#STR$BE6C,$08($b==$FF)".
 B $BE77,$01 Terminator.
 
-t $BE78 Messaging: Saving. Start Tape,Press Any Key
+t $BE78 Messaging: "Saving. Start Tape,Press Any Key"
+@ $BE78 label=Messaging_SavingStartTape
   $BE78,$21 "#STR$BE78,$08($b==$FF)".
 B $BE99,$01 Terminator.
 
-t $BE9A Messaging: Stop Tape.Saving Complete
+t $BE9A Messaging: "Stop Tape.Saving Complete"
+@ $BE9A label=Messaging_StopTape
   $BE9A,$1A "#STR$BE9A,$08($b==$FF)".
 B $BEB4,$01 Terminator.
 
-t $BEB5 Messaging: Want To Save The Game? Y/N
+t $BEB5 Messaging: "Want To Save The Game? Y/N"
+@ $BEB5 label=Messaging_WantToSaveTheGame
   $BEB5,$1B "#STR$BEB5,$08($b==$FF)".
 B $BED0,$01 Terminator.
 
-t $BED1 Messaging: Please Be More Specific
+t $BED1 Messaging: "Please Be More Specific"
+@ $BED1 label=Messaging_PleaseBeMoreSpecific
   $BED1,$18 "#STR$BED1,$08($b==$FF)".
 B $BEE9,$01 Terminator.
 
-t $BEEA Messaging: Please Rephrase That
+t $BEEA Messaging: "Please Rephrase That"
+@ $BEEA label=Messaging_PleaseRephraseThat
   $BEEA,$15 "#STR$BEEA,$08($b==$FF)".
 B $BEFF,$01 Terminator.
 
-t $BF00 Messaging: You Can't
+t $BF00 Messaging: "You Can't"
+@ $BF00 label=Messaging_YouCant
   $BF00,$0A "#STR$BF00,$08($b==$FF)".
 B $BF0A,$01 Terminator.
 
-t $BF0B Messaging: O.K
+t $BF0B Messaging: "O.K"
+@ $BF0B label=Messaging_OK
   $BF0B,$04 "#STR$BF0B,$08($b==$FF)".
 B $BF0F,$01 Terminator.
 
-t $BF10 Messaging: You're Already Carrying 
+t $BF10 Messaging: "You're Already Carrying "
+@ $BF10 label=Messaging_YoureAlreadyCarrying
   $BF10,$18 "#STR$BF10,$08($b==$FF)".
 B $BF28,$01 Terminator.
 
-t $BF29 Messaging: Full Stop
+t $BF29 Messaging: "Full Stop"
+@ $BF29 label=Messaging_FullStop
   $BF29,$01 "#STR$BF29,$08($b==$FF)".
 B $BF2A,$01 Terminator.
 
-t $BF2B Messaging: It
+t $BF2B Messaging: "It"
+@ $BF2B label=Messaging_It
   $BF2B,$03 "#STR$BF2B,$08($b==$FF)".
 B $BF2E,$01 Terminator.
 
-t $BF2F Messaging: Them
+t $BF2F Messaging: "Them"
+@ $BF2F label=Messaging_Them
   $BF2F,$05 "#STR$BF2F,$08($b==$FF)".
 B $BF34,$01 Terminator.
 
-t $BF35 Messaging: You Can't Carry Any More
+t $BF35 Messaging: "You Can't Carry Any More"
+@ $BF35 label=Messaging_YouCantCarryAnyMore
   $BF35,$19 "#STR$BF35,$08($b==$FF)".
 B $BF4E,$01 Terminator.
 
-t $BF4F Messaging: You Are Carrying
+t $BF4F Messaging: "You Are Carrying"
+@ $BF4F label=Messaging_YouAreCarrying
   $BF4F,$12 "#STR$BF4F,$08($b==$FF)".
 B $BF61,$01 Terminator.
 
-t $BF62 Messaging: You Can't Go In That Direction
+t $BF62 Messaging: "You Can't Go In That Direction"
+@ $BF62 label=Messaging_YouCantGoInThatDirection
   $BF62,$1F "#STR$BF62,$08($b==$FF)".
 B $BF81,$01 Terminator.
 
-t $BF82 Messaging: One At A Time, Please!
+t $BF82 Messaging: "One At A Time, Please!"
+@ $BF82 label=Messaging_OneAtATimePlease
   $BF82,$15 "#STR$BF82,$08($b==$FF)".
 B $BF97,$01 Terminator.
 
-t $BF98 Messaging: I Don't See The Point
+t $BF98 Messaging: "I Don't See The Point"
+@ $BF98 label=Messaging_IDontSeeThePoint
   $BF98,$16 "#STR$BF98,$08($b==$FF)".
 B $BFAE,$01 Terminator.
 
-t $BFAF Messaging: You're Not Carrying 
+t $BFAF Messaging: "You're Not Carrying "
+@ $BFAF label=Messaging_YoureNotCarrying
   $BFAF,$14 "#STR$BFAF,$08($b==$FF)".
 B $BFC3,$01 Terminator.
 
-t $BFC4 Messaging: You're Not Carrying Anything
+t $BFC4 Messaging: "You're Not Carrying Anything"
+@ $BFC4 label=Messaging_YoureNotCarryingAnything
   $BFC4,$1D "#STR$BFC4,$08($b==$FF)".
 B $BFE1,$01 Terminator.
 
 g $BFE2 Table: Directions
 @ $BFE2 label=Table_Directions
+D $BFE2 Pointer to the table containing direction messaging.
 W $BFE2,$02 "#STR$BDFF,$08($b==$FF)".
 W $BFE4,$02 "#STR$BE05,$08($b==$FF)".
 W $BFE6,$02 "#STR$BE0B,$08($b==$FF)".
@@ -765,15 +851,33 @@ W $BFE8,$02 "#STR$BE10,$08($b==$FF)".
 W $BFEA,$02 "#STR$BE15,$08($b==$FF)".
 W $BFEC,$02 "#STR$BE18,$08($b==$FF)".
 
-c $BFEE Responses
+c $BFEE Response: "Please Rephrase That"
 @ $BFEE label=Response_PleaseRephraseThat
 N $BFEE Print "#STR$BEEA,$08($b==$FF)".
+  $BFEE,$03 #REGhl=#R$BEEA.
+  $BFF1,$03 Call #R$BAB1.
+  $BFF4,$01 Return.
+
+c $BFF5 Response: "Please Be More Specific"
 @ $BFF5 label=Response_PleaseBeMoreSpecific
 N $BFF5 Print "#STR$BED1,$08($b==$FF)".
+  $BFF5,$03 #REGhl=#R$BED1.
+  $BFF8,$03 Call #R$BAB1.
+  $BFFB,$01 Return.
+
+c $BFFC Response: "You Can't"
 @ $BFFC label=Response_YouCant
 N $BFFC Print "#STR$BF00,$08($b==$FF)".
+  $BFFC,$03 #REGhl=#R$BF00.
+  $BFFF,$03 Call #R$BAB1.
+  $C002,$01 Return.
+
+c $C003 Response: "O.K."
 @ $C003 label=Response_OK
 N $C003 Print "#STR$BF0B,$08($b==$FF)".
+  $C003,$03 #REGhl=#R$BF0B.
+  $C006,$03 Call #R$BAB1.
+  $C009,$01 Return.
 
 c $C00A Handler: User Input
 @ $C00A label=Handler_UserInput
@@ -956,57 +1060,108 @@ N $C174 Print "#STR$BD91,$08($b==$FF)".
   $C177,$03 Call #R$BAB1.
   $C17A,$03 Jump to #R$C00A.
 
-c $C17D
-  $C17D,$03 #REGa=*#R$BC66.
-  $C180,$03 Jump to #R$C1AF if #REGa is zero.
-  $C183,$01 #REGc=#REGa.
-  $C184,$02 #REGb=#N$08.
-  $C186,$02 Shift #REGc right.
-  $C188,$02 Jump to #R$C1AD if ?? is greater than or equal to #REGa.
-  $C18A,$03 #REGde=#N($0000,$04,$04).
-  $C18D,$03 #REGhl=#R$BC67.
-  $C190,$04 #REGe=#N$08-#REGb.
-  $C194,$01 #REGhl+=#REGde.
-  $C195,$01 Decrease *#REGhl by one.
-  $C196,$02 Jump to #R$C1AD if *#REGhl is not equal to #REGa.
-  $C198,$04 #REGix=*#R$BD0E.
-  $C19C,$02 Shift #REGe left (with carry).
-  $C19E,$02 #REGix+=#REGde.
-  $C1A0,$03 #REGl=*#REGix+#N$00.
-  $C1A3,$03 #REGh=*#REGix+#N$01.
-  $C1A6,$01 Stash #REGbc on the stack.
-  $C1A7,$03 #REGde=#R$C1AC.
-  $C1AA,$01 Stash #REGde on the stack.
-  $C1AB,$01 Jump to *#REGhl.
-  $C1AC,$01 Restore #REGbc from the stack.
-  $C1AD,$02 Decrease counter by one and loop back to #R$C186 until counter is zero.
+c $C17D Process Game Events
+@ $C17D label=GameEventsProcessor
+D $C17D This routine manages two types of in-game events:
+. #HTML(<dl><dt>1. Turn-Based Events</dt>
+. <dd>These are timer-based hazards that count down with each game turn. When a
+. turn counter reaches zero, the associated event handler is called via a jump
+. table.</dd>
+. <dt>2. Scenic Events</dt>
+. <dd>Mostly atmospheric events that randomly appear in different locations to
+. add flavor to the game world (like seagulls appearing at the beach).</dd>
+. <dd>The routine maintains a table of current locations for each scenic event.
+. On each turn, it checks if any scenic event is NOT in the current room, then
+. randomly relocates it to one of its valid rooms.</dd>
+. <dd>Each scenic event has a predefined group of rooms where the event can
+. appear.</dd></dl>)
+. The routine ensures that:
+. #LIST
+. { Multiple turn-based dangers can threaten the player simultaneously }
+. { Scenic events don't repeatedly trigger in the same room }
+. { The game world feels dynamic with events occurring in different locations }
+. LIST#
+N $C17D First process the turn-based events (if any are active).
+  $C17D,$03 Load *#R$BC66 into #REGa.
+  $C180,$03 Jump to #R$C1AF if no turn-based events are currently active.
+N $C183 One of the events has triggered, find which one.
+  $C183,$01 Copy the turn-based event flags into #REGc.
+  $C184,$02 Set a counter in #REGb for the number of possible turn-based events
+. (#N$08).
+N $C186 Keep shifting the event flags one-by-one to find which bits are set.
+@ $C186 label=GameEventChecker_Loop
+  $C186,$02 Shift #REGc one position left to check the next event flag bit.
+  $C188,$02 Jump to #R$C1AD if this event bit isn't set.
+N $C18A The currently processed turn-based event is active, so process it.
+N $C18A This is: #R$BC67+(#N$08-the current event counter).
+  $C18A,$0B Calculate the turn-based event index and store it in #REGhl.
+  $C195,$01 Decrease the turn-based event counter at *#REGhl by one.
+  $C196,$02 Jump to #R$C1AD if the event turn counter at *#REGhl was still more
+. than zero.
+N $C198 The event turn counter is zero, so activate the event itself.
+  $C198,$04 Load *#R$BD0E into #REGix.
+  $C19C,$02 Double the index as this table contains addresses.
+  $C19E,$02 Add this offset to #REGix to point to the current handler.
+  $C1A0,$06 Get the handler address and store it in #REGhl.
+  $C1A6,$01 Stash the bit index and event flag byte on the stack.
+  $C1A7,$04 Push #R$C1AC onto the stack so that the next return will go on to
+. continue processing events.
+  $C1AB,$01 Jump to the routine pointed to by *#REGhl to action the current
+. event.
+N $C1AC Once the event handler has run, this is where the routine will resume.
+@ $C1AC label=GameEventChecker_Return
+  $C1AC,$01 Restore the event bit index counter and event flag byte from the
+. stack.
+@ $C1AD label=GameEventChecker_Next
+  $C1AD,$02 Decrease the event bit counter by one and loop back to #R$C186
+. until all the event status bits have been processed.
+N $C1AF Process scenic events.
+@ $C1AF label=GameScenicEventsProcessor
   $C1AF,$01 No operation.
-  $C1B0,$03 #REGhl=#R$BC78.
-  $C1B3,$03 #REGa=*#R$BD30.
-  $C1B6,$01 Set the bits from #REGa.
-  $C1B7,$02 Jump to #R$C1EF if *#REGhl is equal to #REGa.
-  $C1B9,$01 #REGb=#REGa.
+  $C1B0,$03 Load #REGhl with #R$BC78.
+  $C1B3,$03 Load *#R$BD30 into #REGa.
+  $C1B6,$03 Jump to #R$C1EF if there are no more scenic events to run (the
+. count is zero).
+  $C1B9,$01 Copy *#R$BD30 into #REGb as an event counter for the loop.
   $C1BA,$02 Jump to #R$C1BD.
-  $C1BC,$01 Increment #REGhl by one.
-  $C1BD,$04 Jump to #R$C1ED if *#REGhl is zero.
-  $C1C1,$06 Jump to #R$C1ED if *#R$BCCB is equal to *#REGhl.
-  $C1C7,$02 Stash #REGhl and #REGbc on the stack.
-  $C1C9,$05 #REGe=*#R$BD30-#REGb.
-  $C1CE,$04 #REGix=#R$BCCC.
+N $C1BC This is the main scenic event loop.
+@ $C1BC label=GameScenicEventChecker_Loop
+  $C1BC,$01 Increment the scenic event pointer location by one.
+@ $C1BD label=GameScenicEventChecker
+  $C1BD,$04 Jump to #R$C1ED if the event room is #N$00 (deactivated).
+  $C1C1,$06 Jump to #R$C1ED if *#R$BCCB is equal to the event room.
+  $C1C7,$02 Stash the scenic event location pointer and event counter on the stack.
+N $C1C9 This is: #REGe=*#R$BD30-#REGb.
+  $C1C9,$05 Calculate the index of the currently processed event.
+  $C1CE,$04 Load #R$BCCC into #REGix.
+N $C1D2 The routine at #R$C1F0 is usually used to fetch an address from the
+. given table, but here it's used to move #REGix to point to the index of the
+. currently processed event (and this routine will fetch the address itself).
   $C1D2,$03 Call #R$C1F0.
-  $C1D5,$03 Call #R$BB55.
-  $C1D8,$01 #REGb=#REGa.
-  $C1D9,$02 #REGa=#N$FF.
-  $C1DB,$03 #REGl=*#REGix+#N$00.
-  $C1DE,$03 #REGh=*#REGix+#N$01.
+  $C1D5,$04 Load a random number from #R$BB55 into #REGb.
+  $C1D9,$02 Set #REGa to #N$FF (the room group terminator) for the comparison.
+N $C1DB The table at #R$BCCC is indexed by event (there are #N$08 entries), but
+. each address points to a "group" of room IDs where this event could occur.
+. Each set of room IDs for the event is terminated using #N$FF.
+@ $C1DB label=GameScenicEvent_FetchRoomGroup
+  $C1DB,$06 Get the room group address pointer and store it in #REGhl.
   $C1E1,$02 Jump to #R$C1E4.
-  $C1E3,$01 Increment #REGhl by one.
-  $C1E4,$03 Jump to #R$C1DB if #REGa is equal to *#REGhl.
-  $C1E7,$02 Decrease counter by one and loop back to #R$C1E3 until counter is zero.
-  $C1E9,$01 #REGa=*#REGhl.
-  $C1EA,$02 Restore #REGbc and #REGhl from the stack.
-  $C1EC,$01 Write #REGa to *#REGhl.
-  $C1ED,$02 Decrease counter by one and loop back to #R$C1BC until counter is zero.
+N $C1E3 Use the random number to select a room from the group - this loops
+. through the rooms using #REGb as a counter.
+@ $C1E3 label=GameScenicEvent_CountRooms_Loop
+  $C1E3,$01 Move to the next room ID in the group.
+@ $C1E4 label=GameScenicEvent_CountRoomsInGroup
+  $C1E4,$03 Jump to #R$C1DB if the terminator is read from *#REGhl.
+  $C1E7,$02 Decrease the random counter by one and loop back to #R$C1E3 until
+. the counter is zero.
+  $C1E9,$01 Load the current room ID into #REGa.
+  $C1EA,$02 Restore the event counter and scenic event location pointer from the stack.
+  $C1EC,$01 Update the scenic event location with the newly selected room.
+@ $C1ED label=GameScenicEventChecker_Next
+  $C1ED,$02 Decrease the scenic event counter by one and loop back to #R$C1BC
+. until all scenic events have been processed.
+N $C1EF All done, now return.
+@ $C1EF label=GameEventsProcessor_Return
   $C1EF,$01 Return.
 
 c $C1F0 Get Table Entry
@@ -1014,7 +1169,8 @@ c $C1F0 Get Table Entry
 D $C1F0 Retrieves an address from a table using a given index.
 R $C1F0 E Index of item
 R $C1F0 IX Base table address
-R $C1F0 O:HL Address of relevant table entry
+R $C1F0 O:HL Address from the relevant table entry
+R $C1F0 O:IX Address of the table entry
   $C1F0,$06 Multiply the given index by #N$02 and store the result in #REGde.
   $C1F6,$02 Add #REGde to the base table address.
   $C1F8,$06 Fetch the relevant table address and store it in #REGhl.
@@ -1229,7 +1385,10 @@ R $C315 A Line number to begin printing
   $C326,$03 Call #R$BAB1.
   $C329,$01 Return.
 
-c $C32A
+c $C32A Action: Examine Item
+@ $C32A label=Action_ExamineItem
+R $C32A C Item ID
+R $C32A O:F Carry flag set when the item isn't present
   $C32A,$01 Increment #REGbc by one.
   $C32B,$05 #REGe=*#R$BD2A-#REGc.
   $C330,$01 Stash #REGde on the stack.
@@ -1237,11 +1396,15 @@ c $C32A
   $C335,$03 Call #R$C1F0.
   $C338,$01 Restore #REGde from the stack.
   $C339,$02 Jump to #R$C33C.
+@ $C33B label=ExamineItem_Loop
   $C33B,$01 Increment #REGhl by one.
+@ $C33C label=ExamineItem
   $C33C,$05 Jump to #R$C347 if *#REGhl is equal to #N$FF.
   $C341,$03 Call #R$C35F.
-  $C344,$02 Jump to #R$C33B if #REGa is not equal to #N$FF.
+  $C344,$02 Jump to #R$C33B if the item wasn't found.
   $C346,$01 Return.
+N $C347 The item being examined isn't in the room or in the players inventory.
+@ $C347 label=Response_ItemNotHere
 N $C347 Print "#STR$BE1D,$08($b==$FF)".
   $C347,$03 #REGhl=#R$BE1D.
   $C34A,$03 Call #R$BAA4.
@@ -1281,10 +1444,13 @@ N $C37C Housekeeping; restore #REGde and #REGhl to their previous values.
   $C37C,$02 Restore #REGde and #REGhl from the stack.
   $C37E,$01 Return.
 
-c $C37F
-  $C37F,$01 Exchange the #REGde and #REGhl registers.
+c $C37F Match Phrase Tokens
+@ $C37F label=MatchPhraseTokens
+R $C37F HL A pointer to phrase token data
+  $C37F,$01 Switch the phrase token pointer to #REGde.
   $C380,$02 Jump to #R$C383.
-  $C382,$01 Increment #REGde by one.
+@ $C382 label=MatchPhraseTokens_Loop
+  $C382,$01 Increment the phrase token pointer by one.
   $C383,$03 #REGhl=#R$BD67.
   $C386,$02 Jump to #R$C38A.
   $C388,$01 Increment #REGhl by one.
@@ -1301,9 +1467,10 @@ c $C37F
 
   $C3A0,$01 Increment #REGde by one.
   $C3A1,$01 #REGa=*#REGde.
-  $C3A2,$04 Jump to #R$C3AC if #REGa is equal to #N$FE.
+  $C3A2,$04 Jump to #R$C3AC if the terminator has been reached (#N$FE).
   $C3A6,$04 Jump to #R$C3A0 if #REGa is not equal to #N$FD.
   $C3AA,$02 Jump to #R$C382.
+@ $C3AC label=MatchPhraseTokens_Return
   $C3AC,$01 Set the bits from #REGa.
   $C3AD,$01 Return.
 
@@ -1354,33 +1521,49 @@ N $C3E4 The #R$C3D0 routine returns with #REGa containing the room ID of the
   $C3E7,$02 Compare #REGa with #N$01 (inventory).
   $C3E9,$01 Return.
 
-c $C3EA Handler: Destroy Object
-@ $C3EA label=Handler_DestroyObject
-R $C3EA A Object ID
-  $C3EA,$01 Load the object ID into #REGb.
-  $C3EB,$02 Set the room ID to #N$00 which will deactivate the object.
+c $C3EA Handler: Destroy Item/ Event
+@ $C3EA label=Handler_DestroyItemEvent
+D $C3EA Updates a given item/ event ID so it's then "inactive" (has a location
+. ID of #N$00).
+R $C3EA A Item/ event ID
+  $C3EA,$01 Load the item/ event ID into #REGb.
+  $C3EB,$02 Set the room ID to #N$00 which will deactivate the item/ event.
   $C3ED,$03 Call #R$C412.
   $C3F0,$01 Return.
 
-c $C3F1
-  $C3F1,$01 #REGb=#REGa.
-  $C3F2,$04 #REGc=*#R$BCCB.
+c $C3F1 Handler: Update Item/ Event For The Current Room
+@ $C3F1 label=Handler_UpdateItemEventCurrentRoom
+D $C3F1 Updates a given item/ event ID so it appears in the current room. Used
+. for example, when an item is dropped (so it changes from being #N$01 - in the
+. players inventory, to the current room ID).
+R $C3F1 A Item/ event ID
+  $C3F1,$01 Load the item/ event ID into #REGb.
+  $C3F2,$04 Load #REGc with *#R$BCCB.
   $C3F6,$03 Call #R$C412.
   $C3F9,$01 Return.
 
-c $C3FA
-  $C3FA,$01 #REGb=#REGa.
-  $C3FB,$02 #REGc=#N$FF.
+c $C3FA Set Scenic Event As Triggered
+@ $C3FA label=ScenicEventTriggered
+R $C3FA A Scenic event ID (+#N$80)
+  $C3FA,$01 Copy the scenic event ID into #REGb.
+  $C3FB,$02 Set #REGc to #N$FF which denotes that the event has fired already
+. and shouldn't be repeated.
   $C3FD,$03 Call #R$C412.
   $C400,$01 Return.
+
+c $C401 Check Active Scenic Events
+@ $C401 label=CheckActiveScenicEvents
   $C401,$02 Jump to #R$C404.
-  $C403,$01 Increment #REGhl by one.
+@ $C403 label=ActiveScenicEvents_Loop
+  $C403,$01 Move to the next event ID.
+@ $C404 label=ActiveScenicEvents_CheckNext
   $C404,$05 Jump to #R$C410 if *#REGhl is equal to #N$FF.
   $C409,$03 Call #R$C35F.
   $C40C,$02 Jump to #R$C403 if the zero flag is not set.
   $C40E,$01 #REGa=*#REGhl.
   $C40F,$01 Return.
-  $C410,$01 Set flags.
+@ $C410 label=NoActiveScenicEvents
+  $C410,$01 Set Z flag.
   $C411,$01 Return.
 
 c $C412 Handler: Update Object Location
@@ -1551,8 +1734,10 @@ D $C4EB Handles checking if a scenic event should occur ... and also, handles
 @ $C4F2 label=Handler_ScenicEvents_Loop
   $C4F2,$03 Load *#R$BCCB into #REGa.
   $C4F5,$02 Search for the matching room.
-  $C4F7,$02 Jump to #R$C51F if no event was found.
+  $C4F7,$02 Jump to #R$C51F if no events at all were found in the table.
 N $C4F9 An event was found to be processed!
+N $C4F9 First though, stash away the current pointer and index in the search,
+. so this can be resumed later.
   $C4F9,$03 Write the table position to *#R$BD7D.
   $C4FC,$04 Write the counter to *#R$BD7F.
 N $C500 Calculate the event index and get the event handler.
@@ -1569,8 +1754,7 @@ N $C514 This is the return point after the handler has finished executing.
 @ $C514 label=ScenicEvents_PostProcessing
   $C514,$03 Restore *#R$BD7D to #REGhl.
   $C517,$04 Restore *#R$BD7F to #REGbc.
-  $C51B,$01 Reset #REGa to #N$00.
-  $C51C,$03 Jump to #R$C4F2 if there are any further events to process.
+  $C51B,$04 Jump to #R$C4F2 if there are any further events to process.
 @ $C51F label=ScenicEvents_Return
   $C51F,$01 Return.
 
@@ -1587,7 +1771,7 @@ c $C520
   $C534,$01 #REGa=#REGc.
   $C535,$03 Write #REGa to *#R$BCCB.
   $C538,$03 #REGa=*#R$BC6F.
-  $C53B,$03 Jump to #R$C555 if #REGa is equal to #REGa.
+  $C53B,$03 Jump to #R$C555 if #REGa is zero.
   $C53E,$02 #REGb=#N$08.
   $C540,$03 #REGhl=#R$BC70.
   $C543,$01 #REGc=#REGa.
@@ -1613,10 +1797,9 @@ N $C564 Print "#STR$BD91,$08($b==$FF)".
   $C567,$03 Call #R$BAB1.
   $C56A,$01 Return.
 
-  $C56B,$03 #REGa=*#R$BD2C.
-  $C56E,$01 #REGa-=#REGc.
+  $C56B,$04 #REGa=*#R$BD2C-#REGc.
   $C56F,$01 Decrease #REGa by one.
-  $C570,$01 #REGe=#REGa.
+  $C570,$01 Store the result in #REGe.
   $C571,$04 #REGix=*#R$BD20.
   $C575,$03 Call #R$C1F0.
   $C578,$01 Jump to *#REGhl.
@@ -1624,8 +1807,7 @@ N $C564 Print "#STR$BD91,$08($b==$FF)".
 c $C579 Pause, Print String And Scroll
 @ $C579 label=PausePrintStringAndScroll
 D $C579 For dramatic effect! Used when an event occurs.
-  $C579,$02 #REGb=#N$19.
-  $C57B,$03 Call #R$BB51.
+  $C579,$05 Call #R$BB51 using #N$19 HALT loops (for a short pause).
   $C57E,$03 Call #R$BAB1.
   $C581,$01 Return.
 
@@ -1652,615 +1834,683 @@ c $C592 Game Start Alias
 @ $C592 label=GameStart_Alias
   $C592,$03 Jump to #R$FD82.
 
-t $C595 Messaging: A Ladder Leading Down To A<CR>Small Rowing Boat Alongside.
+t $C595 Messaging: "A Ladder Leading Down To A<CR>Small Rowing Boat Alongside."
+@ $C595 label=Messaging_LadderLeadingDownToASmallRowingBoat
   $C595,$37 "#STR$C595,$08($b==$FF)".
 B $C5CC,$01 Terminator.
 
-t $C5CD Messaging: You Are Alongside Your Ship.<CR>A Ladder Leads Up To The Deck.
+t $C5CD Messaging: "You Are Alongside Your Ship.<CR>A Ladder Leads Up To The Deck."
+@ $C5CD label=Messaging_AlongsideYourShip
   $C5CD,$3B "#STR$C5CD,$08($b==$FF)".
 B $C608,$01 Terminator.
 
-t $C609 Messaging: A Match.
+t $C609 Messaging: "A Match."
+@ $C609 label=Messaging_Match
   $C609,$08 "#STR$C609,$08($b==$FF)".
 B $C611,$01 Terminator.
 
-t $C612 Messaging: A Lighted Match.
+t $C612 Messaging: "A Lighted Match."
+@ $C612 label=Messaging_LitMatch
   $C612,$10 "#STR$C612,$08($b==$FF)".
 B $C622,$01 Terminator.
 
-t $C623 Messaging: A Plank.
+t $C623 Messaging: "A Plank."
+@ $C623 label=Messaging_Plank
   $C623,$08 "#STR$C623,$08($b==$FF)".
 B $C62B,$01 Terminator.
 
-t $C62C Messaging: A Plank,Spanning The Pit.
+t $C62C Messaging: "A Plank,Spanning The Pit."
+@ $C62C label=Messaging_PlankSpanningThePit
   $C62C,$19 "#STR$C62C,$08($b==$FF)".
 B $C645,$01 Terminator.
 
-t $C646 Messaging: A Coconut.
+t $C646 Messaging: "A Coconut."
+@ $C646 label=Messaging_Coconut
   $C646,$0A "#STR$C646,$08($b==$FF)".
 B $C650,$01 Terminator.
 
-t $C651 Messaging: A Rod.
+t $C651 Messaging: "A Rod."
+@ $C651 label=Messaging_Rod
   $C651,$06 "#STR$C651,$08($b==$FF)".
 B $C657,$01 Terminator.
 
-t $C658 Messaging: A Small Round Hole To<CR>The Side Of The Door.
+t $C658 Messaging: "A Small Round Hole To<CR>The Side Of The Door."
+@ $C658 label=Messaging_SmallRoundHoleSideOfTheDoor
   $C658,$2B "#STR$C658,$08($b==$FF)".
 B $C683,$01 Terminator.
 
-t $C684 Messaging: A Hole With A Rod Inserted,<CR>To The Side Of The Door.
+t $C684 Messaging: "A Hole With A Rod Inserted,<CR>To The Side Of The Door."
+@ $C684 label=Messaging_HoleWithARodInserted
   $C684,$34 "#STR$C684,$08($b==$FF)".
 B $C6B8,$01 Terminator.
 
-t $C6B9 Messaging: A Bottle.
+t $C6B9 Messaging: "A Bottle."
+@ $C6B9 label=Messaging_Bottle
   $C6B9,$09 "#STR$C6B9,$08($b==$FF)".
 B $C6C2,$01 Terminator.
 
-t $C6C3 Messaging: A Bottle Of Rum.
+t $C6C3 Messaging: "A Bottle Of Rum."
+@ $C6C3 label=Messaging_BottleOfRum
   $C6C3,$10 "#STR$C6C3,$08($b==$FF)".
 B $C6D3,$01 Terminator.
 
-t $C6D4 Messaging: Some Fruit.
+t $C6D4 Messaging: "Some Fruit."
+@ $C6D4 label=Messaging_Fruit
   $C6D4,$0B "#STR$C6D4,$08($b==$FF)".
 B $C6DF,$01 Terminator.
 
-t $C6E0 Messaging: A Gun.
+t $C6E0 Messaging: "A Gun."
+@ $C6E0 label=Messaging_Gun
   $C6E0,$06 "#STR$C6E0,$08($b==$FF)".
 B $C6E6,$01 Terminator.
 
-t $C6E7 Messaging: An Eyepatch.
+t $C6E7 Messaging: "An Eyepatch."
+@ $C6E7 label=Messaging_Eyepatch
   $C6E7,$0C "#STR$C6E7,$08($b==$FF)".
 B $C6F3,$01 Terminator.
 
-t $C6F4 Messaging: An Eyepatch,<CR>Which You Are Wearing.
+t $C6F4 Messaging: "An Eyepatch,<CR>Which You Are Wearing."
+@ $C6F4 label=Messaging_EyepatchWorn
   $C6F4,$23 "#STR$C6F4,$08($b==$FF)".
 B $C717,$01 Terminator.
 
-t $C718 Messaging: A Keg Of Gunpowder.
+t $C718 Messaging: "A Keg Of Gunpowder."
+@ $C718 label=Messaging_KegOfGunpowder
   $C718,$13 "#STR$C718,$08($b==$FF)".
 B $C72B,$01 Terminator.
 
-t $C72C Messaging: A Crocodile.
+t $C72C Messaging: "A Crocodile."
+@ $C72C label=Messaging_Crocodile
   $C72C,$0C "#STR$C72C,$08($b==$FF)".
 B $C738,$01 Terminator.
 
-t $C739 Messaging: A Crocodile,With A Keg Of<CR>Gunpowder In Its Mouth.<CR>The Powder Is Spilling Out.
+t $C739 Messaging: "A Crocodile,With A Keg Of<CR>Gunpowder In Its Mouth.<CR>The Powder Is Spilling Out."
+@ $C739 label=Messaging_CrocodileWithKegOfGunpowder
   $C739,$4D "#STR$C739,$08($b==$FF)".
 B $C786,$01 Terminator.
 
-t $C787 Messaging: A Shoe.
+t $C787 Messaging: "A Shoe."
+@ $C787 label=Messaging_Shoe
   $C787,$07 "#STR$C787,$08($b==$FF)".
 B $C78E,$01 Terminator.
 
-t $C78F Messaging: A Sextant.
+t $C78F Messaging: "A Sextant."
+@ $C78F label=Messaging_Sextant
   $C78F,$0A "#STR$C78F,$08($b==$FF)".
 B $C799,$01 Terminator.
 
-t $C79A Messaging: A Watch.
+t $C79A Messaging: "A Watch."
+@ $C79A label=Messaging_Watch
   $C79A,$08 "#STR$C79A,$08($b==$FF)".
 B $C7A2,$01 Terminator.
 
-t $C7A3 Messaging: You Are Surrounded By Natives.<CR>They Are Licking Their Lips<CR>In A Very Disturbing Manner.<CR>One Brandishes A Spear.
+t $C7A3 Messaging: "You Are Surrounded By Natives.<CR>They Are Licking Their Lips<CR>In A Very Disturbing Manner.<CR>One Brandishes A Spear."
+@ $C7A3 label=Messaging_Cannibals
   $C7A3,$6F "#STR$C7A3,$08($b==$FF)".
 B $C812,$01 Terminator.
 
-t $C813 Messaging: A Group Of Natives,<CR>Examining A Watch.
+t $C813 Messaging: "A Group Of Natives,<CR>Examining A Watch."
+@ $C813 label=Messaging_CannibalsWithWatch
   $C813,$26 "#STR$C813,$08($b==$FF)".
 B $C839,$01 Terminator.
 
-t $C83A Messaging: A Spear.
+t $C83A Messaging: "A Spear."
+@ $C83A label=Messaging_Spear
   $C83A,$08 "#STR$C83A,$08($b==$FF)".
 B $C842,$01 Terminator.
 
-t $C843 Messaging: A Strangely Coloured Fish.
+t $C843 Messaging: "A Strangely Coloured Fish."
+@ $C843 label=Messaging_Fish
   $C843,$1A "#STR$C843,$08($b==$FF)".
 B $C85D,$01 Terminator.
 
-t $C85E Messaging: A Red Herring.
+t $C85E Messaging: "A Red Herring."
+@ $C85E label=Messaging_RedHerring
   $C85E,$0E "#STR$C85E,$08($b==$FF)".
 B $C86C,$01 Terminator.
 
-t $C86D Messaging: The Jewels Of Babylon.
+t $C86D Messaging: "The Jewels Of Babylon."
+@ $C86D label=Messaging_Jewels
   $C86D,$16 "#STR$C86D,$08($b==$FF)".
 B $C883,$01 Terminator.
 
-t $C884 Messaging: A Crowbar.
+t $C884 Messaging: "A Crowbar."
+@ $C884 label=Messaging_Crowbar
   $C884,$0A "#STR$C884,$08($b==$FF)".
 B $C88E,$01 Terminator.
 
-t $C88F Messaging: A Key.
+t $C88F Messaging: "A Key."
+@ $C88F label=Messaging_Key
   $C88F,$06 "#STR$C88F,$08($b==$FF)".
 B $C895,$01 Terminator.
 
-t $C896 Messaging: A Human Skull.
+t $C896 Messaging: "A Human Skull."
+@ $C896 label=Messaging_Skull
   $C896,$0E "#STR$C896,$08($b==$FF)".
 B $C8A4,$01 Terminator.
 
-t $C8A5 Messaging: You Are At The Island.
+t $C8A5 Messaging: "You Are At The Island."
+@ $C8A5 label=Messaging_YouAreAtTheIsland
   $C8A5,$16 "#STR$C8A5,$08($b==$FF)".
 B $C8BB,$01 Terminator.
 
-t $C8BC Messaging: A Sleeping Pirate.
+t $C8BC Messaging: "A Sleeping Pirate."
+@ $C8BC label=Messaging_SleepingPirate
   $C8BC,$12 "#STR$C8BC,$08($b==$FF)".
 B $C8CE,$01 Terminator.
 
-t $C8CF Messaging: A Dead Pirate.
+t $C8CF Messaging: "A Dead Pirate."
+@ $C8CF label=Messaging_DeadPirate
   $C8CF,$0E "#STR$C8CF,$08($b==$FF)".
 B $C8DD,$01 Terminator.
 
-t $C8DE Messaging: A Parrot,Eyeing You<CR>With Suspicion.
+t $C8DE Messaging: "A Parrot,Eyeing You<CR>With Suspicion."
+@ $C8DE label=Messaging_SuspiciousParrot
   $C8DE,$23 "#STR$C8DE,$08($b==$FF)".
 B $C901,$01 Terminator.
 
-t $C902 Messaging: A Dead Parrot.
+t $C902 Messaging: "A Dead Parrot."
+@ $C902 label=Messaging_DeadParrot
   $C902,$0E "#STR$C902,$08($b==$FF)".
 B $C910,$01 Terminator.
 
-t $C911 Messaging: A Giant Crab.<CR>It Advances Toward You.
+t $C911 Messaging: "A Giant Crab.<CR>It Advances Toward You."
+@ $C911 label=Messaging_GiantCrab
   $C911,$25 "#STR$C911,$08($b==$FF)".
 B $C936,$01 Terminator.
 
-t $C937 Messaging: A Lion.<CR>It Is About To Pounce On You.
+t $C937 Messaging: "A Lion.<CR>It Is About To Pounce On You."
+@ $C937 label=Messaging_Lion
   $C937,$25 "#STR$C937,$08($b==$FF)".
 B $C95C,$01 Terminator.
 
-t $C95D Messaging: A Giant Octopus.
+t $C95D Messaging: "A Giant Octopus."
+@ $C95D label=Messaging_Octopus
   $C95D,$10 "#STR$C95D,$08($b==$FF)".
 B $C96D,$01 Terminator.
 
-t $C96E Messaging: A Closed Door.
+t $C96E Messaging: "A Closed Door."
+@ $C96E label=Messaging_ClosedDoor
   $C96E,$0E "#STR$C96E,$08($b==$FF)".
 B $C97C,$01 Terminator.
 
-t $C97D Messaging: An Open Door.
+t $C97D Messaging: "An Open Door."
+@ $C97D label=Messaging_OpenDoor
   $C97D,$0D "#STR$C97D,$08($b==$FF)".
 B $C98A,$01 Terminator.
 
-t $C98B Messaging: The Door Is Open.
+t $C98B Messaging: "The Door Is Open."
+@ $C98B label=Messaging_DoorIsOpen
   $C98B,$11 "#STR$C98B,$08($b==$FF)".
 B $C99C,$01 Terminator.
 
-t $C99D Messaging: The Door Is Closed.
+t $C99D Messaging: "The Door Is Closed."
+@ $C99D label=Messaging_DoorIsClosed
   $C99D,$13 "#STR$C99D,$08($b==$FF)".
 B $C9B0,$01 Terminator.
 
-t $C9B1 Messaging: A Smooth,Vertical Slab Of Rock.
+t $C9B1 Messaging: "A Smooth,Vertical Slab Of Rock."
+@ $C9B1 label=Messaging_Rock
   $C9B1,$1F "#STR$C9B1,$08($b==$FF)".
 B $C9D0,$01 Terminator.
 
-t $C9D1 Messaging: An Open Trapdoor.
+t $C9D1 Messaging: "An Open Trapdoor."
+@ $C9D1 label=Messaging_OpenTrapdoor
   $C9D1,$11 "#STR$C9D1,$08($b==$FF)".
 B $C9E2,$01 Terminator.
 
-t $C9E3 Messaging: The Body Of A Sailor.
+t $C9E3 Messaging: "The Body Of A Sailor."
+@ $C9E3 label=Messaging_Sailor
   $C9E3,$15 "#STR$C9E3,$08($b==$FF)".
 B $C9F8,$01 Terminator.
 
-t $C9F9 Messaging: A Makeshift Bridge.<CR>It Spans The Ravine.
+t $C9F9 Messaging: "A Makeshift Bridge.<CR>It Spans The Ravine."
+@ $C9F9 label=Messaging_BridgeAcrossRavine
   $C9F9,$28 "#STR$C9F9,$08($b==$FF)".
 B $CA21,$01 Terminator.
 
-t $CA22 Messaging: A Makeshift Bridge.
+t $CA22 Messaging: "A Makeshift Bridge."
+@ $CA22 label=Messaging_Bridge
   $CA22,$13 "#STR$CA22,$08($b==$FF)".
 B $CA35,$01 Terminator.
 
-t $CA36 Messaging: A Boulder,Teetering On The<CR>Brink Of A Ledge,Far Above.
+t $CA36 Messaging: "A Boulder,Teetering On The<CR>Brink Of A Ledge,Far Above."
+@ $CA36 label=Messaging_BoulderOnLedge
   $CA36,$36 "#STR$CA36,$08($b==$FF)".
 B $CA6C,$01 Terminator.
 
-t $CA6D Messaging: A Boulder.
+t $CA6D Messaging: "A Boulder."
+@ $CA6D label=Messaging_Boulder
   $CA6D,$0A "#STR$CA6D,$08($b==$FF)".
 B $CA77,$01 Terminator.
 
-t $CA78 Messaging: A Ring,Set Into The Floor.
+t $CA78 Messaging: "A Ring,Set Into The Floor."
+@ $CA78 label=Messaging_Ring
   $CA78,$1A "#STR$CA78,$08($b==$FF)".
 B $CA92,$01 Terminator.
 
-t $CA93 Messaging: A Trail Of Slime,Leading<CR>Into The Cave.
+t $CA93 Messaging: "A Trail Of Slime,Leading<CR>Into The Cave."
+@ $CA93 label=Messaging_Slime
   $CA93,$27 "#STR$CA93,$08($b==$FF)".
 B $CABA,$01 Terminator.
 
-t $CABB Messaging: A Very Large Stone.
+t $CABB Messaging: "A Very Large Stone."
+@ $CABB label=Messaging_LargeStone
   $CABB,$13 "#STR$CABB,$08($b==$FF)".
 B $CACE,$01 Terminator.
 
-t $CACF Messaging: A Rowing Boat.
+t $CACF Messaging: "A Rowing Boat."
+@ $CACF label=Messaging_RowingBoat
   $CACF,$0E "#STR$CACF,$08($b==$FF)".
 B $CADD,$01 Terminator.
 
-t $CADE Messaging: A Ship Anchored Offshore,<CR>To The South.
+t $CADE Messaging: "A Ship Anchored Offshore,<CR>To The South."
+@ $CADE label=Messaging_Ship
   $CADE,$27 "#STR$CADE,$08($b==$FF)".
 B $CB05,$01 Terminator.
 
-t $CB06 Messaging: The Open Sea.<CR>You Are Totally Lost.
+t $CB06 Messaging: "The Open Sea.<CR>You Are Totally Lost."
+@ $CB06 label=Messaging_OpenSea
   $CB06,$23 "#STR$CB06,$08($b==$FF)".
 B $CB29,$01 Terminator.
 
-t $CB2A Messaging: On Board Your Ship,Anchored<CR>To The South Of A Large Island.
+t $CB2A Messaging: "On Board Your Ship,Anchored<CR>To The South Of A Large Island."
+@ $CB2A label=Messaging_OnBoardYourShip
   $CB2A,$3B "#STR$CB2A,$08($b==$FF)".
 B $CB65,$01 Terminator.
 
-t $CB66 Messaging: In A Rowing Boat.
+t $CB66 Messaging: "In A Rowing Boat."
+@ $CB66 label=Messaging_InRowingBoat
   $CB66,$11 "#STR$CB66,$08($b==$FF)".
 B $CB77,$01 Terminator.
 
-t $CB78 Messaging: The Long Sandy Beach.
+t $CB78 Messaging: "The Long Sandy Beach."
+@ $CB78 label=Messaging_LongSandyBeach
   $CB78,$15 "#STR$CB78,$08($b==$FF)".
 B $CB8D,$01 Terminator.
 
-t $CB8E Messaging: The Dunes.<CR>Among Towering Mounds Of<CR>Drifting Sand.
+t $CB8E Messaging: "The Dunes.<CR>Among Towering Mounds Of<CR>Drifting Sand."
+@ $CB8E label=Messaging_TheDunes
   $CB8E,$32 "#STR$CB8E,$08($b==$FF)".
 B $CBC0,$01 Terminator.
 
-t $CBC1 Messaging: The Stand Of Palm Trees.<CR>The Large Leaves Gently Sway<CR>In The Warm,Tropical Breeze.
+t $CBC1 Messaging: "The Stand Of Palm Trees.<CR>The Large Leaves Gently Sway<CR>In The Warm,Tropical Breeze."
+@ $CBC1 label=Messaging_StandOfPalmTrees
   $CBC1,$52 "#STR$CBC1,$08($b==$FF)".
 B $CC13,$01 Terminator.
 
-t $CC14 Messaging: The Hillside Path.
+t $CC14 Messaging: "The Hillside Path."
+@ $CC14 label=Messaging_HillsidePath
   $CC14,$12 "#STR$CC14,$08($b==$FF)".
 B $CC26,$01 Terminator.
 
-t $CC27 Messaging: By A Pool Of Clear,Glistening<CR>Water.
+t $CC27 Messaging: "By A Pool Of Clear,Glistening<CR>Water."
   $CC27,$24 "#STR$CC27,$08($b==$FF)".
 B $CC4B,$01 Terminator.
 
-t $CC4C Messaging: The Narrow Gulley.<CR>Cut Into The Rock By Water<CR>From The Pool Above.
+t $CC4C Messaging: "The Narrow Gulley.<CR>Cut Into The Rock By Water<CR>From The Pool Above."
   $CC4C,$42 "#STR$CC4C,$08($b==$FF)".
 B $CC8E,$01 Terminator.
 
-t $CC8F Messaging: The Hilltop.<CR>The Highest Point Of The Island.
+t $CC8F Messaging: "The Hilltop.<CR>The Highest Point Of The Island."
   $CC8F,$2D "#STR$CC8F,$08($b==$FF)".
 B $CCBC,$01 Terminator.
 
-t $CCBD Messaging: The Waterfall.<CR>A Mighty Torrent Of Cascading<CR>Water.
+t $CCBD Messaging: "The Waterfall.<CR>A Mighty Torrent Of Cascading<CR>Water."
   $CCBD,$33 "#STR$CCBD,$08($b==$FF)".
 B $CCF0,$01 Terminator.
 
-t $CCF1 Messaging: The Narrow Path.<CR>Behind The Waterfall.
+t $CCF1 Messaging: "The Narrow Path.<CR>Behind The Waterfall."
   $CCF1,$26 "#STR$CCF1,$08($b==$FF)".
 B $CD17,$01 Terminator.
 
-t $CD18 Messaging: The Thicket.<CR>A Maze Of Paths Lead<CR>Through The Undergrowth.
+t $CD18 Messaging: "The Thicket.<CR>A Maze Of Paths Lead<CR>Through The Undergrowth."
   $CD18,$3A "#STR$CD18,$08($b==$FF)".
 B $CD52,$01 Terminator.
 
-t $CD53 Messaging: The Cannibals' Village.
+t $CD53 Messaging: "The Cannibals' Village."
   $CD53,$17 "#STR$CD53,$08($b==$FF)".
 B $CD6A,$01 Terminator.
 
-t $CD6B Messaging: The Woodland Path.
+t $CD6B Messaging: "The Woodland Path."
   $CD6B,$12 "#STR$CD6B,$08($b==$FF)".
 B $CD7D,$01 Terminator.
 
-t $CD7E Messaging: The Woodland Clearing.<CR>Trees And Undergrowth Have<CR>Been Cut Down.
+t $CD7E Messaging: "The Woodland Clearing.<CR>Trees And Undergrowth Have<CR>Been Cut Down."
   $CD7E,$40 "#STR$CD7E,$08($b==$FF)".
 B $CDBE,$01 Terminator.
 
-t $CDBF Messaging: The High Ridge.
+t $CDBF Messaging: "The High Ridge."
   $CDBF,$0F "#STR$CDBF,$08($b==$FF)".
 B $CDCE,$01 Terminator.
 
-t $CDCF Messaging: The Valley.<CR>A Thin Miasma Of Mist Covers<CR>The Rich Verdant Grass.
+t $CDCF Messaging: "The Valley.<CR>A Thin Miasma Of Mist Covers<CR>The Rich Verdant Grass."
   $CDCF,$40 "#STR$CDCF,$08($b==$FF)".
 B $CE0F,$01 Terminator.
 
-t $CE10 Messaging: The Fruit Grove.
+t $CE10 Messaging: "The Fruit Grove."
   $CE10,$10 "#STR$CE10,$08($b==$FF)".
 B $CE20,$01 Terminator.
 
-t $CE21 Messaging: The Cliff Path.
+t $CE21 Messaging: "The Cliff Path."
   $CE21,$0F "#STR$CE21,$08($b==$FF)".
 B $CE30,$01 Terminator.
 
-t $CE31 Messaging: The Clifftop.<CR>Overlooking The Sea.
+t $CE31 Messaging: "The Clifftop.<CR>Overlooking The Sea."
   $CE31,$22 "#STR$CE31,$08($b==$FF)".
 B $CE53,$01 Terminator.
 
-t $CE54 Messaging: The Rocky Path.
+t $CE54 Messaging: "The Rocky Path."
   $CE54,$0F "#STR$CE54,$08($b==$FF)".
 B $CE63,$01 Terminator.
 
-t $CE64 Messaging: The Bottom Of A Rocky Slope.
+t $CE64 Messaging: "The Bottom Of A Rocky Slope."
   $CE64,$1C "#STR$CE64,$08($b==$FF)".
 B $CE80,$01 Terminator.
 
-t $CE81 Messaging: The Canyon.<CR>The Walls Rise Dauntingly<CR>On Both Sides.
+t $CE81 Messaging: "The Canyon.<CR>The Walls Rise Dauntingly<CR>On Both Sides."
   $CE81,$34 "#STR$CE81,$08($b==$FF)".
 B $CEB5,$01 Terminator.
 
-t $CEB6 Messaging: The Secluded Beach.
+t $CEB6 Messaging: "The Secluded Beach."
   $CEB6,$13 "#STR$CEB6,$08($b==$FF)".
 B $CEC9,$01 Terminator.
 
-t $CECA Messaging: The Rockpool.<CR>A Deep Trough Of Crystal Clear<CR>Water.
+t $CECA Messaging: "The Rockpool.<CR>A Deep Trough Of Crystal Clear<CR>Water."
   $CECA,$33 "#STR$CECA,$08($b==$FF)".
 B $CEFD,$01 Terminator.
 
-t $CEFE Messaging: Wreckers' Cove.
+t $CEFE Messaging: "Wreckers' Cove."
   $CEFE,$0F "#STR$CEFE,$08($b==$FF)".
 B $CF0D,$01 Terminator.
 
-t $CF0E Messaging: The Jungle.<CR>There Are Game Paths In All<CR>Directions.
+t $CF0E Messaging: "The Jungle.<CR>There Are Game Paths In All<CR>Directions."
   $CF0E,$33 "#STR$CF0E,$08($b==$FF)".
 B $CF41,$01 Terminator.
 
-t $CF42 Messaging: The Grassy Slope.<CR>Near The Jungle.
+t $CF42 Messaging: "The Grassy Slope.<CR>Near The Jungle."
   $CF42,$22 "#STR$CF42,$08($b==$FF)".
 B $CF64,$01 Terminator.
 
-t $CF65 Messaging: The Rocky Beach.
+t $CF65 Messaging: "The Rocky Beach."
   $CF65,$10 "#STR$CF65,$08($b==$FF)".
 B $CF75,$01 Terminator.
 
-t $CF76 Messaging: The Mouth Of A Large Cave.
+t $CF76 Messaging: "The Mouth Of A Large Cave."
   $CF76,$1A "#STR$CF76,$08($b==$FF)".
 B $CF90,$01 Terminator.
 
-t $CF91 Messaging: The Cave.<CR>A Deep Pool Of Water Lays In<CR>Its Centre.
+t $CF91 Messaging: "The Cave.<CR>A Deep Pool Of Water Lays In<CR>Its Centre."
   $CF91,$32 "#STR$CF91,$08($b==$FF)".
 B $CFC3,$01 Terminator.
 
-t $CFC4 Messaging: A Dead End.
+t $CFC4 Messaging: "A Dead End."
   $CFC4,$0B "#STR$CFC4,$08($b==$FF)".
 B $CFCF,$01 Terminator.
 
-t $CFD0 Messaging: The Mossy Path.<CR>The Ground Is Waterlogged.
+t $CFD0 Messaging: "The Mossy Path.<CR>The Ground Is Waterlogged."
   $CFD0,$2A "#STR$CFD0,$08($b==$FF)".
 B $CFFA,$01 Terminator.
 
-t $CFFB Messaging: The Swamp.<CR>Muddy Paths Lead Off In All<CR>Directions.
+t $CFFB Messaging: "The Swamp.<CR>Muddy Paths Lead Off In All<CR>Directions."
   $CFFB,$32 "#STR$CFFB,$08($b==$FF)".
 B $D02D,$01 Terminator.
 
-t $D02E Messaging: The Ravine.<CR>A River Runs Far Below.
+t $D02E Messaging: "The Ravine.<CR>A River Runs Far Below."
   $D02E,$23 "#STR$D02E,$08($b==$FF)".
 B $D051,$01 Terminator.
 
-t $D052 Messaging: The Cliffs.<CR>Overlooking A Natural Harbour.
+t $D052 Messaging: "The Cliffs.<CR>Overlooking A Natural Harbour."
   $D052,$2A "#STR$D052,$08($b==$FF)".
 B $D07C,$01 Terminator.
 
-t $D07D Messaging: The Cliff Bottom.
+t $D07D Messaging: "The Cliff Bottom."
   $D07D,$11 "#STR$D07D,$08($b==$FF)".
 B $D08E,$01 Terminator.
 
-t $D08F Messaging: The Harbour Beach.<CR>At A Cave Entrance.
+t $D08F Messaging: "The Harbour Beach.<CR>At A Cave Entrance."
   $D08F,$26 "#STR$D08F,$08($b==$FF)".
 B $D0B5,$01 Terminator.
 
-t $D0B6 Messaging: The Vast Cavern.
+t $D0B6 Messaging: "The Vast Cavern."
   $D0B6,$10 "#STR$D0B6,$08($b==$FF)".
 B $D0C6,$01 Terminator.
 
-t $D0C7 Messaging: The Warren Of Passages.
+t $D0C7 Messaging: "The Warren Of Passages."
   $D0C7,$17 "#STR$D0C7,$08($b==$FF)".
 B $D0DE,$01 Terminator.
 
-t $D0DF Messaging: The Narrow Passage.
+t $D0DF Messaging: "The Narrow Passage."
   $D0DF,$13 "#STR$D0DF,$08($b==$FF)".
 B $D0F2,$01 Terminator.
 
-t $D0F3 Messaging: The Dusty Corridor.
+t $D0F3 Messaging: "The Dusty Corridor."
   $D0F3,$13 "#STR$D0F3,$08($b==$FF)".
 B $D106,$01 Terminator.
 
-t $D107 Messaging: The Pirate Treasure Chamber.
+t $D107 Messaging: "The Pirate Treasure Chamber."
   $D107,$1C "#STR$D107,$08($b==$FF)".
 B $D123,$01 Terminator.
 
-t $D124 Messaging: The Damp Passage.<CR>Water Trickles Down The Walls.
+t $D124 Messaging: "The Damp Passage.<CR>Water Trickles Down The Walls."
   $D124,$30 "#STR$D124,$08($b==$FF)".
 B $D154,$01 Terminator.
 
-t $D155 Messaging: The Wide Pit.
+t $D155 Messaging: "The Wide Pit."
   $D155,$0D "#STR$D155,$08($b==$FF)".
 B $D162,$01 Terminator.
 
-t $D163 Messaging: The Pit Bottom.
+t $D163 Messaging: "The Pit Bottom."
   $D163,$0F "#STR$D163,$08($b==$FF)".
 B $D172,$01 Terminator.
 
-t $D173 Messaging: The Southern Side Of The Pit.
+t $D173 Messaging: "The Southern Side Of The Pit."
   $D173,$1D "#STR$D173,$08($b==$FF)".
 B $D190,$01 Terminator.
 
-t $D191 Messaging: The Mighty Rock Door.
+t $D191 Messaging: "The Mighty Rock Door."
   $D191,$15 "#STR$D191,$08($b==$FF)".
 B $D1A6,$01 Terminator.
 
-t $D1A7 Messaging: The Bridge.
+t $D1A7 Messaging: "The Bridge."
   $D1A7,$0B "#STR$D1A7,$08($b==$FF)".
 B $D1B2,$01 Terminator.
 
-t $D1B3 Messaging: A Match
+t $D1B3 Messaging: "A Match"
   $D1B3,$07 "#STR$D1B3,$08($b==$FF)".
 B $D1BA,$01 Terminator.
 
-t $D1BB Messaging: A Plank
+t $D1BB Messaging: "A Plank"
   $D1BB,$07 "#STR$D1BB,$08($b==$FF)".
 B $D1C2,$01 Terminator.
 
-t $D1C3 Messaging: A Coconut
+t $D1C3 Messaging: "A Coconut"
   $D1C3,$09 "#STR$D1C3,$08($b==$FF)".
 B $D1CC,$01 Terminator.
 
-t $D1CD Messaging: A Rod
+t $D1CD Messaging: "A Rod"
   $D1CD,$05 "#STR$D1CD,$08($b==$FF)".
 B $D1D2,$01 Terminator.
 
-t $D1D3 Messaging: A Bottle
+t $D1D3 Messaging: "A Bottle"
   $D1D3,$08 "#STR$D1D3,$08($b==$FF)".
 B $D1DB,$01 Terminator.
 
-t $D1DC Messaging: Any Rum
+t $D1DC Messaging: "Any Rum"
   $D1DC,$07 "#STR$D1DC,$08($b==$FF)".
 B $D1E3,$01 Terminator.
 
-t $D1E4 Messaging: Any Fruit
+t $D1E4 Messaging: "Any Fruit"
   $D1E4,$09 "#STR$D1E4,$08($b==$FF)".
 B $D1ED,$01 Terminator.
 
-t $D1EE Messaging: A Gun
+t $D1EE Messaging: "A Gun"
   $D1EE,$05 "#STR$D1EE,$08($b==$FF)".
 B $D1F3,$01 Terminator.
 
-t $D1F4 Messaging: An Eyepatch
+t $D1F4 Messaging: "An Eyepatch"
   $D1F4,$0B "#STR$D1F4,$08($b==$FF)".
 B $D1FF,$01 Terminator.
 
-t $D200 Messaging: Any Gunpowder
+t $D200 Messaging: "Any Gunpowder"
   $D200,$0D "#STR$D200,$08($b==$FF)".
 B $D20D,$01 Terminator.
 
-t $D20E Messaging: A Keg
+t $D20E Messaging: "A Keg"
   $D20E,$05 "#STR$D20E,$08($b==$FF)".
 B $D213,$01 Terminator.
 
-t $D214 Messaging: A Shoe
+t $D214 Messaging: "A Shoe"
   $D214,$06 "#STR$D214,$08($b==$FF)".
 B $D21A,$01 Terminator.
 
-t $D21B Messaging: A Sextant
+t $D21B Messaging: "A Sextant"
   $D21B,$09 "#STR$D21B,$08($b==$FF)".
 B $D224,$01 Terminator.
 
-t $D225 Messaging: A Watch
+t $D225 Messaging: "A Watch"
   $D225,$07 "#STR$D225,$08($b==$FF)".
 B $D22C,$01 Terminator.
 
-t $D22D Messaging: A Fish
+t $D22D Messaging: "A Fish"
   $D22D,$06 "#STR$D22D,$08($b==$FF)".
 B $D233,$01 Terminator.
 
-t $D234 Messaging: Any Jewels
+t $D234 Messaging: "Any Jewels"
   $D234,$0A "#STR$D234,$08($b==$FF)".
 B $D23E,$01 Terminator.
 
-t $D23F Messaging: A Crowbar
+t $D23F Messaging: "A Crowbar"
   $D23F,$09 "#STR$D23F,$08($b==$FF)".
 B $D248,$01 Terminator.
 
-t $D249 Messaging: A Key
+t $D249 Messaging: "A Key"
   $D249,$05 "#STR$D249,$08($b==$FF)".
 B $D24E,$01 Terminator.
 
-t $D24F Messaging: A Skull
+t $D24F Messaging: "A Skull"
   $D24F,$07 "#STR$D24F,$08($b==$FF)".
 B $D256,$01 Terminator.
 
-t $D257 Messaging: A Spear
+t $D257 Messaging: "A Spear"
   $D257,$07 "#STR$D257,$08($b==$FF)".
 B $D25E,$01 Terminator.
 
-t $D25F Messaging: A Ladder
+t $D25F Messaging: "A Ladder"
   $D25F,$08 "#STR$D25F,$08($b==$FF)".
 B $D267,$01 Terminator.
 
-t $D268 Messaging: A Boat
+t $D268 Messaging: "A Boat"
   $D268,$06 "#STR$D268,$08($b==$FF)".
 B $D26E,$01 Terminator.
 
-t $D26F Messaging: Any Oars
+t $D26F Messaging: "Any Oars"
   $D26F,$08 "#STR$D26F,$08($b==$FF)".
 B $D277,$01 Terminator.
 
-t $D278 Messaging: Any Cannibals
+t $D278 Messaging: "Any Cannibals"
   $D278,$0D "#STR$D278,$08($b==$FF)".
 B $D285,$01 Terminator.
 
-t $D286 Messaging: A Pirate
+t $D286 Messaging: "A Pirate"
   $D286,$08 "#STR$D286,$08($b==$FF)".
 B $D28E,$01 Terminator.
 
-t $D28F Messaging: A Parrot
+t $D28F Messaging: "A Parrot"
   $D28F,$08 "#STR$D28F,$08($b==$FF)".
 B $D297,$01 Terminator.
 
-t $D298 Messaging: A Crab
+t $D298 Messaging: "A Crab"
   $D298,$06 "#STR$D298,$08($b==$FF)".
 B $D29E,$01 Terminator.
 
-t $D29F Messaging: A Crocodile
+t $D29F Messaging: "A Crocodile"
   $D29F,$0B "#STR$D29F,$08($b==$FF)".
 B $D2AA,$01 Terminator.
 
-t $D2AB Messaging: A Lion
+t $D2AB Messaging: "A Lion"
   $D2AB,$06 "#STR$D2AB,$08($b==$FF)".
 B $D2B1,$01 Terminator.
 
-t $D2B2 Messaging: A Seagull
+t $D2B2 Messaging: "A Seagull"
   $D2B2,$09 "#STR$D2B2,$08($b==$FF)".
 B $D2BB,$01 Terminator.
 
-t $D2BC Messaging: An Octopus
+t $D2BC Messaging: "An Octopus"
   $D2BC,$0A "#STR$D2BC,$08($b==$FF)".
 B $D2C6,$01 Terminator.
 
-t $D2C7 Messaging: A Door
+t $D2C7 Messaging: "A Door"
   $D2C7,$06 "#STR$D2C7,$08($b==$FF)".
 B $D2CD,$01 Terminator.
 
-t $D2CE Messaging: A Sailor
+t $D2CE Messaging: "A Sailor"
   $D2CE,$08 "#STR$D2CE,$08($b==$FF)".
 B $D2D6,$01 Terminator.
 
-t $D2D7 Messaging: A Snake
+t $D2D7 Messaging: "A Snake"
   $D2D7,$07 "#STR$D2D7,$08($b==$FF)".
 B $D2DE,$01 Terminator.
 
-t $D2DF Messaging: A Spider
+t $D2DF Messaging: "A Spider"
   $D2DF,$08 "#STR$D2DF,$08($b==$FF)".
 B $D2E7,$01 Terminator.
 
-t $D2E8 Messaging: A Bridge
+t $D2E8 Messaging: "A Bridge"
   $D2E8,$08 "#STR$D2E8,$08($b==$FF)".
 B $D2F0,$01 Terminator.
 
-t $D2F1 Messaging: A Boulder
+t $D2F1 Messaging: "A Boulder"
   $D2F1,$09 "#STR$D2F1,$08($b==$FF)".
 B $D2FA,$01 Terminator.
 
-t $D2FB Messaging: A Ring
+t $D2FB Messaging: "A Ring"
   $D2FB,$06 "#STR$D2FB,$08($b==$FF)".
 B $D301,$01 Terminator.
 
-t $D302 Messaging: A Trapdoor
+t $D302 Messaging: "A Trapdoor"
   $D302,$0A "#STR$D302,$08($b==$FF)".
 B $D30C,$01 Terminator.
 
-t $D30D Messaging: A Cave
+t $D30D Messaging: "A Cave"
   $D30D,$06 "#STR$D30D,$08($b==$FF)".
 B $D313,$01 Terminator.
 
-t $D314 Messaging: A Pit
+t $D314 Messaging: "A Pit"
   $D314,$05 "#STR$D314,$08($b==$FF)".
 B $D319,$01 Terminator.
 
-t $D31A Messaging: A Ship
+t $D31A Messaging: "A Ship"
   $D31A,$06 "#STR$D31A,$08($b==$FF)".
 B $D320,$01 Terminator.
 
-t $D321 Messaging: A Hole
+t $D321 Messaging: "A Hole"
+@ $D321 label=Messaging_Hole
   $D321,$06 "#STR$D321,$08($b==$FF)".
 B $D327,$01 Terminator.
 
-t $D328 Messaging: A Deer
+t $D328 Messaging: "A Deer"
+@ $D328 label=Messaging_Deer
   $D328,$06 "#STR$D328,$08($b==$FF)".
 B $D32E,$01 Terminator.
 
-t $D32F Messaging: A Body
+t $D32F Messaging: "A Body"
+@ $D32F label=Messaging_Body
   $D32F,$06 "#STR$D32F,$08($b==$FF)".
 B $D335,$01 Terminator.
 
-t $D336 Messaging: A Rat
+t $D336 Messaging: "A Rat"
+@ $D336 label=Messaging_Rat
   $D336,$05 "#STR$D336,$08($b==$FF)".
 B $D33B,$01 Terminator.
 
-t $D33C Messaging: A Stone
+t $D33C Messaging: "A Stone"
+@ $D33C label=Messaging_Stone
   $D33C,$07 "#STR$D33C,$08($b==$FF)".
 B $D343,$01 Terminator.
 
-t $D344 Messaging: Any Water
+t $D344 Messaging: "Any Water"
+@ $D344 label=Messaging_AnyWater
   $D344,$09 "#STR$D344,$08($b==$FF)".
 B $D34D,$01 Terminator.
 
@@ -2281,414 +2531,427 @@ g $D4C6 Table: Object Noun Phrases
 W $D4C6,$02 Object #R(#PEEK(#PC+$01)*$100+#PEEK(#PC))(#N((#PC-$D4C6)/$02)): #OBJECT((#PC-$D4C6)/$02).
 L $D4C6,$02,$30
 
-t $D526 Messaging: Congratulations!!<CR>Your Quest Has Been Successful.<CR>You Weigh Anchor And Then Sail<CR>Off Into The Sunset With The<CR>Fabulous Jewels Of Babylon.
+t $D526 Messaging: "Congratulations!!<CR>Your Quest Has Been Successful.<CR>You Weigh Anchor And Then Sail<CR>Off Into The Sunset With The<CR>Fabulous Jewels Of Babylon."
+@ $D526 label=Messaging_Congratulations
   $D526,$89 "#STR$D526,$08($b==$FF)".
 B $D5AF,$01 Terminator.
 
-t $D5B0 Messaging: The Crab Has Reached You.<CR>A Monstrous Claw Darts Out<CR>And Crushes You.
+t $D5B0 Messaging: "The Crab Has Reached You.<CR>A Monstrous Claw Darts Out<CR>And Crushes You."
   $D5B0,$45 "#STR$D5B0,$08($b==$FF)".
 B $D5F5,$01 Terminator.
 
-t $D5F6 Messaging: A Tentacle Suddenly Encircles<CR>You And Crushes You.
+t $D5F6 Messaging: "A Tentacle Suddenly Encircles<CR>You And Crushes You."
   $D5F6,$32 "#STR$D5F6,$08($b==$FF)".
 B $D628,$01 Terminator.
 
-t $D629 Messaging: You Drank Too Much Rum.<CR>You Stumble And Slip<CR>And Fall Over The Edge.
+t $D629 Messaging: "You Drank Too Much Rum.<CR>You Stumble And Slip<CR>And Fall Over The Edge."
   $D629,$44 "#STR$D629,$08($b==$FF)".
 B $D66D,$01 Terminator.
 
-t $D66E Messaging: The Lion Pounces Upon You.<CR>It Mauls You Savagely.
+t $D66E Messaging: "The Lion Pounces Upon You.<CR>It Mauls You Savagely."
   $D66E,$31 "#STR$D66E,$08($b==$FF)".
 B $D69F,$01 Terminator.
 
-t $D6A0 Messaging: The Crocodile Lunges At You.<CR>You Are Caught In The<CR>Vicious,Snapping Jaws.
+t $D6A0 Messaging: "The Crocodile Lunges At You.<CR>You Are Caught In The<CR>Vicious,Snapping Jaws."
   $D6A0,$49 "#STR$D6A0,$08($b==$FF)".
 B $D6E9,$01 Terminator.
 
-t $D6EA Messaging: <CR>A Seagull Soars In The Breeze<CR>Above You...
+t $D6EA Messaging: "<CR>A Seagull Soars In The Breeze<CR>Above You..."
   $D6EA,$2B "#STR$D6EA,$08($b==$FF)".
 B $D715,$01 Terminator.
 
-t $D716 Messaging: It Wheels Gently,<CR>And Then Flies Off.
+t $D716 Messaging: "It Wheels Gently,<CR>And Then Flies Off."
   $D716,$25 "#STR$D716,$08($b==$FF)".
 B $D73B,$01 Terminator.
 
-t $D73C Messaging: <CR>A Rat Runs Out On To The<CR>Path,In Front Of You...
+t $D73C Messaging: "<CR>A Rat Runs Out On To The<CR>Path,In Front Of You..."
   $D73C,$31 "#STR$D73C,$08($b==$FF)".
 B $D76D,$01 Terminator.
 
-t $D76E Messaging: It Sniffs The Air And Then<CR>Scurries Off.
+t $D76E Messaging: "It Sniffs The Air And Then<CR>Scurries Off."
   $D76E,$28 "#STR$D76E,$08($b==$FF)".
 B $D796,$01 Terminator.
 
-t $D797 Messaging: <CR>A Deer Appears...
+t $D797 Messaging: "<CR>A Deer Appears..."
   $D797,$12 "#STR$D797,$08($b==$FF)".
 B $D7A9,$01 Terminator.
 
-t $D7AA Messaging: It Sees You And Runs Away.
+t $D7AA Messaging: "It Sees You And Runs Away."
   $D7AA,$1A "#STR$D7AA,$08($b==$FF)".
 B $D7C4,$01 Terminator.
 
-t $D7C5 Messaging: <CR>A Pirate Attacks You...
+t $D7C5 Messaging: "<CR>A Pirate Attacks You..."
   $D7C5,$18 "#STR$D7C5,$08($b==$FF)".
 B $D7DD,$01 Terminator.
 
-t $D7DE Messaging: But You Avoid His Blow.
+t $D7DE Messaging: "But You Avoid His Blow."
   $D7DE,$17 "#STR$D7DE,$08($b==$FF)".
 B $D7F5,$01 Terminator.
 
-t $D7F6 Messaging: After A Fierce Struggle<CR>He Overpowers You.
+t $D7F6 Messaging: "After A Fierce Struggle<CR>He Overpowers You."
   $D7F6,$2A "#STR$D7F6,$08($b==$FF)".
 B $D820,$01 Terminator.
 
-t $D821 Messaging: <CR>A Long Water Snake<CR>Slithers Toward You...
+t $D821 Messaging: "<CR>A Long Water Snake<CR>Slithers Toward You..."
   $D821,$2A "#STR$D821,$08($b==$FF)".
 B $D84B,$01 Terminator.
 
-t $D84C Messaging: It Suddenly Strikes At You...
+t $D84C Messaging: "It Suddenly Strikes At You..."
   $D84C,$1D "#STR$D84C,$08($b==$FF)".
 B $D869,$01 Terminator.
 
-t $D86A Messaging: The Venomous Fangs Sink<CR>Into You.
+t $D86A Messaging: "The Venomous Fangs Sink<CR>Into You."
   $D86A,$21 "#STR$D86A,$08($b==$FF)".
 B $D88B,$01 Terminator.
 
-t $D88C Messaging: But It Misses And Slips Away.
+t $D88C Messaging: "But It Misses And Slips Away."
   $D88C,$1D "#STR$D88C,$08($b==$FF)".
 B $D8A9,$01 Terminator.
 
-t $D8AA Messaging: It Regards You For A Moment,<CR>Then Slips Away.
+t $D8AA Messaging: "It Regards You For A Moment,<CR>Then Slips Away."
   $D8AA,$2D "#STR$D8AA,$08($b==$FF)".
 B $D8D7,$01 Terminator.
 
-t $D8D8 Messaging: <CR>A Poisonous Spider Drops On You.
+t $D8D8 Messaging: "<CR>A Poisonous Spider Drops On You."
 @ $D8D8 label=Messaging_PoisonousSpiderDropsOnYou
   $D8D8,$21 "#STR$D8D8,$08($b==$FF)".
 B $D8F9,$01 Terminator.
 
-t $D8FA Messaging: It Lingers A Moment,<CR>Then Scuttles Off.
+t $D8FA Messaging: "It Lingers A Moment,<CR>Then Scuttles Off."
 @ $D8FA label=Messaging_PoisonousSpiderScuttlesOff
   $D8FA,$27 "#STR$D8FA,$08($b==$FF)".
 B $D921,$01 Terminator.
 
-t $D922 Messaging: It Stings You.
+t $D922 Messaging: "It Stings You."
 @ $D922 label=Messaging_PoisonousSpiderStingsYou
   $D922,$0E "#STR$D922,$08($b==$FF)".
 B $D930,$01 Terminator.
 
-t $D931 Messaging: The Natives Close In.<CR>You Struggle Bravely But<CR>They Overwhelm You.
+t $D931 Messaging: "The Natives Close In.<CR>You Struggle Bravely But<CR>They Overwhelm You."
   $D931,$42 "#STR$D931,$08($b==$FF)".
 B $D973,$01 Terminator.
 
-t $D974 Messaging: You're Really In The Soup Now.
+t $D974 Messaging: "You're Really In The Soup Now."
   $D974,$1E "#STR$D974,$08($b==$FF)".
 B $D992,$01 Terminator.
 
-t $D993 Messaging: Sorry...<CR>That Was In Poor Taste.
+t $D993 Messaging: "Sorry...<CR>That Was In Poor Taste."
   $D993,$20 "#STR$D993,$08($b==$FF)".
 B $D9B3,$01 Terminator.
 
-t $D9B4 Messaging: Try Distracting Them.
+t $D9B4 Messaging: "Try Distracting Them."
   $D9B4,$15 "#STR$D9B4,$08($b==$FF)".
 B $D9C9,$01 Terminator.
 
-t $D9CA Messaging: Keep The Noise Down.
+t $D9CA Messaging: "Keep The Noise Down."
   $D9CA,$14 "#STR$D9CA,$08($b==$FF)".
 B $D9DE,$01 Terminator.
 
-t $D9DF Messaging: Look At Those Jaws!
+t $D9DF Messaging: "Look At Those Jaws!"
   $D9DF,$13 "#STR$D9DF,$08($b==$FF)".
 B $D9F2,$01 Terminator.
 
-t $D9F3 Messaging: Work It Out For Yourself.
+t $D9F3 Messaging: "Work It Out For Yourself."
   $D9F3,$19 "#STR$D9F3,$08($b==$FF)".
 B $DA0C,$01 Terminator.
 
-t $DA0D Messaging: You Don't Really Need It.
+t $DA0D Messaging: "You Don't Really Need It."
   $DA0D,$19 "#STR$DA0D,$08($b==$FF)".
 B $DA26,$01 Terminator.
 
-t $DA27 Messaging: Nice Pussy!
+t $DA27 Messaging: "Nice Pussy!"
   $DA27,$0B "#STR$DA27,$08($b==$FF)".
 B $DA32,$01 Terminator.
 
-t $DA33 Messaging: Pretty Polly!
+t $DA33 Messaging: "Pretty Polly!"
   $DA33,$0D "#STR$DA33,$08($b==$FF)".
 B $DA40,$01 Terminator.
 
-t $DA41 Messaging: Now You're Really Lost.
+t $DA41 Messaging: "Now You're Really Lost."
   $DA41,$17 "#STR$DA41,$08($b==$FF)".
 B $DA58,$01 Terminator.
 
-t $DA59 Messaging: Try Climbing.
+t $DA59 Messaging: "Try Climbing."
   $DA59,$0D "#STR$DA59,$08($b==$FF)".
 B $DA66,$01 Terminator.
 
-t $DA67 Messaging: Try Rowing!
+t $DA67 Messaging: "Try Rowing!"
   $DA67,$0B "#STR$DA67,$08($b==$FF)".
 B $DA72,$01 Terminator.
 
-t $DA73 Messaging: It's Full Of Rum!
+t $DA73 Messaging: "It's Full Of Rum!"
   $DA73,$11 "#STR$DA73,$08($b==$FF)".
 B $DA84,$01 Terminator.
 
-t $DA85 Messaging: It's A Red Herring!
+t $DA85 Messaging: "It's A Red Herring!"
   $DA85,$13 "#STR$DA85,$08($b==$FF)".
 B $DA98,$01 Terminator.
 
-t $DA99 Messaging: It Appears To Work.
+t $DA99 Messaging: "It Appears To Work."
   $DA99,$13 "#STR$DA99,$08($b==$FF)".
 B $DAAC,$01 Terminator.
 
-t $DAAD Messaging: It Is Quite Well Made<CR>And In Good Condition.
+t $DAAD Messaging: "It Is Quite Well Made<CR>And In Good Condition."
   $DAAD,$2C "#STR$DAAD,$08($b==$FF)".
 B $DAD9,$01 Terminator.
 
-t $DADA Messaging: It Has A Circular Cross-Section.
+t $DADA Messaging: "It Has A Circular Cross-Section."
   $DADA,$20 "#STR$DADA,$08($b==$FF)".
 B $DAFA,$01 Terminator.
 
-t $DAFB Messaging: It Looks Delicious.
+t $DAFB Messaging: "It Looks Delicious."
   $DAFB,$13 "#STR$DAFB,$08($b==$FF)".
 B $DB0E,$01 Terminator.
 
-t $DB0F Messaging: Be Careful.<CR>It Won't Carry Much Weight.
+t $DB0F Messaging: "Be Careful.<CR>It Won't Carry Much Weight."
   $DB0F,$27 "#STR$DB0F,$08($b==$FF)".
 B $DB36,$01 Terminator.
 
-t $DB37 Messaging: They Are Very Beautiful<CR>And Very Heavy.
+t $DB37 Messaging: "They Are Very Beautiful<CR>And Very Heavy."
   $DB37,$27 "#STR$DB37,$08($b==$FF)".
 B $DB5E,$01 Terminator.
 
-t $DB5F Messaging: That's Not Such A Good Idea.
+t $DB5F Messaging: "That's Not Such A Good Idea."
   $DB5F,$1C "#STR$DB5F,$08($b==$FF)".
 B $DB7B,$01 Terminator.
 
-t $DB7C Messaging: The Door Rolls Shut.
+t $DB7C Messaging: "The Door Rolls Shut."
   $DB7C,$14 "#STR$DB7C,$08($b==$FF)".
 B $DB90,$01 Terminator.
 
-t $DB91 Messaging: <CR>Ouch!!<CR>The Match Has Burned Away,<CR>Scorching Your Fingers.
+t $DB91 Messaging: "<CR>Ouch!!<CR>The Match Has Burned Away,<CR>Scorching Your Fingers."
   $DB91,$3A "#STR$DB91,$08($b==$FF)".
 B $DBCB,$01 Terminator.
 
-t $DBCC Messaging: As You Start To Move,<CR>The Parrot Squawks...<CR>The Pirate Wakes<CR>And Quickly Shoots You.
+t $DBCC Messaging: "As You Start To Move,<CR>The Parrot Squawks...<CR>The Pirate Wakes<CR>And Quickly Shoots You."
   $DBCC,$54 "#STR$DBCC,$08($b==$FF)".
 B $DC20,$01 Terminator.
 
-t $DC21 Messaging: You're In It Already.
+t $DC21 Messaging: "You're In It Already."
   $DC21,$15 "#STR$DC21,$08($b==$FF)".
 B $DC36,$01 Terminator.
 
-t $DC37 Messaging: You're Not In The Boat.
+t $DC37 Messaging: "You're Not In The Boat."
   $DC37,$17 "#STR$DC37,$08($b==$FF)".
 B $DC4E,$01 Terminator.
 
-t $DC4F Messaging: You Fling The Spear,But The<CR>Lion Easily Avoids It.
+t $DC4F Messaging: "You Fling The Spear,But The<CR>Lion Easily Avoids It."
   $DC4F,$32 "#STR$DC4F,$08($b==$FF)".
 B $DC81,$01 Terminator.
 
-t $DC82 Messaging: The Coconut Bounces Off<CR>The Lion's Head.He Shakes His<CR>Long Mane In Anger.I Think<CR>You've Got His Attention.
+t $DC82 Messaging: "The Coconut Bounces Off<CR>The Lion's Head.He Shakes His<CR>Long Mane In Anger.I Think<CR>You've Got His Attention."
   $DC82,$6A "#STR$DC82,$08($b==$FF)".
 B $DCEC,$01 Terminator.
 
-t $DCED Messaging: He Sniffs The Fruit But<CR>Otherwise Ignores It.
+t $DCED Messaging: "He Sniffs The Fruit But<CR>Otherwise Ignores It."
   $DCED,$2D "#STR$DCED,$08($b==$FF)".
 B $DD1A,$01 Terminator.
 
-t $DD1B Messaging: The Lion Takes The Fish In<CR>His Massive Jaws And Then<CR>Disappears Into The Jungle.
+t $DD1B Messaging: "The Lion Takes The Fish In<CR>His Massive Jaws And Then<CR>Disappears Into The Jungle."
   $DD1B,$50 "#STR$DD1B,$08($b==$FF)".
 B $DD6B,$01 Terminator.
 
-t $DD6C Messaging: The Parrot Catches The Fruit<CR>In Its Beak And Swallows It.<CR>It Flutters Momentarily,Then<CR>Falls To The Ground,Dead.
+t $DD6C Messaging: "The Parrot Catches The Fruit<CR>In Its Beak And Swallows It.<CR>It Flutters Momentarily,Then<CR>Falls To The Ground,Dead."
   $DD6C,$70 "#STR$DD6C,$08($b==$FF)".
 B $DDDC,$01 Terminator.
 
-t $DDDD Messaging: The Cannibal Drops The Spear<CR>And Takes The Watch.<CR>He Examines It Briefly And<CR>Places It To His Ear. The<CR>Other Natives Gather Round Him<CR>And Lose All Interest In You.
+t $DDDD Messaging: "The Cannibal Drops The Spear<CR>And Takes The Watch.<CR>He Examines It Briefly And<CR>Places It To His Ear. The<CR>Other Natives Gather Round Him<CR>And Lose All Interest In You."
   $DDDD,$A3 "#STR$DDDD,$08($b==$FF)".
 B $DE80,$01 Terminator.
 
-t $DE81 Messaging: The Spear Pierces The Oily<CR>Skin And The Octopus Sinks<CR>Beneath The Surface In A<CR>Fury Of Froth And Foam.<CR>The Spear Is Lost.
+t $DE81 Messaging: "The Spear Pierces The Oily<CR>Skin And The Octopus Sinks<CR>Beneath The Surface In A<CR>Fury Of Froth And Foam.<CR>The Spear Is Lost."
   $DE81,$79 "#STR$DE81,$08($b==$FF)".
 B $DEFA,$01 Terminator.
 
-t $DEFB Messaging: You've Done That Already.
+t $DEFB Messaging: "You've Done That Already."
   $DEFB,$19 "#STR$DEFB,$08($b==$FF)".
 B $DF14,$01 Terminator.
 
-t $DF15 Messaging: The Crocodile Opens Its Huge<CR>Jaws And Catches The Keg.<CR>Its Jaws Close On It And<CR>Start To Crush It.<CR>Gunpowder Spills Out.
+t $DF15 Messaging: "The Crocodile Opens Its Huge<CR>Jaws And Catches The Keg.<CR>Its Jaws Close On It And<CR>Start To Crush It.<CR>Gunpowder Spills Out."
   $DF15,$78 "#STR$DF15,$08($b==$FF)".
 B $DF8D,$01 Terminator.
 
-t $DF8E Messaging: The Match Ignites The<CR>Spilled Gunpowder.<CR>There Is A Mighty Flash<CR>And A Thunderous Explosion.<CR>The Crocodile Has Disintegrated.
+t $DF8E Messaging: "The Match Ignites The<CR>Spilled Gunpowder.<CR>There Is A Mighty Flash<CR>And A Thunderous Explosion.<CR>The Crocodile Has Disintegrated."
   $DF8E,$7D "#STR$DF8E,$08($b==$FF)".
 B $E00B,$01 Terminator.
 
-t $E00C Messaging: The Plank Now Spans The Pit.
+t $E00C Messaging: "The Plank Now Spans The Pit."
   $E00C,$1C "#STR$E00C,$08($b==$FF)".
 B $E028,$01 Terminator.
 
-t $E029 Messaging: There Is A Faint Click And<CR>The Rock Door Slowly Rumbles<CR>Open.
+t $E029 Messaging: "There Is A Faint Click And<CR>The Rock Door Slowly Rumbles<CR>Open."
   $E029,$3D "#STR$E029,$08($b==$FF)".
 B $E066,$01 Terminator.
 
-t $E067 Messaging: You're Not Carrying It.
+t $E067 Messaging: "You're Not Carrying It."
   $E067,$17 "#STR$E067,$08($b==$FF)".
 B $E07E,$01 Terminator.
 
-t $E07F Messaging: You Stab At The Lion<CR>But The Beast Easily Avoids It.
+t $E07F Messaging: "You Stab At The Lion<CR>But The Beast Easily Avoids It."
   $E07F,$34 "#STR$E07F,$08($b==$FF)".
 B $E0B3,$01 Terminator.
 
-t $E0B4 Messaging: The Cannibals Turn On You.<CR>They Quickly Overwhelm You.
+t $E0B4 Messaging: "The Cannibals Turn On You.<CR>They Quickly Overwhelm You."
   $E0B4,$36 "#STR$E0B4,$08($b==$FF)".
 B $E0EA,$01 Terminator.
 
-t $E0EB Messaging: You Take A Shot....
+t $E0EB Messaging: "You Take A Shot...."
   $E0EB,$13 "#STR$E0EB,$08($b==$FF)".
 B $E0FE,$01 Terminator.
 
-t $E0FF Messaging: Good Shooting!<CR>The Pirate Is Dead.
+t $E0FF Messaging: "Good Shooting!<CR>The Pirate Is Dead."
   $E0FF,$22 "#STR$E0FF,$08($b==$FF)".
 B $E121,$01 Terminator.
 
-t $E122 Messaging: Bad Luck.<CR>You Missed.
+t $E122 Messaging: "Bad Luck.<CR>You Missed."
   $E122,$15 "#STR$E122,$08($b==$FF)".
 B $E137,$01 Terminator.
 
-t $E138 Messaging: He's Dead Already.
+t $E138 Messaging: "He's Dead Already."
   $E138,$12 "#STR$E138,$08($b==$FF)".
 B $E14A,$01 Terminator.
 
-t $E14B Messaging: It's Already Dead.
+t $E14B Messaging: "It's Already Dead."
   $E14B,$12 "#STR$E14B,$08($b==$FF)".
 B $E15D,$01 Terminator.
 
-t $E15E Messaging: You Haven't Got A Gun.
+t $E15E Messaging: "You Haven't Got A Gun."
   $E15E,$16 "#STR$E15E,$08($b==$FF)".
 B $E174,$01 Terminator.
 
-t $E175 Messaging: You Eat The Fish.<CR>It Was Quite Tasty.
+t $E175 Messaging: "You Eat The Fish.<CR>It Was Quite Tasty."
   $E175,$25 "#STR$E175,$08($b==$FF)".
 B $E19A,$01 Terminator.
 
-t $E19B Messaging: You Start To Eat The Fruit.<CR>You Suddenly Feel Very Unwell.<CR>Too Late,You Realise That<CR>The Fruit Is Poisonous.
+t $E19B Messaging: "You Start To Eat The Fruit.<CR>You Suddenly Feel Very Unwell.<CR>Too Late,You Realise That<CR>The Fruit Is Poisonous."
   $E19B,$6C "#STR$E19B,$08($b==$FF)".
 B $E207,$01 Terminator.
 
-t $E208 Messaging: No. You Don't Like Coconut.
+t $E208 Messaging: "No. You Don't Like Coconut."
   $E208,$1B "#STR$E208,$08($b==$FF)".
 B $E223,$01 Terminator.
 
-t $E224 Messaging: You Must Be Joking.
+t $E224 Messaging: "You Must Be Joking."
   $E224,$13 "#STR$E224,$08($b==$FF)".
 B $E237,$01 Terminator.
 
-t $E238 Messaging: You Drink The Golden Liquid.<CR>It Was Delicious..Hic..<CR>You Feel Decidedly Light-Headed.
+t $E238 Messaging: "You Drink The Golden Liquid.<CR>It Was Delicious..Hic..<CR>You Feel Decidedly Light-Headed."
   $E238,$55 "#STR$E238,$08($b==$FF)".
 B $E28D,$01 Terminator.
 
-t $E28E Messaging: You Can't.<CR>That's Salt Water.
+t $E28E Messaging: "You Can't.<CR>That's Salt Water."
+@ $E28E label=Messaging_YouCantThatsSaltWater
   $E28E,$1D "#STR$E28E,$08($b==$FF)".
 B $E2AB,$01 Terminator.
 
-t $E2AC Messaging: You Take A Refreshing Drink.
+t $E2AC Messaging: "You Take A Refreshing Drink."
+@ $E2AC label=Messaging_YouTakeARefreshingDrink
   $E2AC,$1C "#STR$E2AC,$08($b==$FF)".
 B $E2C8,$01 Terminator.
 
-t $E2C9 Messaging: It's Already Open.
+t $E2C9 Messaging: "It's Already Open."
+@ $E2C9 label=Messaging_ItsAlreadyOpen
   $E2C9,$12 "#STR$E2C9,$08($b==$FF)".
 B $E2DB,$01 Terminator.
 
-t $E2DC Messaging: It's Already Closed.
+t $E2DC Messaging: "It's Already Closed."
+@ $E2DC label=Messaging_ItsAlreadyClosed
   $E2DC,$14 "#STR$E2DC,$08($b==$FF)".
 B $E2F0,$01 Terminator.
 
-t $E2F1 Messaging: The Door Is Locked.
+t $E2F1 Messaging: "The Door Is Locked."
   $E2F1,$13 "#STR$E2F1,$08($b==$FF)".
 B $E304,$01 Terminator.
 
-t $E305 Messaging: It's Much Too Heavy.
+t $E305 Messaging: "It's Much Too Heavy."
   $E305,$14 "#STR$E305,$08($b==$FF)".
 B $E319,$01 Terminator.
 
-t $E31A Messaging: No. I Can't Be Bothered.
+t $E31A Messaging: "No. I Can't Be Bothered."
   $E31A,$18 "#STR$E31A,$08($b==$FF)".
 B $E332,$01 Terminator.
 
-t $E333 Messaging: The Whole Canyon Vibrates.<CR>The Boulder Is Dislodged...
+t $E333 Messaging: "The Whole Canyon Vibrates.<CR>The Boulder Is Dislodged..."
   $E333,$36 "#STR$E333,$08($b==$FF)".
 B $E369,$01 Terminator.
 
-t $E36A Messaging: It Falls And Crushes You.
+t $E36A Messaging: "It Falls And Crushes You."
   $E36A,$19 "#STR$E36A,$08($b==$FF)".
 B $E383,$01 Terminator.
 
-t $E384 Messaging: It Falls And Crushes The Crab.
+t $E384 Messaging: "It Falls And Crushes The Crab."
   $E384,$1E "#STR$E384,$08($b==$FF)".
 B $E3A2,$01 Terminator.
 
-t $E3A3 Messaging: Don't Be Disgusting!
+t $E3A3 Messaging: "Don't Be Disgusting!"
   $E3A3,$14 "#STR$E3A3,$08($b==$FF)".
 B $E3B7,$01 Terminator.
 
-t $E3B8 Messaging: I've Warned You Before!<CR>This Deviant Practice<CR>Has Got To Stop.
+t $E3B8 Messaging: "I've Warned You Before!<CR>This Deviant Practice<CR>Has Got To Stop."
   $E3B8,$3E "#STR$E3B8,$08($b==$FF)".
 B $E3F6,$01 Terminator.
 
-t $E3F7 Messaging: I Didn't Hear That!
+t $E3F7 Messaging: "I Didn't Hear That!"
   $E3F7,$13 "#STR$E3F7,$08($b==$FF)".
 B $E40A,$01 Terminator.
 
-t $E40B Messaging: A Small Section Of Floor<CR>Lifts Up,Revealing It To Be<CR>A Trapdoor.
+t $E40B Messaging: "A Small Section Of Floor<CR>Lifts Up,Revealing It To Be<CR>A Trapdoor."
   $E40B,$40 "#STR$E40B,$08($b==$FF)".
 B $E44B,$01 Terminator.
 
-t $E44C Messaging: You're Wearing It Already.
+t $E44C Messaging: "You're Wearing It Already."
   $E44C,$1A "#STR$E44C,$08($b==$FF)".
 B $E466,$01 Terminator.
 
-t $E467 Messaging: I Think You Look Quite Stupid.
+t $E467 Messaging: "I Think You Look Quite Stupid."
   $E467,$1E "#STR$E467,$08($b==$FF)".
 B $E485,$01 Terminator.
 
-t $E486 Messaging: No!<CR>I'm Not Letting You Hop Around,<CR>With One Shoe On.
+t $E486 Messaging: "No!<CR>I'm Not Letting You Hop Around,<CR>With One Shoe On."
   $E486,$35 "#STR$E486,$08($b==$FF)".
 B $E4BB,$01 Terminator.
 
-t $E4BC Messaging: Don't Be Ridiculous.
+t $E4BC Messaging: "Don't Be Ridiculous."
   $E4BC,$14 "#STR$E4BC,$08($b==$FF)".
 B $E4D0,$01 Terminator.
 
-t $E4D1 Messaging: The Match Flares Into Life.<CR>Hurry It Will Go Out Soon.
+t $E4D1 Messaging: "The Match Flares Into Life.<CR>Hurry It Will Go Out Soon."
+@ $E4D1 label=Messaging_TheMatchFlaresIntoLife
   $E4D1,$36 "#STR$E4D1,$08($b==$FF)".
 B $E507,$01 Terminator.
 
-t $E508 Messaging: Using The Crowbar As A Lever,<CR>You Slowly Move The Stone<CR>And Uncover A Ring Set Into<CR>The Floor.
+t $E508 Messaging: "Using The Crowbar As A Lever,<CR>You Slowly Move The Stone<CR>And Uncover A Ring Set Into<CR>The Floor."
+@ $E508 label=Messaging_UsingTheCrowbarAsALever
   $E508,$5E "#STR$E508,$08($b==$FF)".
 B $E566,$01 Terminator.
 
-t $E567 Messaging: A Massive Wave Hits The Boat.<CR>It Overturns. You're Drowning.
+t $E567 Messaging: "A Massive Wave Hits The Boat.<CR>It Overturns. You're Drowning."
+@ $E567 label=Messaging_AMassiveWaveHitsTheBoat
   $E567,$3C "#STR$E567,$08($b==$FF)".
 B $E5A3,$01 Terminator.
 
-t $E5A4 Messaging: You Can't Swim.
+t $E5A4 Messaging: "You Can't Swim."
+@ $E5A4 label=Messaging_YouCantSwim
   $E5A4,$0F "#STR$E5A4,$08($b==$FF)".
 B $E5B3,$01 Terminator.
 
-t $E5B4 Messaging: It Has No Apparent Effect.
+t $E5B4 Messaging: "It Has No Apparent Effect."
+@ $E5B4 label=Messaging_ItHasNoApparentEffect
   $E5B4,$1A "#STR$E5B4,$08($b==$FF)".
 B $E5CE,$01 Terminator.
 
-t $E5CF Messaging: The Bridge Begins To Shake...
+t $E5CF Messaging: "The Bridge Begins To Shake..."
+@ $E5CF label=Messaging_TheBridgeBeginsToShake
   $E5CF,$1D "#STR$E5CF,$08($b==$FF)".
 B $E5EC,$01 Terminator.
 
-t $E5ED Messaging: Suddenly,It Collapses.
+t $E5ED Messaging: "Suddenly,It Collapses."
+@ $E5ED label=Messaging_SuddenlyItCollapses
   $E5ED,$16 "#STR$E5ED,$08($b==$FF)".
 B $E603,$01 Terminator.
 
-t $E604 Messaging: You Haven't Got The Key.
+t $E604 Messaging: "You Haven't Got The Key."
+@ $E604 label=Messaging_YouHaventGotTheKey
   $E604,$18 "#STR$E604,$08($b==$FF)".
 B $E61C,$01 Terminator.
 
@@ -2750,56 +3013,57 @@ g $E83E Table: Object List?
 B $E83E,$01 Object #N(#PEEK(#PC)): #OBJECT(#PEEK(#PC)).
 L $E83E,$01,$30
 
-g $E86E Data: Object Rooms
-@ $E86E label=Data_ObjectRoom_00
-@ $E871 label=Data_ObjectRoom_01
-@ $E875 label=Data_ObjectRoom_02
-@ $E877 label=Data_ObjectRoom_03
-@ $E87A label=Data_ObjectRoom_04
-@ $E87E label=Data_ObjectRoom_05
-@ $E881 label=Data_ObjectRoom_06
-@ $E883 label=Data_ObjectRoom_07
-@ $E885 label=Data_ObjectRoom_08
-@ $E888 label=Data_ObjectRoom_09
-@ $E88B label=Data_ObjectRoom_10
-@ $E88E label=Data_ObjectRoom_11
-@ $E890 label=Data_ObjectRoom_12
-@ $E892 label=Data_ObjectRoom_13
-@ $E895 label=Data_ObjectRoom_14
-@ $E898 label=Data_ObjectRoom_15
-@ $E89A label=Data_ObjectRoom_16
-@ $E89C label=Data_ObjectRoom_17
-@ $E89E label=Data_ObjectRoom_18
-@ $E8A0 label=Data_ObjectRoom_19
-@ $E8A3 label=Data_ObjectRoom_20
-@ $E8A6 label=Data_ObjectRoom_21
-@ $E8AB label=Data_ObjectRoom_22
-@ $E8AF label=Data_ObjectRoom_23
-@ $E8B2 label=Data_ObjectRoom_24
-@ $E8BC label=Data_ObjectRoom_25
-@ $E8BF label=Data_ObjectRoom_26
-@ $E8C1 label=Data_ObjectRoom_27
-@ $E8C4 label=Data_ObjectRoom_28
-@ $E8C6 label=Data_ObjectRoom_29
-@ $E8C8 label=Data_ObjectRoom_30
-@ $E8CA label=Data_ObjectRoom_31
-@ $E8D2 label=Data_ObjectRoom_32
-@ $E8D4 label=Data_ObjectRoom_33
-@ $E8D6 label=Data_ObjectRoom_34
-@ $E8D8 label=Data_ObjectRoom_35
-@ $E8DC label=Data_ObjectRoom_36
-@ $E8DF label=Data_ObjectRoom_37
-@ $E8E2 label=Data_ObjectRoom_38
-@ $E8E4 label=Data_ObjectRoom_39
-@ $E8E9 label=Data_ObjectRoom_40
-@ $E8ED label=Data_ObjectRoom_41
-@ $E8F2 label=Data_ObjectRoom_42
-@ $E8F5 label=Data_ObjectRoom_43
-@ $E8F7 label=Data_ObjectRoom_44
-@ $E8FE label=Data_ObjectRoom_45
-@ $E900 label=Data_ObjectRoom_46
-@ $E902 label=Data_ObjectRoom_47
-B $E86E,$01 #IF(#PEEK(#PC)==$FF)(Terminator,Room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC))).
+g $E86E Data: Items
+@ $E86E label=Data_Item_Match
+@ $E871 label=Data_Item_Plank
+@ $E875 label=Data_Item_Coconut
+@ $E877 label=Data_Item_Rod
+@ $E87A label=Data_Item_Bottle_1
+@ $E87E label=Data_Item_Bottle_2
+@ $E881 label=Data_Item_Fruit
+@ $E883 label=Data_Item_Gun
+@ $E885 label=Data_Item_Eyepatch
+@ $E888 label=Data_Item_CrocodileWithKeg_1
+@ $E88B label=Data_Item_CrocodileWithKeg_2
+@ $E88E label=Data_Item_Shoe
+@ $E890 label=Data_Item_Sextant
+@ $E892 label=Data_Item_CannibalsWithWatch
+@ $E895 label=Data_Item_Fish
+@ $E898 label=Data_Item_Jewels
+@ $E89A label=Data_Item_Crowbar
+@ $E89C label=Data_Item_Key
+@ $E89E label=Data_Item_Skull
+@ $E8A0 label=Data_Item_CannibalsWithSpear
+@ $E8A3 label=Data_Item_Ladder_1
+@ $E8A6 label=Data_Item_Boats
+@ $E8AB label=Data_Item_Ladder_2
+@ $E8AF label=Data_Item_Cannibals
+@ $E8B2 label=Data_Item_Pirate
+@ $E8BC label=Data_Item_Parrot
+@ $E8BF label=Data_Item_Crab
+N $E8C1 Event: Crocodile.
+@ $E8C1 label=Data_Item_Crocodile
+@ $E8C4 label=Data_Item_Lion
+@ $E8C6 label=Data_Item_29
+@ $E8C8 label=Data_Item_Octopus
+@ $E8CA label=Data_Item_Door
+@ $E8D2 label=Data_Item_Sailor
+@ $E8D4 label=Data_Item_33
+@ $E8D6 label=Data_Item_34
+@ $E8D8 label=Data_Item_Bridge
+@ $E8DC label=Data_Item_Boulder
+@ $E8DF label=Data_Item_TrapdoorWithRing
+@ $E8E2 label=Data_Item_Trapdoor
+@ $E8E4 label=Data_Item_Slime
+@ $E8E9 label=Data_Item_40
+@ $E8ED label=Data_Item_41
+@ $E8F2 label=Data_Item_DoorWithHole
+@ $E8F5 label=Data_Item_43
+@ $E8F7 label=Data_Item_DeadPirate
+@ $E8FE label=Data_Item_45
+@ $E900 label=Data_Item_Stone
+@ $E902 label=Data_Item_47
+B $E86E,$01 #IF(#PEEK(#PC)==$FF)(Terminator,Item #N(#PEEK(#PC)): #ITEM(#PEEK(#PC))).
 L $E86E,$01,$9F
 
 g $E90D
@@ -2835,152 +3099,152 @@ D $E9CA The user input is broken down into tokens which represent the words
 . they've entered. These tokens are then compared against these token patterns
 . to determine the outcome the player was trying to communicate.
 N $E9CA Matches e.g. "bottle".
-@ $E9CA label=Data_Bottle
+@ $E9CA label=PhraseTokens_Bottle
 N $E9CC Matches e.g. "fish", "herring", "red fish", "red herring", "coloured fish",
 . "coloured herring".
-@ $E9CC label=Data_Fish
+@ $E9CC label=PhraseTokens_Fish
 N $E9D1 Matches e.g. "watch".
-@ $E9D1 label=Data_Watch
+@ $E9D1 label=PhraseTokens_Watch
 N $E9D3 Matches e.g. "shoe".
-@ $E9D3 label=Data_Shoe
+@ $E9D3 label=PhraseTokens_Shoe
 N $E9D5 Matches e.g. "rod".
-@ $E9D5 label=Data_Rod
+@ $E9D5 label=PhraseTokens_Rod
 N $E9D7 Matches e.g. "fruit".
-@ $E9D7 label=Data_Fruit
+@ $E9D7 label=PhraseTokens_Fruit
 N $E9D9 Matches e.g. "bridge".
-@ $E9D9 label=Data_Bridge
+@ $E9D9 label=PhraseTokens_Bridge
 N $E9DB Matches e.g. "jewels", "jewels of babylon".
-@ $E9DB label=Data_Jewel
+@ $E9DB label=PhraseTokens_Jewel
 N $E9E1 Matches e.g. "match".
-@ $E9E1 label=Data_Match
+@ $E9E1 label=PhraseTokens_Match
 N $E9E3 Matches e.g. "plank".
-@ $E9E3 label=Data_Plank
+@ $E9E3 label=PhraseTokens_Plank
 N $E9E5 Matches e.g. "coconut".
-@ $E9E5 label=Data_Coconut
+@ $E9E5 label=PhraseTokens_Coconut
 N $E9E7 Matches e.g. "bottle", "rum", "bottle of rum".
-@ $E9E7 label=Data_BottleOfRum
+@ $E9E7 label=PhraseTokens_BottleOfRum
 N $E9EF Matches e.g. "gun".
-@ $E9EF label=Data_Gun
+@ $E9EF label=PhraseTokens_Gun
 N $E9F1 Matches e.g. "eyepatch", "patch".
-@ $E9F1 label=Data_Eyepatch
+@ $E9F1 label=PhraseTokens_Eyepatch
 N $E9F3 Matches e.g. "gunpowder", "powder", "keg", "keg of gunpowder",
 . "keg of powder".
-@ $E9F3 label=Data_KegGunPowder
+@ $E9F3 label=PhraseTokens_KegGunPowder
 N $E9FB Matches e.g. "sextant".
-@ $E9FB label=Data_Sextant
+@ $E9FB label=PhraseTokens_Sextant
 N $E9FD Matches e.g. "crowbar".
-@ $E9FD label=Data_Crowbar
+@ $E9FD label=PhraseTokens_Crowbar
 N $E9FF Matches e.g. "key".
-@ $E9FF label=Data_Key
+@ $E9FF label=PhraseTokens_Key
 N $EA01 Matches e.g. "skull", "human skull".
-@ $EA01 label=Data_Skull
+@ $EA01 label=PhraseTokens_Skull
 N $EA06 Matches e.g. "spear".
-@ $EA06 label=Data_Spear
+@ $EA06 label=PhraseTokens_Spear
 N $EA08 Matches e.g. "parrot", "dead parrot".
-@ $EA08 label=Data_Parrot
+@ $EA08 label=PhraseTokens_Parrot
 N $EA0D Matches e.g. "into boat", "in to boat", "in at boat", "into rowing boat",
 . "in to rowing boat", "in at rowing boat".
-@ $EA0D label=Data_IntoBoat
+@ $EA0D label=PhraseTokens_IntoBoat
 N $EA1D Matches e.g. "out of boat", "out of rowing boat".
-@ $EA1D label=Data_OutOfBoat
+@ $EA1D label=PhraseTokens_OutOfBoat
 N $EA26 Matches e.g. "plank across pit", "plank over pit".
-@ $EA26 label=Data_PlankAcrossPit
+@ $EA26 label=PhraseTokens_PlankAcrossPit
 N $EA2A Matches e.g. "spear to lion", "spear at lion".
-@ $EA2A label=Data_SpearAtLion
+@ $EA2A label=PhraseTokens_SpearAtLion
 N $EA2E Matches e.g. "coconut to lion", "coconut at lion".
-@ $EA2E label=Data_CoconutAtLion
+@ $EA2E label=PhraseTokens_CoconutAtLion
 N $EA32 Matches e.g. "fruit to lion", "fruit at lion".
-@ $EA32 label=Data_FruitAtLion
+@ $EA32 label=PhraseTokens_FruitAtLion
 N $EA36 Matches e.g. "fish to lion", "fish at lion", "herring to lion",
 . "herring at lion", "red fish to lion", "red fish at lion",
 . "red herring to lion", "red herring at lion",
 . "coloured fish to lion", "coloured fish at lion",
 . "coloured herring to lion", "coloured herring at lion".
-@ $EA36 label=Data_FishAtLion
+@ $EA36 label=PhraseTokens_FishAtLion
 N $EA3F Matches e.g. "fruit to parrot", "fruit at parrot".
-@ $EA3F label=Data_FruitAtParrot
+@ $EA3F label=PhraseTokens_FruitAtParrot
 N $EA43 Matches e.g. "watch to cannibals", "watch at cannibals",
 . "watch to natives", "watch at natives".
-@ $EA43 label=Data_WatchAtCannibals
+@ $EA43 label=PhraseTokens_WatchAtCannibals
 N $EA47 Matches e.g. "spear to octopus", "spear at octopus",
 . "spear to giant octopus", "spear at giant octopus".
-@ $EA47 label=Data_SpearAtOctopus
+@ $EA47 label=PhraseTokens_SpearAtOctopus
 N $EA50 Matches e.g. "gunpowder to crocodile", "gunpowder at crocodile",
 . "powder to crocodile", "powder at crocodile", "keg to crocodile",
 . "keg at crocodile", "keg of gunpowder to crocodile",
 . "keg of gunpowder at crocodile", "keg of powder to crocodile",
 . "keg of powder at crocodile".
-@ $EA50 label=Data_KegAtCrocodile
+@ $EA50 label=PhraseTokens_KegAtCrocodile
 N $EA5E Matches e.g. "match to keg", "match at keg", "match to gunpowder",
 . "match at gunpowder", "match to powder", "match at powder",
 . "match to keg of gunpowder", "match at keg of gunpowder",
 . "match to keg of powder", "match at keg of powder".
-@ $EA5E label=Data_MatchAtKeg
+@ $EA5E label=PhraseTokens_MatchAtKeg
 N $EA6C Matches e.g. "match to crocodile", "match at crocodile".
-@ $EA6C label=Data_MatchAtCrocodile
+@ $EA6C label=PhraseTokens_MatchAtCrocodile
 N $EA70 Matches e.g. "rod in hole", "rod in round hole", "rod into hole",
 . "rod into round hole", "rod in to hole", "rod in at hole",
 . "rod in to round hole", "rod in at round hole".
-@ $EA70 label=Data_RodInHole
+@ $EA70 label=PhraseTokens_RodInHole
 N $EA8D Matches e.g. "octopus with spear", "octopus using spear",
 . "giant octopus with spear", "giant octopus using spear".
-@ $EA8D label=Data_OctopusWithSpear
+@ $EA8D label=PhraseTokens_OctopusWithSpear
 N $EA96 Matches e.g. "lion with spear", "lion using spear".
-@ $EA96 label=Data_LionWithSpear
+@ $EA96 label=PhraseTokens_LionWithSpear
 N $EA9A Matches e.g. "cannibals with spear", "cannibals using spear",
 . "natives with spear", "natives using spear".
-@ $EA9A label=Data_CannibalsWithSpear
+@ $EA9A label=PhraseTokens_CannibalsWithSpear
 N $EA9E Matches e.g. "pirate with gun", "pirate using gun".
-@ $EA9E label=Data_PirateWithGun
+@ $EA9E label=PhraseTokens_PirateWithGun
 N $EAA2 Matches e.g. "parrot with gun", "parrot using gun".
-@ $EAA2 label=Data_ParrotWithGun
+@ $EAA2 label=PhraseTokens_ParrotWithGun
 N $EAA6 Matches e.g. "pirate", "pirate with gun", "pirate using gun".
-@ $EAA6 label=Data_PirateWithGun_2
+@ $EAA6 label=PhraseTokens_PirateWithGun_2
 N $EAAC Matches e.g. "parrot", "parrot with gun", "parrot using gun".
-@ $EAAC label=Data_ParrotWithGun_2
+@ $EAAC label=PhraseTokens_ParrotWithGun_2
 N $EAB2 Matches e.g. "u ladder", "up ladder".
-@ $EAB2 label=Data_UpLadder
+@ $EAB2 label=PhraseTokens_UpLadder
 N $EAB5 Matches e.g. "d ladder", "down ladder".
-@ $EAB5 label=Data_DownLadder
+@ $EAB5 label=PhraseTokens_DownLadder
 N $EAB8 Matches e.g. "rum".
-@ $EAB8 label=Data_Rum
+@ $EAB8 label=PhraseTokens_Rum
 N $EABA Matches e.g. "water".
-@ $EABA label=Data_Water
+@ $EABA label=PhraseTokens_Water
 N $EABC Matches e.g. "ladder".
-@ $EABC label=Data_Ladder
+@ $EABC label=PhraseTokens_Ladder
 N $EABE Matches e.g. "door".
-@ $EABE label=Data_Door
+@ $EABE label=PhraseTokens_Door
 N $EAC0 Matches e.g. "rock door", "door".
-@ $EAC0 label=Data_RockDoor
+@ $EAC0 label=PhraseTokens_RockDoor
 N $EAC5 Matches e.g. "trapdoor".
-@ $EAC5 label=Data_TrapDoor
+@ $EAC5 label=PhraseTokens_TrapDoor
 N $EAC7 Matches e.g. "????", "loud".
-@ $EAC7 label=Data_XXXX
+@ $EAC7 label=PhraseTokens_XXXX
 N $EACB Matches e.g. "ring".
-@ $EACB label=Data_Ring
+@ $EACB label=PhraseTokens_Ring
 N $EACD Matches e.g. "cave".
-@ $EACD label=Data_Cave
+@ $EACD label=PhraseTokens_Cave
 N $EACF Matches e.g. "boat", "rowing boat", "ship", "pit".
-@ $EACF label=Data_Boat
+@ $EACF label=PhraseTokens_Boat
 N $EAD8 Matches e.g. "stone", "large stone".
-@ $EAD8 label=Data_Stone
+@ $EAD8 label=PhraseTokens_Stone
 N $EADD Matches e.g. "stone with crowbar", "stone using crowbar",
 . "large stone with crowbar", "large stone using crowbar".
-@ $EADD label=Data_StoneWithCrowbar
+@ $EADD label=PhraseTokens_StoneWithCrowbar
 N $EAE6 Matches e.g. "door", "door with key", "door using key".
-@ $EAE6 label=Data_Door_2
+@ $EAE6 label=PhraseTokens_Door_2
 N $EAEC Matches e.g. "n", "north", "boat n", "boat north", "rowing boat n"
 . "rowing boat north".
-@ $EAEC label=Data_North
+@ $EAEC label=PhraseTokens_North
 N $EAF5 Matches e.g. "s", "south", "boat s", "boat south", "rowing boat s",
 . "rowing boat south".
-@ $EAF5 label=Data_South
+@ $EAF5 label=PhraseTokens_South
 N $EAFE Matches e.g. "e", "east", "boat e", "boat east", "rowing boat e",
 . "rowing boat east".
-@ $EAFE label=Data_East
+@ $EAFE label=PhraseTokens_East
 N $EB07 Matches e.g. "w", "west", "boat w", "boat west", "rowing boat w",
 . "rowing boat west".
-@ $EB07 label=Data_West
+@ $EB07 label=PhraseTokens_West
 B $E9CA,$01 #TOKEN(#PEEK(#PC)).
 L $E9CA,$01,$146,$02
 
@@ -3240,9 +3504,8 @@ N $EF32 Print "#STR$D8D8,$08($b==$FF)".
   $EF3D,$02 Jump to #R$EF48 if the random generator returns a non-zero
 . response.
 N $EF3F Bad luck! 
-  $EF3F,$03 Switch #R$EDD7 onto the stack so the next return actions a "game
+  $EF3F,$04 Switch #R$EDD7 onto the stack so the next return actions a "game
 . over".
-  $EF42,$01 Exchange the *#REGsp with the #REGhl register.
 N $EF43 Print "#STR$D922,$08($b==$FF)".
   $EF43,$03 #REGhl=#R$D922.
   $EF46,$02 Jump to #R$EF50.
@@ -3258,60 +3521,49 @@ N $EF4D Print "#STR$D8FA,$08($b==$FF)".
 
 c $EF54
   $EF54,$03 #REGhl=#R$BC6F.
-  $EF57,$02 Test bit 0 of *#REGhl.
-  $EF59,$02 Jump to #R$EF7B if ?? is equal to #N$00.
-  $EF5B,$03 #REGhl=#R$BC67.
-  $EF5E,$02 Write #N$06 to *#REGhl.
+  $EF57,$04 Jump to #R$EF7B if bit 0 of *#REGhl is unset.
+  $EF5B,$05 Initialise #R$BC67 to #N$06.
   $EF60,$04 Jump to #R$EF7B if #REGa is not equal to #N$2C.
-  $EF64,$03 #REGhl=#R$BC6F.
-  $EF67,$02 Reset bit 0 of *#REGhl.
+  $EF64,$05 Reset bit 0 of *#R$BC6F.
   $EF69,$01 Stash #REGaf on the stack.
-  $EF6A,$03 #REGbc=#N$2930.
-  $EF6D,$03 Call #R$C412.
+N $EF6A Spawn the giant crab in #ROOM$30.
+  $EF6A,$06 Call #R$C412 using item #ITEM$29 to create it in #ROOM$30.
   $EF70,$01 Restore #REGaf from the stack.
-  $EF71,$05 Write #N$2F to *#R$EC27.
-  $EF76,$05 Write #N$30 to *#R$EC2A.
+  $EF71,$05 Write #N$2F to *#R$EC27 to open up westbound access to #ROOM$2F
+. from #ROOM$2E.
+  $EF76,$05 Write #N$30 to *#R$EC2A to open up northbound access to #ROOM$30
+. from #ROOM$2F.
   $EF7B,$03 Call #R$C520.
   $EF7E,$02 #REGe=#N$00.
   $EF80,$03 Call #R$C21E.
   $EF83,$07 Jump to #R$EFA7 if *#R$BCCB is not room #N$30: "#ROOM$30".
-  $EF8A,$02 #REGa=#N$29 (event ID: #N($29&$7F)).
-  $EF8C,$03 Call #R$C35F.
+  $EF8A,$05 Call #R$C35F with #ITEM$29.
   $EF8F,$02 Jump to #R$EFA7 if #REGa is not equal to #N$29.
-  $EF91,$03 #REGhl=#R$BC6F.
-  $EF94,$02 Set bit 0 of *#REGhl.
-  $EF96,$07 Write #N$00 to #LIST { *#R$EC27 } { *#R$EC2A } LIST#
-  $EF9D,$03 #REGhl=#R$BC66.
-  $EFA0,$02 Set bit 0 of *#REGhl.
+  $EF91,$05 Set bit 0 of *#R$BC6F.
+  $EF96,$04 Write #N$00 to *#R$EC27 to remove access to #ROOM$2F from #ROOM$2E.
+  $EF9A,$03 Write #N$00 to *#R$EC2A to remove access to #ROOM$30 from #ROOM$2F.
+  $EF9D,$05 Set bit 0 of *#R$BC66 which relates to the crab being active.
   $EFA2,$05 Write #N$06 to *#R$BC67.
-  $EFA7,$02 #REGa=#N$2B (event ID: #N($2B&$7F)).
-  $EFA9,$03 Call #R$C35F.
-  $EFAC,$02 Jump to #R$EFB8 if #REGa is not equal to #N$2B.
-  $EFAE,$03 #REGhl=#R$BC66.
-  $EFB1,$02 Set bit 1 of *#REGhl.
+  $EFA7,$05 Call #R$C35F with #ITEM$2B.
+  $EFAC,$02 Jump to #R$EFB8 if #ITEM$2B isn't in the current room.
+  $EFAE,$05 Set bit 1 of *#R$BC66 which relates to the tentacle being active.
   $EFB3,$05 Write #N$05 to *#R$BC68.
-  $EFB8,$02 #REGa=#N$2A (event ID: #N($2A&$7F)).
-  $EFBA,$03 Call #R$C35F.
-  $EFBD,$02 Jump to #R$EFC9 if #REGa is not equal to #N$2A.
-  $EFBF,$03 #REGhl=#R$BC66.
-  $EFC2,$02 Set bit 3 of *#REGhl.
+  $EFB8,$05 Call #R$C35F with #ITEM$2A.
+  $EFBD,$02 Jump to #R$EFC9 if #ITEM$2A isn't in the current room.
+  $EFBF,$05 Set bit 3 of *#R$BC66 which relates to the lion being active.
   $EFC4,$05 Write #N$07 to *#R$BC6A.
   $EFC9,$03 #REGhl=#R$E8C1.
   $EFCC,$03 Call #R$C401.
   $EFCF,$02 Jump to #R$EFDB if #REGa is not equal to #N$07.
-  $EFD1,$03 #REGhl=#R$BC66.
-  $EFD4,$02 Set bit 4 of *#REGhl.
+  $EFD1,$05 Set bit 4 of *#R$BC66 which relates to the crocodile being active.
   $EFD6,$05 Write #N$0B to *#R$BC6B.
-  $EFDB,$02 #REGa=#N$18 (event ID: #N($18&$7F)).
-  $EFDD,$03 Call #R$C35F.
-  $EFE0,$02 Jump to #R$EFEC if #REGa is not equal to #N$18.
-  $EFE2,$03 #REGhl=#R$BC66.
-  $EFE5,$02 Set bit 5 of *#REGhl.
-  $EFE7,$05 Write #N$09 to *#R$BC6C.
+  $EFDB,$05 Call #R$C35F with #ITEM$18.
+  $EFE0,$02 Jump to #R$EFEC if #ITEM$18 isn't in the current room.
+  $EFE2,$05 Set bit 5 of *#R$BC66 which relates to the cannibals being active.
+  $EFE7,$05 Initialise the turn counter at *#R$BC6C with #N$09.
   $EFEC,$07 Jump to #R$EFFF if *#R$BCCB is not room #N$03: "#ROOM$03".
-  $EFF3,$02 #REGa=#N$1D (event ID: #N($1D&$7F)).
-  $EFF5,$03 Call #R$C35F.
-  $EFF8,$02 Jump to #R$EFFF if #REGa is not equal to #N$1D.
+  $EFF3,$05 Call #R$C35F with #ITEM$1D.
+  $EFF8,$02 Jump to #R$EFFF if #ITEM$1D isn't in the current room.
   $EFFA,$02 Restore #REGhl and #REGhl from the stack.
   $EFFC,$03 Jump to #R$EDF2.
   $EFFF,$07 Jump to #R$F019 if *#R$BCCB is not room #N$02: "#ROOM$02".
@@ -3319,19 +3571,18 @@ c $EF54
   $F009,$02 Test bit 5 of *#REGhl.
   $F00B,$02 Jump to #R$F019 if #REGa is not equal to #N$02.
   $F00D,$02 Set bit 5 of *#REGhl.
-  $F00F,$03 #REGhl=#R$BC66.
-  $F012,$02 Set bit 7 of *#REGhl.
+  $F00F,$05 Set bit 7 of *#R$BC66 which relates to the wave being active.
   $F014,$05 Write #N$05 to *#R$BC6E.
   $F019,$07 Jump to #R$F039 if *#R$BCCB is not room #N$6C: "#ROOM$6C".
-  $F020,$02 #REGa=#N$1D (event ID: #N($1D&$7F)).
-  $F022,$03 Call #R$C35F.
-  $F025,$02 Jump to #R$F039 if #REGa is not equal to #N$1D.
+  $F020,$05 Call #R$C35F with #ITEM$1D.
+  $F025,$02 Jump to #R$F039 if #ITEM$1D isn't in the current room.
 N $F027 Print "#STR$E5CF,$08($b==$FF)".
   $F027,$03 #REGhl=#R$E5CF.
   $F02A,$03 Call #R$BAB1.
   $F02D,$01 Restore #REGhl from the stack.
-  $F02E,$03 #REGhl=#R$EDD7.
-  $F031,$01 Exchange the *#REGsp with the #REGhl register.
+N $F02E Bad luck!
+  $F02E,$04 Switch #R$EDD7 onto the stack so the next return actions a "game
+. over".
 N $F032 Print "#STR$E5ED,$08($b==$FF)".
   $F032,$03 #REGhl=#R$E5ED.
   $F035,$03 Call #R$C579.
@@ -3339,99 +3590,131 @@ N $F032 Print "#STR$E5ED,$08($b==$FF)".
 
   $F039,$01 Return.
 
-c $F03A
+c $F03A Print String And Newline Alias
+@ $F03A label=PrintStringAndNewline_Alias
   $F03A,$03 Call #R$BAB1.
   $F03D,$01 Return.
 
+c $F03E Pause, Print String And Scroll Alias
+@ $F03E label=PausePrintStringAndScroll_Alias
   $F03E,$03 Call #R$C579.
   $F041,$01 Return.
 
+c $F042 Response: "Work It Out For Yourself"
+@ $F042 label=Response_WorkItOutForYourself
 N $F042 Print "#STR$D9F3,$08($b==$FF)".
   $F042,$03 #REGhl=#R$D9F3.
   $F045,$02 Jump to #R$F03A.
 
+c $F047 Response: "You Really Don't Need It"
+@ $F047 label=Response_YouReallyDontNeedIt
 N $F047 Print "#STR$DA0D,$08($b==$FF)".
   $F047,$03 #REGhl=#R$DA0D.
   $F04A,$02 Jump to #R$F03A.
 
+c $F04C Response: "You're Not Carrying Anything"
+@ $F04C label=Response_YoureNotCarryingAnything
 N $F04C Print "#STR$BFC4,$08($b==$FF)".
   $F04C,$03 #REGhl=#R$BFC4.
   $F04F,$02 Jump to #R$F03A.
 
+c $F051 Response: "Try Climbing"
+@ $F051 label=Response_TryClimbing
 N $F051 Print "#STR$DA59,$08($b==$FF)".
   $F051,$03 #REGhl=#R$DA59.
   $F054,$02 Jump to #R$F03A.
 
+c $F056 Response: "Try Rowing"
+@ $F056 label=Response_TryRowing
 N $F056 Print "#STR$DA67,$08($b==$FF)".
   $F056,$03 #REGhl=#R$DA67.
   $F059,$02 Jump to #R$F03A.
 
+c $F05B Response: "You Can't Go In That Direction"
+@ $F05B label=Response_YouCantGoInThatDirection
 N $F05B Print "#STR$BF62,$08($b==$FF)".
   $F05B,$03 #REGhl=#R$BF62.
   $F05E,$02 Jump to #R$F03A.
 
+c $F060 Response: "One At A Time, Please"
+@ $F060 label=Response_OneAtATimePlease
 N $F060 Print "#STR$BF82,$08($b==$FF)".
   $F060,$03 #REGhl=#R$BF82.
   $F063,$02 Jump to #R$F03A.
 
-@ $F065 label=Print_IDontSeeThePoint
+c $F065 Response: "I Don't See The Point"
+@ $F065 label=Response_IDontSeeThePoint
 N $F065 Print "#STR$BF98,$08($b==$FF)".
   $F065,$03 #REGhl=#R$BF98.
   $F068,$02 Jump to #R$F03A.
 
-@ $F06A label=Print_OK
+c $F06A Response: "O.K."
+@ $F06A label=Response_OK_Duplicate
 N $F06A Print "#STR$BF0B,$08($b==$FF)".
   $F06A,$03 #REGhl=#R$BF0B.
   $F06D,$02 Jump to #R$F03A.
 
-@ $F06F label=Print_YouCant
+c $F06F Response: "You Can't"
+@ $F06F label=Response_YouCant_Duplicate
 N $F06F Print "#STR$BF00,$08($b==$FF)".
   $F06F,$03 #REGhl=#R$BF00.
   $F072,$02 Jump to #R$F03A.
 
-@ $F074 label=Print_PleaseRephraseThat
+c $F074 Response: "Please Rephrase That"
+@ $F074 label=Response_PleaseRephraseThat_Duplicate
 N $F074 Print "#STR$BEEA,$08($b==$FF)".
   $F074,$03 #REGhl=#R$BEEA.
   $F077,$02 Jump to #R$F03A.
 
-@ $F079 label=Print_YouveDoneThatAlready
+c $F079 Response: "You've Done That Already"
+@ $F079 label=Response_YouveDoneThatAlready
 N $F079 Print "#STR$DEFB,$08($b==$FF)".
   $F079,$03 #REGhl=#R$DEFB.
   $F07C,$02 Jump to #R$F03A.
 
-@ $F07E label=Print_YoureNotCarryingIt
+c $F07E Response: "You're Not Carrying It"
+@ $F07E label=Response_YoureNotCarryingIt
 N $F07E Print "#STR$E067,$08($b==$FF)".
   $F07E,$03 #REGhl=#R$E067.
   $F081,$02 Jump to #R$F03A.
 
+c $F083 Response: "You Must Be Joking"
+@ $F083 label=Response_YouMustBeJoking
 N $F083 Print "#STR$E224,$08($b==$FF)".
   $F083,$03 #REGhl=#R$E224.
   $F086,$02 Jump to #R$F03A.
 
+c $F088 Response: "It's Already Open"
+@ $F088 label=Response_ItsAlreadyOpen
 N $F088 Print "#STR$E2C9,$08($b==$FF)".
   $F088,$03 #REGhl=#R$E2C9.
   $F08B,$02 Jump to #R$F03A.
 
+c $F08D Response: "It's Already Closed"
+@ $F08D label=Response_ItsAlreadyClosed
 N $F08D Print "#STR$E2DC,$08($b==$FF)".
   $F08D,$03 #REGhl=#R$E2DC.
   $F090,$02 Jump to #R$F03A.
 
+c $F092 Response: "Don't Be Ridiculous"
+@ $F092 label=Response_DontBeRidiculous
 N $F092 Print "#STR$E4BC,$08($b==$FF)".
   $F092,$03 #REGhl=#R$E4BC.
   $F095,$02 Jump to #R$F03A.
 
+c $F097 Response: "It Has No Apparent Effect"
+@ $F097 label=Response_ItHasNoApparentEffect
 N $F097 Print "#STR$E5B4,$08($b==$FF)".
   $F097,$03 #REGhl=#R$E5B4.
   $F09A,$02 Jump to #R$F03A.
 
+c $F09C
   $F09C,$03 Call #R$C470.
   $F09F,$01 Return if ?? is less than #N$00.
-  $F0A0,$02 #REGa=#N$18 (event ID: #N($18&$7F)).
-  $F0A2,$03 Call #R$C35F.
-  $F0A5,$02 Jump to #R$F0C2 if ?? is not equal to #N$18.
+  $F0A0,$05 Call #R$C35F with #ITEM$18.
+  $F0A5,$02 Jump to #R$F0C2 if #ITEM$18 isn't in the current room.
   $F0A7,$03 #REGhl=#R$BC54.
-  $F0AA,$02 Test bit 1 of *#REGhl.
-  $F0AC,$02 Jump to #R$F0BC if ?? is not equal to #N$18.
+  $F0AA,$04 Jump to #R$F0BC if bit 1 of *#REGhl is set.
   $F0AE,$02 Set bit 1 of *#REGhl.
 N $F0B0 Print "#STR$D974,$08($b==$FF)".
   $F0B0,$03 #REGhl=#R$D974.
@@ -3442,66 +3725,75 @@ N $F0B6 Print "#STR$D993,$08($b==$FF)".
 N $F0BC Print "#STR$D9B4,$08($b==$FF)".
   $F0BC,$03 #REGhl=#R$D9B4.
   $F0BF,$03 Jump to #R$F03E.
-  $F0C2,$02 #REGa=#N$39 (event ID: #N($39&$7F)).
-  $F0C4,$03 Call #R$C35F.
-  $F0C7,$02 Jump to #R$F0CF if ?? is not equal to #N$39.
+
+c $F0C2
+  $F0C2,$05 Call #R$C35F with #ITEM$39.
+  $F0C7,$02 Jump to #R$F0CF if #ITEM$39 isn't in the current room.
 N $F0C9 Print "#STR$D9CA,$08($b==$FF)".
   $F0C9,$03 #REGhl=#R$D9CA.
   $F0CC,$03 Jump to #R$F03A.
-  $F0CF,$02 #REGa=#N$13 (event ID: #N($13&$7F)).
-  $F0D1,$03 Call #R$C35F.
-  $F0D4,$02 Jump to #R$F0DC if ?? is not equal to #N$13.
+
+c $F0CF
+  $F0CF,$05 Call #R$C35F with #ITEM$13.
+  $F0D4,$02 Jump to #R$F0DC if #ITEM$13 isn't in the current room.
 N $F0D6 Print "#STR$D9DF,$08($b==$FF)".
   $F0D6,$03 #REGhl=#R$D9DF.
   $F0D9,$03 Jump to #R$F03A.
-  $F0DC,$02 #REGa=#N$14 (event ID: #N($14&$7F)).
-  $F0DE,$03 Call #R$C35F.
-  $F0E1,$03 Jump to #R$F042 if ?? is equal to #N$14.
-  $F0E4,$02 #REGa=#N$2B (event ID: #N($2B&$7F)).
-  $F0E6,$03 Call #R$C35F.
-  $F0E9,$03 Jump to #R$F042 if ?? is equal to #N$2B.
-  $F0EC,$02 #REGa=#N$2A (event ID: #N($2A&$7F)).
-  $F0EE,$03 Call #R$C35F.
-  $F0F1,$02 Jump to #R$F0F9 if ?? is not equal to #N$2A.
+
+c $F0DC
+  $F0DC,$05 Call #R$C35F with #ITEM$14.
+  $F0E1,$03 Jump to #R$F042 if #ITEM$14 is in the current room.
+  $F0E4,$05 Call #R$C35F with #ITEM$2B.
+  $F0E9,$03 Jump to #R$F042 if #ITEM$2B is in the current room.
+  $F0EC,$05 Call #R$C35F with #ITEM$2A.
+  $F0F1,$02 Jump to #R$F0F9 if #ITEM$2A isn't in the current room.
 N $F0F3 Print "#STR$DA27,$08($b==$FF)".
   $F0F3,$03 #REGhl=#R$DA27.
   $F0F6,$03 Jump to #R$F03A.
-  $F0F9,$02 #REGa=#N$27 (event ID: #N($27&$7F)).
-  $F0FB,$03 Call #R$C35F.
+
+c $F0F9
+  $F0F9,$05 Call #R$C35F with #ITEM$27.
   $F0FE,$02 Jump to #R$F106 if ?? is not equal to #N$27.
 N $F100 Print "#STR$DA33,$08($b==$FF)".
   $F100,$03 #REGhl=#R$DA33.
   $F103,$03 Jump to #R$F03A.
+
+c $F106
   $F106,$07 Jump to #R$F113 if *#R$BCCB is not room #N$02: "#ROOM$02".
 N $F10D Print "#STR$DA41,$08($b==$FF)".
   $F10D,$03 #REGhl=#R$DA41.
   $F110,$03 Jump to #R$F03A.
-  $F113,$02 #REGa=#N$32 (event ID: #N($32&$7F)).
-  $F115,$03 Call #R$C35F.
-  $F118,$03 Jump to #R$F042 if #REGa is equal to #N$32.
+
+c $F113
+  $F113,$05 Call #R$C35F with #ITEM$32.
+  $F118,$03 Jump to #R$F042 if #ITEM$32 is present in the current room.
   $F11B,$03 #REGhl=#R$E8E9.
   $F11E,$03 Call #R$C401.
   $F121,$02 Jump to #R$F12B if #REGa is not equal to #N$32.
-  $F123,$02 #REGa=#N$04 (event ID: #N($04&$7F)).
-  $F125,$03 Call #R$C35F.
-  $F128,$03 Jump to #R$F042 if #REGa is equal to #N$04.
+  $F123,$05 Call #R$C35F with #ITEM$04.
+  $F128,$03 Jump to #R$F042 if #ITEM$04 is present in the current room.
   $F12B,$03 Jump to #R$F047.
 
+c $F12E Action: Inventory
+@ $F12E label=Action_Inventory
   $F12E,$03 Call #R$C470.
-  $F131,$01 Return if #REGa is less than #N$04.
+  $F131,$01 Return if "inventory" wasn't requested.
   $F132,$07 Jump to #R$F04C if *#R$BC98 is zero.
   $F139,$03 Call #R$BA6D.
   $F13C,$03 Call #R$BA89.
 N $F13F Print "#STR$BF4F,$08($b==$FF)".
   $F13F,$03 #REGhl=#R$BF4F.
   $F142,$03 Call #R$BAB1.
-  $F145,$02 #REGa=#N$01.
-  $F147,$03 Call #R$C1FF.
+  $F145,$05 Call #R$C1FF with a room ID of #N$01 which is the players
+. inventory.
   $F14A,$01 Return.
+
+c $F14B Action: Look
+@ $F14B label=Action_Look
   $F14B,$03 Call #R$C470.
-  $F14E,$01 Return if #REGa is less than #REGa.
-  $F14F,$02 #REGe=#N$01.
-  $F151,$03 Call #R$C21E.
+  $F14E,$01 Return if "look" wasn't requested.
+  $F14F,$05 Call #R$C21E with #REGe set to #N$01 (which will force any room
+. images to be re-displayed).
   $F154,$01 Return.
 
 c $F155
@@ -3533,7 +3825,7 @@ c $F155
   $F18A,$03 Jump to #R$F056 if #REGa is less than #N$04.
   $F18D,$03 Jump to #R$F05B.
 
-  $F190,$04 Jump to #R$F19A if #REGa is not equal to #N$02.
+  $F190,$04 Jump to #R$F19A if *#R$BCCB is not room #N$02: "#ROOM$02".
   $F194,$01 #REGa=#REGc.
   $F195,$05 Jump to #R$F056 if #REGa is less than #N$04.
   $F19A,$03 Jump to #R$F05B.
@@ -3557,7 +3849,7 @@ N $F1BE Print "#STR$DA73,$08($b==$FF)".
   $F1C7,$03 Call #R$C37F.
   $F1CA,$02 Jump to #R$F1DF if #REGa is not equal to #N$0B.
   $F1CC,$05 Call #R$C35F with #ITEM$1B.
-  $F1D1,$02 Jump to #R$F1DF if #REGa is not equal to #N$1B.
+  $F1D1,$02 Jump to #R$F1DF if #ITEM$1B isn't in the current room.
   $F1D3,$06 Call #R$C426 to transform item #N$1B (#ITEM$1B) into item #N$1C
 . (#ITEM$1C).
 N $F1D9 Print "#STR$DA85,$08($b==$FF)".
@@ -3623,8 +3915,8 @@ N $F24A Print "#STR$BEB5,$08($b==$FF)".
   $F253,$04 Jump to #R$F25E if #REGa is equal to #N$4E.
   $F257,$04 Jump to #R$F250 if #REGa is not equal to #N$59.
   $F25B,$03 Call #R$BB59.
-  $F25E,$03 #REGhl=#R$EDDD.
-  $F261,$01 Exchange the *#REGsp with the #REGhl register.
+  $F25E,$04 Switch #R$EDDD onto the stack so the next return action is asking
+. for "Y"/ "N" user input, the same as for "Want another game? Y/N.".
   $F262,$01 Return.
 
   $F263,$03 Call #R$C47B.
@@ -3685,36 +3977,31 @@ B $F29B,$01
   $F2D0,$03 #REGhl=#R$E9D1.
   $F2D3,$03 Call #R$C37F.
   $F2D6,$02 Jump to #R$F2ED if *#REGhl is not equal to #N$01.
-  $F2D8,$02 #REGa=#N$19 (event ID: #N($19&$7F)).
-  $F2DA,$03 Call #R$C35F.
-  $F2DD,$02 Jump to #R$F2E5 if *#REGhl is not equal to #N$19.
+  $F2D8,$05 Call #R$C35F with #ITEM$19.
+  $F2DD,$02 Jump to #R$F2E5 if #ITEM$19 isn't in the current room.
 N $F2DF Print "#STR$DB5F,$08($b==$FF)".
   $F2DF,$03 #REGhl=#R$DB5F.
   $F2E2,$03 Jump to #R$F03A.
 
-  $F2E5,$02 #REGa=#N$17.
-  $F2E7,$03 Call #R$F26A.
+  $F2E5,$05 Call #R$F26A with #ITEM$17.
   $F2EA,$03 Jump to #R$F29C.
 
   $F2ED,$03 #REGhl=#R$E9D3.
   $F2F0,$03 Call #R$C37F.
   $F2F3,$02 Jump to #R$F2FD if *#REGhl is not equal to #N$17.
-  $F2F5,$02 #REGa=#N$15.
-  $F2F7,$03 Call #R$F26A.
+  $F2F5,$05 Call #R$F26A with #ITEM$15.
   $F2FA,$03 Jump to #R$F29C.
 
   $F2FD,$03 #REGhl=#R$E9D7.
   $F300,$03 Call #R$C37F.
   $F303,$02 Jump to #R$F30D if *#REGhl is not equal to #N$15.
-  $F305,$02 #REGa=#N$0E.
-  $F307,$03 Call #R$F26A.
+  $F305,$05 Call #R$F26A with #ITEM$0E.
   $F30A,$03 Jump to #R$F29C.
 
   $F30D,$03 #REGhl=#R$E9D5.
   $F310,$03 Call #R$C37F.
   $F313,$02 Jump to #R$F347 if *#REGhl is not equal to #N$0E.
-  $F315,$02 #REGa=#N$08.
-  $F317,$03 Call #R$F26A.
+  $F315,$05 Call #R$F26A with #ITEM$08.
   $F31A,$01 #REGa=#REGb.
   $F31B,$03 Call #R$C35F.
   $F31E,$02 #REGb=#N$08.
@@ -3724,7 +4011,8 @@ N $F2DF Print "#STR$DB5F,$08($b==$FF)".
   $F329,$06 Call #R$C426 to transform item #N$31 (#ITEM$31) into item #N$32
 . (#ITEM$32).
   $F32F,$06 Call #R$C412 using item #ITEM$33 to create it in #ROOM$15.
-  $F335,$07 Write #N$00 to: #LIST { *#R$EB90 } { *#R$ED8D } LIST#
+  $F335,$04 Write #N$00 to *#R$EB90 to remove access to #ROOM$6A from #ROOM$15.
+  $F339,$03 Write #N$00 to *#R$ED8D to remove access to #ROOM$15 from #ROOM$6A.
   $F33C,$02 #REGb=#N$08.
   $F33E,$03 Call #R$F29C.
 N $F341 Print "#STR$DB7C,$08($b==$FF)".
@@ -3734,8 +4022,7 @@ N $F341 Print "#STR$DB7C,$08($b==$FF)".
   $F347,$03 #REGhl=#R$E9DB.
   $F34A,$03 Call #R$C37F.
   $F34D,$02 Jump to #R$F357 if *#REGhl is not equal to #N$08.
-  $F34F,$02 #REGa=#N$1D.
-  $F351,$03 Call #R$F26A.
+  $F34F,$05 Call #R$F26A with #ITEM$1D.
   $F354,$03 Jump to #R$F29C.
 
   $F357,$03 #REGhl=#R$E9E1.
@@ -3765,18 +4052,15 @@ N $F341 Print "#STR$DB7C,$08($b==$FF)".
   $F398,$03 #REGhl=#R$E9E5.
   $F39B,$03 Call #R$C37F.
   $F39E,$02 Jump to #R$F3A8 if #REGa is not equal to #N$04.
-  $F3A0,$02 #REGa=#N$07.
-  $F3A2,$03 Call #R$F26A.
+  $F3A0,$05 Call #R$F26A with #ITEM$07.
   $F3A5,$03 Jump to #R$F29C.
 
   $F3A8,$03 #REGhl=#R$E9EF.
   $F3AB,$03 Call #R$C37F.
   $F3AE,$02 Jump to #R$F3D5 if #REGa is not equal to #N$07.
-  $F3B0,$02 #REGa=#N$0F.
-  $F3B2,$03 Call #R$F26A.
-  $F3B5,$02 #REGa=#N$27 (event ID: #N($27&$7F)).
-  $F3B7,$03 Call #R$C35F.
-  $F3BA,$02 Jump to #R$F3CB if #REGa is equal to #N$27.
+  $F3B0,$05 Call #R$F26A with #ITEM$0F.
+  $F3B5,$05 Call #R$C35F with #ITEM$27.
+  $F3BA,$02 Jump to #R$F3CB if #ITEM$27 is present in the current room.
   $F3BC,$02 #REGa=#N$22 (event ID: #N($22&$7F)).
   $F3BE,$03 Call #R$C3EA.
   $F3C1,$02 #REGa=#N$88.
@@ -3784,8 +4068,9 @@ N $F341 Print "#STR$DB7C,$08($b==$FF)".
   $F3C6,$02 #REGb=#N$0F.
   $F3C8,$03 Jump to #R$F29C.
 
-  $F3CB,$03 #REGhl=#R$EDD7.
-  $F3CE,$01 Exchange the *#REGsp with the #REGhl register.
+N $F3CB Bad luck!
+  $F3CB,$04 Switch #R$EDD7 onto the stack so the next return actions a "game
+. over".
 N $F3CF Print "#STR$DBCC,$08($b==$FF)".
   $F3CF,$03 #REGhl=#R$DBCC.
   $F3D2,$03 Jump to #R$F03A.
@@ -3812,29 +4097,25 @@ N $F3CF Print "#STR$DBCC,$08($b==$FF)".
   $F403,$03 #REGhl=#R$E9FB.
   $F406,$03 Call #R$C37F.
   $F409,$02 Jump to #R$F413 if #REGa is not equal to #N$12.
-  $F40B,$02 #REGa=#N$16.
-  $F40D,$03 Call #R$F26A.
+  $F40B,$05 Call #R$F26A with #ITEM$16.
   $F410,$03 Jump to #R$F29C.
 
   $F413,$03 #REGhl=#R$E9FD.
   $F416,$03 Call #R$C37F.
   $F419,$02 Jump to #R$F423 if #REGa is not equal to #N$16.
-  $F41B,$02 #REGa=#N$1E.
-  $F41D,$03 Call #R$F26A.
+  $F41B,$05 Call #R$F26A with #ITEM$1E.
   $F420,$03 Jump to #R$F29C.
 
   $F423,$03 #REGhl=#R$E9FF.
   $F426,$03 Call #R$C37F.
   $F429,$02 Jump to #R$F433 if #REGa is not equal to #N$1E.
-  $F42B,$02 #REGa=#N$1F.
-  $F42D,$03 Call #R$F26A.
+  $F42B,$05 Call #R$F26A with #ITEM$1F.
   $F430,$03 Jump to #R$F29C.
 
   $F433,$03 #REGhl=#R$EA01.
   $F436,$03 Call #R$C37F.
   $F439,$02 Jump to #R$F443 if #REGa is not equal to #N$1F.
-  $F43B,$02 #REGa=#N$20.
-  $F43D,$03 Call #R$F26A.
+  $F43B,$05 Call #R$F26A with #ITEM$20.
   $F440,$03 Jump to #R$F29C.
 
   $F443,$03 #REGhl=#R$EA06.
@@ -3857,8 +4138,9 @@ N $F3CF Print "#STR$DBCC,$08($b==$FF)".
   $F46E,$01 #REGa=#REGb.
   $F46F,$02 Compare #REGa with #N$28.
   $F471,$03 Jump to #R$F29C if #REGa is equal to #N$28.
-  $F474,$03 #REGhl=#R$EDD7.
-  $F477,$01 Exchange the *#REGsp with the #REGhl register.
+N $F474 Bad luck!
+  $F474,$04 Switch #R$EDD7 onto the stack so the next return actions a "game
+. over".
 N $F478 Print "#STR$DBCC,$08($b==$FF)".
   $F478,$03 #REGhl=#R$DBCC.
   $F47B,$03 Jump to #R$F03A.
@@ -4130,7 +4412,7 @@ N $F6BC Print "#STR$DD6C,$08($b==$FF)".
   $F6C5,$03 Call #R$C37F.
   $F6C8,$02 Jump to #R$F6FD if *#REGhl is not equal to #N$0E.
   $F6CA,$05 Call #R$C35F with #ITEM$17.
-  $F6CF,$03 Jump to #R$F079 if *#REGhl is not equal to #N$17.
+  $F6CF,$03 Jump to #R$F079 #ITEM$17 isn't in the current room.
   $F6D2,$02 Load #ITEM$17 into #REGa.
   $F6D4,$03 Call #R$F635.
   $F6D7,$06 Call #R$C426 to transform item #N$18 (#ITEM$18) into item #N$19
@@ -4167,9 +4449,8 @@ N $F723 Print "#STR$DE81,$08($b==$FF)".
   $F729,$03 #REGhl=#R$EA50.
   $F72C,$03 Call #R$C37F.
   $F72F,$02 Jump to #R$F74F if *#REGhl is not equal to #N$42.
-  $F731,$02 #REGa=#N$12 (event ID: #N($12&$7F)).
-  $F733,$03 Call #R$C35F.
-  $F736,$03 Jump to #R$F079 if *#REGhl is not equal to #N$12.
+  $F731,$05 Call #R$C35F with #ITEM$12.
+  $F736,$03 Jump to #R$F079 if #ITEM$12 isn't in the current room.
   $F739,$02 #REGa=#N$12.
   $F73B,$03 Call #R$F635.
   $F73E,$02 #REGa=#N$12 (event ID: #N($12&$7F)).
@@ -4189,9 +4470,9 @@ N $F749 Print "#STR$DF15,$08($b==$FF)".
   $F762,$03 Call #R$C401.
   $F765,$03 Call #R$F635.
   $F768,$05 Call #R$C35F with #ITEM$12.
-  $F76D,$03 Jump to #R$F06A if *#REGhl is equal to #N$12.
+  $F76D,$03 Jump to #R$F06A if #ITEM$12 is present in the current room.
   $F770,$05 Call #R$C35F with #ITEM$02.
-  $F775,$03 Jump to #R$F06A if *#REGhl is equal to #N$02.
+  $F775,$03 Jump to #R$F06A if #ITEM$02 is present in the current room.
   $F778,$05 Call #R$C3EA with #ITEM$03.
   $F77D,$05 Call #R$C3EA with #ITEM$14.
   $F782,$05 Write #N$4E to *#R$ECBC to open up eastbound access to #ROOM$4E
@@ -4207,7 +4488,7 @@ N $F787 Print "#STR$DF8E,$08($b==$FF)".
   $F798,$03 Call #R$C401.
   $F79B,$03 Call #R$F635.
   $F79E,$05 Call #R$C35F with #ITEM$14.
-  $F7A3,$02 Jump to #R$F770 if *#REGhl is equal to #N$14.
+  $F7A3,$02 Jump to #R$F770 if #ITEM$14 is present in the current room.
   $F7A5,$03 Jump to #R$F06A.
   $F7A8,$03 Jump to #R$F065.
 
@@ -4232,17 +4513,14 @@ N $F787 Print "#STR$DF8E,$08($b==$FF)".
   $F7DA,$03 #REGhl=#R$EA26.
   $F7DD,$03 Call #R$C37F.
   $F7E0,$02 Jump to #R$F813 if *#REGhl is not equal to #N$14.
-  $F7E2,$02 #REGa=#N$04 (event ID: #N($04&$7F)).
-  $F7E4,$03 Call #R$C35F.
-  $F7E7,$03 Jump to #R$F079 if *#REGhl is not equal to #N$04.
+  $F7E2,$05 Call #R$C35F with #ITEM$04.
+  $F7E7,$03 Jump to #R$F079 if #ITEM$04 isn't in the current room.
   $F7EA,$02 #REGa=#N$04.
   $F7EC,$03 Call #R$F635.
   $F7EF,$02 #REGa=#N$04 (event ID: #N($04&$7F)).
   $F7F1,$03 Call #R$C3EA.
-  $F7F4,$03 #REGbc=#N$0566.
-  $F7F7,$03 Call #R$C412.
-  $F7FA,$03 #REGbc=#N$0668.
-  $F7FD,$03 Call #R$C412.
+  $F7F4,$06 Call #R$C412 using item #ITEM$05 to create it in #ROOM$66.
+  $F7FA,$06 Call #R$C412 using item #ITEM$06 to create it in #ROOM$68.
   $F800,$05 Write #N$68 to *#R$ED75.
   $F805,$05 Write #N$66 to *#R$ED80.
   $F80A,$03 Call #R$F06A.
@@ -4254,7 +4532,7 @@ N $F80D Print "#STR$E00C,$08($b==$FF)".
   $F816,$03 Call #R$C37F.
   $F819,$02 Jump to #R$F84E if *#REGhl is not equal to #N$66.
   $F81B,$05 Call #R$C35F with #ITEM$08.
-  $F820,$03 Jump to #R$F079 if *#REGhl is not equal to #N$08.
+  $F820,$03 Jump to #R$F079 if #ITEM$08 isn't in the current room.
   $F823,$05 Call #R$F635 with #ITEM$08.
   $F828,$05 Call #R$C3EA with #ITEM$08.
   $F82D,$06 Call #R$C426 to transform item #N$09 (#ITEM$09) into item #N$0A
@@ -4262,10 +4540,10 @@ N $F80D Print "#STR$E00C,$08($b==$FF)".
   $F833,$06 Call #R$C426 to transform item #N$32 (#ITEM$32) into item #N$31
 . (#ITEM$31).
   $F839,$05 Call #R$C3EA with #ITEM$33.
-  $F83E,$05 Write #N$6A to *#R$EB90 to open up bound access to #ROOM$6A
+  $F83E,$05 Write #N$6A to *#R$EB90 to open up eastbound access to #ROOM$6A
 . from #ROOM$15.
-  $F843,$05 Write #N$15 to *#R$ED8D to open up bound access to #ROOM$15
-. from #ROOM$68.
+  $F843,$05 Write #N$15 to *#R$ED8D to open up southbound access to #ROOM$15
+. from #ROOM$6A.
 N $F848 Print "#STR$E029,$08($b==$FF)".
   $F848,$03 #REGhl=#R$E029.
   $F84B,$03 Jump to #R$F03A.
@@ -4282,11 +4560,11 @@ N $F848 Print "#STR$E029,$08($b==$FF)".
   $F86A,$05 Call #R$C3EA with #ITEM$2B.
   $F86F,$03 #REGhl=#R$BC98.
   $F872,$01 Decrease *#REGhl by one.
-  $F873,$05 Write #N$40 to *#R$EC8A to open up bound access to #ROOM$40
+  $F873,$05 Write #N$40 to *#R$EC8A to open up northbound access to #ROOM$40
 . from #ROOM$3F.
-  $F878,$05 Write #N$41 to *#R$EC8B to open up bound access to #ROOM$41
+  $F878,$05 Write #N$41 to *#R$EC8B to open up southbound access to #ROOM$41
 . from #ROOM$3F.
-  $F87D,$05 Write #N$42 to *#R$EC8C to open up bound access to #ROOM$42
+  $F87D,$05 Write #N$42 to *#R$EC8C to open up eastbound access to #ROOM$42
 . from #ROOM$3F.
 N $F882 Print "#STR$DE81,$08($b==$FF)".
   $F882,$03 #REGhl=#R$DE81.
@@ -4306,9 +4584,9 @@ N $F898 Print "#STR$E07F,$08($b==$FF)".
   $F8A4,$02 Jump to #R$F8B8 if *#REGhl is not equal to #N$1A.
   $F8A6,$05 Call #R$C3E4 with #ITEM$1A.
   $F8AB,$03 Jump to #R$F07E if *#REGhl is not equal to #N$1A.
-  $F8AE,$03 #REGhl=#R$EDD7.
-  $F8B1,$01 Exchange the *#REGsp with the #REGhl register.
-
+N $F8AE Bad luck!
+  $F8AE,$04 Switch #R$EDD7 onto the stack so the next return actions a "game
+. over".
 N $F8B2 Print "#STR$E0B4,$08($b==$FF)".
   $F8B2,$03 #REGhl=#R$E0B4.
   $F8B5,$03 Jump to #R$F03A.
@@ -4432,8 +4710,9 @@ N $F9BB Print "#STR$E175,$08($b==$FF)".
   $F9C1,$03 #REGhl=#R$E9D7.
   $F9C4,$03 Call #R$C37F.
   $F9C7,$02 Jump to #R$F9D3 if *#REGhl is not equal to #N$04.
-  $F9C9,$03 #REGhl=#R$EDD7.
-  $F9CC,$01 Exchange the *#REGsp with the #REGhl register.
+N $F9C9 Bad luck!
+  $F9C9,$04 Switch #R$EDD7 onto the stack so the next return actions a "game
+. over".
   $F9CD,$03 #REGhl=#R$E19B.
   $F9D0,$03 Jump to #R$F03A.
   $F9D3,$03 #REGhl=#R$E9E5.
@@ -4456,8 +4735,7 @@ N $F9BB Print "#STR$E175,$08($b==$FF)".
   $F9FD,$01 Restore #REGbc from the stack.
   $F9FE,$03 Jump to #R$F07E if *#REGhl is not equal to #N$0D.
   $FA01,$03 Call #R$C426.
-  $FA04,$03 #REGhl=#R$BC66.
-  $FA07,$02 Set bit 2 of *#REGhl.
+  $FA04,$05 Set bit 2 of *#R$BC66 which relates to the player being drunk.
   $FA09,$05 Write #N$06 to *#R$BC69.
 N $FA0E Print "#STR$E238,$08($b==$FF)".
   $FA0E,$03 #REGhl=#R$E238.
@@ -4516,9 +4794,8 @@ N $FA5D Print "#STR$E2F1,$08($b==$FF)".
   $FA88,$03 Call #R$C37F.
   $FA8B,$02 Jump to #R$FAA5 if #REGa is not equal to #N$61.
   $FA8D,$07 Jump to #R$FAA5 if *#R$BCCB is not room #N$6A: "#ROOM$6A".
-  $FA94,$02 #REGa=#N$31 (event ID: #N($31&$7F)).
-  $FA96,$03 Call #R$C35F.
-  $FA99,$03 Jump to #R$F088 if #REGa is equal to #N$31.
+  $FA94,$05 Call #R$C35F with #ITEM$31.
+  $FA99,$03 Jump to #R$F088 if #ITEM$31 is present in the current room.
   $FA9C,$03 Call #R$F06F.
 N $FA9F Print "#STR$E305,$08($b==$FF)".
   $FA9F,$03 #REGhl=#R$E305.
@@ -4545,9 +4822,8 @@ N $FA9F Print "#STR$E305,$08($b==$FF)".
   $FAE8,$03 Call #R$C37F.
   $FAEB,$02 Jump to #R$FB05 if #REGa is not equal to #N$30.
   $FAED,$07 Jump to #R$FB05 if *#R$BCCB is not room #N$6A: "#ROOM$6A".
-  $FAF4,$02 #REGa=#N$32 (event ID: #N($32&$7F)).
-  $FAF6,$03 Call #R$C35F.
-  $FAF9,$03 Jump to #R$F08D if #REGa is equal to #N$32.
+  $FAF4,$05 Call #R$C35F with #ITEM$32.
+  $FAF9,$03 Jump to #R$F08D if #ITEM$32 is present in the current room.
   $FAFC,$03 Call #R$F06F.
 N $FAFF Print "#STR$E305,$08($b==$FF)".
   $FAFF,$03 #REGhl=#R$E305.
@@ -4564,14 +4840,13 @@ N $FB0D Print "#STR$E31A,$08($b==$FF)".
   $FB1C,$03 #REGhl=#R$EAC7.
   $FB1F,$03 Call #R$C37F.
   $FB22,$02 Jump to #R$FB6E if #REGa is not equal to #N$32.
-  $FB24,$02 #REGa=#N$39 (event ID: #N($39&$7F)).
-  $FB26,$03 Call #R$C35F.
-  $FB29,$03 Jump to #R$F06A if #REGa is not equal to #N$39.
-  $FB2C,$02 #REGa=#N$29 (event ID: #N($29&$7F)).
-  $FB2E,$03 Call #R$C35F.
+  $FB24,$05 Call #R$C35F with #ITEM$39.
+  $FB29,$03 Jump to #R$F06A if #ITEM$39 isn't in the current room.
+  $FB2C,$05 Call #R$C35F with #ITEM$29.
   $FB31,$02 Jump to #R$FB43 if #REGa is equal to #N$29.
-  $FB33,$03 #REGhl=#R$EDD7.
-  $FB36,$01 Exchange the *#REGsp with the #REGhl register.
+N $FB33 Bad luck!
+  $FB33,$04 Switch #R$EDD7 onto the stack so the next return actions a "game
+. over".
 N $FB37 Print "#STR$E333,$08($b==$FF)".
   $FB37,$03 #REGhl=#R$E333.
   $FB3A,$03 Call #R$BAB1.
@@ -4629,8 +4904,7 @@ N $FBA2 Print "#STR$E3F7,$08($b==$FF)".
   $FBB1,$03 #REGhl=#R$EACB.
   $FBB4,$03 Call #R$C37F.
   $FBB7,$02 Jump to #R$FBD2 if #REGa is not equal to #N$02.
-  $FBB9,$02 #REGa=#N$34 (event ID: #N($34&$7F)).
-  $FBBB,$03 Call #R$C35F.
+  $FBB9,$05 Call #R$C35F with #ITEM$34.
   $FBBE,$03 Jump to #R$F065 if #REGa is equal to #N$34.
   $FBC1,$06 Call #R$C426 to transform item #N$34 (#ITEM$34) into item #N$3B
 . (#ITEM$3B).
@@ -4644,9 +4918,8 @@ N $FBA2 Print "#STR$E3F7,$08($b==$FF)".
   $FBDE,$03 #REGhl=#R$E9F1.
   $FBE1,$03 Call #R$C37F.
   $FBE4,$02 Jump to #R$FC0A if #REGa is not equal to #N$02.
-  $FBE6,$02 #REGa=#N$11 (event ID: #N($11&$7F)).
-  $FBE8,$03 Call #R$C35F.
-  $FBEB,$02 Jump to #R$FBF3 if #REGa is not equal to #N$11.
+  $FBE6,$05 Call #R$C35F with #ITEM$11.
+  $FBEB,$02 Jump to #R$FBF3 if #ITEM$11 isn't in the current room.
 N $FBED Print "#STR$E44C,$08($b==$FF)".
   $FBED,$03 #REGhl=#R$E44C.
   $FBF0,$03 Jump to #R$F03A.
@@ -4720,8 +4993,7 @@ N $FCA4 Print "#STR$E305,$08($b==$FF)".
   $FCAA,$03 #REGhl=#R$EADD.
   $FCAD,$03 Call #R$C37F.
   $FCB0,$02 Jump to #R$FCCA if #REGa is not equal to #N$52.
-  $FCB2,$02 #REGa=#N$4A (event ID: #N($4A&$7F)).
-  $FCB4,$03 Call #R$C35F.
+  $FCB2,$05 Call #R$C35F with #ITEM$4A.
   $FCB7,$03 Jump to #R$F079 if #REGa is equal to #N$4A.
   $FCBA,$02 #REGa=#N$4A.
   $FCBC,$03 Call #R$C3F1.
@@ -4737,9 +5009,8 @@ N $FCC4 Print "#STR$E508,$08($b==$FF)".
   $FCD4,$03 Call #R$C37F.
   $FCD7,$02 Jump to #R$FCFF if #REGa is not equal to #N$3B.
   $FCD9,$08 Jump to #R$F06F if *#R$BCCB is room #N$6A: "#ROOM$6A".
-  $FCE1,$02 #REGa=#N$2E (event ID: #N($2E&$7F)).
-  $FCE3,$03 Call #R$C35F.
-  $FCE6,$03 Jump to #R$F079 if #REGa is not equal to #N$2E.
+  $FCE1,$05 Call #R$C35F with #ITEM$2E.
+  $FCE6,$03 Jump to #R$F079 if #ITEM$2E isn't in the current room.
   $FCE9,$02 #REGa=#N$1F.
   $FCEB,$03 Call #R$C3E4.
   $FCEE,$02 Jump to #R$FCF6 if #REGa is equal to #N$1F.
@@ -4882,12 +5153,14 @@ g $FF3A Jump Table:
 W $FF3A,$02 #N((#PC-$FF3A)/$02).
 L $FF3A,$02,$26
 
-g $FF86 Jump Table: Events
-@ $FF86 label=JumpTable_Events
-@ $FF96 label=JumpTable_ScenicEvents
+g $FF86 Jump Table: Turn-Based Events
+@ $FF86 label=JumpTable_TurnBasedEvents
 W $FF86,$02 Event #N((#PC-$FF86)/$02).
 L $FF86,$02,$08
-W $FF96,$02 Scenic event #N((#PC-$FF96)/$02).
+
+g $FF96 Jump Table: Scenic Events
+@ $FF96 label=JumpTable_ScenicEvents
+W $FF96,$02 Event #N((#PC-$FF96)/$02).
 L $FF96,$02,$09
 
 g $FFA8 Jump Table: Room Images
