@@ -61,7 +61,7 @@ Used by the routine at <a href="EF54.html">EF54</a>.
 <tr>
 <td class="address-1"><span id="c525"></span>C525</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c528"></span>C528</td>
@@ -105,17 +105,17 @@ Used by the routine at <a href="EF54.html">EF54</a>.
 <tr>
 <td class="address-1"><span id="c535"></span>C535</td>
 <td class="instruction">LD ($BCCB),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="BCCB.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="BCCB.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c538"></span>C538</td>
 <td class="instruction">LD A,($BC6F)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BC67.html#bc6f">BC6F</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BC6F.html">Flag_EventState</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c53b"></span>C53B</td>
 <td class="instruction">AND A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C520.html#c555">C555</a> if <span class="register">A</span> is equal to <span class="register">A</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C520.html#c555">C555</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c53c"></span>C53C</td>
@@ -129,7 +129,7 @@ Used by the routine at <a href="EF54.html">EF54</a>.
 <tr>
 <td class="address-1"><span id="c540"></span>C540</td>
 <td class="instruction">LD HL,$BC70</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC67.html#bc70">BC70</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC70.html">BC70</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c543"></span>C543</td>
@@ -172,8 +172,8 @@ Used by the routine at <a href="EF54.html">EF54</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="c54e"></span>C54E</td>
-<td class="instruction">CALL <a href="C3F1.html">$C3F1</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3F1.html">C3F1</a>.</td>
+<td class="instruction">CALL <a href="C3F1.html">Handler_UpdateItemEventCurrentRoom</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3F1.html">Handler_UpdateItemEventCurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c551"></span>C551</td>

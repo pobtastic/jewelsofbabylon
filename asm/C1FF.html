@@ -39,7 +39,7 @@ Next: <a href="C21E.html">C21E</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="C26A.html">Handler_RoomExits</a> and <a href="F03A.html">F03A</a>.
+Used by the routines at <a href="C26A.html">Handler_RoomExits</a> and <a href="F12E.html">Action_Inventory</a>.
 </div>
 </div>
 <table class="input">
@@ -57,7 +57,7 @@ Used by the routines at <a href="C26A.html">Handler_RoomExits</a> and <a href="F
 <td class="asm-label">PrintObjects</td>
 <td class="address-2"><span id="c1ff"></span>C1FF</td>
 <td class="instruction">LD HL,$BBF0</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BBF0.html">Table_ObjectLocations</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BBF0.html">Table_ItemLocations</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -81,7 +81,7 @@ Used by the routines at <a href="C26A.html">Handler_RoomExits</a> and <a href="F
 <td class="asm-label"></td>
 <td class="address-1"><span id="c209"></span>C209</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="1">Stash the current place in <a href="BBF0.html">Table_ObjectLocations</a> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the current place in <a href="BBF0.html">Table_ItemLocations</a> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -109,8 +109,8 @@ Used by the routines at <a href="C26A.html">Handler_RoomExits</a> and <a href="F
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c211"></span>C211</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -133,7 +133,7 @@ Used by the routines at <a href="C26A.html">Handler_RoomExits</a> and <a href="F
 <td class="asm-label"></td>
 <td class="address-1"><span id="c217"></span>C217</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore the current place in <a href="BBF0.html">Table_ObjectLocations</a> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the current place in <a href="BBF0.html">Table_ItemLocations</a> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

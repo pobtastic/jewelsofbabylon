@@ -86,8 +86,8 @@ Print "I don't understand.".
 </tr>
 <tr>
 <td class="address-1"><span id="c567"></span>C567</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c56a"></span>C56A</td>
@@ -97,12 +97,11 @@ Print "I don't understand.".
 <tr>
 <td class="address-2"><span id="c56b"></span>C56B</td>
 <td class="instruction">LD A,($BD2C)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BD2C.html">BD2C</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">A</span>=*<a href="BD2C.html">BD2C</a>-<span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c56e"></span>C56E</td>
 <td class="instruction">SUB C</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>-=<span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c56f"></span>C56F</td>
@@ -112,7 +111,7 @@ Print "I don't understand.".
 <tr>
 <td class="address-1"><span id="c570"></span>C570</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-1" rowspan="1"><span class="register">E</span>=<span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Store the result in <span class="register">E</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="c571"></span>C571</td>

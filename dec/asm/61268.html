@@ -47,27 +47,25 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-2"><span id="61268"></span>61268</td>
 <td class="instruction">LD HL,48239</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48231.html#48239">48239</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48239.html">Flag_EventState</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61271"></span>61271</td>
 <td class="instruction">BIT 0,(HL)</td>
-<td class="comment-1" rowspan="1">Test bit 0 of *<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61268.html#61307">61307</a> if bit 0 of *<span class="register">HL</span> is unset.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61273"></span>61273</td>
 <td class="instruction">JR Z,<a href="61268.html#61307">61307</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61307">61307</a> if ?? is equal to 0.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61275"></span>61275</td>
 <td class="instruction">LD HL,48231</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48231.html">48231</a>.</td>
+<td class="comment-1" rowspan="2">Initialise <a href="48231.html">Counter_Crab</a> to 6.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61278"></span>61278</td>
 <td class="instruction">LD (HL),6</td>
-<td class="comment-1" rowspan="1">Write 6 to *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61280"></span>61280</td>
@@ -81,12 +79,11 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61284"></span>61284</td>
 <td class="instruction">LD HL,48239</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48231.html#48239">48239</a>.</td>
+<td class="comment-1" rowspan="2">Reset bit 0 of *<a href="48239.html">Flag_EventState</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61287"></span>61287</td>
 <td class="instruction">RES 0,(HL)</td>
-<td class="comment-1" rowspan="1">Reset bit 0 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61289"></span>61289</td>
@@ -94,14 +91,27 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="61290"></span>
+<div class="comments">
+<div class="paragraph">
+Spawn the giant crab in 
+
+<a href="52938.html">The Rockpool</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-1"><span id="61290"></span>61290</td>
 <td class="instruction">LD BC,10544</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=10544.</td>
+<td class="comment-1" rowspan="2">Call <a href="50194.html">Handler_UpdateObjectLocation</a> using item "A giant crab" to create it in 
+
+<a href="52938.html">The Rockpool</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61293"></span>61293</td>
 <td class="instruction">CALL <a href="50194.html">Handler_UpdateObjectLocation</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50194.html">Handler_UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61296"></span>61296</td>
@@ -111,7 +121,11 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61297"></span>61297</td>
 <td class="instruction">LD HL,60455</td>
-<td class="comment-1" rowspan="2">Write 47 to *<a href="60176.html#60455">60455</a>.</td>
+<td class="comment-1" rowspan="2">Write 47 to *<a href="60176.html#60455">60455</a> to open up westbound access to 
+
+<a href="52918.html">The Secluded Beach</a> from 
+
+<a href="52865.html">The Canyon</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61300"></span>61300</td>
@@ -120,7 +134,11 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61302"></span>61302</td>
 <td class="instruction">LD HL,60458</td>
-<td class="comment-1" rowspan="2">Write 48 to *<a href="60176.html#60458">60458</a>.</td>
+<td class="comment-1" rowspan="2">Write 48 to *<a href="60176.html#60458">60458</a> to open up northbound access to 
+
+<a href="52938.html">The Rockpool</a> from 
+
+<a href="52918.html">The Secluded Beach</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61305"></span>61305</td>
@@ -144,7 +162,7 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61315"></span>61315</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61351">61351</a> if *<a href="48331.html">RoomNumber</a> is not room 48: "
+<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61351">61351</a> if *<a href="48331.html">CurrentRoom</a> is not room 48: "
 
 <a href="52938.html">The Rockpool</a>".</td>
 </tr>
@@ -159,12 +177,11 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61322"></span>61322</td>
 <td class="instruction">LD A,41</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=41 (event ID: 41).</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A giant crab".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61324"></span>61324</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61327"></span>61327</td>
@@ -174,20 +191,20 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61329"></span>61329</td>
 <td class="instruction">LD HL,48239</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48231.html#48239">48239</a>.</td>
+<td class="comment-1" rowspan="2">Set bit 0 of *<a href="48239.html">Flag_EventState</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61332"></span>61332</td>
 <td class="instruction">SET 0,(HL)</td>
-<td class="comment-1" rowspan="1">Set bit 0 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61334"></span>61334</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="3">Write 0 to <ul class="">
-<li>*<a href="60176.html#60455">60455</a></li>
-<li>*<a href="60176.html#60458">60458</a></li>
-</ul></td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="60176.html#60455">60455</a> to remove access to 
+
+<a href="52918.html">The Secluded Beach</a> from 
+
+<a href="52865.html">The Canyon</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61335"></span>61335</td>
@@ -196,21 +213,25 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61338"></span>61338</td>
 <td class="instruction">LD (60458),A</td>
+<td class="comment-1" rowspan="1">Write 0 to *<a href="60176.html#60458">60458</a> to remove access to 
+
+<a href="52938.html">The Rockpool</a> from 
+
+<a href="52918.html">The Secluded Beach</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61341"></span>61341</td>
 <td class="instruction">LD HL,48230</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48230.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Set bit 0 of *<a href="48230.html">Flag_TurnBasedEventState</a> which relates to the crab being active.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61344"></span>61344</td>
 <td class="instruction">SET 0,(HL)</td>
-<td class="comment-1" rowspan="1">Set bit 0 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61346"></span>61346</td>
 <td class="instruction">LD A,6</td>
-<td class="comment-1" rowspan="2">Write 6 to *<a href="48231.html">48231</a>.</td>
+<td class="comment-1" rowspan="2">Write 6 to *<a href="48231.html">Counter_Crab</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61348"></span>61348</td>
@@ -219,32 +240,30 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-2"><span id="61351"></span>61351</td>
 <td class="instruction">LD A,43</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=43 (event ID: 43).</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A giant octopus".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61353"></span>61353</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61356"></span>61356</td>
 <td class="instruction">JR NZ,<a href="61268.html#61368">61368</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61368">61368</a> if <span class="register">A</span> is not equal to 43.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61368">61368</a> if "A giant octopus" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61358"></span>61358</td>
 <td class="instruction">LD HL,48230</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48230.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Set bit 1 of *<a href="48230.html">Flag_TurnBasedEventState</a> which relates to the tentacle being active.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61361"></span>61361</td>
 <td class="instruction">SET 1,(HL)</td>
-<td class="comment-1" rowspan="1">Set bit 1 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61363"></span>61363</td>
 <td class="instruction">LD A,5</td>
-<td class="comment-1" rowspan="2">Write 5 to *<a href="48231.html#48232">48232</a>.</td>
+<td class="comment-1" rowspan="2">Write 5 to *<a href="48231.html#48232">Counter_Tentacle</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61365"></span>61365</td>
@@ -253,32 +272,30 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-2"><span id="61368"></span>61368</td>
 <td class="instruction">LD A,42</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=42 (event ID: 42).</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A lion".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61370"></span>61370</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61373"></span>61373</td>
 <td class="instruction">JR NZ,<a href="61268.html#61385">61385</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61385">61385</a> if <span class="register">A</span> is not equal to 42.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61385">61385</a> if "A lion" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61375"></span>61375</td>
 <td class="instruction">LD HL,48230</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48230.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Set bit 3 of *<a href="48230.html">Flag_TurnBasedEventState</a> which relates to the lion being active.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61378"></span>61378</td>
 <td class="instruction">SET 3,(HL)</td>
-<td class="comment-1" rowspan="1">Set bit 3 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61380"></span>61380</td>
 <td class="instruction">LD A,7</td>
-<td class="comment-1" rowspan="2">Write 7 to *<a href="48231.html#48234">48234</a>.</td>
+<td class="comment-1" rowspan="2">Write 7 to *<a href="48231.html#48234">Counter_Lion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61382"></span>61382</td>
@@ -287,12 +304,12 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-2"><span id="61385"></span>61385</td>
 <td class="instruction">LD HL,59585</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59585">Data_ObjectRoom_27</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59585">Data_Item_Crocodile</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61388"></span>61388</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61391"></span>61391</td>
@@ -302,17 +319,16 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61393"></span>61393</td>
 <td class="instruction">LD HL,48230</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48230.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Set bit 4 of *<a href="48230.html">Flag_TurnBasedEventState</a> which relates to the crocodile being active.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61396"></span>61396</td>
 <td class="instruction">SET 4,(HL)</td>
-<td class="comment-1" rowspan="1">Set bit 4 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61398"></span>61398</td>
 <td class="instruction">LD A,11</td>
-<td class="comment-1" rowspan="2">Write 11 to *<a href="48231.html#48235">48235</a>.</td>
+<td class="comment-1" rowspan="2">Write 11 to *<a href="48231.html#48235">Counter_Crocodile</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61400"></span>61400</td>
@@ -321,32 +337,30 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-2"><span id="61403"></span>61403</td>
 <td class="instruction">LD A,24</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=24 (event ID: 24).</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "Surrounded by natives".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61405"></span>61405</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61408"></span>61408</td>
 <td class="instruction">JR NZ,<a href="61268.html#61420">61420</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61420">61420</a> if <span class="register">A</span> is not equal to 24.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61420">61420</a> if "Surrounded by natives" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61410"></span>61410</td>
 <td class="instruction">LD HL,48230</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48230.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Set bit 5 of *<a href="48230.html">Flag_TurnBasedEventState</a> which relates to the cannibals being active.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61413"></span>61413</td>
 <td class="instruction">SET 5,(HL)</td>
-<td class="comment-1" rowspan="1">Set bit 5 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61415"></span>61415</td>
 <td class="instruction">LD A,9</td>
-<td class="comment-1" rowspan="2">Write 9 to *<a href="48231.html#48236">48236</a>.</td>
+<td class="comment-1" rowspan="2">Initialise the turn counter at *<a href="48231.html#48236">Counter_Cannibals</a> with 9.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61417"></span>61417</td>
@@ -355,7 +369,7 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-2"><span id="61420"></span>61420</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61439">61439</a> if *<a href="48331.html">RoomNumber</a> is not room 3: "
+<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61439">61439</a> if *<a href="48331.html">CurrentRoom</a> is not room 3: "
 
 <a href="52010.html">Your Ship</a>".</td>
 </tr>
@@ -370,17 +384,16 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61427"></span>61427</td>
 <td class="instruction">LD A,29</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=29 (event ID: 29).</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "The Jewels of Babylon".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61429"></span>61429</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61432"></span>61432</td>
 <td class="instruction">JR NZ,<a href="61268.html#61439">61439</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61439">61439</a> if <span class="register">A</span> is not equal to 29.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61439">61439</a> if "The Jewels of Babylon" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61434"></span>61434</td>
@@ -399,7 +412,7 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-2"><span id="61439"></span>61439</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61465">61465</a> if *<a href="48331.html">RoomNumber</a> is not room 2: "
+<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61465">61465</a> if *<a href="48331.html">CurrentRoom</a> is not room 2: "
 
 <a href="51974.html">The Open Sea</a>".</td>
 </tr>
@@ -434,17 +447,16 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61455"></span>61455</td>
 <td class="instruction">LD HL,48230</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48230.html">Flag_EventState</a>.</td>
+<td class="comment-1" rowspan="2">Set bit 7 of *<a href="48230.html">Flag_TurnBasedEventState</a> which relates to the wave being active.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61458"></span>61458</td>
 <td class="instruction">SET 7,(HL)</td>
-<td class="comment-1" rowspan="1">Set bit 7 of *<span class="register">HL</span>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61460"></span>61460</td>
 <td class="instruction">LD A,5</td>
-<td class="comment-1" rowspan="2">Write 5 to *<a href="48231.html#48238">48238</a>.</td>
+<td class="comment-1" rowspan="2">Write 5 to *<a href="48231.html#48238">Counter_Wave</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61462"></span>61462</td>
@@ -453,7 +465,7 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-2"><span id="61465"></span>61465</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61497">61497</a> if *<a href="48331.html">RoomNumber</a> is not room 108: "
+<td class="comment-1" rowspan="3">Jump to <a href="61268.html#61497">61497</a> if *<a href="48331.html">CurrentRoom</a> is not room 108: "
 
 <a href="53671.html">The Bridge</a>".</td>
 </tr>
@@ -468,17 +480,16 @@ Used by the routines at <a href="61781.html">61781</a>, <a href="63754.html">637
 <tr>
 <td class="address-1"><span id="61472"></span>61472</td>
 <td class="instruction">LD A,29</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=29 (event ID: 29).</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "The Jewels of Babylon".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61474"></span>61474</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61477"></span>61477</td>
 <td class="instruction">JR NZ,<a href="61268.html#61497">61497</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61497">61497</a> if <span class="register">A</span> is not equal to 29.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61268.html#61497">61497</a> if "The Jewels of Babylon" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -493,12 +504,12 @@ Print "The bridge begins to shake...".
 <tr>
 <td class="address-1"><span id="61479"></span>61479</td>
 <td class="instruction">LD HL,58831</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="58831.html">58831</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="58831.html">Messaging_TheBridgeBeginsToShake</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61482"></span>61482</td>
-<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61485"></span>61485</td>
@@ -506,14 +517,23 @@ Print "The bridge begins to shake...".
 <td class="comment-1" rowspan="1">Restore <span class="register">HL</span> from the stack.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="61486"></span>
+<div class="comments">
+<div class="paragraph">
+Bad luck!
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-1"><span id="61486"></span>61486</td>
 <td class="instruction">LD HL,60887</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="60887.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="2">Switch <a href="60887.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61489"></span>61489</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -528,7 +548,7 @@ Print "Suddenly,it collapses.".
 <tr>
 <td class="address-1"><span id="61490"></span>61490</td>
 <td class="instruction">LD HL,58861</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="58861.html">58861</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="58861.html">Messaging_SuddenlyItCollapses</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61493"></span>61493</td>

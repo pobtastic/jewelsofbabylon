@@ -39,7 +39,7 @@ Next: <a href="C582.html">C582</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="EEA9.html">Event_Seagull</a>, <a href="EEBB.html">Event_Rat</a>, <a href="EECD.html">Event_Deer</a>, <a href="EEDF.html">Event_Pirate</a>, <a href="EEFC.html">Event_WaterSnake</a>, <a href="EF32.html">Event_Spider</a>, <a href="EF54.html">EF54</a> and <a href="F03A.html">F03A</a>.
+Used by the routines at <a href="EEA9.html">Event_Seagull</a>, <a href="EEBB.html">Event_Rat</a>, <a href="EECD.html">Event_Deer</a>, <a href="EEDF.html">Event_Pirate</a>, <a href="EEFC.html">Event_WaterSnake</a>, <a href="EF32.html">Event_Spider</a>, <a href="EF54.html">EF54</a>, <a href="F03E.html">PausePrintStringAndScroll_Alias</a> and <a href="F09C.html">F09C</a>.
 </div>
 <div class="paragraph">
 For dramatic effect! Used when an event occurs.
@@ -51,19 +51,18 @@ For dramatic effect! Used when an event occurs.
 <td class="asm-label">PausePrintStringAndScroll</td>
 <td class="address-2"><span id="c579"></span>C579</td>
 <td class="instruction">LD B,$19</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=19.</td>
+<td class="comment-1" rowspan="2">Call <a href="BB51.html">Pause_Loop</a> using 19 HALT loops (for a short pause).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c57b"></span>C57B</td>
 <td class="instruction">CALL <a href="BB51.html">Pause_Loop</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BB51.html">Pause_Loop</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c57e"></span>C57E</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

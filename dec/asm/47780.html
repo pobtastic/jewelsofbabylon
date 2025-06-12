@@ -39,7 +39,10 @@ Next: <a href="47802.html">47802</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="48084.html">PrintInputPrompt</a>, <a href="49162.html">Handler_UserInput</a>, <a href="49770.html">Handler_RoomExits</a>, <a href="49962.html">49962</a> and <a href="61781.html">61781</a>.
+Used by the routines at <a href="48084.html">PrintInputPrompt</a>, <a href="49162.html">Handler_UserInput</a>, <a href="49770.html">Handler_RoomExits</a>, <a href="49962.html">Action_ExamineItem</a> and <a href="61781.html">61781</a>.
+</div>
+<div class="paragraph">
+Standard printing loop, which prints the fetched character byte and loops until the termination byte is reached (255).
 </div>
 </div>
 <table class="input">
@@ -58,6 +61,16 @@ Used by the routines at <a href="48084.html">PrintInputPrompt</a>, <a href="4916
 <td class="address-2"><span id="47780"></span>47780</td>
 <td class="instruction">CALL <a href="47766.html">SwitchScreenUpper</a></td>
 <td class="comment-1" rowspan="1">Call <a href="47766.html">SwitchScreenUpper</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="47783"></span>
+<div class="comments">
+<div class="paragraph">
+Just keep looping and printing the fetched character until the termination byte is reached (255).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">PrintString_Loop</td>
@@ -99,16 +112,16 @@ Used by the routines at <a href="48084.html">PrintInputPrompt</a>, <a href="4916
 <span id="47793"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="47961.html">SaveGame</a>, <a href="48020.html">LoadTape</a>, <a href="49134.html">Response_PleaseRephraseThat</a>, <a href="49240.html">Parser</a>, <a href="49663.html">PrintObjects</a>, <a href="49770.html">Handler_RoomExits</a>, <a href="49941.html">Print_RoomDescription</a>, <a href="49962.html">49962</a>, <a href="50518.html">50518</a>, <a href="50553.html">PausePrintStringAndScroll</a>, <a href="60887.html">GameOver</a>, <a href="60914.html">GameComplete</a>, <a href="61044.html">Event_Match</a>, <a href="61083.html">Events_GameOver</a>, <a href="61097.html">Event_Seagull</a>, <a href="61115.html">Event_Rat</a>, <a href="61133.html">Event_Deer</a>, <a href="61151.html">Event_Pirate</a>, <a href="61180.html">Event_WaterSnake</a>, <a href="61234.html">Event_Spider</a>, <a href="61268.html">61268</a>, <a href="61498.html">61498</a>, <a href="61781.html">61781</a>, <a href="63705.html">Action_Shooting</a> and <a href="63754.html">63754</a>.
+This entry point is used by the routines at <a href="47961.html">SaveGame</a>, <a href="48020.html">LoadTape</a>, <a href="49134.html">Response_PleaseRephraseThat</a>, <a href="49141.html">Response_PleaseBeMoreSpecific</a>, <a href="49148.html">Response_YouCant</a>, <a href="49155.html">Response_OK</a>, <a href="49240.html">Parser</a>, <a href="49663.html">PrintObjects</a>, <a href="49770.html">Handler_RoomExits</a>, <a href="49941.html">Print_RoomDescription</a>, <a href="49962.html">Action_ExamineItem</a>, <a href="50518.html">50518</a>, <a href="50553.html">PausePrintStringAndScroll</a>, <a href="60887.html">GameOver</a>, <a href="60914.html">GameComplete</a>, <a href="61044.html">Event_Match</a>, <a href="61083.html">Events_GameOver</a>, <a href="61097.html">Event_Seagull</a>, <a href="61115.html">Event_Rat</a>, <a href="61133.html">Event_Deer</a>, <a href="61151.html">Event_Pirate</a>, <a href="61180.html">Event_WaterSnake</a>, <a href="61234.html">Event_Spider</a>, <a href="61268.html">61268</a>, <a href="61498.html">PrintStringAndNewline_Alias</a>, <a href="61596.html">61596</a>, <a href="61742.html">Action_Inventory</a>, <a href="61781.html">61781</a>, <a href="63705.html">Action_Shooting</a> and <a href="63754.html">63754</a>.
 </div>
 <div class="paragraph">
-Shortcut print routine which auto-scrolls after it's done.
+Shortcut print routine which prints a newline after it's done.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">PrintStringAndScroll</td>
+<td class="asm-label">PrintStringAndNewline</td>
 <td class="address-2"><span id="47793"></span>47793</td>
 <td class="instruction">CALL <a href="47780.html#47780">PrintString</a></td>
 <td class="comment-1" rowspan="1">Call <a href="47780.html">PrintString</a>.</td>

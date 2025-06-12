@@ -61,7 +61,7 @@ Used by the routine at <a href="61268.html">61268</a>.
 <tr>
 <td class="address-1"><span id="50469"></span>50469</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48331.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48331.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50472"></span>50472</td>
@@ -105,17 +105,17 @@ Used by the routine at <a href="61268.html">61268</a>.
 <tr>
 <td class="address-1"><span id="50485"></span>50485</td>
 <td class="instruction">LD (48331),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="48331.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="48331.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50488"></span>50488</td>
 <td class="instruction">LD A,(48239)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48231.html#48239">48239</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48239.html">Flag_EventState</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50491"></span>50491</td>
 <td class="instruction">AND A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="50464.html#50517">50517</a> if <span class="register">A</span> is equal to <span class="register">A</span>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="50464.html#50517">50517</a> if <span class="register">A</span> is zero.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50492"></span>50492</td>
@@ -129,7 +129,7 @@ Used by the routine at <a href="61268.html">61268</a>.
 <tr>
 <td class="address-1"><span id="50496"></span>50496</td>
 <td class="instruction">LD HL,48240</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48231.html#48240">48240</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48240.html">48240</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50499"></span>50499</td>
@@ -172,8 +172,8 @@ Used by the routine at <a href="61268.html">61268</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="50510"></span>50510</td>
-<td class="instruction">CALL <a href="50161.html">50161</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50161.html">50161</a>.</td>
+<td class="instruction">CALL <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50513"></span>50513</td>

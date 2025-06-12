@@ -55,7 +55,7 @@ Make the crocodile inactive.
 <td class="asm-label">Event_Crocodile</td>
 <td class="address-2"><span id="61009"></span>61009</td>
 <td class="instruction">LD HL,48230</td>
-<td class="comment-1" rowspan="2">Reset bit 4 of *<a href="48230.html">Flag_EventState</a> which relates to the crocodile being active.</td>
+<td class="comment-1" rowspan="2">Reset bit 4 of *<a href="48230.html">Flag_TurnBasedEventState</a> which relates to the crocodile being active.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -66,13 +66,13 @@ Make the crocodile inactive.
 <td class="asm-label"></td>
 <td class="address-1"><span id="61014"></span>61014</td>
 <td class="instruction">LD HL,59585</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59585">Data_ObjectRoom_27</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59585">Data_Item_Crocodile</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61017"></span>61017</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

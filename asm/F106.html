@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Jewels of Babylon: Routine at F106</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F0F9.html">F0F9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f106">Map</a></td>
+<td class="next">
+Next: <a href="F113.html">F113</a>
+</td>
+</tr>
+</table>
+<div class="description">F106: Routine at F106</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="F0F9.html">F0F9</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="f106"></span>F106</td>
+<td class="instruction">LD A,($BCCB)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="F113.html">F113</a> if *<a href="BCCB.html">CurrentRoom</a> is not room 02: "
+
+<a href="CB06.html">The Open Sea</a>".</td>
+</tr>
+<tr>
+<td class="address-1"><span id="f109"></span>F109</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="f10b"></span>F10B</td>
+<td class="instruction">JR NZ,<a href="F113.html">$F113</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="f10d"></span>
+<div class="comments">
+<div class="paragraph">
+Print "Now you're really lost.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="f10d"></span>F10D</td>
+<td class="instruction">LD HL,$DA41</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="DA41.html">DA41</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="f110"></span>F110</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F0F9.html">F0F9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f106">Map</a></td>
+<td class="next">
+Next: <a href="F113.html">F113</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1985 Interceptor Software UK &copy; 2025 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.6.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/jewelsofbabylon/">Source code</a>.</div>
+<div><a href="../dec/asm/61702.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

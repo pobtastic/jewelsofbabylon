@@ -145,13 +145,13 @@ Print "SAVING.Start tape,press any key.".
 <td class="asm-label">SaveGame_2</td>
 <td class="address-2"><span id="bb78"></span>BB78</td>
 <td class="instruction">LD HL,$BE78</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BE78.html">BE78</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BE78.html">Messaging_SavingStartTape</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="bb7b"></span>BB7B</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -163,7 +163,7 @@ Print "SAVING.Start tape,press any key.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="bb81"></span>BB81</td>
 <td class="instruction">LD IX,$BBF0</td>
-<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="BBF0.html">Table_ObjectLocations</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="BBF0.html">Table_ItemLocations</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -197,13 +197,13 @@ Print "Stop tape.Saving complete.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="bb8d"></span>BB8D</td>
 <td class="instruction">LD HL,$BE9A</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BE9A.html">BE9A</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BE9A.html">Messaging_StopTape</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="bb90"></span>BB90</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

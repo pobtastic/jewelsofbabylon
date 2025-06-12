@@ -55,7 +55,7 @@ Make the match inactive.
 <td class="asm-label">Event_Match</td>
 <td class="address-2"><span id="ee74"></span>EE74</td>
 <td class="instruction">LD HL,$BC66</td>
-<td class="comment-1" rowspan="2">Reset bit 6 of *<a href="BC66.html">Flag_EventState</a> which relates to the match being active.</td>
+<td class="comment-1" rowspan="2">Reset bit 6 of *<a href="BC66.html">Flag_TurnBasedEventState</a> which relates to the match being active.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -120,8 +120,8 @@ Print "Ouch!!The match has burned away,scorching your fingers.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee87"></span>EE87</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -137,12 +137,12 @@ The match can no longer be used, so destroy it.
 <td class="asm-label">Event_Match_Return</td>
 <td class="address-2"><span id="ee8a"></span>EE8A</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyObject</a> using item: "A lighted match".</td>
+<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyItemEvent</a> using item: "A lighted match".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee8c"></span>EE8C</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

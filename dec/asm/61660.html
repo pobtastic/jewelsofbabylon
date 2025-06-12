@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Jewels of Babylon: Routine at 61660</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61647.html">61647</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61660">Map</a></td>
+<td class="next">
+Next: <a href="61689.html">61689</a>
+</td>
+</tr>
+</table>
+<div class="description">61660: Routine at F0DC</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="61647.html">61647</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="61660"></span>61660</td>
+<td class="instruction">LD A,20</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A crocodile (with the keg in its mouth)".</td>
+</tr>
+<tr>
+<td class="address-1"><span id="61662"></span>61662</td>
+<td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="61665"></span>61665</td>
+<td class="instruction">JP Z,<a href="61506.html">Response_WorkItOutForYourself</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61506.html">Response_WorkItOutForYourself</a> if "A crocodile (with the keg in its mouth)" is in the current room.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="61668"></span>61668</td>
+<td class="instruction">LD A,43</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A giant octopus".</td>
+</tr>
+<tr>
+<td class="address-1"><span id="61670"></span>61670</td>
+<td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="61673"></span>61673</td>
+<td class="instruction">JP Z,<a href="61506.html">Response_WorkItOutForYourself</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61506.html">Response_WorkItOutForYourself</a> if "A giant octopus" is in the current room.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="61676"></span>61676</td>
+<td class="instruction">LD A,42</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A lion".</td>
+</tr>
+<tr>
+<td class="address-1"><span id="61678"></span>61678</td>
+<td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="61681"></span>61681</td>
+<td class="instruction">JR NZ,<a href="61689.html">61689</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61689.html">61689</a> if "A lion" isn't in the current room.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="61683"></span>
+<div class="comments">
+<div class="paragraph">
+Print "Nice pussy!".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="61683"></span>61683</td>
+<td class="instruction">LD HL,55847</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="55847.html">55847</a>.</td>
+</tr>
+<tr>
+<td class="address-1"><span id="61686"></span>61686</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61647.html">61647</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61660">Map</a></td>
+<td class="next">
+Next: <a href="61689.html">61689</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1985 Interceptor Software UK &copy; 2025 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.6.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/jewelsofbabylon/">Source code</a>.</div>
+<div><a href="../../asm/F0DC.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

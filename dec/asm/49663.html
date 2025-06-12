@@ -39,7 +39,7 @@ Next: <a href="49694.html">49694</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="49770.html">Handler_RoomExits</a> and <a href="61498.html">61498</a>.
+Used by the routines at <a href="49770.html">Handler_RoomExits</a> and <a href="61742.html">Action_Inventory</a>.
 </div>
 </div>
 <table class="input">
@@ -57,7 +57,7 @@ Used by the routines at <a href="49770.html">Handler_RoomExits</a> and <a href="
 <td class="asm-label">PrintObjects</td>
 <td class="address-2"><span id="49663"></span>49663</td>
 <td class="instruction">LD HL,48112</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48112.html">Table_ObjectLocations</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48112.html">Table_ItemLocations</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -81,7 +81,7 @@ Used by the routines at <a href="49770.html">Handler_RoomExits</a> and <a href="
 <td class="asm-label"></td>
 <td class="address-1"><span id="49673"></span>49673</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="1">Stash the current place in <a href="48112.html">Table_ObjectLocations</a> on the stack.</td>
+<td class="comment-1" rowspan="1">Stash the current place in <a href="48112.html">Table_ItemLocations</a> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -109,8 +109,8 @@ Used by the routines at <a href="49770.html">Handler_RoomExits</a> and <a href="
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="49681"></span>49681</td>
-<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -133,7 +133,7 @@ Used by the routines at <a href="49770.html">Handler_RoomExits</a> and <a href="
 <td class="asm-label"></td>
 <td class="address-1"><span id="49687"></span>49687</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore the current place in <a href="48112.html">Table_ObjectLocations</a> from the stack.</td>
+<td class="comment-1" rowspan="1">Restore the current place in <a href="48112.html">Table_ItemLocations</a> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

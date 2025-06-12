@@ -58,19 +58,19 @@ Print "LOADING. Start tape.".
 <td class="asm-label">LoadTape</td>
 <td class="address-2"><span id="48020"></span>48020</td>
 <td class="instruction">LD HL,48727</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48727.html">48727</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48727.html">Messaging_LoadingStartTape</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="48023"></span>48023</td>
-<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="48026"></span>48026</td>
 <td class="instruction">LD IX,48112</td>
-<td class="comment-1" rowspan="1">Load the starting address into <span class="register">IX</span> at <a href="48112.html">Table_ObjectLocations</a>.</td>
+<td class="comment-1" rowspan="1">Load the starting address into <span class="register">IX</span> at <a href="48112.html">Table_ItemLocations</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -116,13 +116,13 @@ Print "Tape error.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="48041"></span>48041</td>
 <td class="instruction">LD HL,48748</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48748.html">48748</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48748.html">Messaging_TapeError</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="48044"></span>48044</td>
-<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

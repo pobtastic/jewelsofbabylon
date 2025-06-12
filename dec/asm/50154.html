@@ -33,13 +33,16 @@ Next: <a href="50161.html">50161</a>
 </td>
 </tr>
 </table>
-<div class="description">50154: Handler: Destroy Object</div>
+<div class="description">50154: Handler: Destroy Item/ Event</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
 Used by the routines at <a href="61044.html">Event_Match</a>, <a href="61097.html">Event_Seagull</a>, <a href="61115.html">Event_Rat</a>, <a href="61133.html">Event_Deer</a>, <a href="61180.html">Event_WaterSnake</a>, <a href="61234.html">Event_Spider</a>, <a href="61781.html">61781</a> and <a href="63754.html">63754</a>.
+</div>
+<div class="paragraph">
+Updates a given item/ event ID so it's then "inactive" (has a location ID of 0).
 </div>
 </div>
 <table class="input">
@@ -48,22 +51,22 @@ Used by the routines at <a href="61044.html">Event_Match</a>, <a href="61097.htm
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Object ID</td>
+<td class="register-desc">Item/ event ID</td>
 </tr>
 </table>
 </td>
 </tr>
 <tr>
-<td class="asm-label">Handler_DestroyObject</td>
+<td class="asm-label">Handler_DestroyItemEvent</td>
 <td class="address-2"><span id="50154"></span>50154</td>
 <td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="1">Load the object ID into <span class="register">B</span>.</td>
+<td class="comment-1" rowspan="1">Load the item/ event ID into <span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="50155"></span>50155</td>
 <td class="instruction">LD C,0</td>
-<td class="comment-1" rowspan="1">Set the room ID to 0 which will deactivate the object.</td>
+<td class="comment-1" rowspan="1">Set the room ID to 0 which will deactivate the item/ event.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

@@ -33,10 +33,13 @@ gtag('config', 'G-75RERFCHBG');
 <td class="map-g"><span id="48112"></span><a href="../asm/48112.html">48112</a></td>
 <td class="map-length">100</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48112.html">Table: Object Locations</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48112.html">Table: Item Locations</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-When the object is in the players inventory, the room ID changes to 1.
+A table where the index is the item ID, and the value is the room it resides in (0 for "currently inactive").
+</div>
+<div class="paragraph">
+When the item is in the players inventory, the room ID changes to 1.
 </div>
 </div>
 </td>
@@ -48,6 +51,104 @@ When the object is in the players inventory, the room ID changes to 1.
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48220.html">Table: Already Seen Room Images</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
+Corresponds to whether the player has already seen the image for the following rooms:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Bit</th>
+<th colspan="1" rowspan="1">Room ID</th>
+<th colspan="1" rowspan="1">Room Name</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">0</td>
+<td class="centre" colspan="1" rowspan="1">3</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/52010.html">Your Ship</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">1</td>
+<td class="centre" colspan="1" rowspan="1">8</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/52110.html">The Dunes</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">2</td>
+<td class="centre" colspan="1" rowspan="1">9</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/52110.html">The Dunes</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">3</td>
+<td class="centre" colspan="1" rowspan="1">10</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/52110.html">The Dunes</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">4</td>
+<td class="centre" colspan="1" rowspan="1">108</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/53671.html">The Bridge</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">5</td>
+<td class="centre" colspan="1" rowspan="1">62</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/53110.html">The Cave Mouth</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">6</td>
+<td class="centre" colspan="1" rowspan="1">106</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/53649.html">The Mighty Rock Door</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">7</td>
+<td class="centre" colspan="1" rowspan="1">31</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/52563.html">The Cannibals' Village</a></td>
+</tr>
+</table> <table class="default">
+<tr>
+<th colspan="1" rowspan="1">Bit</th>
+<th colspan="1" rowspan="1">Room ID</th>
+<th colspan="1" rowspan="1">Room Name</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">0</td>
+<td class="centre" colspan="1" rowspan="1">40</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/52769.html">The Cliff Path</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">1</td>
+<td class="centre" colspan="1" rowspan="1">41</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/52769.html">The Cliff Path</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">2</td>
+<td class="centre" colspan="1" rowspan="1">42</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/52769.html">The Cliff Path</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">3</td>
+<td class="centre" colspan="1" rowspan="1">82</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/53430.html">The Vast Cavern</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">4</td>
+<td class="centre" colspan="1" rowspan="1">98</td>
+<td class="" colspan="1" rowspan="1"><a href="../asm/53511.html">The Pirate Treasure Chamber</a></td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">5</td>
+<td class="centre" colspan="1" rowspan="1">N/A</td>
+<td class="" colspan="1" rowspan="1">N/A</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">6</td>
+<td class="centre" colspan="1" rowspan="1">N/A</td>
+<td class="" colspan="1" rowspan="1">N/A</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">7</td>
+<td class="centre" colspan="1" rowspan="1">N/A</td>
+<td class="" colspan="1" rowspan="1">N/A</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
 Used by the routine at <a href="../asm/49694.html">Handler_DisplayRoomImage</a> but uses the bit index from <a href="../asm/59741.html">Table_RoomsWithImages</a>.
 </div>
 </div>
@@ -57,10 +158,10 @@ Used by the routine at <a href="../asm/49694.html">Handler_DisplayRoomImage</a> 
 <td class="map-g"><span id="48230"></span><a href="../asm/48230.html">48230</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48230.html">Flags: Event States</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48230.html">Flags: Turn-Based Event States</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-<table class="default">
+Holds a single byte, where each bit relates to a turn-based event as follows: <table class="default">
 <tr>
 <th colspan="1" rowspan="1">Bit</th>
 <th colspan="1" rowspan="1">Relating To</th>
@@ -97,16 +198,74 @@ Used by the routine at <a href="../asm/49694.html">Handler_DisplayRoomImage</a> 
 <td class="centre" colspan="1" rowspan="1">7</td>
 <td class="centre" colspan="1" rowspan="1">Wave</td>
 </tr>
-</table>
+</table> When the bit is set, this starts a turn counter (see <a href="../asm/48231.html">Counter_Crab</a>).
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="map-g"><span id="48231"></span><a href="../asm/48231.html">48231</a></td>
-<td class="map-length">17</td>
+<td class="map-length">8</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48231.html">Game status buffer entry at BC67</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48231.html">Turn-Based Event Counters</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="48239"></span><a href="../asm/48239.html">48239</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48239.html">Flags: Event States</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Holds a single byte, where each bit relates to an event as follows: <table class="default">
+<tr>
+<th colspan="1" rowspan="1">Bit</th>
+<th colspan="1" rowspan="1">Relating To</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">0</td>
+<td class="centre" colspan="1" rowspan="1">Crab</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">1</td>
+<td class="centre" colspan="1" rowspan="1">Tentacle</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">2</td>
+<td class="centre" colspan="1" rowspan="1">Drunk</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">3</td>
+<td class="centre" colspan="1" rowspan="1">Lion</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">4</td>
+<td class="centre" colspan="1" rowspan="1">Crocodile</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">5</td>
+<td class="centre" colspan="1" rowspan="1">Cannibals</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">6</td>
+<td class="centre" colspan="1" rowspan="1">Match</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1">7</td>
+<td class="centre" colspan="1" rowspan="1">Wave</td>
+</tr>
+</table> When the bit is set, this indicates that a turn-based event has started.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="48240"></span><a href="../asm/48240.html">48240</a></td>
+<td class="map-length">8</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48240.html">Game status buffer entry at BC70</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -117,6 +276,9 @@ Used by the routine at <a href="../asm/49694.html">Handler_DisplayRoomImage</a> 
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48248.html">Table: Scenic Event Locations</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+A table where the index is the event ID, and the value is the room it resides in (0 for "currently inactive"). See <a href="../asm/48432.html">Count_ScenicEvents</a> for the count.
+</div>
 </div>
 </td>
 </tr>
@@ -145,8 +307,13 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="48331"></span><a href="../asm/48331.html">48331</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48331.html">Room Number</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48331.html">Current Room ID</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+The room the player starts the game in is room 3: 
+
+<a href="../asm/52010.html">Your Ship</a>.
+</div>
 </div>
 </td>
 </tr>
@@ -156,6 +323,9 @@ The duration the match burns for before burning you.
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48332.html">Table: Scenic Event Rooms</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Pointer to the table containing groups of room IDs that an event could occur in.
+</div>
 </div>
 </td>
 </tr>
@@ -174,6 +344,9 @@ The duration the match burns for before burning you.
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48396.html">Pointer: Vocabulary Table</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Pointer to the table containing the game vocabulary.
+</div>
 </div>
 </td>
 </tr>
@@ -181,8 +354,11 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="48398"></span><a href="../asm/48398.html">48398</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48398.html">Pointer: Events Jump Table</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48398.html">Pointer: Turn-Based Events Jump Table</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Pointer to the jump table containing turn-based events.
+</div>
 </div>
 </td>
 </tr>
@@ -192,6 +368,9 @@ The duration the match burns for before burning you.
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48400.html">Pointer: Room Map Table</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Pointer to the table containing the relationships between rooms.
+</div>
 </div>
 </td>
 </tr>
@@ -199,8 +378,11 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="48402"></span><a href="../asm/48402.html">48402</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48402.html">Pointer: Object Description Table</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48402.html">Pointer: Item Description Table</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Pointer to the table containing item descriptions.
+</div>
 </div>
 </td>
 </tr>
@@ -210,6 +392,9 @@ The duration the match burns for before burning you.
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48404.html">Pointer: Rooms With Images Table</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Pointer to the table containing all the rooms which have an image to display.
+</div>
 </div>
 </td>
 </tr>
@@ -219,6 +404,9 @@ The duration the match burns for before burning you.
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48406.html">Pointer: Room Image Jump Table</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Pointer to the jump table for displaying an image relating to a room.
+</div>
 </div>
 </td>
 </tr>
@@ -228,6 +416,9 @@ The duration the match burns for before burning you.
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48408.html">Pointer: Room Description Table</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Pointer to the table containing room descriptions.
+</div>
 </div>
 </td>
 </tr>
@@ -235,7 +426,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="48410"></span><a href="../asm/48410.html">48410</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48410.html">Pointer: Object Rooms Table</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48410.html">Pointer: Item Grouping Table</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -298,8 +489,11 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="48424"></span><a href="../asm/48424.html">48424</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48424.html">Number Of Items?</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48424.html">Number Of Items</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+The total number of items in the game.
+</div>
 </div>
 </td>
 </tr>
@@ -307,8 +501,11 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="48426"></span><a href="../asm/48426.html">48426</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48426.html">Number Of Objects?</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48426.html">Number Of Objects</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+The total number of objects in the game.
+</div>
 </div>
 </td>
 </tr>
@@ -327,6 +524,9 @@ The duration the match burns for before burning you.
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48430.html">Number Of Rooms With Images</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+The total number of rooms which have related images in the game.
+</div>
 </div>
 </td>
 </tr>
@@ -334,7 +534,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="48432"></span><a href="../asm/48432.html">48432</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48432.html">Number Of Scenic Events?</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/48432.html">Number Of Scenic Events</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -417,6 +617,9 @@ The duration the match burns for before burning you.
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/49122.html">Table: Directions</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Pointer to the table containing direction messaging.
+</div>
 </div>
 </td>
 </tr>
@@ -460,7 +663,7 @@ The duration the match burns for before burning you.
 <td class="map-g"><span id="59502"></span><a href="../asm/59502.html">59502</a></td>
 <td class="map-length">159</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/59502.html">Data: Object Rooms</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/59502.html">Data: Items</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -554,9 +757,18 @@ The user input is broken down into tokens which represent the words they've ente
 </tr>
 <tr>
 <td class="map-g"><span id="65414"></span><a href="../asm/65414.html">65414</a></td>
-<td class="map-length">34</td>
+<td class="map-length">16</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/65414.html">Jump Table: Events</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/65414.html">Jump Table: Turn-Based Events</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="65430"></span><a href="../asm/65430.html">65430</a></td>
+<td class="map-length">18</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/65430.html">Jump Table: Scenic Events</a></div>
 <div class="map-entry-desc">
 </div>
 </td>

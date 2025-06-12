@@ -39,26 +39,10 @@ Next: <a href="48222.html">48222</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="49694.html">Handler_DisplayRoomImage</a> but uses the bit index from <a href="59741.html">Table_RoomsWithImages</a>.
+Corresponds to whether the player has already seen the image for the following rooms:
 </div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="48220"></span>
-<div class="comments">
 <div class="paragraph">
-Corresponds to whether the player has already seen (bit is set) the image for the following rooms:
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">Table_RoomImagesAlreadySeen</td>
-<td class="address-1"><span id="48220"></span>48220</td>
-<td class="instruction">DEFB %00000000</td>
-<td class="comment-1" rowspan="1"><table class="default">
+<table class="default">
 <tr>
 <th colspan="1" rowspan="1">Bit</th>
 <th colspan="1" rowspan="1">Room ID</th>
@@ -104,13 +88,7 @@ Corresponds to whether the player has already seen (bit is set) the image for th
 <td class="centre" colspan="1" rowspan="1">31</td>
 <td class="" colspan="1" rowspan="1"><a href="52563.html">The Cannibals' Village</a></td>
 </tr>
-</table></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="48221"></span>48221</td>
-<td class="instruction">DEFB %00000000</td>
-<td class="comment-1" rowspan="1"><table class="default">
+</table> <table class="default">
 <tr>
 <th colspan="1" rowspan="1">Bit</th>
 <th colspan="1" rowspan="1">Room ID</th>
@@ -156,7 +134,25 @@ Corresponds to whether the player has already seen (bit is set) the image for th
 <td class="centre" colspan="1" rowspan="1">N/A</td>
 <td class="" colspan="1" rowspan="1">N/A</td>
 </tr>
-</table></td>
+</table>
+</div>
+<div class="paragraph">
+Used by the routine at <a href="49694.html">Handler_DisplayRoomImage</a> but uses the bit index from <a href="59741.html">Table_RoomsWithImages</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Table_RoomImagesAlreadySeen</td>
+<td class="address-1"><span id="48220"></span>48220</td>
+<td class="instruction">DEFB %00000000</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="48221"></span>48221</td>
+<td class="instruction">DEFB %00000000</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">

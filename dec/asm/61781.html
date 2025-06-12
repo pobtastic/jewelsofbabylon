@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="61498.html">61498</a>
+Prev: <a href="61771.html">61771</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#61781">Map</a></td>
 <td class="next">
@@ -149,7 +149,7 @@ Next: <a href="63705.html">63705</a>
 <tr>
 <td class="address-2"><span id="61821"></span>61821</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61781.html#61840">61840</a> if *<a href="48331.html">RoomNumber</a> is not room 4: "
+<td class="comment-1" rowspan="3">Jump to <a href="61781.html#61840">61840</a> if *<a href="48331.html">CurrentRoom</a> is not room 4: "
 
 <a href="52070.html">In A Rowing Boat</a>".</td>
 </tr>
@@ -173,23 +173,25 @@ Next: <a href="63705.html">63705</a>
 </tr>
 <tr>
 <td class="address-1"><span id="61831"></span>61831</td>
-<td class="instruction">JP Z,<a href="61498.html#61521">61521</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61521">61521</a> if <span class="register">A</span> is equal to 4.</td>
+<td class="instruction">JP Z,<a href="61521.html">Response_TryClimbing</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61521.html">Response_TryClimbing</a> if <span class="register">A</span> is equal to 4.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61834"></span>61834</td>
-<td class="instruction">JP C,<a href="61498.html#61526">61526</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61526">61526</a> if <span class="register">A</span> is less than 4.</td>
+<td class="instruction">JP C,<a href="61526.html">Response_TryRowing</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61526.html">Response_TryRowing</a> if <span class="register">A</span> is less than 4.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61837"></span>61837</td>
-<td class="instruction">JP <a href="61498.html#61531">61531</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61531">61531</a>.</td>
+<td class="instruction">JP <a href="61531.html">Response_YouCantGoInThatDirection</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61531.html">Response_YouCantGoInThatDirection</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="61840"></span>61840</td>
 <td class="instruction">CP 2</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61781.html#61850">61850</a> if <span class="register">A</span> is not equal to 2.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61781.html#61850">61850</a> if *<a href="48331.html">CurrentRoom</a> is not room 2: "
+
+<a href="51974.html">The Open Sea</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61842"></span>61842</td>
@@ -203,16 +205,16 @@ Next: <a href="63705.html">63705</a>
 <tr>
 <td class="address-1"><span id="61845"></span>61845</td>
 <td class="instruction">CP 4</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61526">61526</a> if <span class="register">A</span> is less than 4.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61526.html">Response_TryRowing</a> if <span class="register">A</span> is less than 4.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61847"></span>61847</td>
-<td class="instruction">JP C,<a href="61498.html#61526">61526</a></td>
+<td class="instruction">JP C,<a href="61526.html">Response_TryRowing</a></td>
 </tr>
 <tr>
 <td class="address-2"><span id="61850"></span>61850</td>
-<td class="instruction">JP <a href="61498.html#61531">61531</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61531">61531</a>.</td>
+<td class="instruction">JP <a href="61531.html">Response_YouCantGoInThatDirection</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61531.html">Response_YouCantGoInThatDirection</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61853"></span>61853</td>
@@ -227,21 +229,21 @@ Next: <a href="63705.html">63705</a>
 <tr>
 <td class="address-1"><span id="61857"></span>61857</td>
 <td class="instruction">CP 1</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61498.html#61536">61536</a> if <span class="register">A</span> is not equal to 1.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61536.html">Response_OneAtATimePlease</a> if <span class="register">A</span> is not equal to 1.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61859"></span>61859</td>
-<td class="instruction">JP NZ,<a href="61498.html#61536">61536</a></td>
+<td class="instruction">JP NZ,<a href="61536.html">Response_OneAtATimePlease</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="61862"></span>61862</td>
 <td class="instruction">LD HL,59850</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html">Data_Bottle</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html">PhraseTokens_Bottle</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61865"></span>61865</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61868"></span>61868</td>
@@ -251,12 +253,12 @@ Next: <a href="63705.html">63705</a>
 <tr>
 <td class="address-1"><span id="61870"></span>61870</td>
 <td class="instruction">LD HL,59514</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">Data_ObjectRoom_04</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">Data_Item_Bottle_1</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61873"></span>61873</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61876"></span>61876</td>
@@ -293,18 +295,18 @@ Print "It's full of rum!".
 </tr>
 <tr>
 <td class="address-1"><span id="61889"></span>61889</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="61892"></span>61892</td>
 <td class="instruction">LD HL,59852</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59852">Data_Fish</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59852">PhraseTokens_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61895"></span>61895</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61898"></span>61898</td>
@@ -323,7 +325,7 @@ Print "It's full of rum!".
 <tr>
 <td class="address-1"><span id="61905"></span>61905</td>
 <td class="instruction">JR NZ,<a href="61781.html#61919">61919</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61781.html#61919">61919</a> if <span class="register">A</span> is not equal to 27.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61781.html#61919">61919</a> if "A strangely coloured fish" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61907"></span>61907</td>
@@ -351,18 +353,18 @@ Print "It's a red herring!".
 </tr>
 <tr>
 <td class="address-1"><span id="61916"></span>61916</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="61919"></span>61919</td>
 <td class="instruction">LD HL,59857</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59857">Data_Watch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59857">PhraseTokens_Watch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61922"></span>61922</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61925"></span>61925</td>
@@ -386,18 +388,18 @@ Print "It appears to work.".
 </tr>
 <tr>
 <td class="address-1"><span id="61930"></span>61930</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="61933"></span>61933</td>
 <td class="instruction">LD HL,59859</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59859">Data_Shoe</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59859">PhraseTokens_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61936"></span>61936</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61939"></span>61939</td>
@@ -411,18 +413,18 @@ Print "It appears to work.".
 </tr>
 <tr>
 <td class="address-1"><span id="61944"></span>61944</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="61947"></span>61947</td>
 <td class="instruction">LD HL,59861</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59861">Data_Rod</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59861">PhraseTokens_Rod</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61950"></span>61950</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61953"></span>61953</td>
@@ -446,18 +448,18 @@ Print "It has a circular cross-section.".
 </tr>
 <tr>
 <td class="address-1"><span id="61958"></span>61958</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="61961"></span>61961</td>
 <td class="instruction">LD HL,59863</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59863">Data_Fruit</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59863">PhraseTokens_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61964"></span>61964</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61967"></span>61967</td>
@@ -481,18 +483,18 @@ Print "It looks delicious.".
 </tr>
 <tr>
 <td class="address-1"><span id="61972"></span>61972</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="61975"></span>61975</td>
 <td class="instruction">LD HL,59865</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59865">Data_Bridge</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59865">PhraseTokens_Bridge</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61978"></span>61978</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61981"></span>61981</td>
@@ -516,18 +518,18 @@ Print "Be careful.It won't carry much weight.".
 </tr>
 <tr>
 <td class="address-1"><span id="61986"></span>61986</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="61989"></span>61989</td>
 <td class="instruction">LD HL,59867</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59867">Data_Jewel</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59867">PhraseTokens_Jewel</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61992"></span>61992</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="61995"></span>61995</td>
@@ -551,13 +553,13 @@ Print "They are very beautifuland very heavy.".
 </tr>
 <tr>
 <td class="address-1"><span id="62000"></span>62000</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62003"></span>62003</td>
-<td class="instruction">JP <a href="61498.html#61541">Print_IDontSeeThePoint</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61541">Print_IDontSeeThePoint</a>.</td>
+<td class="instruction">JP <a href="61541.html">Response_IDontSeeThePoint</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61541.html">Response_IDontSeeThePoint</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62006"></span>62006</td>
@@ -622,12 +624,12 @@ Print "Want to save the game? Y/N.".
 <tr>
 <td class="address-1"><span id="62026"></span>62026</td>
 <td class="instruction">LD HL,48821</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48821.html">48821</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48821.html">Messaging_WantToSaveTheGame</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62029"></span>62029</td>
-<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62032"></span>62032</td>
@@ -660,12 +662,11 @@ Print "Want to save the game? Y/N.".
 <tr>
 <td class="address-2"><span id="62046"></span>62046</td>
 <td class="instruction">LD HL,60893</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="60887.html#60893">GameOverInput</a>.</td>
+<td class="comment-1" rowspan="2">Switch <a href="60887.html#60893">GameOverInput</a> onto the stack so the next return action is asking for "Y"/ "N" user input, the same as for "Want another game? Y/N.".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62049"></span>62049</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62050"></span>62050</td>
@@ -715,7 +716,7 @@ Print "You're already carrying ".
 <tr>
 <td class="address-1"><span id="62064"></span>62064</td>
 <td class="instruction">LD HL,48912</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48912.html">48912</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48912.html">Messaging_YoureAlreadyCarrying</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62067"></span>62067</td>
@@ -760,12 +761,12 @@ Print "it.".
 <tr>
 <td class="address-1"><span id="62081"></span>62081</td>
 <td class="instruction">LD HL,48939</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48939.html">48939</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48939.html">Messaging_It</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62084"></span>62084</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -780,12 +781,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62087"></span>62087</td>
 <td class="instruction">LD HL,48943</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48943.html">48943</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48943.html">Messaging_Them</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62090"></span>62090</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62093"></span>62093</td>
@@ -825,12 +826,12 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="62101"></span>62101</td>
 <td class="instruction">LD HL,48949</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48949.html">48949</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48949.html">Messaging_YouCantCarryAnyMore</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62104"></span>62104</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62107"></span>62107</td>
@@ -859,18 +860,18 @@ Print "You can't carry any more.".
 </tr>
 <tr>
 <td class="address-1"><span id="62117"></span>62117</td>
-<td class="instruction">JP <a href="61498.html#61546">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">Print_OK</a>.</td>
+<td class="instruction">JP <a href="61546.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61546.html">Response_OK_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62120"></span>62120</td>
 <td class="instruction">LD HL,59879</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59879">Data_BottleOfRum</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59879">PhraseTokens_BottleOfRum</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62123"></span>62123</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62126"></span>62126</td>
@@ -880,12 +881,12 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="62128"></span>62128</td>
 <td class="instruction">LD HL,59514</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">Data_ObjectRoom_04</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">Data_Item_Bottle_1</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62131"></span>62131</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62134"></span>62134</td>
@@ -900,12 +901,12 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-2"><span id="62140"></span>62140</td>
 <td class="instruction">LD HL,59852</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59852">Data_Fish</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59852">PhraseTokens_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62143"></span>62143</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62146"></span>62146</td>
@@ -915,12 +916,12 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="62148"></span>62148</td>
 <td class="instruction">LD HL,59541</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">Data_ObjectRoom_14</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">Data_Item_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62151"></span>62151</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62154"></span>62154</td>
@@ -935,12 +936,12 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-2"><span id="62160"></span>62160</td>
 <td class="instruction">LD HL,59857</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59857">Data_Watch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59857">PhraseTokens_Watch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62163"></span>62163</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62166"></span>62166</td>
@@ -950,17 +951,16 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="62168"></span>62168</td>
 <td class="instruction">LD A,25</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=25 (event ID: 25).</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "The distracted natives".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62170"></span>62170</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62173"></span>62173</td>
 <td class="instruction">JR NZ,<a href="61781.html#62181">62181</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61781.html#62181">62181</a> if *<span class="register">HL</span> is not equal to 25.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61781.html#62181">62181</a> if "The distracted natives" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -979,18 +979,17 @@ Print "That's not such a good idea.".
 </tr>
 <tr>
 <td class="address-1"><span id="62178"></span>62178</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62181"></span>62181</td>
 <td class="instruction">LD A,23</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=23.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "A watch".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62183"></span>62183</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62186"></span>62186</td>
@@ -1000,12 +999,12 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-2"><span id="62189"></span>62189</td>
 <td class="instruction">LD HL,59859</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59859">Data_Shoe</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59859">PhraseTokens_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62192"></span>62192</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62195"></span>62195</td>
@@ -1015,12 +1014,11 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="62197"></span>62197</td>
 <td class="instruction">LD A,21</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=21.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "A shoe".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62199"></span>62199</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62202"></span>62202</td>
@@ -1030,12 +1028,12 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-2"><span id="62205"></span>62205</td>
 <td class="instruction">LD HL,59863</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59863">Data_Fruit</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59863">PhraseTokens_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62208"></span>62208</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62211"></span>62211</td>
@@ -1045,12 +1043,11 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="62213"></span>62213</td>
 <td class="instruction">LD A,14</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=14.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "Some fruit".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62215"></span>62215</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62218"></span>62218</td>
@@ -1060,12 +1057,12 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-2"><span id="62221"></span>62221</td>
 <td class="instruction">LD HL,59861</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59861">Data_Rod</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59861">PhraseTokens_Rod</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62224"></span>62224</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62227"></span>62227</td>
@@ -1075,12 +1072,11 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="62229"></span>62229</td>
 <td class="instruction">LD A,8</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=8.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "A rod".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62231"></span>62231</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62234"></span>62234</td>
@@ -1134,10 +1130,11 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="62261"></span>62261</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="3">Write 0 to: <ul class="">
-<li>*<a href="60176.html#60304">60304</a></li>
-<li>*<a href="60176.html#60813">60813</a></li>
-</ul></td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="60176.html#60304">60304</a> to remove access to 
+
+<a href="53649.html">The Mighty Rock Door</a> from 
+
+<a href="52465.html">The Narrow Path</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62262"></span>62262</td>
@@ -1146,6 +1143,11 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="62265"></span>62265</td>
 <td class="instruction">LD (60813),A</td>
+<td class="comment-1" rowspan="1">Write 0 to *<a href="60176.html#60813">60813</a> to remove access to 
+
+<a href="52465.html">The Narrow Path</a> from 
+
+<a href="53649.html">The Mighty Rock Door</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62268"></span>62268</td>
@@ -1174,18 +1176,18 @@ Print "The door rolls shut.".
 </tr>
 <tr>
 <td class="address-1"><span id="62276"></span>62276</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62279"></span>62279</td>
 <td class="instruction">LD HL,59867</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59867">Data_Jewel</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59867">PhraseTokens_Jewel</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62282"></span>62282</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62285"></span>62285</td>
@@ -1195,12 +1197,11 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="62287"></span>62287</td>
 <td class="instruction">LD A,29</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=29.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "The Jewels of Babylon".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62289"></span>62289</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62292"></span>62292</td>
@@ -1210,12 +1211,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="62295"></span>62295</td>
 <td class="instruction">LD HL,59873</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59873">Data_Match</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59873">PhraseTokens_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62298"></span>62298</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62301"></span>62301</td>
@@ -1225,12 +1226,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="62303"></span>62303</td>
 <td class="instruction">LD HL,59502</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_ObjectRoom_00</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_Item_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62306"></span>62306</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62309"></span>62309</td>
@@ -1245,12 +1246,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="62315"></span>62315</td>
 <td class="instruction">LD HL,59875</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59875">Data_Plank</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59875">PhraseTokens_Plank</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62318"></span>62318</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62321"></span>62321</td>
@@ -1260,12 +1261,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="62323"></span>62323</td>
 <td class="instruction">LD HL,59505</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59505">Data_ObjectRoom_01</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59505">Data_Item_Plank</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62326"></span>62326</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62329"></span>62329</td>
@@ -1293,8 +1294,8 @@ Print "The door rolls shut.".
 </tr>
 <tr>
 <td class="address-1"><span id="62340"></span>62340</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62343"></span>62343</td>
@@ -1303,8 +1304,8 @@ Print "The door rolls shut.".
 </tr>
 <tr>
 <td class="address-1"><span id="62345"></span>62345</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62348"></span>62348</td>
@@ -1335,12 +1336,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="62360"></span>62360</td>
 <td class="instruction">LD HL,59877</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59877">Data_Coconut</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59877">PhraseTokens_Coconut</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62363"></span>62363</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62366"></span>62366</td>
@@ -1350,12 +1351,11 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="62368"></span>62368</td>
 <td class="instruction">LD A,7</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=7.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "A coconut".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62370"></span>62370</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62373"></span>62373</td>
@@ -1365,12 +1365,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="62376"></span>62376</td>
 <td class="instruction">LD HL,59887</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59887">Data_Gun</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59887">PhraseTokens_Gun</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62379"></span>62379</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62382"></span>62382</td>
@@ -1380,27 +1380,25 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="62384"></span>62384</td>
 <td class="instruction">LD A,15</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=15.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "A gun".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62386"></span>62386</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62389"></span>62389</td>
 <td class="instruction">LD A,39</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=39 (event ID: 39).</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A parrot (alive)".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62391"></span>62391</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62394"></span>62394</td>
 <td class="instruction">JR Z,<a href="61781.html#62411">62411</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61781.html#62411">62411</a> if <span class="register">A</span> is equal to 39.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61781.html#62411">62411</a> if "A parrot (alive)" is present in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62396"></span>62396</td>
@@ -1409,8 +1407,8 @@ Print "The door rolls shut.".
 </tr>
 <tr>
 <td class="address-1"><span id="62398"></span>62398</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62401"></span>62401</td>
@@ -1419,8 +1417,8 @@ Print "The door rolls shut.".
 </tr>
 <tr>
 <td class="address-1"><span id="62403"></span>62403</td>
-<td class="instruction">CALL <a href="50170.html">50170</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html">50170</a>.</td>
+<td class="instruction">CALL <a href="50170.html">ScenicEventTriggered</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50170.html">ScenicEventTriggered</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62406"></span>62406</td>
@@ -1433,14 +1431,23 @@ Print "The door rolls shut.".
 <td class="comment-1" rowspan="1">Jump to <a href="61781.html#62108">62108</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="62411"></span>
+<div class="comments">
+<div class="paragraph">
+Bad luck!
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-2"><span id="62411"></span>62411</td>
 <td class="instruction">LD HL,60887</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="60887.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="2">Switch <a href="60887.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62414"></span>62414</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1459,18 +1466,18 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 </tr>
 <tr>
 <td class="address-1"><span id="62418"></span>62418</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62421"></span>62421</td>
 <td class="instruction">LD HL,59889</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59889">Data_Eyepatch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59889">PhraseTokens_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62424"></span>62424</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62427"></span>62427</td>
@@ -1480,12 +1487,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62429"></span>62429</td>
 <td class="instruction">LD HL,59525</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59525">Data_ObjectRoom_08</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59525">Data_Item_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62432"></span>62432</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62435"></span>62435</td>
@@ -1500,12 +1507,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62441"></span>62441</td>
 <td class="instruction">LD HL,59891</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59891">Data_KegGunPowder</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59891">PhraseTokens_KegGunPowder</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62444"></span>62444</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62447"></span>62447</td>
@@ -1515,12 +1522,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62449"></span>62449</td>
 <td class="instruction">LD HL,59528</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59528">Data_ObjectRoom_09</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59528">Data_Item_CrocodileWithKeg_1</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62452"></span>62452</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62455"></span>62455</td>
@@ -1544,18 +1551,18 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 </tr>
 <tr>
 <td class="address-1"><span id="62464"></span>62464</td>
-<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
+<td class="instruction">JP <a href="61551.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61551.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62467"></span>62467</td>
 <td class="instruction">LD HL,59899</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59899">Data_Sextant</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59899">PhraseTokens_Sextant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62470"></span>62470</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62473"></span>62473</td>
@@ -1565,12 +1572,11 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62475"></span>62475</td>
 <td class="instruction">LD A,22</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=22.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "A sextant".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62477"></span>62477</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62480"></span>62480</td>
@@ -1580,12 +1586,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62483"></span>62483</td>
 <td class="instruction">LD HL,59901</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59901">Data_Crowbar</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59901">PhraseTokens_Crowbar</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62486"></span>62486</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62489"></span>62489</td>
@@ -1595,12 +1601,11 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62491"></span>62491</td>
 <td class="instruction">LD A,30</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=30.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "A crowbar".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62493"></span>62493</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62496"></span>62496</td>
@@ -1610,12 +1615,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62499"></span>62499</td>
 <td class="instruction">LD HL,59903</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59903">Data_Key</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59903">PhraseTokens_Key</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62502"></span>62502</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62505"></span>62505</td>
@@ -1625,12 +1630,11 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62507"></span>62507</td>
 <td class="instruction">LD A,31</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=31.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "A key".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62509"></span>62509</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62512"></span>62512</td>
@@ -1640,12 +1644,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62515"></span>62515</td>
 <td class="instruction">LD HL,59905</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59905">Data_Skull</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59905">PhraseTokens_Skull</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62518"></span>62518</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62521"></span>62521</td>
@@ -1655,12 +1659,11 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62523"></span>62523</td>
 <td class="instruction">LD A,32</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=32.</td>
+<td class="comment-1" rowspan="2">Call <a href="61781.html#62058">62058</a> with "A human skull".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62525"></span>62525</td>
 <td class="instruction">CALL <a href="61781.html#62058">62058</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61781.html#62058">62058</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62528"></span>62528</td>
@@ -1670,12 +1673,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="62531"></span>62531</td>
 <td class="instruction">LD HL,59910</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59910">Data_Spear</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59910">PhraseTokens_Spear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62534"></span>62534</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62537"></span>62537</td>
@@ -1685,12 +1688,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62539"></span>62539</td>
 <td class="instruction">LD HL,59552</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59552">Data_ObjectRoom_19</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59552">Data_Item_CannibalsWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62542"></span>62542</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62545"></span>62545</td>
@@ -1714,18 +1717,18 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 </tr>
 <tr>
 <td class="address-1"><span id="62554"></span>62554</td>
-<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
+<td class="instruction">JP <a href="61551.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61551.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62557"></span>62557</td>
 <td class="instruction">LD HL,59912</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59912">Data_Parrot</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59912">PhraseTokens_Parrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62560"></span>62560</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62563"></span>62563</td>
@@ -1735,12 +1738,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62565"></span>62565</td>
 <td class="instruction">LD HL,59580</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59580">Data_ObjectRoom_25</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59580">Data_Item_Parrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62568"></span>62568</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62571"></span>62571</td>
@@ -1763,14 +1766,23 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <td class="comment-1" rowspan="1">Jump to <a href="61781.html#62108">62108</a> if <span class="register">A</span> is equal to 40.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="62580"></span>
+<div class="comments">
+<div class="paragraph">
+Bad luck!
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-1"><span id="62580"></span>62580</td>
 <td class="instruction">LD HL,60887</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="60887.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="2">Switch <a href="60887.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62583"></span>62583</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1789,13 +1801,13 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 </tr>
 <tr>
 <td class="address-1"><span id="62587"></span>62587</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62590"></span>62590</td>
-<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
+<td class="instruction">JP <a href="61551.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61551.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62593"></span>62593</td>
@@ -1810,12 +1822,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="62597"></span>62597</td>
 <td class="instruction">LD HL,59917</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59917">Data_IntoBoat</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59917">PhraseTokens_IntoBoat</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62600"></span>62600</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62603"></span>62603</td>
@@ -1835,7 +1847,7 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-2"><span id="62605"></span>62605</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48331.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48331.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62608"></span>62608</td>
@@ -1876,8 +1888,8 @@ Print "You're in it already.".
 </tr>
 <tr>
 <td class="address-1"><span id="62619"></span>62619</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62622"></span>62622</td>
@@ -1916,12 +1928,12 @@ Print "You're in it already.".
 <tr>
 <td class="address-2"><span id="62636"></span>62636</td>
 <td class="instruction">LD HL,59933</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59933">Data_OutOfBoat</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59933">PhraseTokens_OutOfBoat</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62639"></span>62639</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62642"></span>62642</td>
@@ -1941,7 +1953,7 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-2"><span id="62644"></span>62644</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61781.html#62657">62657</a> if *<a href="48331.html">RoomNumber</a> is not room 4: "
+<td class="comment-1" rowspan="3">Jump to <a href="61781.html#62657">62657</a> if *<a href="48331.html">CurrentRoom</a> is not room 4: "
 
 <a href="52070.html">In A Rowing Boat</a>".</td>
 </tr>
@@ -1971,7 +1983,7 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-2"><span id="62657"></span>62657</td>
 <td class="instruction">CP 107</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61781.html#62667">62667</a> if *<a href="48331.html">RoomNumber</a> is not room 107: "
+<td class="comment-1" rowspan="2">Jump to <a href="61781.html#62667">62667</a> if *<a href="48331.html">CurrentRoom</a> is not room 107: "
 
 <a href="52070.html">In A Rowing Boat</a>".</td>
 </tr>
@@ -2011,8 +2023,8 @@ Print "You're not in the boat.".
 </tr>
 <tr>
 <td class="address-1"><span id="62670"></span>62670</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62673"></span>62673</td>
@@ -2057,7 +2069,7 @@ Print "You're not carrying ".
 <tr>
 <td class="address-1"><span id="62687"></span>62687</td>
 <td class="instruction">LD HL,49071</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="49071.html">49071</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="49071.html">Messaging_YoureNotCarrying</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62690"></span>62690</td>
@@ -2102,12 +2114,12 @@ Print "it.".
 <tr>
 <td class="address-1"><span id="62704"></span>62704</td>
 <td class="instruction">LD HL,48939</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48939.html">48939</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48939.html">Messaging_It</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62707"></span>62707</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -2122,12 +2134,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62710"></span>62710</td>
 <td class="instruction">LD HL,48943</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48943.html">48943</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48943.html">Messaging_Them</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62713"></span>62713</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62716"></span>62716</td>
@@ -2137,7 +2149,7 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="62717"></span>62717</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48331.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48331.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62720"></span>62720</td>
@@ -2161,18 +2173,18 @@ Print "them.".
 </tr>
 <tr>
 <td class="address-1"><span id="62728"></span>62728</td>
-<td class="instruction">JP <a href="61498.html#61546">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">Print_OK</a>.</td>
+<td class="instruction">JP <a href="61546.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61546.html">Response_OK_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="62731"></span>62731</td>
 <td class="instruction">LD HL,59879</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59879">Data_BottleOfRum</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59879">PhraseTokens_BottleOfRum</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62734"></span>62734</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62737"></span>62737</td>
@@ -2182,12 +2194,12 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="62739"></span>62739</td>
 <td class="instruction">LD HL,59514</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">Data_ObjectRoom_04</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59514">Data_Item_Bottle_1</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62742"></span>62742</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62745"></span>62745</td>
@@ -2197,12 +2209,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62748"></span>62748</td>
 <td class="instruction">LD HL,59852</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59852">Data_Fish</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59852">PhraseTokens_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62751"></span>62751</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62754"></span>62754</td>
@@ -2212,12 +2224,12 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="62756"></span>62756</td>
 <td class="instruction">LD HL,59541</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">Data_ObjectRoom_14</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">Data_Item_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62759"></span>62759</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62762"></span>62762</td>
@@ -2227,12 +2239,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62765"></span>62765</td>
 <td class="instruction">LD HL,59857</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59857">Data_Watch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59857">PhraseTokens_Watch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62768"></span>62768</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62771"></span>62771</td>
@@ -2252,12 +2264,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62778"></span>62778</td>
 <td class="instruction">LD HL,59859</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59859">Data_Shoe</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59859">PhraseTokens_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62781"></span>62781</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62784"></span>62784</td>
@@ -2277,12 +2289,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62791"></span>62791</td>
 <td class="instruction">LD HL,59861</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59861">Data_Rod</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59861">PhraseTokens_Rod</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62794"></span>62794</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62797"></span>62797</td>
@@ -2302,12 +2314,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62804"></span>62804</td>
 <td class="instruction">LD HL,59863</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59863">Data_Fruit</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59863">PhraseTokens_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62807"></span>62807</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62810"></span>62810</td>
@@ -2327,12 +2339,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62817"></span>62817</td>
 <td class="instruction">LD HL,59867</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59867">Data_Jewel</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59867">PhraseTokens_Jewel</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62820"></span>62820</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62823"></span>62823</td>
@@ -2352,12 +2364,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62830"></span>62830</td>
 <td class="instruction">LD HL,59873</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59873">Data_Match</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59873">PhraseTokens_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62833"></span>62833</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62836"></span>62836</td>
@@ -2367,12 +2379,12 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="62838"></span>62838</td>
 <td class="instruction">LD HL,59502</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_ObjectRoom_00</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_Item_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62841"></span>62841</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62844"></span>62844</td>
@@ -2382,12 +2394,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62847"></span>62847</td>
 <td class="instruction">LD HL,59875</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59875">Data_Plank</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59875">PhraseTokens_Plank</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62850"></span>62850</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62853"></span>62853</td>
@@ -2407,12 +2419,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62860"></span>62860</td>
 <td class="instruction">LD HL,59877</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59877">Data_Coconut</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59877">PhraseTokens_Coconut</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62863"></span>62863</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62866"></span>62866</td>
@@ -2432,12 +2444,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62873"></span>62873</td>
 <td class="instruction">LD HL,59887</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59887">Data_Gun</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59887">PhraseTokens_Gun</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62876"></span>62876</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62879"></span>62879</td>
@@ -2457,12 +2469,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62886"></span>62886</td>
 <td class="instruction">LD HL,59889</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59889">Data_Eyepatch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59889">PhraseTokens_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62889"></span>62889</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62892"></span>62892</td>
@@ -2472,12 +2484,12 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="62894"></span>62894</td>
 <td class="instruction">LD HL,59525</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59525">Data_ObjectRoom_08</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59525">Data_Item_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62897"></span>62897</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62900"></span>62900</td>
@@ -2510,12 +2522,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62916"></span>62916</td>
 <td class="instruction">LD HL,59891</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59891">Data_KegGunPowder</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59891">PhraseTokens_KegGunPowder</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62919"></span>62919</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62922"></span>62922</td>
@@ -2535,12 +2547,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62929"></span>62929</td>
 <td class="instruction">LD HL,59899</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59899">Data_Sextant</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59899">PhraseTokens_Sextant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62932"></span>62932</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62935"></span>62935</td>
@@ -2560,12 +2572,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62942"></span>62942</td>
 <td class="instruction">LD HL,59901</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59901">Data_Crowbar</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59901">PhraseTokens_Crowbar</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62945"></span>62945</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62948"></span>62948</td>
@@ -2585,12 +2597,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62955"></span>62955</td>
 <td class="instruction">LD HL,59903</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59903">Data_Key</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59903">PhraseTokens_Key</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62958"></span>62958</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62961"></span>62961</td>
@@ -2610,12 +2622,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62968"></span>62968</td>
 <td class="instruction">LD HL,59905</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59905">Data_Skull</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59905">PhraseTokens_Skull</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62971"></span>62971</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62974"></span>62974</td>
@@ -2635,12 +2647,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62981"></span>62981</td>
 <td class="instruction">LD HL,59910</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59910">Data_Spear</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59910">PhraseTokens_Spear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62984"></span>62984</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62987"></span>62987</td>
@@ -2660,12 +2672,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="62994"></span>62994</td>
 <td class="instruction">LD HL,59912</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59912">Data_Parrot</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59912">PhraseTokens_Parrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="62997"></span>62997</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63000"></span>63000</td>
@@ -2685,17 +2697,17 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="63007"></span>63007</td>
 <td class="instruction">LD HL,59942</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59942">Data_PlankAcrossPit</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59942">PhraseTokens_PlankAcrossPit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63010"></span>63010</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63013"></span>63013</td>
-<td class="instruction">JP Z,<a href="61498.html#61556">Print_PleaseRephraseThat</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61556">Print_PleaseRephraseThat</a> if <span class="register">A</span> is equal to 40.</td>
+<td class="instruction">JP Z,<a href="61556.html">Response_PleaseRephraseThat_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61556.html">Response_PleaseRephraseThat_Duplicate</a> if <span class="register">A</span> is equal to 40.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63016"></span>63016</td>
@@ -2712,8 +2724,8 @@ Print "them.".
 </tr>
 <tr>
 <td class="address-1"><span id="63024"></span>63024</td>
-<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
+<td class="instruction">JP <a href="61551.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61551.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63027"></span>63027</td>
@@ -2738,7 +2750,7 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="63034"></span>63034</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="2"><span class="register">C</span>=*<a href="48331.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">C</span>=*<a href="48331.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63037"></span>63037</td>
@@ -2767,12 +2779,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="63046"></span>63046</td>
 <td class="instruction">LD HL,59946</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59946">Data_SpearAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59946">PhraseTokens_SpearAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63049"></span>63049</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63052"></span>63052</td>
@@ -2806,18 +2818,18 @@ Print "You fling the spear,but thelion easily avoids it.".
 </tr>
 <tr>
 <td class="address-1"><span id="63062"></span>63062</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63065"></span>63065</td>
 <td class="instruction">LD HL,59950</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59950">Data_CoconutAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59950">PhraseTokens_CoconutAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63068"></span>63068</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63071"></span>63071</td>
@@ -2851,18 +2863,18 @@ Print "The coconut bounces offthe lion's head.He shakes hislong mane in anger.
 </tr>
 <tr>
 <td class="address-1"><span id="63081"></span>63081</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63084"></span>63084</td>
 <td class="instruction">LD HL,59954</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59954">Data_FruitAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59954">PhraseTokens_FruitAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63087"></span>63087</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63090"></span>63090</td>
@@ -2896,18 +2908,18 @@ Print "He sniffs the fruit butotherwise ignores it.".
 </tr>
 <tr>
 <td class="address-1"><span id="63100"></span>63100</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63103"></span>63103</td>
 <td class="instruction">LD HL,59958</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59958">Data_FishAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59958">PhraseTokens_FishAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63106"></span>63106</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63109"></span>63109</td>
@@ -2917,12 +2929,12 @@ Print "He sniffs the fruit butotherwise ignores it.".
 <tr>
 <td class="address-2"><span id="63111"></span>63111</td>
 <td class="instruction">LD HL,59541</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">Data_ObjectRoom_14</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59541">Data_Item_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63114"></span>63114</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63117"></span>63117</td>
@@ -2936,8 +2948,8 @@ Print "He sniffs the fruit butotherwise ignores it.".
 </tr>
 <tr>
 <td class="address-1"><span id="63121"></span>63121</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63124"></span>63124</td>
@@ -2946,8 +2958,8 @@ Print "He sniffs the fruit butotherwise ignores it.".
 </tr>
 <tr>
 <td class="address-1"><span id="63126"></span>63126</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63129"></span>63129</td>
@@ -2975,18 +2987,18 @@ Print "The lion takes the fish inhis massive jaws and thendisappears into the 
 </tr>
 <tr>
 <td class="address-1"><span id="63137"></span>63137</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63140"></span>63140</td>
 <td class="instruction">LD HL,59967</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59967">Data_FruitAtParrot</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59967">PhraseTokens_FruitAtParrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63143"></span>63143</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63146"></span>63146</td>
@@ -3016,11 +3028,11 @@ Print "The lion takes the fish inhis massive jaws and thendisappears into the 
 <tr>
 <td class="address-1"><span id="63159"></span>63159</td>
 <td class="instruction">LD A,14</td>
-<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "Some fruit" (as the parrot ate it).</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyItemEvent</a> with "Some fruit" (as the parrot ate it).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63161"></span>63161</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -3039,18 +3051,18 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 </tr>
 <tr>
 <td class="address-1"><span id="63167"></span>63167</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63170"></span>63170</td>
 <td class="instruction">LD HL,59971</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59971">Data_WatchAtCannibals</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59971">PhraseTokens_WatchAtCannibals</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63173"></span>63173</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63176"></span>63176</td>
@@ -3068,8 +3080,8 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 </tr>
 <tr>
 <td class="address-1"><span id="63183"></span>63183</td>
-<td class="instruction">JP NZ,<a href="61498.html#61561">Print_YouveDoneThatAlready</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61561">Print_YouveDoneThatAlready</a> if *<span class="register">HL</span> is not equal to 23.</td>
+<td class="instruction">JP NZ,<a href="61561.html">Response_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61561.html">Response_YouveDoneThatAlready</a> "A watch" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63186"></span>63186</td>
@@ -3168,18 +3180,18 @@ Print "The cannibal drops the spearand takes the watch.He examines it briefly 
 </tr>
 <tr>
 <td class="address-1"><span id="63226"></span>63226</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63229"></span>63229</td>
 <td class="instruction">LD HL,59975</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59975">Data_SpearAtOctopus</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59975">PhraseTokens_SpearAtOctopus</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63232"></span>63232</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63235"></span>63235</td>
@@ -3198,20 +3210,20 @@ Print "The cannibal drops the spearand takes the watch.He examines it briefly 
 <tr>
 <td class="address-1"><span id="63242"></span>63242</td>
 <td class="instruction">LD A,43</td>
-<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A giant octopus".</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyItemEvent</a> with "A giant octopus".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63244"></span>63244</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63247"></span>63247</td>
 <td class="instruction">LD A,26</td>
-<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A spear".</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyItemEvent</a> with "A spear".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63249"></span>63249</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63252"></span>63252</td>
@@ -3269,18 +3281,18 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 </tr>
 <tr>
 <td class="address-1"><span id="63270"></span>63270</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63273"></span>63273</td>
 <td class="instruction">LD HL,59984</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59984">Data_KegAtCrocodile</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59984">PhraseTokens_KegAtCrocodile</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63276"></span>63276</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63279"></span>63279</td>
@@ -3290,17 +3302,16 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 <tr>
 <td class="address-1"><span id="63281"></span>63281</td>
 <td class="instruction">LD A,18</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=18 (event ID: 18).</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A keg of gunpowder".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63283"></span>63283</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63286"></span>63286</td>
-<td class="instruction">JP NZ,<a href="61498.html#61561">Print_YouveDoneThatAlready</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61561">Print_YouveDoneThatAlready</a> if *<span class="register">HL</span> is not equal to 18.</td>
+<td class="instruction">JP NZ,<a href="61561.html">Response_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61561.html">Response_YouveDoneThatAlready</a> if "A keg of gunpowder" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63289"></span>63289</td>
@@ -3319,8 +3330,8 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 </tr>
 <tr>
 <td class="address-1"><span id="63296"></span>63296</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63299"></span>63299</td>
@@ -3348,18 +3359,18 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 </tr>
 <tr>
 <td class="address-1"><span id="63308"></span>63308</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63311"></span>63311</td>
 <td class="instruction">LD HL,59998</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59998">Data_MatchAtKeg</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59998">PhraseTokens_MatchAtKeg</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63314"></span>63314</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63317"></span>63317</td>
@@ -3377,18 +3388,18 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 </tr>
 <tr>
 <td class="address-1"><span id="63324"></span>63324</td>
-<td class="instruction">JP Z,<a href="61498.html#61551">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a> if *<span class="register">HL</span> is equal to 18.</td>
+<td class="instruction">JP Z,<a href="61551.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61551.html">Response_YouCant_Duplicate</a> if *<span class="register">HL</span> is equal to 18.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63327"></span>63327</td>
 <td class="instruction">LD HL,59502</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_ObjectRoom_00</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_Item_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63330"></span>63330</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63333"></span>63333</td>
@@ -3406,8 +3417,8 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 </tr>
 <tr>
 <td class="address-1"><span id="63341"></span>63341</td>
-<td class="instruction">JP Z,<a href="61498.html#61546">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">Print_OK</a> if *<span class="register">HL</span> is equal to 18.</td>
+<td class="instruction">JP Z,<a href="61546.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61546.html">Response_OK_Duplicate</a> if "A keg of gunpowder" is present in the current room.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63344"></span>63344</td>
@@ -3420,26 +3431,26 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 </tr>
 <tr>
 <td class="address-1"><span id="63349"></span>63349</td>
-<td class="instruction">JP Z,<a href="61498.html#61546">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">Print_OK</a> if *<span class="register">HL</span> is equal to 2.</td>
+<td class="instruction">JP Z,<a href="61546.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61546.html">Response_OK_Duplicate</a> if "A match" is present in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63352"></span>63352</td>
 <td class="instruction">LD A,3</td>
-<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A lighted match".</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyItemEvent</a> with "A lighted match".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63354"></span>63354</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63357"></span>63357</td>
 <td class="instruction">LD A,20</td>
-<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A crocodile (with the keg in its mouth)".</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyItemEvent</a> with "A crocodile (with the keg in its mouth)".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63359"></span>63359</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63362"></span>63362</td>
@@ -3471,18 +3482,18 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 </tr>
 <tr>
 <td class="address-1"><span id="63370"></span>63370</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63373"></span>63373</td>
 <td class="instruction">LD HL,60012</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60012">Data_MatchAtCrocodile</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60012">PhraseTokens_MatchAtCrocodile</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63376"></span>63376</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63379"></span>63379</td>
@@ -3492,12 +3503,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63381"></span>63381</td>
 <td class="instruction">LD HL,59502</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_ObjectRoom_00</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html">Data_Item_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63384"></span>63384</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63387"></span>63387</td>
@@ -3516,17 +3527,17 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63395"></span>63395</td>
 <td class="instruction">JR Z,<a href="61781.html#63344">63344</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61781.html#63344">63344</a> if *<span class="register">HL</span> is equal to 20.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61781.html#63344">63344</a> if "A crocodile (with the keg in its mouth)" is present in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63397"></span>63397</td>
-<td class="instruction">JP <a href="61498.html#61546">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61546">Print_OK</a>.</td>
+<td class="instruction">JP <a href="61546.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61546.html">Response_OK_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63400"></span>63400</td>
-<td class="instruction">JP <a href="61498.html#61541">Print_IDontSeeThePoint</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61541">Print_IDontSeeThePoint</a>.</td>
+<td class="instruction">JP <a href="61541.html">Response_IDontSeeThePoint</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61541.html">Response_IDontSeeThePoint</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63403"></span>63403</td>
@@ -3541,12 +3552,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63407"></span>63407</td>
 <td class="instruction">LD HL,59954</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59954">Data_FruitAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59954">PhraseTokens_FruitAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63410"></span>63410</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63413"></span>63413</td>
@@ -3556,12 +3567,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63416"></span>63416</td>
 <td class="instruction">LD HL,59958</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59958">Data_FishAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59958">PhraseTokens_FishAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63419"></span>63419</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63422"></span>63422</td>
@@ -3571,12 +3582,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63425"></span>63425</td>
 <td class="instruction">LD HL,59967</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59967">Data_FruitAtParrot</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59967">PhraseTokens_FruitAtParrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63428"></span>63428</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63431"></span>63431</td>
@@ -3586,12 +3597,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63434"></span>63434</td>
 <td class="instruction">LD HL,59971</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59971">Data_WatchAtCannibals</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59971">PhraseTokens_WatchAtCannibals</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63437"></span>63437</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63440"></span>63440</td>
@@ -3600,8 +3611,8 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 </tr>
 <tr>
 <td class="address-1"><span id="63443"></span>63443</td>
-<td class="instruction">JP <a href="61498.html#61541">Print_IDontSeeThePoint</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61541">Print_IDontSeeThePoint</a>.</td>
+<td class="instruction">JP <a href="61541.html">Response_IDontSeeThePoint</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61541.html">Response_IDontSeeThePoint</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63446"></span>63446</td>
@@ -3616,12 +3627,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63450"></span>63450</td>
 <td class="instruction">LD HL,59942</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59942">Data_PlankAcrossPit</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59942">PhraseTokens_PlankAcrossPit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63453"></span>63453</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63456"></span>63456</td>
@@ -3631,17 +3642,16 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="63458"></span>63458</td>
 <td class="instruction">LD A,4</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=4 (event ID: 4).</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "A plank".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63460"></span>63460</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50015.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63463"></span>63463</td>
-<td class="instruction">JP NZ,<a href="61498.html#61561">Print_YouveDoneThatAlready</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61561">Print_YouveDoneThatAlready</a> if *<span class="register">HL</span> is not equal to 4.</td>
+<td class="instruction">JP NZ,<a href="61561.html">Response_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61561.html">Response_YouveDoneThatAlready</a> if "A plank" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63466"></span>63466</td>
@@ -3660,28 +3670,30 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 </tr>
 <tr>
 <td class="address-1"><span id="63473"></span>63473</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50154.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63476"></span>63476</td>
 <td class="instruction">LD BC,1382</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=1382.</td>
+<td class="comment-1" rowspan="2">Call <a href="50194.html">Handler_UpdateObjectLocation</a> using item "A plank (spanning the pit)" to create it in 
+
+<a href="53589.html">The Wide Pit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63479"></span>63479</td>
 <td class="instruction">CALL <a href="50194.html">Handler_UpdateObjectLocation</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50194.html">Handler_UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63482"></span>63482</td>
 <td class="instruction">LD BC,1640</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=1640.</td>
+<td class="comment-1" rowspan="2">Call <a href="50194.html">Handler_UpdateObjectLocation</a> using item "A plank (spanning the pit)" to create it in 
+
+<a href="53619.html">The Southern Side of the Pit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63485"></span>63485</td>
 <td class="instruction">CALL <a href="50194.html">Handler_UpdateObjectLocation</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50194.html">Handler_UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63488"></span>63488</td>
@@ -3703,8 +3715,8 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 </tr>
 <tr>
 <td class="address-1"><span id="63498"></span>63498</td>
-<td class="instruction">CALL <a href="61498.html#61546">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61498.html#61546">Print_OK</a>.</td>
+<td class="instruction">CALL <a href="61546.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61546.html">Response_OK_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -3723,18 +3735,18 @@ Print "The plank now spans the pit.".
 </tr>
 <tr>
 <td class="address-1"><span id="63504"></span>63504</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63507"></span>63507</td>
 <td class="instruction">LD HL,60016</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60016">Data_RodInHole</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60016">PhraseTokens_RodInHole</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63510"></span>63510</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63513"></span>63513</td>
@@ -3762,8 +3774,8 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="63520"></span>63520</td>
-<td class="instruction">JP NZ,<a href="61498.html#61561">Print_YouveDoneThatAlready</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61561">Print_YouveDoneThatAlready</a> if *<span class="register">HL</span> is not equal to 8.</td>
+<td class="instruction">JP NZ,<a href="61561.html">Response_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61561.html">Response_YouveDoneThatAlready</a> if "A rod" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63523"></span>63523</td>
@@ -3777,11 +3789,11 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-1"><span id="63528"></span>63528</td>
 <td class="instruction">LD A,8</td>
-<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A rod".</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyItemEvent</a> with "A rod".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63530"></span>63530</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63533"></span>63533</td>
@@ -3804,16 +3816,16 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-1"><span id="63545"></span>63545</td>
 <td class="instruction">LD A,51</td>
-<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A slab of rock".</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyItemEvent</a> with "A slab of rock".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63547"></span>63547</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63550"></span>63550</td>
 <td class="instruction">LD A,106</td>
-<td class="comment-1" rowspan="2">Write 106 to *<a href="60176.html#60304">60304</a> to open up bound access to 
+<td class="comment-1" rowspan="2">Write 106 to *<a href="60176.html#60304">60304</a> to open up eastbound access to 
 
 <a href="53649.html">The Mighty Rock Door</a> from 
 
@@ -3826,11 +3838,11 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-1"><span id="63555"></span>63555</td>
 <td class="instruction">LD A,21</td>
-<td class="comment-1" rowspan="2">Write 21 to *<a href="60176.html#60813">60813</a> to open up bound access to 
+<td class="comment-1" rowspan="2">Write 21 to *<a href="60176.html#60813">60813</a> to open up southbound access to 
 
 <a href="52465.html">The Narrow Path</a> from 
 
-<a href="53619.html">The Southern Side of the Pit</a>.</td>
+<a href="53649.html">The Mighty Rock Door</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63557"></span>63557</td>
@@ -3853,13 +3865,13 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 </tr>
 <tr>
 <td class="address-1"><span id="63563"></span>63563</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63566"></span>63566</td>
-<td class="instruction">JP <a href="61498.html#61551">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61551">Print_YouCant</a>.</td>
+<td class="instruction">JP <a href="61551.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61551.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63569"></span>63569</td>
@@ -3874,12 +3886,12 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="63573"></span>63573</td>
 <td class="instruction">LD HL,60045</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60045">Data_OctopusWithSpear</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60045">PhraseTokens_OctopusWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63576"></span>63576</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63579"></span>63579</td>
@@ -3897,26 +3909,26 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 </tr>
 <tr>
 <td class="address-1"><span id="63586"></span>63586</td>
-<td class="instruction">JP NZ,<a href="61498.html#61566">Print_YoureNotCarryingIt</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61566">Print_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 26.</td>
+<td class="instruction">JP NZ,<a href="61566.html">Response_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61566.html">Response_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 26.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63589"></span>63589</td>
 <td class="instruction">LD A,26</td>
-<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A spear".</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyItemEvent</a> with "A spear".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63591"></span>63591</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63594"></span>63594</td>
 <td class="instruction">LD A,43</td>
-<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyObject</a> with "A giant octopus".</td>
+<td class="comment-1" rowspan="2">Call <a href="50154.html">Handler_DestroyItemEvent</a> with "A giant octopus".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63596"></span>63596</td>
-<td class="instruction">CALL <a href="50154.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="50154.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="63599"></span>63599</td>
@@ -3931,7 +3943,7 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="63603"></span>63603</td>
 <td class="instruction">LD A,64</td>
-<td class="comment-1" rowspan="2">Write 64 to *<a href="60176.html#60554">60554</a> to open up bound access to 
+<td class="comment-1" rowspan="2">Write 64 to *<a href="60176.html#60554">60554</a> to open up northbound access to 
 
 <a href="53188.html">A Dead End</a> from 
 
@@ -3944,7 +3956,7 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="63608"></span>63608</td>
 <td class="instruction">LD A,65</td>
-<td class="comment-1" rowspan="2">Write 65 to *<a href="60176.html#60555">60555</a> to open up bound access to 
+<td class="comment-1" rowspan="2">Write 65 to *<a href="60176.html#60555">60555</a> to open up southbound access to 
 
 <a href="53188.html">A Dead End</a> from 
 
@@ -3957,7 +3969,7 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="63613"></span>63613</td>
 <td class="instruction">LD A,66</td>
-<td class="comment-1" rowspan="2">Write 66 to *<a href="60176.html#60556">60556</a> to open up bound access to 
+<td class="comment-1" rowspan="2">Write 66 to *<a href="60176.html#60556">60556</a> to open up eastbound access to 
 
 <a href="53188.html">A Dead End</a> from 
 
@@ -3984,18 +3996,18 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 </tr>
 <tr>
 <td class="address-1"><span id="63621"></span>63621</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63624"></span>63624</td>
 <td class="instruction">LD HL,60054</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60054">Data_LionWithSpear</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60054">PhraseTokens_LionWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63627"></span>63627</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63630"></span>63630</td>
@@ -4013,8 +4025,8 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 </tr>
 <tr>
 <td class="address-1"><span id="63637"></span>63637</td>
-<td class="instruction">JP NZ,<a href="61498.html#61566">Print_YoureNotCarryingIt</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61566">Print_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 26.</td>
+<td class="instruction">JP NZ,<a href="61566.html">Response_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61566.html">Response_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 26.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -4033,18 +4045,18 @@ Print "You stab at the lionbut the beast easily avoids it.".
 </tr>
 <tr>
 <td class="address-1"><span id="63643"></span>63643</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63646"></span>63646</td>
 <td class="instruction">LD HL,60058</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60058">Data_CannibalsWithSpear</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60058">PhraseTokens_CannibalsWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63649"></span>63649</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63652"></span>63652</td>
@@ -4062,18 +4074,27 @@ Print "You stab at the lionbut the beast easily avoids it.".
 </tr>
 <tr>
 <td class="address-1"><span id="63659"></span>63659</td>
-<td class="instruction">JP NZ,<a href="61498.html#61566">Print_YoureNotCarryingIt</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61566">Print_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 26.</td>
+<td class="instruction">JP NZ,<a href="61566.html">Response_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61566.html">Response_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 26.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="63662"></span>
+<div class="comments">
+<div class="paragraph">
+Bad luck!
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63662"></span>63662</td>
 <td class="instruction">LD HL,60887</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="60887.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="2">Switch <a href="60887.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63665"></span>63665</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -4092,18 +4113,18 @@ Print "The cannibals turn on you.They quickly overwhelm you.".
 </tr>
 <tr>
 <td class="address-1"><span id="63669"></span>63669</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="63672"></span>63672</td>
 <td class="instruction">LD HL,60062</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60062">Data_PirateWithGun</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60062">PhraseTokens_PirateWithGun</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63675"></span>63675</td>
-<td class="instruction">CALL <a href="50047.html">50047</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">50047</a>.</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63678"></span>63678</td>
@@ -4121,8 +4142,8 @@ Print "The cannibals turn on you.They quickly overwhelm you.".
 </tr>
 <tr>
 <td class="address-1"><span id="63685"></span>63685</td>
-<td class="instruction">JP NZ,<a href="61498.html#61566">Print_YoureNotCarryingIt</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html#61566">Print_YoureNotCarryingIt</a> if ?? is not equal to 15.</td>
+<td class="instruction">JP NZ,<a href="61566.html">Response_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61566.html">Response_YoureNotCarryingIt</a> if ?? is not equal to 15.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -4137,12 +4158,12 @@ This entry point is used by the routine at <a href="63754.html">63754</a>.
 <tr>
 <td class="address-2"><span id="63688"></span>63688</td>
 <td class="instruction">LD HL,59570</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59570">Data_ObjectRoom_24</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59502.html#59570">Data_Item_Pirate</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63691"></span>63691</td>
-<td class="instruction">CALL <a href="50170.html#50177">50177</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50170.html#50177">50177</a>.</td>
+<td class="instruction">CALL <a href="50177.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50177.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="63694"></span>63694</td>
@@ -4176,14 +4197,14 @@ Print "He's dead already.".
 </tr>
 <tr>
 <td class="address-1"><span id="63702"></span>63702</td>
-<td class="instruction">JP <a href="61498.html">61498</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61498.html">61498</a>.</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="61498.html">61498</a>
+Prev: <a href="61771.html">61771</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#61781">Map</a></td>
 <td class="next">

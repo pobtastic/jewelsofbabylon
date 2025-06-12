@@ -39,7 +39,7 @@ Next: <a href="50562.html">50562</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="61097.html">Event_Seagull</a>, <a href="61115.html">Event_Rat</a>, <a href="61133.html">Event_Deer</a>, <a href="61151.html">Event_Pirate</a>, <a href="61180.html">Event_WaterSnake</a>, <a href="61234.html">Event_Spider</a>, <a href="61268.html">61268</a> and <a href="61498.html">61498</a>.
+Used by the routines at <a href="61097.html">Event_Seagull</a>, <a href="61115.html">Event_Rat</a>, <a href="61133.html">Event_Deer</a>, <a href="61151.html">Event_Pirate</a>, <a href="61180.html">Event_WaterSnake</a>, <a href="61234.html">Event_Spider</a>, <a href="61268.html">61268</a>, <a href="61502.html">PausePrintStringAndScroll_Alias</a> and <a href="61596.html">61596</a>.
 </div>
 <div class="paragraph">
 For dramatic effect! Used when an event occurs.
@@ -51,19 +51,18 @@ For dramatic effect! Used when an event occurs.
 <td class="asm-label">PausePrintStringAndScroll</td>
 <td class="address-2"><span id="50553"></span>50553</td>
 <td class="instruction">LD B,25</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=25.</td>
+<td class="comment-1" rowspan="2">Call <a href="47953.html">Pause_Loop</a> using 25 HALT loops (for a short pause).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="50555"></span>50555</td>
 <td class="instruction">CALL <a href="47953.html">Pause_Loop</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47953.html">Pause_Loop</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="50558"></span>50558</td>
-<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="47780.html#47793">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="47780.html#47793">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

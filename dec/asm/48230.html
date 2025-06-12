@@ -33,13 +33,13 @@ Next: <a href="48231.html">48231</a>
 </td>
 </tr>
 </table>
-<div class="description">48230: Flags: Event States</div>
+<div class="description">48230: Flags: Turn-Based Event States</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-<table class="default">
+Holds a single byte, where each bit relates to a turn-based event as follows: <table class="default">
 <tr>
 <th colspan="1" rowspan="1">Bit</th>
 <th colspan="1" rowspan="1">Relating To</th>
@@ -76,13 +76,13 @@ Next: <a href="48231.html">48231</a>
 <td class="centre" colspan="1" rowspan="1">7</td>
 <td class="centre" colspan="1" rowspan="1">Wave</td>
 </tr>
-</table>
+</table> When the bit is set, this starts a turn counter (see <a href="48231.html">Counter_Crab</a>).
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">Flag_EventState</td>
+<td class="asm-label">Flag_TurnBasedEventState</td>
 <td class="address-1"><span id="48230"></span>48230</td>
 <td class="instruction">DEFB 0</td>
 <td class="comment-0" rowspan="1"></td>

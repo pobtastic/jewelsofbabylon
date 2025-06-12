@@ -63,7 +63,7 @@ Handles checking if a scenic event should occur ... and also, handles jumping to
 <td class="asm-label">Handler_ScenicEvents_Loop</td>
 <td class="address-2"><span id="c4f2"></span>C4F2</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="1">Load *<a href="BCCB.html">RoomNumber</a> into <span class="register">A</span>.</td>
+<td class="comment-1" rowspan="1">Load *<a href="BCCB.html">CurrentRoom</a> into <span class="register">A</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -75,7 +75,7 @@ Handles checking if a scenic event should occur ... and also, handles jumping to
 <td class="asm-label"></td>
 <td class="address-1"><span id="c4f7"></span>C4F7</td>
 <td class="instruction">JR NZ,<a href="C4EB.html#c51f">ScenicEvents_Return</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C4EB.html#c51f">ScenicEvents_Return</a> if no event was found.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="C4EB.html#c51f">ScenicEvents_Return</a> if no events at all were found in the table.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -83,6 +83,9 @@ Handles checking if a scenic event should occur ... and also, handles jumping to
 <div class="comments">
 <div class="paragraph">
 An event was found to be processed!
+</div>
+<div class="paragraph">
+First though, stash away the current pointer and index in the search, so this can be resumed later.
 </div>
 </div>
 </td>
@@ -193,13 +196,12 @@ This is the return point after the handler has finished executing.
 <td class="asm-label"></td>
 <td class="address-1"><span id="c51b"></span>C51B</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1">Reset <span class="register">A</span> to 00.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="C4EB.html#c4f2">Handler_ScenicEvents_Loop</a> if there are any further events to process.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="c51c"></span>C51C</td>
 <td class="instruction">OR C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C4EB.html#c4f2">Handler_ScenicEvents_Loop</a> if there are any further events to process.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

@@ -33,21 +33,24 @@ Next: <a href="BCCC.html">BCCC</a>
 </td>
 </tr>
 </table>
-<div class="description">BCCB: Room Number</div>
+<div class="description">BCCB: Current Room ID</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+The room the player starts the game in is room 03: 
+
+<a href="CB2A.html">Your Ship</a>.
+</div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">RoomNumber</td>
+<td class="asm-label">CurrentRoom</td>
 <td class="address-1"><span id="bccb"></span>BCCB</td>
 <td class="instruction">DEFB $03</td>
-<td class="comment-1" rowspan="1">Default/ Starting Room 03: 
-
-<a href="CB2A.html">Your Ship</a>.</td>
+<td class="comment-1" rowspan="1">Current room ID.</td>
 </tr>
 </table>
 <table class="asm-navigation">

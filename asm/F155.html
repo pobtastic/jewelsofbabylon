@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="F03A.html">F03A</a>
+Prev: <a href="F14B.html">F14B</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#f155">Map</a></td>
 <td class="next">
@@ -149,7 +149,7 @@ Next: <a href="F8D9.html">F8D9</a>
 <tr>
 <td class="address-2"><span id="f17d"></span>F17D</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="F155.html#f190">F190</a> if *<a href="BCCB.html">RoomNumber</a> is not room 04: "
+<td class="comment-1" rowspan="3">Jump to <a href="F155.html#f190">F190</a> if *<a href="BCCB.html">CurrentRoom</a> is not room 04: "
 
 <a href="CB66.html">In A Rowing Boat</a>".</td>
 </tr>
@@ -173,23 +173,25 @@ Next: <a href="F8D9.html">F8D9</a>
 </tr>
 <tr>
 <td class="address-1"><span id="f187"></span>F187</td>
-<td class="instruction">JP Z,<a href="F03A.html#f051">$F051</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f051">F051</a> if <span class="register">A</span> is equal to 04.</td>
+<td class="instruction">JP Z,<a href="F051.html">Response_TryClimbing</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F051.html">Response_TryClimbing</a> if <span class="register">A</span> is equal to 04.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f18a"></span>F18A</td>
-<td class="instruction">JP C,<a href="F03A.html#f056">$F056</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f056">F056</a> if <span class="register">A</span> is less than 04.</td>
+<td class="instruction">JP C,<a href="F056.html">Response_TryRowing</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F056.html">Response_TryRowing</a> if <span class="register">A</span> is less than 04.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f18d"></span>F18D</td>
-<td class="instruction">JP <a href="F03A.html#f05b">$F05B</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f05b">F05B</a>.</td>
+<td class="instruction">JP <a href="F05B.html">Response_YouCantGoInThatDirection</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F05B.html">Response_YouCantGoInThatDirection</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f190"></span>F190</td>
 <td class="instruction">CP $02</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F155.html#f19a">F19A</a> if <span class="register">A</span> is not equal to 02.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F155.html#f19a">F19A</a> if *<a href="BCCB.html">CurrentRoom</a> is not room 02: "
+
+<a href="CB06.html">The Open Sea</a>".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f192"></span>F192</td>
@@ -203,16 +205,16 @@ Next: <a href="F8D9.html">F8D9</a>
 <tr>
 <td class="address-1"><span id="f195"></span>F195</td>
 <td class="instruction">CP $04</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F03A.html#f056">F056</a> if <span class="register">A</span> is less than 04.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F056.html">Response_TryRowing</a> if <span class="register">A</span> is less than 04.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f197"></span>F197</td>
-<td class="instruction">JP C,<a href="F03A.html#f056">$F056</a></td>
+<td class="instruction">JP C,<a href="F056.html">Response_TryRowing</a></td>
 </tr>
 <tr>
 <td class="address-2"><span id="f19a"></span>F19A</td>
-<td class="instruction">JP <a href="F03A.html#f05b">$F05B</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f05b">F05B</a>.</td>
+<td class="instruction">JP <a href="F05B.html">Response_YouCantGoInThatDirection</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F05B.html">Response_YouCantGoInThatDirection</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f19d"></span>F19D</td>
@@ -227,21 +229,21 @@ Next: <a href="F8D9.html">F8D9</a>
 <tr>
 <td class="address-1"><span id="f1a1"></span>F1A1</td>
 <td class="instruction">CP $01</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F03A.html#f060">F060</a> if <span class="register">A</span> is not equal to 01.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F060.html">Response_OneAtATimePlease</a> if <span class="register">A</span> is not equal to 01.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1a3"></span>F1A3</td>
-<td class="instruction">JP NZ,<a href="F03A.html#f060">$F060</a></td>
+<td class="instruction">JP NZ,<a href="F060.html">Response_OneAtATimePlease</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1a6"></span>F1A6</td>
 <td class="instruction">LD HL,$E9CA</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html">Data_Bottle</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html">PhraseTokens_Bottle</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1a9"></span>F1A9</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1ac"></span>F1AC</td>
@@ -251,12 +253,12 @@ Next: <a href="F8D9.html">F8D9</a>
 <tr>
 <td class="address-1"><span id="f1ae"></span>F1AE</td>
 <td class="instruction">LD HL,$E87A</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e87a">Data_ObjectRoom_04</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e87a">Data_Item_Bottle_1</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1b1"></span>F1B1</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1b4"></span>F1B4</td>
@@ -293,18 +295,18 @@ Print "It's full of rum!".
 </tr>
 <tr>
 <td class="address-1"><span id="f1c1"></span>F1C1</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f1c4"></span>F1C4</td>
 <td class="instruction">LD HL,$E9CC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9cc">Data_Fish</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9cc">PhraseTokens_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1c7"></span>F1C7</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1ca"></span>F1CA</td>
@@ -323,7 +325,7 @@ Print "It's full of rum!".
 <tr>
 <td class="address-1"><span id="f1d1"></span>F1D1</td>
 <td class="instruction">JR NZ,<a href="F155.html#f1df">$F1DF</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F155.html#f1df">F1DF</a> if <span class="register">A</span> is not equal to 1B.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F155.html#f1df">F1DF</a> if "A strangely coloured fish" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1d3"></span>F1D3</td>
@@ -351,18 +353,18 @@ Print "It's a red herring!".
 </tr>
 <tr>
 <td class="address-1"><span id="f1dc"></span>F1DC</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f1df"></span>F1DF</td>
 <td class="instruction">LD HL,$E9D1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d1">Data_Watch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d1">PhraseTokens_Watch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1e2"></span>F1E2</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1e5"></span>F1E5</td>
@@ -386,18 +388,18 @@ Print "It appears to work.".
 </tr>
 <tr>
 <td class="address-1"><span id="f1ea"></span>F1EA</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f1ed"></span>F1ED</td>
 <td class="instruction">LD HL,$E9D3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d3">Data_Shoe</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d3">PhraseTokens_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1f0"></span>F1F0</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1f3"></span>F1F3</td>
@@ -411,18 +413,18 @@ Print "It appears to work.".
 </tr>
 <tr>
 <td class="address-1"><span id="f1f8"></span>F1F8</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f1fb"></span>F1FB</td>
 <td class="instruction">LD HL,$E9D5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d5">Data_Rod</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d5">PhraseTokens_Rod</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f1fe"></span>F1FE</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f201"></span>F201</td>
@@ -446,18 +448,18 @@ Print "It has a circular cross-section.".
 </tr>
 <tr>
 <td class="address-1"><span id="f206"></span>F206</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f209"></span>F209</td>
 <td class="instruction">LD HL,$E9D7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d7">Data_Fruit</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d7">PhraseTokens_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f20c"></span>F20C</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f20f"></span>F20F</td>
@@ -481,18 +483,18 @@ Print "It looks delicious.".
 </tr>
 <tr>
 <td class="address-1"><span id="f214"></span>F214</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f217"></span>F217</td>
 <td class="instruction">LD HL,$E9D9</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d9">Data_Bridge</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d9">PhraseTokens_Bridge</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f21a"></span>F21A</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f21d"></span>F21D</td>
@@ -516,18 +518,18 @@ Print "Be careful.It won't carry much weight.".
 </tr>
 <tr>
 <td class="address-1"><span id="f222"></span>F222</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f225"></span>F225</td>
 <td class="instruction">LD HL,$E9DB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9db">Data_Jewel</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9db">PhraseTokens_Jewel</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f228"></span>F228</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f22b"></span>F22B</td>
@@ -551,13 +553,13 @@ Print "They are very beautifuland very heavy.".
 </tr>
 <tr>
 <td class="address-1"><span id="f230"></span>F230</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f233"></span>F233</td>
-<td class="instruction">JP <a href="F03A.html#f065">Print_IDontSeeThePoint</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f065">Print_IDontSeeThePoint</a>.</td>
+<td class="instruction">JP <a href="F065.html">Response_IDontSeeThePoint</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F065.html">Response_IDontSeeThePoint</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f236"></span>F236</td>
@@ -622,12 +624,12 @@ Print "Want to save the game? Y/N.".
 <tr>
 <td class="address-1"><span id="f24a"></span>F24A</td>
 <td class="instruction">LD HL,$BEB5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BEB5.html">BEB5</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BEB5.html">Messaging_WantToSaveTheGame</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f24d"></span>F24D</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f250"></span>F250</td>
@@ -660,12 +662,11 @@ Print "Want to save the game? Y/N.".
 <tr>
 <td class="address-2"><span id="f25e"></span>F25E</td>
 <td class="instruction">LD HL,$EDDD</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EDD7.html#eddd">GameOverInput</a>.</td>
+<td class="comment-1" rowspan="2">Switch <a href="EDD7.html#eddd">GameOverInput</a> onto the stack so the next return action is asking for "Y"/ "N" user input, the same as for "Want another game? Y/N.".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f261"></span>F261</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f262"></span>F262</td>
@@ -715,7 +716,7 @@ Print "You're already carrying ".
 <tr>
 <td class="address-1"><span id="f270"></span>F270</td>
 <td class="instruction">LD HL,$BF10</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF10.html">BF10</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF10.html">Messaging_YoureAlreadyCarrying</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f273"></span>F273</td>
@@ -760,12 +761,12 @@ Print "it.".
 <tr>
 <td class="address-1"><span id="f281"></span>F281</td>
 <td class="instruction">LD HL,$BF2B</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF2B.html">BF2B</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF2B.html">Messaging_It</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f284"></span>F284</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -780,12 +781,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f287"></span>F287</td>
 <td class="instruction">LD HL,$BF2F</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF2F.html">BF2F</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF2F.html">Messaging_Them</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f28a"></span>F28A</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f28d"></span>F28D</td>
@@ -825,12 +826,12 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="f295"></span>F295</td>
 <td class="instruction">LD HL,$BF35</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF35.html">BF35</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF35.html">Messaging_YouCantCarryAnyMore</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f298"></span>F298</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f29b"></span>F29B</td>
@@ -859,18 +860,18 @@ Print "You can't carry any more.".
 </tr>
 <tr>
 <td class="address-1"><span id="f2a5"></span>F2A5</td>
-<td class="instruction">JP <a href="F03A.html#f06a">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06a">Print_OK</a>.</td>
+<td class="instruction">JP <a href="F06A.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06A.html">Response_OK_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f2a8"></span>F2A8</td>
 <td class="instruction">LD HL,$E9E7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e7">Data_BottleOfRum</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e7">PhraseTokens_BottleOfRum</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2ab"></span>F2AB</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2ae"></span>F2AE</td>
@@ -880,12 +881,12 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="f2b0"></span>F2B0</td>
 <td class="instruction">LD HL,$E87A</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e87a">Data_ObjectRoom_04</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e87a">Data_Item_Bottle_1</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2b3"></span>F2B3</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2b6"></span>F2B6</td>
@@ -900,12 +901,12 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-2"><span id="f2bc"></span>F2BC</td>
 <td class="instruction">LD HL,$E9CC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9cc">Data_Fish</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9cc">PhraseTokens_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2bf"></span>F2BF</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2c2"></span>F2C2</td>
@@ -915,12 +916,12 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="f2c4"></span>F2C4</td>
 <td class="instruction">LD HL,$E895</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e895">Data_ObjectRoom_14</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e895">Data_Item_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2c7"></span>F2C7</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2ca"></span>F2CA</td>
@@ -935,12 +936,12 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-2"><span id="f2d0"></span>F2D0</td>
 <td class="instruction">LD HL,$E9D1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d1">Data_Watch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d1">PhraseTokens_Watch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2d3"></span>F2D3</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2d6"></span>F2D6</td>
@@ -950,17 +951,16 @@ Print "You can't carry any more.".
 <tr>
 <td class="address-1"><span id="f2d8"></span>F2D8</td>
 <td class="instruction">LD A,$19</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=19 (event ID: 19).</td>
+<td class="comment-1" rowspan="2">Call <a href="C35F.html">Handler_Objects</a> with "The distracted natives".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2da"></span>F2DA</td>
 <td class="instruction">CALL <a href="C35F.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C35F.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2dd"></span>F2DD</td>
 <td class="instruction">JR NZ,<a href="F155.html#f2e5">$F2E5</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F155.html#f2e5">F2E5</a> if *<span class="register">HL</span> is not equal to 19.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F155.html#f2e5">F2E5</a> if "The distracted natives" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -979,18 +979,17 @@ Print "That's not such a good idea.".
 </tr>
 <tr>
 <td class="address-1"><span id="f2e2"></span>F2E2</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f2e5"></span>F2E5</td>
 <td class="instruction">LD A,$17</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=17.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "A watch".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2e7"></span>F2E7</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2ea"></span>F2EA</td>
@@ -1000,12 +999,12 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-2"><span id="f2ed"></span>F2ED</td>
 <td class="instruction">LD HL,$E9D3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d3">Data_Shoe</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d3">PhraseTokens_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2f0"></span>F2F0</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2f3"></span>F2F3</td>
@@ -1015,12 +1014,11 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="f2f5"></span>F2F5</td>
 <td class="instruction">LD A,$15</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=15.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "A shoe".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2f7"></span>F2F7</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f2fa"></span>F2FA</td>
@@ -1030,12 +1028,12 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-2"><span id="f2fd"></span>F2FD</td>
 <td class="instruction">LD HL,$E9D7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d7">Data_Fruit</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d7">PhraseTokens_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f300"></span>F300</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f303"></span>F303</td>
@@ -1045,12 +1043,11 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="f305"></span>F305</td>
 <td class="instruction">LD A,$0E</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0E.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "Some fruit".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f307"></span>F307</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f30a"></span>F30A</td>
@@ -1060,12 +1057,12 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-2"><span id="f30d"></span>F30D</td>
 <td class="instruction">LD HL,$E9D5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d5">Data_Rod</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d5">PhraseTokens_Rod</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f310"></span>F310</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f313"></span>F313</td>
@@ -1075,12 +1072,11 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="f315"></span>F315</td>
 <td class="instruction">LD A,$08</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=08.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "A rod".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f317"></span>F317</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f31a"></span>F31A</td>
@@ -1134,10 +1130,11 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="f335"></span>F335</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="3">Write 00 to: <ul class="">
-<li>*<a href="EB10.html#eb90">EB90</a></li>
-<li>*<a href="EB10.html#ed8d">ED8D</a></li>
-</ul></td>
+<td class="comment-1" rowspan="2">Write 00 to *<a href="EB10.html#eb90">EB90</a> to remove access to 
+
+<a href="D191.html">The Mighty Rock Door</a> from 
+
+<a href="CCF1.html">The Narrow Path</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f336"></span>F336</td>
@@ -1146,6 +1143,11 @@ Print "That's not such a good idea.".
 <tr>
 <td class="address-1"><span id="f339"></span>F339</td>
 <td class="instruction">LD ($ED8D),A</td>
+<td class="comment-1" rowspan="1">Write 00 to *<a href="EB10.html#ed8d">ED8D</a> to remove access to 
+
+<a href="CCF1.html">The Narrow Path</a> from 
+
+<a href="D191.html">The Mighty Rock Door</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f33c"></span>F33C</td>
@@ -1174,18 +1176,18 @@ Print "The door rolls shut.".
 </tr>
 <tr>
 <td class="address-1"><span id="f344"></span>F344</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f347"></span>F347</td>
 <td class="instruction">LD HL,$E9DB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9db">Data_Jewel</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9db">PhraseTokens_Jewel</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f34a"></span>F34A</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f34d"></span>F34D</td>
@@ -1195,12 +1197,11 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="f34f"></span>F34F</td>
 <td class="instruction">LD A,$1D</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=1D.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "The Jewels of Babylon".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f351"></span>F351</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f354"></span>F354</td>
@@ -1210,12 +1211,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="f357"></span>F357</td>
 <td class="instruction">LD HL,$E9E1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e1">Data_Match</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e1">PhraseTokens_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f35a"></span>F35A</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f35d"></span>F35D</td>
@@ -1225,12 +1226,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="f35f"></span>F35F</td>
 <td class="instruction">LD HL,$E86E</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html">Data_ObjectRoom_00</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html">Data_Item_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f362"></span>F362</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f365"></span>F365</td>
@@ -1245,12 +1246,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="f36b"></span>F36B</td>
 <td class="instruction">LD HL,$E9E3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e3">Data_Plank</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e3">PhraseTokens_Plank</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f36e"></span>F36E</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f371"></span>F371</td>
@@ -1260,12 +1261,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="f373"></span>F373</td>
 <td class="instruction">LD HL,$E871</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e871">Data_ObjectRoom_01</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e871">Data_Item_Plank</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f376"></span>F376</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f379"></span>F379</td>
@@ -1293,8 +1294,8 @@ Print "The door rolls shut.".
 </tr>
 <tr>
 <td class="address-1"><span id="f384"></span>F384</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f387"></span>F387</td>
@@ -1303,8 +1304,8 @@ Print "The door rolls shut.".
 </tr>
 <tr>
 <td class="address-1"><span id="f389"></span>F389</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f38c"></span>F38C</td>
@@ -1335,12 +1336,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="f398"></span>F398</td>
 <td class="instruction">LD HL,$E9E5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e5">Data_Coconut</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e5">PhraseTokens_Coconut</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f39b"></span>F39B</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f39e"></span>F39E</td>
@@ -1350,12 +1351,11 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="f3a0"></span>F3A0</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=07.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "A coconut".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3a2"></span>F3A2</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3a5"></span>F3A5</td>
@@ -1365,12 +1365,12 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-2"><span id="f3a8"></span>F3A8</td>
 <td class="instruction">LD HL,$E9EF</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9ef">Data_Gun</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9ef">PhraseTokens_Gun</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3ab"></span>F3AB</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3ae"></span>F3AE</td>
@@ -1380,27 +1380,25 @@ Print "The door rolls shut.".
 <tr>
 <td class="address-1"><span id="f3b0"></span>F3B0</td>
 <td class="instruction">LD A,$0F</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0F.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "A gun".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3b2"></span>F3B2</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3b5"></span>F3B5</td>
 <td class="instruction">LD A,$27</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=27 (event ID: 27).</td>
+<td class="comment-1" rowspan="2">Call <a href="C35F.html">Handler_Objects</a> with "A parrot (alive)".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3b7"></span>F3B7</td>
 <td class="instruction">CALL <a href="C35F.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C35F.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3ba"></span>F3BA</td>
 <td class="instruction">JR Z,<a href="F155.html#f3cb">$F3CB</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F155.html#f3cb">F3CB</a> if <span class="register">A</span> is equal to 27.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F155.html#f3cb">F3CB</a> if "A parrot (alive)" is present in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3bc"></span>F3BC</td>
@@ -1409,8 +1407,8 @@ Print "The door rolls shut.".
 </tr>
 <tr>
 <td class="address-1"><span id="f3be"></span>F3BE</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3c1"></span>F3C1</td>
@@ -1419,8 +1417,8 @@ Print "The door rolls shut.".
 </tr>
 <tr>
 <td class="address-1"><span id="f3c3"></span>F3C3</td>
-<td class="instruction">CALL <a href="C3FA.html">$C3FA</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html">C3FA</a>.</td>
+<td class="instruction">CALL <a href="C3FA.html">ScenicEventTriggered</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3FA.html">ScenicEventTriggered</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3c6"></span>F3C6</td>
@@ -1433,14 +1431,23 @@ Print "The door rolls shut.".
 <td class="comment-1" rowspan="1">Jump to <a href="F155.html#f29c">F29C</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="f3cb"></span>
+<div class="comments">
+<div class="paragraph">
+Bad luck!
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-2"><span id="f3cb"></span>F3CB</td>
 <td class="instruction">LD HL,$EDD7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EDD7.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="2">Switch <a href="EDD7.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3ce"></span>F3CE</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1459,18 +1466,18 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 </tr>
 <tr>
 <td class="address-1"><span id="f3d2"></span>F3D2</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f3d5"></span>F3D5</td>
 <td class="instruction">LD HL,$E9F1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f1">Data_Eyepatch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f1">PhraseTokens_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3d8"></span>F3D8</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3db"></span>F3DB</td>
@@ -1480,12 +1487,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="f3dd"></span>F3DD</td>
 <td class="instruction">LD HL,$E885</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e885">Data_ObjectRoom_08</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e885">Data_Item_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3e0"></span>F3E0</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3e3"></span>F3E3</td>
@@ -1500,12 +1507,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="f3e9"></span>F3E9</td>
 <td class="instruction">LD HL,$E9F3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f3">Data_KegGunPowder</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f3">PhraseTokens_KegGunPowder</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3ec"></span>F3EC</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3ef"></span>F3EF</td>
@@ -1515,12 +1522,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="f3f1"></span>F3F1</td>
 <td class="instruction">LD HL,$E888</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e888">Data_ObjectRoom_09</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e888">Data_Item_CrocodileWithKeg_1</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3f4"></span>F3F4</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f3f7"></span>F3F7</td>
@@ -1544,18 +1551,18 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 </tr>
 <tr>
 <td class="address-1"><span id="f400"></span>F400</td>
-<td class="instruction">JP <a href="F03A.html#f06f">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06f">Print_YouCant</a>.</td>
+<td class="instruction">JP <a href="F06F.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06F.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f403"></span>F403</td>
 <td class="instruction">LD HL,$E9FB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9fb">Data_Sextant</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9fb">PhraseTokens_Sextant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f406"></span>F406</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f409"></span>F409</td>
@@ -1565,12 +1572,11 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="f40b"></span>F40B</td>
 <td class="instruction">LD A,$16</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=16.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "A sextant".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f40d"></span>F40D</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f410"></span>F410</td>
@@ -1580,12 +1586,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="f413"></span>F413</td>
 <td class="instruction">LD HL,$E9FD</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9fd">Data_Crowbar</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9fd">PhraseTokens_Crowbar</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f416"></span>F416</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f419"></span>F419</td>
@@ -1595,12 +1601,11 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="f41b"></span>F41B</td>
 <td class="instruction">LD A,$1E</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=1E.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "A crowbar".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f41d"></span>F41D</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f420"></span>F420</td>
@@ -1610,12 +1615,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="f423"></span>F423</td>
 <td class="instruction">LD HL,$E9FF</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9ff">Data_Key</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9ff">PhraseTokens_Key</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f426"></span>F426</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f429"></span>F429</td>
@@ -1625,12 +1630,11 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="f42b"></span>F42B</td>
 <td class="instruction">LD A,$1F</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=1F.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "A key".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f42d"></span>F42D</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f430"></span>F430</td>
@@ -1640,12 +1644,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="f433"></span>F433</td>
 <td class="instruction">LD HL,$EA01</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea01">Data_Skull</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea01">PhraseTokens_Skull</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f436"></span>F436</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f439"></span>F439</td>
@@ -1655,12 +1659,11 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="f43b"></span>F43B</td>
 <td class="instruction">LD A,$20</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=20.</td>
+<td class="comment-1" rowspan="2">Call <a href="F155.html#f26a">F26A</a> with "A human skull".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f43d"></span>F43D</td>
 <td class="instruction">CALL <a href="F155.html#f26a">$F26A</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F155.html#f26a">F26A</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f440"></span>F440</td>
@@ -1670,12 +1673,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-2"><span id="f443"></span>F443</td>
 <td class="instruction">LD HL,$EA06</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea06">Data_Spear</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea06">PhraseTokens_Spear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f446"></span>F446</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f449"></span>F449</td>
@@ -1685,12 +1688,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="f44b"></span>F44B</td>
 <td class="instruction">LD HL,$E8A0</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8a0">Data_ObjectRoom_19</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8a0">Data_Item_CannibalsWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f44e"></span>F44E</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f451"></span>F451</td>
@@ -1714,18 +1717,18 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 </tr>
 <tr>
 <td class="address-1"><span id="f45a"></span>F45A</td>
-<td class="instruction">JP <a href="F03A.html#f06f">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06f">Print_YouCant</a>.</td>
+<td class="instruction">JP <a href="F06F.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06F.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f45d"></span>F45D</td>
 <td class="instruction">LD HL,$EA08</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea08">Data_Parrot</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea08">PhraseTokens_Parrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f460"></span>F460</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f463"></span>F463</td>
@@ -1735,12 +1738,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="f465"></span>F465</td>
 <td class="instruction">LD HL,$E8BC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8bc">Data_ObjectRoom_25</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8bc">Data_Item_Parrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f468"></span>F468</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f46b"></span>F46B</td>
@@ -1763,14 +1766,23 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <td class="comment-1" rowspan="1">Jump to <a href="F155.html#f29c">F29C</a> if <span class="register">A</span> is equal to 28.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="f474"></span>
+<div class="comments">
+<div class="paragraph">
+Bad luck!
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-1"><span id="f474"></span>F474</td>
 <td class="instruction">LD HL,$EDD7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EDD7.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="2">Switch <a href="EDD7.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f477"></span>F477</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1789,13 +1801,13 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 </tr>
 <tr>
 <td class="address-1"><span id="f47b"></span>F47B</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f47e"></span>F47E</td>
-<td class="instruction">JP <a href="F03A.html#f06f">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06f">Print_YouCant</a>.</td>
+<td class="instruction">JP <a href="F06F.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06F.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f481"></span>F481</td>
@@ -1810,12 +1822,12 @@ Print "As you start to move,the parrot squawks...The pirate wakesand quickly 
 <tr>
 <td class="address-1"><span id="f485"></span>F485</td>
 <td class="instruction">LD HL,$EA0D</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea0d">Data_IntoBoat</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea0d">PhraseTokens_IntoBoat</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f488"></span>F488</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f48b"></span>F48B</td>
@@ -1835,7 +1847,7 @@ This entry point is used by the routine at <a href="F90A.html">F90A</a>.
 <tr>
 <td class="address-2"><span id="f48d"></span>F48D</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f490"></span>F490</td>
@@ -1876,8 +1888,8 @@ Print "You're in it already.".
 </tr>
 <tr>
 <td class="address-1"><span id="f49b"></span>F49B</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f49e"></span>F49E</td>
@@ -1916,12 +1928,12 @@ Print "You're in it already.".
 <tr>
 <td class="address-2"><span id="f4ac"></span>F4AC</td>
 <td class="instruction">LD HL,$EA1D</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea1d">Data_OutOfBoat</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea1d">PhraseTokens_OutOfBoat</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f4af"></span>F4AF</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f4b2"></span>F4B2</td>
@@ -1941,7 +1953,7 @@ This entry point is used by the routine at <a href="F90A.html">F90A</a>.
 <tr>
 <td class="address-2"><span id="f4b4"></span>F4B4</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="F155.html#f4c1">F4C1</a> if *<a href="BCCB.html">RoomNumber</a> is not room 04: "
+<td class="comment-1" rowspan="3">Jump to <a href="F155.html#f4c1">F4C1</a> if *<a href="BCCB.html">CurrentRoom</a> is not room 04: "
 
 <a href="CB66.html">In A Rowing Boat</a>".</td>
 </tr>
@@ -1971,7 +1983,7 @@ This entry point is used by the routine at <a href="F90A.html">F90A</a>.
 <tr>
 <td class="address-2"><span id="f4c1"></span>F4C1</td>
 <td class="instruction">CP $6B</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F155.html#f4cb">F4CB</a> if *<a href="BCCB.html">RoomNumber</a> is not room 6B: "
+<td class="comment-1" rowspan="2">Jump to <a href="F155.html#f4cb">F4CB</a> if *<a href="BCCB.html">CurrentRoom</a> is not room 6B: "
 
 <a href="CB66.html">In A Rowing Boat</a>".</td>
 </tr>
@@ -2011,8 +2023,8 @@ Print "You're not in the boat.".
 </tr>
 <tr>
 <td class="address-1"><span id="f4ce"></span>F4CE</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f4d1"></span>F4D1</td>
@@ -2057,7 +2069,7 @@ Print "You're not carrying ".
 <tr>
 <td class="address-1"><span id="f4df"></span>F4DF</td>
 <td class="instruction">LD HL,$BFAF</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BFAF.html">BFAF</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BFAF.html">Messaging_YoureNotCarrying</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f4e2"></span>F4E2</td>
@@ -2102,12 +2114,12 @@ Print "it.".
 <tr>
 <td class="address-1"><span id="f4f0"></span>F4F0</td>
 <td class="instruction">LD HL,$BF2B</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF2B.html">BF2B</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF2B.html">Messaging_It</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f4f3"></span>F4F3</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -2122,12 +2134,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f4f6"></span>F4F6</td>
 <td class="instruction">LD HL,$BF2F</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF2F.html">BF2F</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF2F.html">Messaging_Them</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f4f9"></span>F4F9</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f4fc"></span>F4FC</td>
@@ -2137,7 +2149,7 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="f4fd"></span>F4FD</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f500"></span>F500</td>
@@ -2161,18 +2173,18 @@ Print "them.".
 </tr>
 <tr>
 <td class="address-1"><span id="f508"></span>F508</td>
-<td class="instruction">JP <a href="F03A.html#f06a">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06a">Print_OK</a>.</td>
+<td class="instruction">JP <a href="F06A.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06A.html">Response_OK_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f50b"></span>F50B</td>
 <td class="instruction">LD HL,$E9E7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e7">Data_BottleOfRum</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e7">PhraseTokens_BottleOfRum</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f50e"></span>F50E</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f511"></span>F511</td>
@@ -2182,12 +2194,12 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="f513"></span>F513</td>
 <td class="instruction">LD HL,$E87A</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e87a">Data_ObjectRoom_04</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e87a">Data_Item_Bottle_1</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f516"></span>F516</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f519"></span>F519</td>
@@ -2197,12 +2209,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f51c"></span>F51C</td>
 <td class="instruction">LD HL,$E9CC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9cc">Data_Fish</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9cc">PhraseTokens_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f51f"></span>F51F</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f522"></span>F522</td>
@@ -2212,12 +2224,12 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="f524"></span>F524</td>
 <td class="instruction">LD HL,$E895</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e895">Data_ObjectRoom_14</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e895">Data_Item_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f527"></span>F527</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f52a"></span>F52A</td>
@@ -2227,12 +2239,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f52d"></span>F52D</td>
 <td class="instruction">LD HL,$E9D1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d1">Data_Watch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d1">PhraseTokens_Watch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f530"></span>F530</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f533"></span>F533</td>
@@ -2252,12 +2264,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f53a"></span>F53A</td>
 <td class="instruction">LD HL,$E9D3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d3">Data_Shoe</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d3">PhraseTokens_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f53d"></span>F53D</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f540"></span>F540</td>
@@ -2277,12 +2289,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f547"></span>F547</td>
 <td class="instruction">LD HL,$E9D5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d5">Data_Rod</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d5">PhraseTokens_Rod</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f54a"></span>F54A</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f54d"></span>F54D</td>
@@ -2302,12 +2314,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f554"></span>F554</td>
 <td class="instruction">LD HL,$E9D7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d7">Data_Fruit</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d7">PhraseTokens_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f557"></span>F557</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f55a"></span>F55A</td>
@@ -2327,12 +2339,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f561"></span>F561</td>
 <td class="instruction">LD HL,$E9DB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9db">Data_Jewel</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9db">PhraseTokens_Jewel</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f564"></span>F564</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f567"></span>F567</td>
@@ -2352,12 +2364,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f56e"></span>F56E</td>
 <td class="instruction">LD HL,$E9E1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e1">Data_Match</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e1">PhraseTokens_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f571"></span>F571</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f574"></span>F574</td>
@@ -2367,12 +2379,12 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="f576"></span>F576</td>
 <td class="instruction">LD HL,$E86E</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html">Data_ObjectRoom_00</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html">Data_Item_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f579"></span>F579</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f57c"></span>F57C</td>
@@ -2382,12 +2394,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f57f"></span>F57F</td>
 <td class="instruction">LD HL,$E9E3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e3">Data_Plank</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e3">PhraseTokens_Plank</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f582"></span>F582</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f585"></span>F585</td>
@@ -2407,12 +2419,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f58c"></span>F58C</td>
 <td class="instruction">LD HL,$E9E5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e5">Data_Coconut</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e5">PhraseTokens_Coconut</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f58f"></span>F58F</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f592"></span>F592</td>
@@ -2432,12 +2444,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f599"></span>F599</td>
 <td class="instruction">LD HL,$E9EF</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9ef">Data_Gun</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9ef">PhraseTokens_Gun</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f59c"></span>F59C</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f59f"></span>F59F</td>
@@ -2457,12 +2469,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f5a6"></span>F5A6</td>
 <td class="instruction">LD HL,$E9F1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f1">Data_Eyepatch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f1">PhraseTokens_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5a9"></span>F5A9</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5ac"></span>F5AC</td>
@@ -2472,12 +2484,12 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="f5ae"></span>F5AE</td>
 <td class="instruction">LD HL,$E885</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e885">Data_ObjectRoom_08</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e885">Data_Item_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5b1"></span>F5B1</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5b4"></span>F5B4</td>
@@ -2510,12 +2522,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f5c4"></span>F5C4</td>
 <td class="instruction">LD HL,$E9F3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f3">Data_KegGunPowder</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f3">PhraseTokens_KegGunPowder</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5c7"></span>F5C7</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5ca"></span>F5CA</td>
@@ -2535,12 +2547,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f5d1"></span>F5D1</td>
 <td class="instruction">LD HL,$E9FB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9fb">Data_Sextant</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9fb">PhraseTokens_Sextant</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5d4"></span>F5D4</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5d7"></span>F5D7</td>
@@ -2560,12 +2572,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f5de"></span>F5DE</td>
 <td class="instruction">LD HL,$E9FD</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9fd">Data_Crowbar</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9fd">PhraseTokens_Crowbar</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5e1"></span>F5E1</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5e4"></span>F5E4</td>
@@ -2585,12 +2597,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f5eb"></span>F5EB</td>
 <td class="instruction">LD HL,$E9FF</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9ff">Data_Key</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9ff">PhraseTokens_Key</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5ee"></span>F5EE</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5f1"></span>F5F1</td>
@@ -2610,12 +2622,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f5f8"></span>F5F8</td>
 <td class="instruction">LD HL,$EA01</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea01">Data_Skull</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea01">PhraseTokens_Skull</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5fb"></span>F5FB</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f5fe"></span>F5FE</td>
@@ -2635,12 +2647,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f605"></span>F605</td>
 <td class="instruction">LD HL,$EA06</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea06">Data_Spear</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea06">PhraseTokens_Spear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f608"></span>F608</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f60b"></span>F60B</td>
@@ -2660,12 +2672,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f612"></span>F612</td>
 <td class="instruction">LD HL,$EA08</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea08">Data_Parrot</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea08">PhraseTokens_Parrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f615"></span>F615</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f618"></span>F618</td>
@@ -2685,17 +2697,17 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f61f"></span>F61F</td>
 <td class="instruction">LD HL,$EA26</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea26">Data_PlankAcrossPit</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea26">PhraseTokens_PlankAcrossPit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f622"></span>F622</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f625"></span>F625</td>
-<td class="instruction">JP Z,<a href="F03A.html#f074">Print_PleaseRephraseThat</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f074">Print_PleaseRephraseThat</a> if <span class="register">A</span> is equal to 28.</td>
+<td class="instruction">JP Z,<a href="F074.html">Response_PleaseRephraseThat_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F074.html">Response_PleaseRephraseThat_Duplicate</a> if <span class="register">A</span> is equal to 28.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f628"></span>F628</td>
@@ -2712,8 +2724,8 @@ Print "them.".
 </tr>
 <tr>
 <td class="address-1"><span id="f630"></span>F630</td>
-<td class="instruction">JP <a href="F03A.html#f06f">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06f">Print_YouCant</a>.</td>
+<td class="instruction">JP <a href="F06F.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06F.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f633"></span>F633</td>
@@ -2738,7 +2750,7 @@ Print "them.".
 <tr>
 <td class="address-1"><span id="f63a"></span>F63A</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="2"><span class="register">C</span>=*<a href="BCCB.html">RoomNumber</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">C</span>=*<a href="BCCB.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f63d"></span>F63D</td>
@@ -2767,12 +2779,12 @@ Print "them.".
 <tr>
 <td class="address-2"><span id="f646"></span>F646</td>
 <td class="instruction">LD HL,$EA2A</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea2a">Data_SpearAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea2a">PhraseTokens_SpearAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f649"></span>F649</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f64c"></span>F64C</td>
@@ -2806,18 +2818,18 @@ Print "You fling the spear,but thelion easily avoids it.".
 </tr>
 <tr>
 <td class="address-1"><span id="f656"></span>F656</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f659"></span>F659</td>
 <td class="instruction">LD HL,$EA2E</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea2e">Data_CoconutAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea2e">PhraseTokens_CoconutAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f65c"></span>F65C</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f65f"></span>F65F</td>
@@ -2851,18 +2863,18 @@ Print "The coconut bounces offthe lion's head.He shakes hislong mane in anger.
 </tr>
 <tr>
 <td class="address-1"><span id="f669"></span>F669</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f66c"></span>F66C</td>
 <td class="instruction">LD HL,$EA32</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea32">Data_FruitAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea32">PhraseTokens_FruitAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f66f"></span>F66F</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f672"></span>F672</td>
@@ -2896,18 +2908,18 @@ Print "He sniffs the fruit butotherwise ignores it.".
 </tr>
 <tr>
 <td class="address-1"><span id="f67c"></span>F67C</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f67f"></span>F67F</td>
 <td class="instruction">LD HL,$EA36</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea36">Data_FishAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea36">PhraseTokens_FishAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f682"></span>F682</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f685"></span>F685</td>
@@ -2917,12 +2929,12 @@ Print "He sniffs the fruit butotherwise ignores it.".
 <tr>
 <td class="address-2"><span id="f687"></span>F687</td>
 <td class="instruction">LD HL,$E895</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e895">Data_ObjectRoom_14</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e895">Data_Item_Fish</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f68a"></span>F68A</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f68d"></span>F68D</td>
@@ -2936,8 +2948,8 @@ Print "He sniffs the fruit butotherwise ignores it.".
 </tr>
 <tr>
 <td class="address-1"><span id="f691"></span>F691</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f694"></span>F694</td>
@@ -2946,8 +2958,8 @@ Print "He sniffs the fruit butotherwise ignores it.".
 </tr>
 <tr>
 <td class="address-1"><span id="f696"></span>F696</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f699"></span>F699</td>
@@ -2975,18 +2987,18 @@ Print "The lion takes the fish inhis massive jaws and thendisappears into the 
 </tr>
 <tr>
 <td class="address-1"><span id="f6a1"></span>F6A1</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f6a4"></span>F6A4</td>
 <td class="instruction">LD HL,$EA3F</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea3f">Data_FruitAtParrot</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea3f">PhraseTokens_FruitAtParrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f6a7"></span>F6A7</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f6aa"></span>F6AA</td>
@@ -3016,11 +3028,11 @@ Print "The lion takes the fish inhis massive jaws and thendisappears into the 
 <tr>
 <td class="address-1"><span id="f6b7"></span>F6B7</td>
 <td class="instruction">LD A,$0E</td>
-<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyObject</a> with "Some fruit" (as the parrot ate it).</td>
+<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyItemEvent</a> with "Some fruit" (as the parrot ate it).</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f6b9"></span>F6B9</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -3039,18 +3051,18 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 </tr>
 <tr>
 <td class="address-1"><span id="f6bf"></span>F6BF</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f6c2"></span>F6C2</td>
 <td class="instruction">LD HL,$EA43</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea43">Data_WatchAtCannibals</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea43">PhraseTokens_WatchAtCannibals</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f6c5"></span>F6C5</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f6c8"></span>F6C8</td>
@@ -3068,8 +3080,8 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 </tr>
 <tr>
 <td class="address-1"><span id="f6cf"></span>F6CF</td>
-<td class="instruction">JP NZ,<a href="F03A.html#f079">Print_YouveDoneThatAlready</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f079">Print_YouveDoneThatAlready</a> if *<span class="register">HL</span> is not equal to 17.</td>
+<td class="instruction">JP NZ,<a href="F079.html">Response_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F079.html">Response_YouveDoneThatAlready</a> "A watch" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f6d2"></span>F6D2</td>
@@ -3168,18 +3180,18 @@ Print "The cannibal drops the spearand takes the watch.He examines it briefly 
 </tr>
 <tr>
 <td class="address-1"><span id="f6fa"></span>F6FA</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f6fd"></span>F6FD</td>
 <td class="instruction">LD HL,$EA47</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea47">Data_SpearAtOctopus</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea47">PhraseTokens_SpearAtOctopus</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f700"></span>F700</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f703"></span>F703</td>
@@ -3198,20 +3210,20 @@ Print "The cannibal drops the spearand takes the watch.He examines it briefly 
 <tr>
 <td class="address-1"><span id="f70a"></span>F70A</td>
 <td class="instruction">LD A,$2B</td>
-<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyObject</a> with "A giant octopus".</td>
+<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyItemEvent</a> with "A giant octopus".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f70c"></span>F70C</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="f70f"></span>F70F</td>
 <td class="instruction">LD A,$1A</td>
-<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyObject</a> with "A spear".</td>
+<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyItemEvent</a> with "A spear".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f711"></span>F711</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="f714"></span>F714</td>
@@ -3269,18 +3281,18 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 </tr>
 <tr>
 <td class="address-1"><span id="f726"></span>F726</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f729"></span>F729</td>
 <td class="instruction">LD HL,$EA50</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea50">Data_KegAtCrocodile</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea50">PhraseTokens_KegAtCrocodile</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f72c"></span>F72C</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f72f"></span>F72F</td>
@@ -3290,17 +3302,16 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 <tr>
 <td class="address-1"><span id="f731"></span>F731</td>
 <td class="instruction">LD A,$12</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=12 (event ID: 12).</td>
+<td class="comment-1" rowspan="2">Call <a href="C35F.html">Handler_Objects</a> with "A keg of gunpowder".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f733"></span>F733</td>
 <td class="instruction">CALL <a href="C35F.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C35F.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f736"></span>F736</td>
-<td class="instruction">JP NZ,<a href="F03A.html#f079">Print_YouveDoneThatAlready</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f079">Print_YouveDoneThatAlready</a> if *<span class="register">HL</span> is not equal to 12.</td>
+<td class="instruction">JP NZ,<a href="F079.html">Response_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F079.html">Response_YouveDoneThatAlready</a> if "A keg of gunpowder" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f739"></span>F739</td>
@@ -3319,8 +3330,8 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 </tr>
 <tr>
 <td class="address-1"><span id="f740"></span>F740</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f743"></span>F743</td>
@@ -3348,18 +3359,18 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 </tr>
 <tr>
 <td class="address-1"><span id="f74c"></span>F74C</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f74f"></span>F74F</td>
 <td class="instruction">LD HL,$EA5E</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea5e">Data_MatchAtKeg</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea5e">PhraseTokens_MatchAtKeg</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f752"></span>F752</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f755"></span>F755</td>
@@ -3377,18 +3388,18 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 </tr>
 <tr>
 <td class="address-1"><span id="f75c"></span>F75C</td>
-<td class="instruction">JP Z,<a href="F03A.html#f06f">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06f">Print_YouCant</a> if *<span class="register">HL</span> is equal to 12.</td>
+<td class="instruction">JP Z,<a href="F06F.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06F.html">Response_YouCant_Duplicate</a> if *<span class="register">HL</span> is equal to 12.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f75f"></span>F75F</td>
 <td class="instruction">LD HL,$E86E</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html">Data_ObjectRoom_00</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html">Data_Item_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f762"></span>F762</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f765"></span>F765</td>
@@ -3406,8 +3417,8 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 </tr>
 <tr>
 <td class="address-1"><span id="f76d"></span>F76D</td>
-<td class="instruction">JP Z,<a href="F03A.html#f06a">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06a">Print_OK</a> if *<span class="register">HL</span> is equal to 12.</td>
+<td class="instruction">JP Z,<a href="F06A.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06A.html">Response_OK_Duplicate</a> if "A keg of gunpowder" is present in the current room.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f770"></span>F770</td>
@@ -3420,26 +3431,26 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 </tr>
 <tr>
 <td class="address-1"><span id="f775"></span>F775</td>
-<td class="instruction">JP Z,<a href="F03A.html#f06a">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06a">Print_OK</a> if *<span class="register">HL</span> is equal to 02.</td>
+<td class="instruction">JP Z,<a href="F06A.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06A.html">Response_OK_Duplicate</a> if "A match" is present in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f778"></span>F778</td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyObject</a> with "A lighted match".</td>
+<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyItemEvent</a> with "A lighted match".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f77a"></span>F77A</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="f77d"></span>F77D</td>
 <td class="instruction">LD A,$14</td>
-<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyObject</a> with "A crocodile (with the keg in its mouth)".</td>
+<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyItemEvent</a> with "A crocodile (with the keg in its mouth)".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f77f"></span>F77F</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="f782"></span>F782</td>
@@ -3471,18 +3482,18 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 </tr>
 <tr>
 <td class="address-1"><span id="f78a"></span>F78A</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f78d"></span>F78D</td>
 <td class="instruction">LD HL,$EA6C</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea6c">Data_MatchAtCrocodile</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea6c">PhraseTokens_MatchAtCrocodile</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f790"></span>F790</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f793"></span>F793</td>
@@ -3492,12 +3503,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="f795"></span>F795</td>
 <td class="instruction">LD HL,$E86E</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html">Data_ObjectRoom_00</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html">Data_Item_Match</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f798"></span>F798</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f79b"></span>F79B</td>
@@ -3516,17 +3527,17 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="f7a3"></span>F7A3</td>
 <td class="instruction">JR Z,<a href="F155.html#f770">$F770</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F155.html#f770">F770</a> if *<span class="register">HL</span> is equal to 14.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F155.html#f770">F770</a> if "A crocodile (with the keg in its mouth)" is present in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7a5"></span>F7A5</td>
-<td class="instruction">JP <a href="F03A.html#f06a">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06a">Print_OK</a>.</td>
+<td class="instruction">JP <a href="F06A.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06A.html">Response_OK_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f7a8"></span>F7A8</td>
-<td class="instruction">JP <a href="F03A.html#f065">Print_IDontSeeThePoint</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f065">Print_IDontSeeThePoint</a>.</td>
+<td class="instruction">JP <a href="F065.html">Response_IDontSeeThePoint</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F065.html">Response_IDontSeeThePoint</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7ab"></span>F7AB</td>
@@ -3541,12 +3552,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="f7af"></span>F7AF</td>
 <td class="instruction">LD HL,$EA32</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea32">Data_FruitAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea32">PhraseTokens_FruitAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7b2"></span>F7B2</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7b5"></span>F7B5</td>
@@ -3556,12 +3567,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="f7b8"></span>F7B8</td>
 <td class="instruction">LD HL,$EA36</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea36">Data_FishAtLion</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea36">PhraseTokens_FishAtLion</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7bb"></span>F7BB</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7be"></span>F7BE</td>
@@ -3571,12 +3582,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="f7c1"></span>F7C1</td>
 <td class="instruction">LD HL,$EA3F</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea3f">Data_FruitAtParrot</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea3f">PhraseTokens_FruitAtParrot</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7c4"></span>F7C4</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7c7"></span>F7C7</td>
@@ -3586,12 +3597,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="f7ca"></span>F7CA</td>
 <td class="instruction">LD HL,$EA43</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea43">Data_WatchAtCannibals</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea43">PhraseTokens_WatchAtCannibals</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7cd"></span>F7CD</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7d0"></span>F7D0</td>
@@ -3600,8 +3611,8 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 </tr>
 <tr>
 <td class="address-1"><span id="f7d3"></span>F7D3</td>
-<td class="instruction">JP <a href="F03A.html#f065">Print_IDontSeeThePoint</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f065">Print_IDontSeeThePoint</a>.</td>
+<td class="instruction">JP <a href="F065.html">Response_IDontSeeThePoint</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F065.html">Response_IDontSeeThePoint</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7d6"></span>F7D6</td>
@@ -3616,12 +3627,12 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="f7da"></span>F7DA</td>
 <td class="instruction">LD HL,$EA26</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea26">Data_PlankAcrossPit</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea26">PhraseTokens_PlankAcrossPit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7dd"></span>F7DD</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7e0"></span>F7E0</td>
@@ -3631,17 +3642,16 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="address-1"><span id="f7e2"></span>F7E2</td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=04 (event ID: 04).</td>
+<td class="comment-1" rowspan="2">Call <a href="C35F.html">Handler_Objects</a> with "A plank".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7e4"></span>F7E4</td>
 <td class="instruction">CALL <a href="C35F.html">Handler_Objects</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C35F.html">Handler_Objects</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7e7"></span>F7E7</td>
-<td class="instruction">JP NZ,<a href="F03A.html#f079">Print_YouveDoneThatAlready</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f079">Print_YouveDoneThatAlready</a> if *<span class="register">HL</span> is not equal to 04.</td>
+<td class="instruction">JP NZ,<a href="F079.html">Response_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F079.html">Response_YouveDoneThatAlready</a> if "A plank" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7ea"></span>F7EA</td>
@@ -3660,28 +3670,30 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 </tr>
 <tr>
 <td class="address-1"><span id="f7f1"></span>F7F1</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7f4"></span>F7F4</td>
 <td class="instruction">LD BC,$0566</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0566.</td>
+<td class="comment-1" rowspan="2">Call <a href="C412.html">Handler_UpdateObjectLocation</a> using item "A plank (spanning the pit)" to create it in 
+
+<a href="D155.html">The Wide Pit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7f7"></span>F7F7</td>
 <td class="instruction">CALL <a href="C412.html">Handler_UpdateObjectLocation</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C412.html">Handler_UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7fa"></span>F7FA</td>
 <td class="instruction">LD BC,$0668</td>
-<td class="comment-1" rowspan="1"><span class="register">BC</span>=0668.</td>
+<td class="comment-1" rowspan="2">Call <a href="C412.html">Handler_UpdateObjectLocation</a> using item "A plank (spanning the pit)" to create it in 
+
+<a href="D173.html">The Southern Side of the Pit</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f7fd"></span>F7FD</td>
 <td class="instruction">CALL <a href="C412.html">Handler_UpdateObjectLocation</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C412.html">Handler_UpdateObjectLocation</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f800"></span>F800</td>
@@ -3703,8 +3715,8 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 </tr>
 <tr>
 <td class="address-1"><span id="f80a"></span>F80A</td>
-<td class="instruction">CALL <a href="F03A.html#f06a">Print_OK</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F03A.html#f06a">Print_OK</a>.</td>
+<td class="instruction">CALL <a href="F06A.html">Response_OK_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F06A.html">Response_OK_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -3723,18 +3735,18 @@ Print "The plank now spans the pit.".
 </tr>
 <tr>
 <td class="address-1"><span id="f810"></span>F810</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f813"></span>F813</td>
 <td class="instruction">LD HL,$EA70</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea70">Data_RodInHole</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea70">PhraseTokens_RodInHole</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f816"></span>F816</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f819"></span>F819</td>
@@ -3762,8 +3774,8 @@ This entry point is used by the routine at <a href="F90A.html">F90A</a>.
 </tr>
 <tr>
 <td class="address-1"><span id="f820"></span>F820</td>
-<td class="instruction">JP NZ,<a href="F03A.html#f079">Print_YouveDoneThatAlready</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f079">Print_YouveDoneThatAlready</a> if *<span class="register">HL</span> is not equal to 08.</td>
+<td class="instruction">JP NZ,<a href="F079.html">Response_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F079.html">Response_YouveDoneThatAlready</a> if "A rod" isn't in the current room.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f823"></span>F823</td>
@@ -3777,11 +3789,11 @@ This entry point is used by the routine at <a href="F90A.html">F90A</a>.
 <tr>
 <td class="address-1"><span id="f828"></span>F828</td>
 <td class="instruction">LD A,$08</td>
-<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyObject</a> with "A rod".</td>
+<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyItemEvent</a> with "A rod".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f82a"></span>F82A</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="f82d"></span>F82D</td>
@@ -3804,16 +3816,16 @@ This entry point is used by the routine at <a href="F90A.html">F90A</a>.
 <tr>
 <td class="address-1"><span id="f839"></span>F839</td>
 <td class="instruction">LD A,$33</td>
-<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyObject</a> with "A slab of rock".</td>
+<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyItemEvent</a> with "A slab of rock".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f83b"></span>F83B</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="f83e"></span>F83E</td>
 <td class="instruction">LD A,$6A</td>
-<td class="comment-1" rowspan="2">Write 6A to *<a href="EB10.html#eb90">EB90</a> to open up bound access to 
+<td class="comment-1" rowspan="2">Write 6A to *<a href="EB10.html#eb90">EB90</a> to open up eastbound access to 
 
 <a href="D191.html">The Mighty Rock Door</a> from 
 
@@ -3826,11 +3838,11 @@ This entry point is used by the routine at <a href="F90A.html">F90A</a>.
 <tr>
 <td class="address-1"><span id="f843"></span>F843</td>
 <td class="instruction">LD A,$15</td>
-<td class="comment-1" rowspan="2">Write 15 to *<a href="EB10.html#ed8d">ED8D</a> to open up bound access to 
+<td class="comment-1" rowspan="2">Write 15 to *<a href="EB10.html#ed8d">ED8D</a> to open up southbound access to 
 
 <a href="CCF1.html">The Narrow Path</a> from 
 
-<a href="D173.html">The Southern Side of the Pit</a>.</td>
+<a href="D191.html">The Mighty Rock Door</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f845"></span>F845</td>
@@ -3853,13 +3865,13 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 </tr>
 <tr>
 <td class="address-1"><span id="f84b"></span>F84B</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f84e"></span>F84E</td>
-<td class="instruction">JP <a href="F03A.html#f06f">Print_YouCant</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f06f">Print_YouCant</a>.</td>
+<td class="instruction">JP <a href="F06F.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06F.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f851"></span>F851</td>
@@ -3874,12 +3886,12 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="f855"></span>F855</td>
 <td class="instruction">LD HL,$EA8D</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea8d">Data_OctopusWithSpear</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea8d">PhraseTokens_OctopusWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f858"></span>F858</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f85b"></span>F85B</td>
@@ -3897,26 +3909,26 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 </tr>
 <tr>
 <td class="address-1"><span id="f862"></span>F862</td>
-<td class="instruction">JP NZ,<a href="F03A.html#f07e">Print_YoureNotCarryingIt</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f07e">Print_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 1A.</td>
+<td class="instruction">JP NZ,<a href="F07E.html">Response_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F07E.html">Response_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 1A.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f865"></span>F865</td>
 <td class="instruction">LD A,$1A</td>
-<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyObject</a> with "A spear".</td>
+<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyItemEvent</a> with "A spear".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f867"></span>F867</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="f86a"></span>F86A</td>
 <td class="instruction">LD A,$2B</td>
-<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyObject</a> with "A giant octopus".</td>
+<td class="comment-1" rowspan="2">Call <a href="C3EA.html">Handler_DestroyItemEvent</a> with "A giant octopus".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f86c"></span>F86C</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="f86f"></span>F86F</td>
@@ -3931,7 +3943,7 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="f873"></span>F873</td>
 <td class="instruction">LD A,$40</td>
-<td class="comment-1" rowspan="2">Write 40 to *<a href="EB10.html#ec8a">EC8A</a> to open up bound access to 
+<td class="comment-1" rowspan="2">Write 40 to *<a href="EB10.html#ec8a">EC8A</a> to open up northbound access to 
 
 <a href="CFC4.html">A Dead End</a> from 
 
@@ -3944,7 +3956,7 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="f878"></span>F878</td>
 <td class="instruction">LD A,$41</td>
-<td class="comment-1" rowspan="2">Write 41 to *<a href="EB10.html#ec8b">EC8B</a> to open up bound access to 
+<td class="comment-1" rowspan="2">Write 41 to *<a href="EB10.html#ec8b">EC8B</a> to open up southbound access to 
 
 <a href="CFC4.html">A Dead End</a> from 
 
@@ -3957,7 +3969,7 @@ Print "There is a faint click andthe rock door slowly rumblesopen.".
 <tr>
 <td class="address-1"><span id="f87d"></span>F87D</td>
 <td class="instruction">LD A,$42</td>
-<td class="comment-1" rowspan="2">Write 42 to *<a href="EB10.html#ec8c">EC8C</a> to open up bound access to 
+<td class="comment-1" rowspan="2">Write 42 to *<a href="EB10.html#ec8c">EC8C</a> to open up eastbound access to 
 
 <a href="CFC4.html">A Dead End</a> from 
 
@@ -3984,18 +3996,18 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 </tr>
 <tr>
 <td class="address-1"><span id="f885"></span>F885</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f888"></span>F888</td>
 <td class="instruction">LD HL,$EA96</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea96">Data_LionWithSpear</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea96">PhraseTokens_LionWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f88b"></span>F88B</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f88e"></span>F88E</td>
@@ -4013,8 +4025,8 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 </tr>
 <tr>
 <td class="address-1"><span id="f895"></span>F895</td>
-<td class="instruction">JP NZ,<a href="F03A.html#f07e">Print_YoureNotCarryingIt</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f07e">Print_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 1A.</td>
+<td class="instruction">JP NZ,<a href="F07E.html">Response_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F07E.html">Response_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 1A.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -4033,18 +4045,18 @@ Print "You stab at the lionbut the beast easily avoids it.".
 </tr>
 <tr>
 <td class="address-1"><span id="f89b"></span>F89B</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f89e"></span>F89E</td>
 <td class="instruction">LD HL,$EA9A</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea9a">Data_CannibalsWithSpear</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea9a">PhraseTokens_CannibalsWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f8a1"></span>F8A1</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f8a4"></span>F8A4</td>
@@ -4062,18 +4074,27 @@ Print "You stab at the lionbut the beast easily avoids it.".
 </tr>
 <tr>
 <td class="address-1"><span id="f8ab"></span>F8AB</td>
-<td class="instruction">JP NZ,<a href="F03A.html#f07e">Print_YoureNotCarryingIt</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f07e">Print_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 1A.</td>
+<td class="instruction">JP NZ,<a href="F07E.html">Response_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F07E.html">Response_YoureNotCarryingIt</a> if *<span class="register">HL</span> is not equal to 1A.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="f8ae"></span>
+<div class="comments">
+<div class="paragraph">
+Bad luck!
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f8ae"></span>F8AE</td>
 <td class="instruction">LD HL,$EDD7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="EDD7.html">GameOver</a>.</td>
+<td class="comment-1" rowspan="2">Switch <a href="EDD7.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f8b1"></span>F8B1</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -4092,18 +4113,18 @@ Print "The cannibals turn on you.They quickly overwhelm you.".
 </tr>
 <tr>
 <td class="address-1"><span id="f8b5"></span>F8B5</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
 <td class="address-2"><span id="f8b8"></span>F8B8</td>
 <td class="instruction">LD HL,$EA9E</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea9e">Data_PirateWithGun</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea9e">PhraseTokens_PirateWithGun</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f8bb"></span>F8BB</td>
-<td class="instruction">CALL <a href="C37F.html">$C37F</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">C37F</a>.</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f8be"></span>F8BE</td>
@@ -4121,8 +4142,8 @@ Print "The cannibals turn on you.They quickly overwhelm you.".
 </tr>
 <tr>
 <td class="address-1"><span id="f8c5"></span>F8C5</td>
-<td class="instruction">JP NZ,<a href="F03A.html#f07e">Print_YoureNotCarryingIt</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html#f07e">Print_YoureNotCarryingIt</a> if ?? is not equal to 0F.</td>
+<td class="instruction">JP NZ,<a href="F07E.html">Response_YoureNotCarryingIt</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F07E.html">Response_YoureNotCarryingIt</a> if ?? is not equal to 0F.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -4137,12 +4158,12 @@ This entry point is used by the routine at <a href="F90A.html">F90A</a>.
 <tr>
 <td class="address-2"><span id="f8c8"></span>F8C8</td>
 <td class="instruction">LD HL,$E8B2</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8b2">Data_ObjectRoom_24</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e8b2">Data_Item_Pirate</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f8cb"></span>F8CB</td>
-<td class="instruction">CALL <a href="C3FA.html#c401">$C401</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3FA.html#c401">C401</a>.</td>
+<td class="instruction">CALL <a href="C401.html">CheckActiveScenicEvents</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C401.html">CheckActiveScenicEvents</a>.</td>
 </tr>
 <tr>
 <td class="address-1"><span id="f8ce"></span>F8CE</td>
@@ -4176,14 +4197,14 @@ Print "He's dead already.".
 </tr>
 <tr>
 <td class="address-1"><span id="f8d6"></span>F8D6</td>
-<td class="instruction">JP <a href="F03A.html">$F03A</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">F03A</a>.</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="F03A.html">F03A</a>
+Prev: <a href="F14B.html">F14B</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#f155">Map</a></td>
 <td class="next">

@@ -63,8 +63,8 @@ Print "A poisonous spider drops on you.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef35"></span>EF35</td>
-<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndScroll</a></td>
-<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndScroll</a>.</td>
+<td class="instruction">CALL <a href="BAA4.html#bab1">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAA4.html#bab1">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -97,13 +97,12 @@ Bad luck!
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef3f"></span>EF3F</td>
 <td class="instruction">LD HL,$EDD7</td>
-<td class="comment-1" rowspan="1">Switch <a href="EDD7.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
+<td class="comment-1" rowspan="2">Switch <a href="EDD7.html">GameOver</a> onto the stack so the next return actions a "game over".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef42"></span>EF42</td>
 <td class="instruction">EX (SP),HL</td>
-<td class="comment-1" rowspan="1">Exchange the *<span class="register">SP</span> with the <span class="register">HL</span> register.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -146,8 +145,8 @@ Handle that the poisonous spider didn't sting you.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ef4a"></span>EF4A</td>
-<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyObject</a>.</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyItemEvent</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
