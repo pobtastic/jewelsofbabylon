@@ -197,8 +197,10 @@ N $BAA7 Just keep looping and printing the fetched character until the
 . reached.
   $BAAC,$03 Call #R$BAC3.
   $BAAF,$02 Jump to #R$BAA7.
-N $BAB1 Shortcut print routine which prints a newline after it's done.
+
+c $BAB1 Print String And A Newline
 @ $BAB1 label=PrintStringAndNewline
+D $BAB1 Shortcut print routine which prints a newline after it's done.
   $BAB1,$03 Call #R$BAA4.
 N $BAB4 Force a newline to be "printed".
   $BAB4,$02 Load a "newline" character into #REGa (#N$0D).
@@ -617,9 +619,8 @@ g $BD34 Command Buffer
 @ $BD34 label=CommandBuffer
 B $BD34,$32
 
-  $BD65
-
-g $BD66
+g $BD66 Word Tokens
+@ $BD66 label=WordTokens
 B $BD66,$01
 L $BD66,$01,$0A
 
@@ -647,7 +648,8 @@ t $BD85 Messaging: "> "
 B $BD87,$01 Terminator.
 
 t $BD88 Messaging: "<BS> <BS>"
-@ $BD88 label=Messaging_BackspaceX2
+@ $BD88 label=Messaging_BackspaceSpaceBackspace
+D $BD88 Used by the routine at #R$C041.
   $BD88,$03 "#STR$BD88,$08($b==$FF)".
 B $BD8B,$01 Terminator.
 
@@ -888,6 +890,7 @@ N $C00D Clear down the command buffer which will hold the users input.
   $C010,$02 Store the ASCII code for "SPACE" ("#CHR$20") into #REGa.
   $C012,$02 Set a counter in #REGb for the size of the command buffer (#N$32
 . bytes).
+N $C014 Write "SPACE" #N$32 times wiping the entire command buffer.
 @ $C014 label=EmptyCommandBuffer_Loop
   $C014,$01 Write #REGa to *#REGhl.
   $C015,$01 Increment #REGhl by one.
@@ -895,51 +898,78 @@ N $C00D Clear down the command buffer which will hold the users input.
 . until the whole buffer is cleared.
 N $C018 Now print the prompt icon ">".
   $C018,$03 Call #R$BBD4.
+N $C01B Initialise the command buffer.
   $C01B,$03 #REGhl=#R$BD34.
+N $C01E Collect the users keypress.
 @ $C01E label=UserInput_Loop
   $C01E,$03 Call #R$BA5D.
+N $C021 Check the two valid control keys "DELETE" and "ENTER".
   $C021,$04 Jump to #R$C041 if "DELETE" was pressed.
   $C025,$04 Jump to #R$C058 if "ENTER" was pressed.
-  $C029,$04 Jump to #R$C01E if #REGa is less than #N$20.
-  $C02D,$01 Exchange the #REGde and #REGhl registers.
-  $C02E,$03 #REGhl=#R$BD65.
-  $C031,$03 #REGhl-=#REGde (with carry).
-  $C034,$01 Exchange the #REGde and #REGhl registers.
-  $C035,$02 Jump to #R$C01E if #REGa is equal to #REGa.
-  $C037,$01 Write #REGa to *#REGhl.
+  $C029,$04 If the keypress was any other control key (the value being under
+. #N$20 ASCII "SPACE"), it's not valid input so jump back to #R$C01E.
+N $C02D Test if the current position in the command buffer is at the end
+. (#R$BD34(#N$BD65)) of the buffer.
+. For example: #PUSHS #TABLE(default,centre,centre) { =h Position | =h Output }
+. #FOR($BD34,$BD65,$07,$04)(x,#SIM(start=$C02D,stop=$C035,hl=x)
+. { #Nx | #N({sim[DE]}) })
+. TABLE# #POPS
+  $C02D,$0A Jump back to #R$C01E if the input has reached the end of the
+. command buffer (so don't process it).
+N $C037 The keypress is valid, so process it and print it to the screen.
+  $C037,$01 Write the keypress into the command buffer at the current position.
   $C038,$03 Call #R$BA96.
   $C03B,$03 Call #R$BAC3.
-  $C03E,$01 Increment #REGhl by one.
-  $C03F,$02 Jump to #R$C01E.
+  $C03E,$01 Increment the pointer to the command buffer by one.
+  $C03F,$02 Jump back to #R$C01E.
+
+c $C041 Handler: User Pressed "DELETE"
 @ $C041 label=UserInput_Delete
-N $C041 Handles the user pressing delete.
-  $C041,$01 Exchange the #REGde and #REGhl registers.
-  $C042,$03 #REGhl=#R$BD34.
-  $C045,$03 #REGhl-=#REGde (with carry).
-  $C048,$01 Exchange the #REGde and #REGhl registers.
-  $C049,$02 Jump to #R$C01E if #REGhl is equal to #REGa.
-  $C04B,$01 Stash #REGhl on the stack.
-N $C04C Print "#STR$BD88,$08($b==$FF)".
+D $C041 Handles the user pressing delete.
+R $C041 HL Current position in the command buffer
+N $C041 Test if the current position in the command buffer is at the start
+. (#R$BD34(#N$BD34)) of the buffer.
+  $C041,$0A Jump back to #R$C01E if the user is already at the beginning of the
+. command buffer.
+N $C04B Else delete the current character.
+  $C04B,$01 Stash the pointer to the command buffer on the stack.
+N $C04C Print "BACKSPACE SPACE BACKSPACE" to move the current print position on
+. the screen to the previous character, and to delete the charactr present
+. using a space.
   $C04C,$03 #REGhl=#R$BD88.
   $C04F,$03 Call #R$BAA4.
-  $C052,$01 Restore #REGhl from the stack.
-  $C053,$01 Decrease #REGhl by one.
-  $C054,$02 Write #N$20 to *#REGhl.
+  $C052,$01 Restore the pointer to the command buffer from the stack.
+N $C053 Now adjust the command buffer pointer to match the new position.
+  $C053,$01 Decrease the pointer to the command buffer by one.
+  $C054,$02 Write an ASCII space (#N$20) into the command buffer at the current
+. position.
   $C056,$02 Jump to #R$C01E.
 
-c $C058 Parser
-@ $C058 label=Parser
-  $C058,$01 Write #REGa to *#REGhl.
+c $C058 Handler: User Pressed "ENTER"
+@ $C058 label=UserInput_Enter
+D $C058 Handles the user pressing "ENTER".
+R $C058 HL Current position in the command buffer
+R $C058 A Which contains #N$0D ("ENTER") at this point.
+  $C058,$01 Write #N$0D to the command buffer pointer for use as a termination
+. character.
+N $C059 Force a newline to be "printed" to the screen.
   $C059,$03 Call #R$BA96.
   $C05C,$03 Call #R$BAC3.
+N $C05F Clear down the word token buffer which will eventually hold the
+. tokenised input.
   $C05F,$03 #REGhl=#R$BD66.
   $C062,$02 #REGa=#N$FF.
-  $C064,$02 #REGb=#N$0A.
+  $C064,$02 Set a counter in #REGb for the size of the word token buffer (#N$0A bytes).
+N $C066 Write #N$FF #N$0A times wiping the word token buffer.
+@ $C066 label=EmptyWordTokenBuffer_Loop
   $C066,$01 Write #REGa to *#REGhl.
   $C067,$01 Increment #REGhl by one.
-  $C068,$02 Decrease counter by one and loop back to #R$C066 until counter is zero.
+  $C068,$02 Decrease the word token buffer counter by one and loop back to
+. #R$C066 until the whole buffer is cleared.
   $C06A,$03 #REGhl=#R$BD34.
   $C06D,$02 #REGc=#N$0A.
+N $C06F Now begin tokenising the user input.
+@ $C06F label=UserInputParser_Loop
   $C06F,$03 #REGde=#R$BD71.
   $C072,$02 #REGb=#N$04.
   $C074,$03 Write ASCII "SPACE" (#N$20) to *#REGde.

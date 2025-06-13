@@ -3494,7 +3494,8 @@ c$BA96 PUSH HL       ; {Stash #REGhl, #REGde, #REGbc and #REGaf on the stack.
 
 ; Print String
 ;
-; Used by the routines at #R$BBD4, #R$C00A, #R$C26A, #R$C32A and #R$F155.
+; Used by the routines at #R$BAB1, #R$BBD4, #R$C041, #R$C26A, #R$C32A and
+; #R$F155.
 ; .
 ; Standard printing loop, which prints the fetched character byte and
 ; loops until the termination byte is reached (#N$FF).
@@ -3511,15 +3512,17 @@ c$BAA4 CALL $BA96    ; Call #R$BA96.
  $BAAB RET Z         ; reached.}
  $BAAC CALL $BAC3    ; Call #R$BAC3.
  $BAAF JR $BAA7      ; Jump to #R$BAA7.
-; This entry point is used by the routines at #R$BB59, #R$BB94, #R$BFEE,
-; #R$BFF5, #R$BFFC, #R$C003, #R$C058, #R$C1FF, #R$C26A, #R$C315, #R$C32A,
-; #R$C556, #R$C579, #R$EDD7, #R$EDF2, #R$EE74, #R$EE9B, #R$EEA9, #R$EEBB,
-; #R$EECD, #R$EEDF, #R$EEFC, #R$EF32, #R$EF54, #R$F03A, #R$F09C, #R$F12E,
-; #R$F155, #R$F8D9 and #R$F90A.
+
+; Print String And A Newline
+;
+; Used by the routines at #R$BB59, #R$BB94, #R$BFEE, #R$BFF5, #R$BFFC, #R$C003,
+; #R$C058, #R$C1FF, #R$C26A, #R$C315, #R$C32A, #R$C556, #R$C579, #R$EDD7,
+; #R$EDF2, #R$EE74, #R$EE9B, #R$EEA9, #R$EEBB, #R$EECD, #R$EEDF, #R$EEFC,
+; #R$EF32, #R$EF54, #R$F03A, #R$F09C, #R$F12E, #R$F155, #R$F8D9 and #R$F90A.
 ; .
 ; Shortcut print routine which prints a newline after it's done.
 @label=PrintStringAndNewline
-*$BAB1 CALL $BAA4    ; Call #R$BAA4.
+c$BAB1 CALL $BAA4    ; Call #R$BAA4.
 ; Force a newline to be "printed".
  $BAB4 LD A,$0D      ; Load a "newline" character into #REGa (#N$0D).
  $BAB6 CALL $BAC3    ; Call #R$BAC3.
@@ -3542,8 +3545,8 @@ c$BABA EXX           ; Switch to the shadow registers.
 
 ; Print Character
 ;
-; Used by the routines at #R$BAA4, #R$BBD4, #R$C00A, #R$C058, #R$C26A and
-; #R$EE9B.
+; Used by the routines at #R$BAA4, #R$BAB1, #R$BBD4, #R$C00A, #R$C058, #R$C26A
+; and #R$EE9B.
 ;
 ; A The character to print
 @label=PrintCharacter
@@ -4412,10 +4415,10 @@ g$BD34 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BD4C DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BD54 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BD5C DEFB $00,$00,$00,$00,$00,$00,$00,$00
- $BD64 DEFB $00
- $BD65 DEFB $00
+ $BD64 DEFB $00,$00
 
-; Game status buffer entry at BD66
+; Word Tokens
+@label=WordTokens
 g$BD66 DEFB $FF
  $BD67 DEFB $FF
  $BD68 DEFB $FF
@@ -4452,7 +4455,9 @@ t$BD85 DEFM "> "     ; "#STR$BD85,$08($b==$FF)".
  $BD87 DEFB $FF      ; Terminator.
 
 ; Messaging: "<BS> <BS>"
-@label=Messaging_BackspaceX2
+;
+; Used by the routine at #R$C041.
+@label=Messaging_BackspaceSpaceBackspace
 t$BD88 DEFM $08," ",$08 ; "#STR$BD88,$08($b==$FF)".
  $BD8B DEFB $FF         ; Terminator.
 
@@ -4719,6 +4724,7 @@ c$C00A CALL $BA7F    ; Call #R$BA7F.
  $C010 LD A,$20      ; Store the ASCII code for "SPACE" ("#CHR$20") into #REGa.
  $C012 LD B,$32      ; Set a counter in #REGb for the size of the command buffer (#N$32
                      ; bytes).
+; Write "SPACE" #N$32 times wiping the entire command buffer.
 @label=EmptyCommandBuffer_Loop
 *$C014 LD (HL),A     ; Write #REGa to *#REGhl.
  $C015 INC HL        ; Increment #REGhl by one.
@@ -4726,59 +4732,103 @@ c$C00A CALL $BA7F    ; Call #R$BA7F.
                      ; until the whole buffer is cleared.
 ; Now print the prompt icon ">".
  $C018 CALL $BBD4    ; Call #R$BBD4.
+; Initialise the command buffer.
  $C01B LD HL,$BD34   ; #REGhl=#R$BD34.
+; This entry point is used by the routine at #R$C041.
+; .
+; Collect the users keypress.
 @label=UserInput_Loop
 *$C01E CALL $BA5D    ; Call #R$BA5D.
+; Check the two valid control keys "DELETE" and "ENTER".
  $C021 CP $0C        ; {Jump to #R$C041 if "DELETE" was pressed.
  $C023 JR Z,$C041    ; }
  $C025 CP $0D        ; {Jump to #R$C058 if "ENTER" was pressed.
  $C027 JR Z,$C058    ; }
- $C029 CP $20        ; {Jump to #R$C01E if #REGa is less than #N$20.
- $C02B JR C,$C01E    ; }
- $C02D EX DE,HL      ; Exchange the #REGde and #REGhl registers.
- $C02E LD HL,$BD65   ; #REGhl=#R$BD65.
- $C031 AND A         ; {#REGhl-=#REGde (with carry).
- $C032 SBC HL,DE     ; }
- $C034 EX DE,HL      ; Exchange the #REGde and #REGhl registers.
- $C035 JR Z,$C01E    ; Jump to #R$C01E if #REGa is equal to #REGa.
- $C037 LD (HL),A     ; Write #REGa to *#REGhl.
+ $C029 CP $20        ; {If the keypress was any other control key (the value being under
+ $C02B JR C,$C01E    ; #N$20 ASCII "SPACE"), it's not valid input so jump back to #R$C01E.
+                     ; }
+; Test if the current position in the command buffer is at the end
+; (#R$BD34(#N$BD65)) of the buffer.
+; For example: #PUSHS #TABLE(default,centre,centre) { =h Position | =h Output }
+; #FOR($BD34,$BD65,$07,$04)(x,#SIM(start=$C02D,stop=$C035,hl=x)
+; { #Nx | #N({sim[DE]}) })
+; TABLE# #POPS
+ $C02D EX DE,HL      ; {Jump back to #R$C01E if the input has reached the end of the
+ $C02E LD HL,$BD65   ; command buffer (so don't process it).
+ $C031 AND A         ;
+ $C032 SBC HL,DE     ;
+ $C034 EX DE,HL      ;
+ $C035 JR Z,$C01E    ; }
+; The keypress is valid, so process it and print it to the screen.
+ $C037 LD (HL),A     ; Write the keypress into the command buffer at the
+                     ; current position.
  $C038 CALL $BA96    ; Call #R$BA96.
  $C03B CALL $BAC3    ; Call #R$BAC3.
- $C03E INC HL        ; Increment #REGhl by one.
- $C03F JR $C01E      ; Jump to #R$C01E.
-; Handles the user pressing delete.
-@label=UserInput_Delete
-*$C041 EX DE,HL      ; Exchange the #REGde and #REGhl registers.
- $C042 LD HL,$BD34   ; #REGhl=#R$BD34.
- $C045 AND A         ; {#REGhl-=#REGde (with carry).
- $C046 SBC HL,DE     ; }
- $C048 EX DE,HL      ; Exchange the #REGde and #REGhl registers.
- $C049 JR Z,$C01E    ; Jump to #R$C01E if #REGhl is equal to #REGa.
- $C04B PUSH HL       ; Stash #REGhl on the stack.
-; Print "#STR$BD88,$08($b==$FF)".
- $C04C LD HL,$BD88   ; #REGhl=#R$BD88.
- $C04F CALL $BAA4    ; Call #R$BAA4.
- $C052 POP HL        ; Restore #REGhl from the stack.
- $C053 DEC HL        ; Decrease #REGhl by one.
- $C054 LD (HL),$20   ; Write #N$20 to *#REGhl.
- $C056 JR $C01E      ; Jump to #R$C01E.
+ $C03E INC HL        ; Increment the pointer to the command buffer by one.
+ $C03F JR $C01E      ; Jump back to #R$C01E.
 
-; Parser
+; Handler: User Pressed "DELETE"
 ;
 ; Used by the routine at #R$C00A.
-@label=Parser
-c$C058 LD (HL),A     ; Write #REGa to *#REGhl.
+; .
+; Handles the user pressing delete.
+;
+; HL Current position in the command buffer
+;
+; Test if the current position in the command buffer is at the start
+; (#R$BD34(#N$BD34)) of the buffer.
+@label=UserInput_Delete
+c$C041 EX DE,HL      ; {Jump back to #R$C01E if the user is already at the beginning of the
+ $C042 LD HL,$BD34   ; command buffer.
+ $C045 AND A         ;
+ $C046 SBC HL,DE     ;
+ $C048 EX DE,HL      ;
+ $C049 JR Z,$C01E    ; }
+; Else delete the current character.
+ $C04B PUSH HL       ; Stash the pointer to the command buffer on the stack.
+; Print "BACKSPACE SPACE BACKSPACE" to move the current print position on
+; the screen to the previous character, and to delete the charactr present
+; using a space.
+ $C04C LD HL,$BD88   ; #REGhl=#R$BD88.
+ $C04F CALL $BAA4    ; Call #R$BAA4.
+ $C052 POP HL        ; Restore the pointer to the command buffer from the
+                     ; stack.
+; Now adjust the command buffer pointer to match the new position.
+ $C053 DEC HL        ; Decrease the pointer to the command buffer by one.
+ $C054 LD (HL),$20   ; Write an ASCII space (#N$20) into the command buffer at the current
+                     ; position.
+ $C056 JR $C01E      ; Jump to #R$C01E.
+
+; Handler: User Pressed "ENTER"
+;
+; Used by the routine at #R$C00A.
+; .
+; Handles the user pressing "ENTER".
+;
+; HL Current position in the command buffer
+; A Which contains #N$0D ("ENTER") at this point.
+@label=UserInput_Enter
+c$C058 LD (HL),A     ; Write #N$0D to the command buffer pointer for use as a termination
+                     ; character.
+; Force a newline to be "printed" to the screen.
  $C059 CALL $BA96    ; Call #R$BA96.
  $C05C CALL $BAC3    ; Call #R$BAC3.
+; Clear down the word token buffer which will eventually hold the
+; tokenised input.
  $C05F LD HL,$BD66   ; #REGhl=#R$BD66.
  $C062 LD A,$FF      ; #REGa=#N$FF.
- $C064 LD B,$0A      ; #REGb=#N$0A.
+ $C064 LD B,$0A      ; Set a counter in #REGb for the size of the word token
+                     ; buffer (#N$0A bytes).
+; Write #N$FF #N$0A times wiping the word token buffer.
+@label=EmptyWordTokenBuffer_Loop
 *$C066 LD (HL),A     ; Write #REGa to *#REGhl.
  $C067 INC HL        ; Increment #REGhl by one.
- $C068 DJNZ $C066    ; Decrease counter by one and loop back to #R$C066 until
-                     ; counter is zero.
+ $C068 DJNZ $C066    ; Decrease the word token buffer counter by one and loop back to
+                     ; #R$C066 until the whole buffer is cleared.
  $C06A LD HL,$BD34   ; #REGhl=#R$BD34.
  $C06D LD C,$0A      ; #REGc=#N$0A.
+; Now begin tokenising the user input.
+@label=UserInputParser_Loop
 *$C06F LD DE,$BD71   ; #REGde=#R$BD71.
  $C072 LD B,$04      ; #REGb=#N$04.
  $C074 LD A,$20      ; {Write ASCII "SPACE" (#N$20) to *#REGde.
