@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Jewels of Babylon: Routine at 62593</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62051.html">62051</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62593">Map</a></td>
+<td class="next">
+Next: <a href="62676.html">62676</a>
+</td>
+</tr>
+</table>
+<div class="description">62593: Action: Get</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get</td>
+<td class="address-2"><span id="62593"></span>62593</td>
+<td class="instruction">CALL <a href="50299.html">Handler_DirectObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50299.html">Handler_DirectObject</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62596"></span>62596</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1">Return if <span class="register">A</span> is less than 40.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62597"></span>62597</td>
+<td class="instruction">LD HL,59917</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59917">PhraseTokens_IntoBoat</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62600"></span>62600</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62603"></span>62603</td>
+<td class="instruction">JR NZ,<a href="62593.html#62636">Action_Get_5</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62593.html#62636">Action_Get_5</a> if <span class="register">A</span> is not equal to 40.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="62605"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="63814.html">Action_Eat</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get_0</td>
+<td class="address-2"><span id="62605"></span>62605</td>
+<td class="instruction">LD A,(48331)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="48331.html">CurrentRoom</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62608"></span>62608</td>
+<td class="instruction">CP 4</td>
+<td class="comment-1" rowspan="2">Jump to <a href="62593.html#62616">Action_Get_1</a> if <span class="register">A</span> is room 4: "
+
+<a href="52070.html">In A Rowing Boat</a>".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62610"></span>62610</td>
+<td class="instruction">JR Z,<a href="62593.html#62616">Action_Get_1</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62612"></span>62612</td>
+<td class="instruction">CP 107</td>
+<td class="comment-1" rowspan="2">Jump to <a href="62593.html#62622">Action_Get_2</a> if <span class="register">A</span> is not room 107: "
+
+<a href="52070.html">In A Rowing Boat</a>".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62614"></span>62614</td>
+<td class="instruction">JR NZ,<a href="62593.html#62622">Action_Get_2</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="62616"></span>
+<div class="comments">
+<div class="paragraph">
+Print "You're in it already.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get_1</td>
+<td class="address-2"><span id="62616"></span>62616</td>
+<td class="instruction">LD HL,56353</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="56353.html">56353</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62619"></span>62619</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get_2</td>
+<td class="address-2"><span id="62622"></span>62622</td>
+<td class="instruction">CP 3</td>
+<td class="comment-1" rowspan="2">Jump to <a href="62593.html#62630">Action_Get_3</a> if <span class="register">A</span> is not equal to 3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62624"></span>62624</td>
+<td class="instruction">JR NZ,<a href="62593.html#62630">Action_Get_3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62626"></span>62626</td>
+<td class="instruction">LD A,4</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=4.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62628"></span>62628</td>
+<td class="instruction">JR <a href="62593.html#62632">Action_Get_4</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62593.html#62632">Action_Get_4</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get_3</td>
+<td class="address-2"><span id="62630"></span>62630</td>
+<td class="instruction">LD A,107</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=107.</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get_4</td>
+<td class="address-2"><span id="62632"></span>62632</td>
+<td class="instruction">CALL <a href="61268.html">61268</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61268.html">61268</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62635"></span>62635</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get_5</td>
+<td class="address-2"><span id="62636"></span>62636</td>
+<td class="instruction">LD HL,59933</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59933">PhraseTokens_OutOfBoat</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62639"></span>62639</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62642"></span>62642</td>
+<td class="instruction">JR NZ,<a href="62593.html#62673">Action_Get_9</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62593.html#62673">Action_Get_9</a> if <span class="register">A</span> is not equal to 107.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="62644"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="63814.html">Action_Eat</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get_6</td>
+<td class="address-2"><span id="62644"></span>62644</td>
+<td class="instruction">LD A,(48331)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="62593.html#62657">Action_Get_7</a> if *<a href="48331.html">CurrentRoom</a> is not room 4: "
+
+<a href="52070.html">In A Rowing Boat</a>".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62647"></span>62647</td>
+<td class="instruction">CP 4</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62649"></span>62649</td>
+<td class="instruction">JR NZ,<a href="62593.html#62657">Action_Get_7</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62651"></span>62651</td>
+<td class="instruction">LD A,3</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62653"></span>62653</td>
+<td class="instruction">CALL <a href="61268.html">61268</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61268.html">61268</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62656"></span>62656</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get_7</td>
+<td class="address-2"><span id="62657"></span>62657</td>
+<td class="instruction">CP 107</td>
+<td class="comment-1" rowspan="2">Jump to <a href="62593.html#62667">Action_Get_8</a> if *<a href="48331.html">CurrentRoom</a> is not room 107: "
+
+<a href="52070.html">In A Rowing Boat</a>".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62659"></span>62659</td>
+<td class="instruction">JR NZ,<a href="62593.html#62667">Action_Get_8</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62661"></span>62661</td>
+<td class="instruction">LD A,6</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62663"></span>62663</td>
+<td class="instruction">CALL <a href="61268.html">61268</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61268.html">61268</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62666"></span>62666</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="62667"></span>
+<div class="comments">
+<div class="paragraph">
+Print "You're not in the boat.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get_8</td>
+<td class="address-2"><span id="62667"></span>62667</td>
+<td class="instruction">LD HL,56375</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="56375.html">56375</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62670"></span>62670</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Get_9</td>
+<td class="address-2"><span id="62673"></span>62673</td>
+<td class="instruction">JP <a href="62051.html">Action_Take</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62051.html">Action_Take</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62051.html">62051</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62593">Map</a></td>
+<td class="next">
+Next: <a href="62676.html">62676</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1985 Interceptor Software UK &copy; 2025 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.6.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/jewelsofbabylon/">Source code</a>.</div>
+<div><a href="../../asm/F481.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

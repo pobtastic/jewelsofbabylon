@@ -25,11 +25,11 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="F155.html">F155</a>
+Prev: <a href="F851.html">F851</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#f8d9">Map</a></td>
 <td class="next">
-Next: <a href="F90A.html">F90A</a>
+Next: <a href="F91B.html">F91B</a>
 </td>
 </tr>
 </table>
@@ -39,7 +39,7 @@ Next: <a href="F90A.html">F90A</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="F155.html">F155</a>.
+Used by the routine at <a href="F851.html">Action_Shoot</a>.
 </div>
 </div>
 </td>
@@ -200,15 +200,71 @@ Print "Good shooting!The pirate is dead.".
 <td class="instruction">DEFB $23,$24,$25,$00,$00,$26</td>
 <td class="comment-1" rowspan="1"></td>
 </tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="f90a"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="F851.html">Action_Shoot</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Shooting_0</td>
+<td class="address-2"><span id="f90a"></span>F90A</td>
+<td class="instruction">LD HL,$EAA2</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eaa2">PhraseTokens_ParrotWithGun</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f90d"></span>F90D</td>
+<td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f910"></span>F910</td>
+<td class="instruction">JR NZ,<a href="F8D9.html#f918">Action_Shooting_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F8D9.html#f918">Action_Shooting_1</a> if ?? is not equal to 00.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="f912"></span>
+<div class="comments">
+<div class="paragraph">
+Print "It's already dead.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f912"></span>F912</td>
+<td class="instruction">LD HL,$E14B</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E14B.html">E14B</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f915"></span>F915</td>
+<td class="instruction">JP <a href="F03A.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Shooting_1</td>
+<td class="address-2"><span id="f918"></span>F918</td>
+<td class="instruction">JP <a href="F06F.html">Response_YouCant_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F06F.html">Response_YouCant_Duplicate</a>.</td>
+</tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="F155.html">F155</a>
+Prev: <a href="F851.html">F851</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#f8d9">Map</a></td>
 <td class="next">
-Next: <a href="F90A.html">F90A</a>
+Next: <a href="F91B.html">F91B</a>
 </td>
 </tr>
 </table>

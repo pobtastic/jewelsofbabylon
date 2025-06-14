@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Jewels of Babylon: Routine at 64664</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="64609.html">64609</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#64664">Map</a></td>
+<td class="next">
+Next: <a href="64717.html">64717</a>
+</td>
+</tr>
+</table>
+<div class="description">64664: Action: Move</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Move</td>
+<td class="address-2"><span id="64664"></span>64664</td>
+<td class="instruction">CALL <a href="50299.html">Handler_DirectObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50299.html">Handler_DirectObject</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64667"></span>64667</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1">Return if <span class="register">A</span> is less than 82.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64668"></span>64668</td>
+<td class="instruction">LD HL,60120</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60120">PhraseTokens_Stone</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64671"></span>64671</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64674"></span>64674</td>
+<td class="instruction">JR NZ,<a href="64664.html#64682">Action_Move_0</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="64664.html#64682">Action_Move_0</a> if <span class="register">A</span> is not equal to 82.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="64676"></span>
+<div class="comments">
+<div class="paragraph">
+Print "It's much too heavy.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64676"></span>64676</td>
+<td class="instruction">LD HL,58117</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="58117.html">58117</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64679"></span>64679</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Move_0</td>
+<td class="address-2"><span id="64682"></span>64682</td>
+<td class="instruction">LD HL,60125</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60125">PhraseTokens_StoneWithCrowbar</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64685"></span>64685</td>
+<td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64688"></span>64688</td>
+<td class="instruction">JR NZ,<a href="64664.html#64714">Action_Move_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="64664.html#64714">Action_Move_1</a> if <span class="register">A</span> is not equal to 82.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64690"></span>64690</td>
+<td class="instruction">LD A,74</td>
+<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with 
+N/A.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64692"></span>64692</td>
+<td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64695"></span>64695</td>
+<td class="instruction">JP Z,<a href="61561.html">Response_YouveDoneThatAlready</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61561.html">Response_YouveDoneThatAlready</a> if <span class="register">A</span> is equal to 74.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64698"></span>64698</td>
+<td class="instruction">LD A,74</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=74.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64700"></span>64700</td>
+<td class="instruction">CALL <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64703"></span>64703</td>
+<td class="instruction">LD A,59</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=59.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64705"></span>64705</td>
+<td class="instruction">CALL <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="64708"></span>
+<div class="comments">
+<div class="paragraph">
+Print "Using the crowbar as a lever,You slowly move the stoneand uncover a ring set intothe floor.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64708"></span>64708</td>
+<td class="instruction">LD HL,58632</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="58632.html">Messaging_UsingTheCrowbarAsALever</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64711"></span>64711</td>
+<td class="instruction">JP <a href="61498.html">PrintStringAndNewline_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Move_1</td>
+<td class="address-2"><span id="64714"></span>64714</td>
+<td class="instruction">JP <a href="61556.html">Response_PleaseRephraseThat_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61556.html">Response_PleaseRephraseThat_Duplicate</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="64609.html">64609</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#64664">Map</a></td>
+<td class="next">
+Next: <a href="64717.html">64717</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1985 Interceptor Software UK &copy; 2025 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.6.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/jewelsofbabylon/">Source code</a>.</div>
+<div><a href="../../asm/FC98.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

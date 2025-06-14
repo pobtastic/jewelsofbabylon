@@ -33,7 +33,7 @@ Next: <a href="61634.html">61634</a>
 </td>
 </tr>
 </table>
-<div class="description">61596: Routine at F09C</div>
+<div class="description">61596: Action: Help</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -42,44 +42,53 @@ Next: <a href="61634.html">61634</a>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Action_Help</td>
 <td class="address-2"><span id="61596"></span>61596</td>
 <td class="instruction">CALL <a href="50288.html">50288</a></td>
 <td class="comment-1" rowspan="1">Call <a href="50288.html">50288</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61599"></span>61599</td>
 <td class="instruction">RET C</td>
 <td class="comment-1" rowspan="1">Return if ?? is less than 0.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61600"></span>61600</td>
 <td class="instruction">LD A,24</td>
 <td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with "Surrounded by natives".</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61602"></span>61602</td>
 <td class="instruction">CALL <a href="50015.html">Handler_Objects</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61605"></span>61605</td>
 <td class="instruction">JR NZ,<a href="61634.html">61634</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="61634.html">61634</a> if "Surrounded by natives" isn't in the current room.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61607"></span>61607</td>
 <td class="instruction">LD HL,48212</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48212.html">48212</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61610"></span>61610</td>
 <td class="instruction">BIT 1,(HL)</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61596.html#61628">61628</a> if bit 1 of *<span class="register">HL</span> is set.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61596.html#61628">Action_Help_0</a> if bit 1 of *<span class="register">HL</span> is set.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61612"></span>61612</td>
-<td class="instruction">JR NZ,<a href="61596.html#61628">61628</a></td>
+<td class="instruction">JR NZ,<a href="61596.html#61628">Action_Help_0</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61614"></span>61614</td>
 <td class="instruction">SET 1,(HL)</td>
 <td class="comment-1" rowspan="1">Set bit 1 of *<span class="register">HL</span>.</td>
@@ -95,11 +104,13 @@ Print "You're really in the soup now.".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61616"></span>61616</td>
 <td class="instruction">LD HL,55668</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="55668.html">55668</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61619"></span>61619</td>
 <td class="instruction">CALL <a href="47793.html">PrintStringAndNewline</a></td>
 <td class="comment-1" rowspan="1">Call <a href="47793.html">PrintStringAndNewline</a>.</td>
@@ -115,11 +126,13 @@ Print "Sorry...That was in poor taste.".
 </td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61622"></span>61622</td>
 <td class="instruction">LD HL,55699</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="55699.html">55699</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61625"></span>61625</td>
 <td class="instruction">CALL <a href="50553.html">PausePrintStringAndScroll</a></td>
 <td class="comment-1" rowspan="1">Call <a href="50553.html">PausePrintStringAndScroll</a>.</td>
@@ -135,11 +148,13 @@ Print "Try distracting them.".
 </td>
 </tr>
 <tr>
+<td class="asm-label">Action_Help_0</td>
 <td class="address-2"><span id="61628"></span>61628</td>
 <td class="instruction">LD HL,55732</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="55732.html">55732</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="61631"></span>61631</td>
 <td class="instruction">JP <a href="61502.html">PausePrintStringAndScroll_Alias</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="61502.html">PausePrintStringAndScroll_Alias</a>.</td>

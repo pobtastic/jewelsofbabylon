@@ -480,7 +480,7 @@ Pointer to the table containing room descriptions.
 <td class="map-g"><span id="bd26"></span><a href="../asm/BD26.html">BD26</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD26.html">Game status buffer entry at BD26</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD26.html">Pointer: Verb Word Tokens Table</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -513,8 +513,11 @@ The total number of objects in the game.
 <td class="map-g"><span id="bd2c"></span><a href="../asm/BD2C.html">BD2C</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD2C.html">Game status buffer entry at BD2C</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD2C.html">Number Of Verb Tokens</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+The total number of verb word tokens the game has. See <a href="../asm/E90D.html">Table_VerbWordTokens</a>.
+</div>
 </div>
 </td>
 </tr>
@@ -561,7 +564,7 @@ The total number of rooms which have related images in the game.
 <td class="map-g"><span id="bd66"></span><a href="../asm/BD66.html">BD66</a></td>
 <td class="map-length">10</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD66.html">Word Tokens</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/BD66.html">User Input: Word Tokens</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -663,8 +666,11 @@ Pointer to the table containing direction messaging.
 <td class="map-g"><span id="e86e"></span><a href="../asm/E86E.html">E86E</a></td>
 <td class="map-length">159</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E86E.html">Data: Items</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E86E.html">Data: Item Groups</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+See <a href="../asm/E96A.html">Table_ItemGrouping</a> for usage.
+</div>
 </div>
 </td>
 </tr>
@@ -672,8 +678,11 @@ Pointer to the table containing direction messaging.
 <td class="map-g"><span id="e90d"></span><a href="../asm/E90D.html">E90D</a></td>
 <td class="map-length">38</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E90D.html">Game status buffer entry at E90D</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E90D.html">Table: Verb Word Tokens</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+A list of all available verb tokens in the game. See <a href="../asm/BD2C.html">Count_VerbTokens</a>.
+</div>
 </div>
 </td>
 </tr>
@@ -702,8 +711,57 @@ See <a href="../asm/FFA8.html">JumpTable_RoomImages</a>.
 <td class="map-g"><span id="e96a"></span><a href="../asm/E96A.html">E96A</a></td>
 <td class="map-length">96</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E96A.html">Table: Object Rooms</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/E96A.html">Table: Item Grouping</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Items may have several item IDs which relate to a single item, this table groups the items together to assist the parser with knowing that tokens refer to the same thing.
+</div>
+<div class="paragraph">
+Some examples are: <table class="default">
+<tr>
+<th colspan="1" rowspan="1">Item ID</th>
+<th colspan="1" rowspan="1">Item Name</th>
+<th colspan="1" rowspan="1">Relates To:</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><a href="../asm/E86E.html">02</a></td>
+<td class="centre" colspan="1" rowspan="1">"A match"</td>
+<td class="centre" colspan="1" rowspan="2">The Match</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><a href="../asm/E86E.html#e86f">03</a></td>
+<td class="centre" colspan="1" rowspan="1">"A lighted match"</td>
+</tr>
+<tr>
+<th colspan="1" rowspan="1">Item ID</th>
+<th colspan="1" rowspan="1">Item Name</th>
+<th colspan="1" rowspan="1">Relates To:</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><a href="../asm/E86E.html#e885">10</a></td>
+<td class="centre" colspan="1" rowspan="1">"An eyepatch"</td>
+<td class="centre" colspan="1" rowspan="2">The Eyepatch</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><a href="../asm/E86E.html#e886">11</a></td>
+<td class="centre" colspan="1" rowspan="1">"An eyepatch (worn)"</td>
+</tr>
+<tr>
+<th colspan="1" rowspan="1">Item ID</th>
+<th colspan="1" rowspan="1">Item Name</th>
+<th colspan="1" rowspan="1">Relates To:</th>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><a href="../asm/E86E.html#e8bc">27</a></td>
+<td class="centre" colspan="1" rowspan="1">"A parrot (alive)"</td>
+<td class="centre" colspan="1" rowspan="2">The Parrot</td>
+</tr>
+<tr>
+<td class="centre" colspan="1" rowspan="1"><a href="../asm/E86E.html#e8bd">28</a></td>
+<td class="centre" colspan="1" rowspan="1">"A dead parrot"</td>
+</tr>
+</table>
+</div>
 </div>
 </td>
 </tr>
@@ -750,7 +808,7 @@ The user input is broken down into tokens which represent the words they've ente
 <td class="map-g"><span id="ff3a"></span><a href="../asm/FF3A.html">FF3A</a></td>
 <td class="map-length">76</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/FF3A.html">Jump Table:</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/FF3A.html">Jump Table: Verbs</a></div>
 <div class="map-entry-desc">
 </div>
 </td>

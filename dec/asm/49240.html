@@ -102,7 +102,7 @@ Clear down the word token buffer which will eventually hold the tokenised input.
 <td class="asm-label"></td>
 <td class="address-1"><span id="49247"></span>49247</td>
 <td class="instruction">LD HL,48486</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48486.html">WordTokens</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48486.html">UserInput_Token_1</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -617,7 +617,7 @@ Now begin tokenising the user input.
 <td class="asm-label"></td>
 <td class="address-1"><span id="49402"></span>49402</td>
 <td class="instruction">LD HL,48486</td>
-<td class="comment-1" rowspan="2"><span class="register">HL</span>=<a href="48486.html">WordTokens</a>+<span class="register">DE</span>.</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>=<a href="48486.html">UserInput_Token_1</a>+<span class="register">DE</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -968,7 +968,7 @@ Print ".".
 <td class="asm-label">UserInput_Enter_19</td>
 <td class="address-2"><span id="49518"></span>49518</td>
 <td class="instruction">LD A,(48486)</td>
-<td class="comment-1" rowspan="3">Return if *<a href="48486.html">WordTokens</a> is not equal to 255.</td>
+<td class="comment-1" rowspan="3">Return if *<a href="48486.html">UserInput_Token_1</a> is not equal to 255.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
