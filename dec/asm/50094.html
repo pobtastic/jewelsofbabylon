@@ -33,110 +33,142 @@ Next: <a href="50128.html">50128</a>
 </td>
 </tr>
 </table>
-<div class="description">50094: Routine at C3AE</div>
+<div class="description">50094: Parser: Count Item References</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="50299.html">Handler_DirectObject</a>, <a href="50320.html">50320</a>, <a href="50359.html">50359</a> and <a href="64278.html">Action_Give</a>.
+Used by the routines at <a href="50299.html">Parser_ValidateDirectObject</a>, <a href="50320.html">50320</a>, <a href="50359.html">50359</a> and <a href="64278.html">Action_Give</a>.
+</div>
+<div class="paragraph">
+Count how many tokens in the user input refer to game items.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Parser_CountItems</td>
 <td class="address-2"><span id="50094"></span>50094</td>
 <td class="instruction">LD HL,48486</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48486.html">UserInput_Token_1</a>.</td>
+<td class="comment-1" rowspan="1">Set a pointer to <a href="48486.html">UserInput_Token_1</a> in <span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50097"></span>50097</td>
 <td class="instruction">LD B,10</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=10.</td>
+<td class="comment-1" rowspan="1">Set a token count in <span class="register">B</span> of 10 which is the total length of the user input tokens.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50099"></span>50099</td>
 <td class="instruction">LD E,0</td>
-<td class="comment-1" rowspan="1"><span class="register">E</span>=0.</td>
+<td class="comment-1" rowspan="1">Initialise the item counter held in <span class="register">E</span> to 0.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_CountItems_Loop</td>
 <td class="address-2"><span id="50101"></span>50101</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Fetch a user input token.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50102"></span>50102</td>
 <td class="instruction">CP 255</td>
-<td class="comment-1" rowspan="2">Jump to <a href="50094.html#50125">50125</a> if <span class="register">A</span> is equal to 255.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="50094.html#50125">Parser_CountItems_Process</a> if the terminator character (255) has been reached.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50104"></span>50104</td>
-<td class="instruction">JR Z,<a href="50094.html#50125">50125</a></td>
+<td class="instruction">JR Z,<a href="50094.html#50125">Parser_CountItems_Process</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50106"></span>50106</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">BC</span> on the stack.</td>
+<td class="comment-1" rowspan="2">Stash the token pointer and token counter on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50107"></span>50107</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50108"></span>50108</td>
 <td class="instruction">LD HL,(48414)</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="48414.html">Pointer_ObjectList</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50111"></span>50111</td>
 <td class="instruction">LD BC,(48426)</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="48426.html">Count_Objects</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50115"></span>50115</td>
 <td class="instruction">CPIR</td>
 <td class="comment-1" rowspan="1">CPIR.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50117"></span>50117</td>
 <td class="instruction">POP BC</td>
-<td class="comment-1" rowspan="2">Restore <span class="register">BC</span> and <span class="register">HL</span> from the stack.</td>
+<td class="comment-1" rowspan="2">Restore the token counter and token pointer from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50118"></span>50118</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50119"></span>50119</td>
-<td class="instruction">JR NZ,<a href="50094.html#50122">50122</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="50094.html#50122">50122</a> if <span class="register">A</span> is not equal to 255.</td>
+<td class="instruction">JR NZ,<a href="50094.html#50122">Parser_CountItems_Skip</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="50094.html#50122">Parser_CountItems_Skip</a> if this token doesn't refer to a game item.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="50121"></span>
+<div class="comments">
+<div class="paragraph">
+This token does point to a game item, so increase the item counter.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50121"></span>50121</td>
 <td class="instruction">INC E</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">E</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment item counter by one.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_CountItems_Skip</td>
 <td class="address-2"><span id="50122"></span>50122</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Move to the next token.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50123"></span>50123</td>
-<td class="instruction">DJNZ <a href="50094.html#50101">50101</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="50094.html#50101">50101</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="50094.html#50101">Parser_CountItems_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the token counter by one and loop back to <a href="50094.html#50101">Parser_CountItems_Loop</a> until all the tokens have been evaluated.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_CountItems_Process</td>
 <td class="address-2"><span id="50125"></span>50125</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+<td class="comment-1" rowspan="2">Transfer the item count into <span class="register">A</span> and set flags accordingly.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50126"></span>50126</td>
 <td class="instruction">OR E</td>
-<td class="comment-1" rowspan="1">Set the bits from <span class="register">E</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="50127"></span>50127</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

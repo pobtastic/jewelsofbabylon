@@ -29,7 +29,7 @@ Prev: <a href="F165.html">F165</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#f169">Map</a></td>
 <td class="next">
-Next: <a href="F19D.html">F19D</a>
+Next: <a href="F16B.html">F16B</a>
 </td>
 </tr>
 </table>
@@ -45,161 +45,16 @@ Next: <a href="F19D.html">F19D</a>
 <td class="asm-label">Action_Down</td>
 <td class="address-2"><span id="f169"></span>F169</td>
 <td class="instruction">LD C,$05</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=05.</td>
+<td class="comment-1" rowspan="1">Set <span class="register">C</span> to "DOWN" (05).</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="f16b"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="F155.html">Action_North</a>, <a href="F159.html">Action_South</a>, <a href="F15D.html">Action_East</a>, <a href="F161.html">Action_West</a> and <a href="F165.html">Action_Up</a>.
+Continue on to <a href="F16B.html">MovePlayer</a>.
 </div>
 </div>
 </td>
-</tr>
-<tr>
-<td class="asm-label">Action_Down_0</td>
-<td class="address-2"><span id="f16b"></span>F16B</td>
-<td class="instruction">CALL <a href="C470.html">$C470</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C470.html">C470</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f16e"></span>F16E</td>
-<td class="instruction">RET C</td>
-<td class="comment-1" rowspan="1">Return if ?? is less than 05.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f16f"></span>F16F</td>
-<td class="instruction">LD B,$00</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=00.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f171"></span>F171</td>
-<td class="instruction">CALL <a href="C302.html">GetRoomPointer</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C302.html">GetRoomPointer</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f174"></span>F174</td>
-<td class="instruction">ADD HL,BC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">BC</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f175"></span>F175</td>
-<td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f176"></span>F176</td>
-<td class="instruction">OR A</td>
-<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f177"></span>F177</td>
-<td class="instruction">JR Z,<a href="F169.html#f17d">Action_Down_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F169.html#f17d">Action_Down_1</a> if ?? is equal to <span class="register">A</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f179"></span>F179</td>
-<td class="instruction">CALL <a href="EF54.html">$EF54</a></td>
-<td class="comment-1" rowspan="1">Call <a href="EF54.html">EF54</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f17c"></span>F17C</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
-</tr>
-<tr>
-<td class="asm-label">Action_Down_1</td>
-<td class="address-2"><span id="f17d"></span>F17D</td>
-<td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="F169.html#f190">Action_Down_2</a> if *<a href="BCCB.html">CurrentRoom</a> is not room 04: "
-
-<a href="CB66.html">In A Rowing Boat</a>".</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f180"></span>F180</td>
-<td class="instruction">CP $04</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f182"></span>F182</td>
-<td class="instruction">JR NZ,<a href="F169.html#f190">Action_Down_2</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f184"></span>F184</td>
-<td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">C</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f185"></span>F185</td>
-<td class="instruction">CP $04</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 04.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f187"></span>F187</td>
-<td class="instruction">JP Z,<a href="F051.html">Response_TryClimbing</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F051.html">Response_TryClimbing</a> if <span class="register">A</span> is equal to 04.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f18a"></span>F18A</td>
-<td class="instruction">JP C,<a href="F056.html">Response_TryRowing</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F056.html">Response_TryRowing</a> if <span class="register">A</span> is less than 04.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f18d"></span>F18D</td>
-<td class="instruction">JP <a href="F05B.html">Response_YouCantGoInThatDirection</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F05B.html">Response_YouCantGoInThatDirection</a>.</td>
-</tr>
-<tr>
-<td class="asm-label">Action_Down_2</td>
-<td class="address-2"><span id="f190"></span>F190</td>
-<td class="instruction">CP $02</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F169.html#f19a">Action_Down_3</a> if *<a href="BCCB.html">CurrentRoom</a> is not room 02: "
-
-<a href="CB06.html">The Open Sea</a>".</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f192"></span>F192</td>
-<td class="instruction">JR NZ,<a href="F169.html#f19a">Action_Down_3</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f194"></span>F194</td>
-<td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">C</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f195"></span>F195</td>
-<td class="instruction">CP $04</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F056.html">Response_TryRowing</a> if <span class="register">A</span> is less than 04.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f197"></span>F197</td>
-<td class="instruction">JP C,<a href="F056.html">Response_TryRowing</a></td>
-</tr>
-<tr>
-<td class="asm-label">Action_Down_3</td>
-<td class="address-2"><span id="f19a"></span>F19A</td>
-<td class="instruction">JP <a href="F05B.html">Response_YouCantGoInThatDirection</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F05B.html">Response_YouCantGoInThatDirection</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -209,7 +64,7 @@ Prev: <a href="F165.html">F165</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#f169">Map</a></td>
 <td class="next">
-Next: <a href="F19D.html">F19D</a>
+Next: <a href="F16B.html">F16B</a>
 </td>
 </tr>
 </table>

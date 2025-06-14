@@ -33,110 +33,142 @@ Next: <a href="C3D0.html">C3D0</a>
 </td>
 </tr>
 </table>
-<div class="description">C3AE: Routine at C3AE</div>
+<div class="description">C3AE: Parser: Count Item References</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="C47B.html">Handler_DirectObject</a>, <a href="C490.html">C490</a>, <a href="C4B7.html">C4B7</a> and <a href="FB16.html">Action_Give</a>.
+Used by the routines at <a href="C47B.html">Parser_ValidateDirectObject</a>, <a href="C490.html">C490</a>, <a href="C4B7.html">C4B7</a> and <a href="FB16.html">Action_Give</a>.
+</div>
+<div class="paragraph">
+Count how many tokens in the user input refer to game items.
 </div>
 </div>
 </td>
 </tr>
 <tr>
+<td class="asm-label">Parser_CountItems</td>
 <td class="address-2"><span id="c3ae"></span>C3AE</td>
 <td class="instruction">LD HL,$BD66</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BD66.html">UserInput_Token_1</a>.</td>
+<td class="comment-1" rowspan="1">Set a pointer to <a href="BD66.html">UserInput_Token_1</a> in <span class="register">HL</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3b1"></span>C3B1</td>
 <td class="instruction">LD B,$0A</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=0A.</td>
+<td class="comment-1" rowspan="1">Set a token count in <span class="register">B</span> of 0A which is the total length of the user input tokens.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3b3"></span>C3B3</td>
 <td class="instruction">LD E,$00</td>
-<td class="comment-1" rowspan="1"><span class="register">E</span>=00.</td>
+<td class="comment-1" rowspan="1">Initialise the item counter held in <span class="register">E</span> to 00.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_CountItems_Loop</td>
 <td class="address-2"><span id="c3b5"></span>C3B5</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
+<td class="comment-1" rowspan="1">Fetch a user input token.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3b6"></span>C3B6</td>
 <td class="instruction">CP $FF</td>
-<td class="comment-1" rowspan="2">Jump to <a href="C3AE.html#c3cd">C3CD</a> if <span class="register">A</span> is equal to FF.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="C3AE.html#c3cd">Parser_CountItems_Process</a> if the terminator character (FF) has been reached.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3b8"></span>C3B8</td>
-<td class="instruction">JR Z,<a href="C3AE.html#c3cd">$C3CD</a></td>
+<td class="instruction">JR Z,<a href="C3AE.html#c3cd">Parser_CountItems_Process</a></td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3ba"></span>C3BA</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="2">Stash <span class="register">HL</span> and <span class="register">BC</span> on the stack.</td>
+<td class="comment-1" rowspan="2">Stash the token pointer and token counter on the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3bb"></span>C3BB</td>
 <td class="instruction">PUSH BC</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3bc"></span>C3BC</td>
 <td class="instruction">LD HL,($BD1E)</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="BD1E.html">Pointer_ObjectList</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3bf"></span>C3BF</td>
 <td class="instruction">LD BC,($BD2A)</td>
 <td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="BD2A.html">Count_Objects</a>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3c3"></span>C3C3</td>
 <td class="instruction">CPIR</td>
 <td class="comment-1" rowspan="1">CPIR.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3c5"></span>C3C5</td>
 <td class="instruction">POP BC</td>
-<td class="comment-1" rowspan="2">Restore <span class="register">BC</span> and <span class="register">HL</span> from the stack.</td>
+<td class="comment-1" rowspan="2">Restore the token counter and token pointer from the stack.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3c6"></span>C3C6</td>
 <td class="instruction">POP HL</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3c7"></span>C3C7</td>
-<td class="instruction">JR NZ,<a href="C3AE.html#c3ca">$C3CA</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="C3AE.html#c3ca">C3CA</a> if <span class="register">A</span> is not equal to FF.</td>
+<td class="instruction">JR NZ,<a href="C3AE.html#c3ca">Parser_CountItems_Skip</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="C3AE.html#c3ca">Parser_CountItems_Skip</a> if this token doesn't refer to a game item.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="c3c9"></span>
+<div class="comments">
+<div class="paragraph">
+This token does point to a game item, so increase the item counter.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3c9"></span>C3C9</td>
 <td class="instruction">INC E</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">E</span> by one.</td>
+<td class="comment-1" rowspan="1">Increment item counter by one.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_CountItems_Skip</td>
 <td class="address-2"><span id="c3ca"></span>C3CA</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="1">Increment <span class="register">HL</span> by one.</td>
+<td class="comment-1" rowspan="1">Move to the next token.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3cb"></span>C3CB</td>
-<td class="instruction">DJNZ <a href="C3AE.html#c3b5">$C3B5</a></td>
-<td class="comment-1" rowspan="1">Decrease counter by one and loop back to <a href="C3AE.html#c3b5">C3B5</a> until counter is zero.</td>
+<td class="instruction">DJNZ <a href="C3AE.html#c3b5">Parser_CountItems_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the token counter by one and loop back to <a href="C3AE.html#c3b5">Parser_CountItems_Loop</a> until all the tokens have been evaluated.</td>
 </tr>
 <tr>
+<td class="asm-label">Parser_CountItems_Process</td>
 <td class="address-2"><span id="c3cd"></span>C3CD</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
+<td class="comment-1" rowspan="2">Transfer the item count into <span class="register">A</span> and set flags accordingly.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3ce"></span>C3CE</td>
 <td class="instruction">OR E</td>
-<td class="comment-1" rowspan="1">Set the bits from <span class="register">E</span>.</td>
 </tr>
 <tr>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c3cf"></span>C3CF</td>
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>

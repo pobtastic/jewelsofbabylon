@@ -44,14 +44,24 @@ Next: <a href="F263.html">F263</a>
 <tr>
 <td class="asm-label">Action_Quit</td>
 <td class="address-2"><span id="f246"></span>F246</td>
-<td class="instruction">CALL <a href="C470.html">$C470</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C470.html">C470</a>.</td>
+<td class="instruction">CALL <a href="C470.html">Parser_ValidateNoDirectObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C470.html">Parser_ValidateNoDirectObject</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="f249"></span>
+<div class="comments">
+<div class="paragraph">
+The "QUIT" command can only be called on its own.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f249"></span>F249</td>
 <td class="instruction">RET C</td>
-<td class="comment-1" rowspan="1">Return if <span class="register">A</span> is less than 1B.</td>
+<td class="comment-1" rowspan="1">Return if there's any token set in <a href="BD66.html#bd67">UserInput_Token_2</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -76,32 +86,52 @@ Print "Want to save the game? Y/N.".
 <td class="comment-1" rowspan="1">Call <a href="BAB1.html">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Quit_0</td>
+<td class="asm-label">WantToSave_Loop</td>
 <td class="address-2"><span id="f250"></span>F250</td>
 <td class="instruction">CALL <a href="BA5D.html">GetUserInput</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BA5D.html">GetUserInput</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="f253"></span>
+<div class="comments">
+<div class="paragraph">
+The player just wants to quit.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f253"></span>F253</td>
 <td class="instruction">CP $4E</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F246.html#f25e">Action_Quit_1</a> if <span class="register">A</span> is equal to 4E.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F246.html#f25e">QuitGame</a> if the keypress is "<code>&#78;</code>".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f255"></span>F255</td>
-<td class="instruction">JR Z,<a href="F246.html#f25e">Action_Quit_1</a></td>
+<td class="instruction">JR Z,<a href="F246.html#f25e">QuitGame</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f257"></span>F257</td>
 <td class="instruction">CP $59</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F246.html#f250">Action_Quit_0</a> if <span class="register">A</span> is not equal to 59.</td>
+<td class="comment-1" rowspan="2">Jump back to <a href="F246.html#f250">WantToSave_Loop</a> if the keypress is anything other than "<code>&#89;</code>".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f259"></span>F259</td>
-<td class="instruction">JR NZ,<a href="F246.html#f250">Action_Quit_0</a></td>
+<td class="instruction">JR NZ,<a href="F246.html#f250">WantToSave_Loop</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="f25b"></span>
+<div class="comments">
+<div class="paragraph">
+The player does want to save before quitting...
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -110,10 +140,20 @@ Print "Want to save the game? Y/N.".
 <td class="comment-1" rowspan="1">Call <a href="BB59.html">SaveGame</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Quit_1</td>
+<td class="routine-comment" colspan="5">
+<span id="f25e"></span>
+<div class="comments">
+<div class="paragraph">
+Jump to asking if the player "wants another game?"
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">QuitGame</td>
 <td class="address-2"><span id="f25e"></span>F25E</td>
 <td class="instruction">LD HL,$EDDD</td>
-<td class="comment-1" rowspan="2">Switch <a href="EDD7.html#eddd">GameOverInput</a> onto the stack so the next return action is asking for "Y"/ "N" user input, the same as for "Want another game? Y/N.".</td>
+<td class="comment-1" rowspan="2">Switch <a href="EDD7.html#eddd">WantAnotherGameInput</a> onto the stack so the next return action is asking if the player would "Want another game? Y/N.".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

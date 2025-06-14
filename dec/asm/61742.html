@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="61715.html">61715</a>
+Prev: <a href="61596.html">61596</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#61742">Map</a></td>
 <td class="next">
@@ -44,20 +44,30 @@ Next: <a href="61771.html">61771</a>
 <tr>
 <td class="asm-label">Action_Inventory</td>
 <td class="address-2"><span id="61742"></span>61742</td>
-<td class="instruction">CALL <a href="50288.html">50288</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50288.html">50288</a>.</td>
+<td class="instruction">CALL <a href="50288.html">Parser_ValidateNoDirectObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50288.html">Parser_ValidateNoDirectObject</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="61745"></span>
+<div class="comments">
+<div class="paragraph">
+The "INVENTORY" command can only be called on its own.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61745"></span>61745</td>
 <td class="instruction">RET C</td>
-<td class="comment-1" rowspan="1">Return if "inventory" wasn't requested.</td>
+<td class="comment-1" rowspan="1">Return if there's any token set in <a href="48486.html#48487">UserInput_Token_2</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61746"></span>61746</td>
 <td class="instruction">LD A,(48280)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61516.html">Response_YoureNotCarryingAnything</a> if *<a href="48280.html">CounterMatch</a> is zero.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61516.html">Response_YoureNotCarryingAnything</a> if *<a href="48280.html">CounterMatch</a> is zero. TODO re-evaluate this.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -68,6 +78,16 @@ Next: <a href="61771.html">61771</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="61750"></span>61750</td>
 <td class="instruction">JP Z,<a href="61516.html">Response_YoureNotCarryingAnything</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="61753"></span>
+<div class="comments">
+<div class="paragraph">
+Clear the screen and display the players inventory.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -124,7 +144,7 @@ Print "You are carrying:-".
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="61715.html">61715</a>
+Prev: <a href="61596.html">61596</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#61742">Map</a></td>
 <td class="next">

@@ -80,7 +80,7 @@ Print "Want another game? Y/N.".
 </td>
 </tr>
 <tr>
-<td class="asm-label">GameOverInput</td>
+<td class="asm-label">WantAnotherGameInput</td>
 <td class="address-2"><span id="eddd"></span>EDDD</td>
 <td class="instruction">LD HL,$BE3F</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BE3F.html">Messaging_WantAnotherGame</a>.</td>
@@ -92,10 +92,20 @@ Print "Want another game? Y/N.".
 <td class="comment-1" rowspan="1">Call <a href="BAB1.html">PrintStringAndNewline</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">GameOverInput_Loop</td>
+<td class="asm-label">WantAnotherGameInput_Loop</td>
 <td class="address-2"><span id="ede3"></span>EDE3</td>
 <td class="instruction">CALL <a href="BA5D.html">GetUserInput</a></td>
 <td class="comment-1" rowspan="1">Call <a href="BA5D.html">GetUserInput</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ede6"></span>
+<div class="comments">
+<div class="paragraph">
+The player is done with the game, so reset back to BASIC.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -109,6 +119,16 @@ Print "Want another game? Y/N.".
 <td class="instruction">JP Z,$0000</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="edeb"></span>
+<div class="comments">
+<div class="paragraph">
+The player wants another go...
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="edeb"></span>EDEB</td>
 <td class="instruction">CP $59</td>
@@ -120,10 +140,20 @@ Print "Want another game? Y/N.".
 <td class="instruction">JP Z,<a href="BA50.html">GameEntryPoint</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="edf0"></span>
+<div class="comments">
+<div class="paragraph">
+Just loop round for any other input.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="edf0"></span>EDF0</td>
-<td class="instruction">JR <a href="EDD7.html#ede3">GameOverInput_Loop</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="EDD7.html#ede3">GameOverInput_Loop</a>.</td>
+<td class="instruction">JR <a href="EDD7.html#ede3">WantAnotherGameInput_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EDD7.html#ede3">WantAnotherGameInput_Loop</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

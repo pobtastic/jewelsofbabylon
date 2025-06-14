@@ -29,7 +29,7 @@ Prev: <a href="61797.html">61797</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#61801">Map</a></td>
 <td class="next">
-Next: <a href="61853.html">61853</a>
+Next: <a href="61803.html">61803</a>
 </td>
 </tr>
 </table>
@@ -45,161 +45,16 @@ Next: <a href="61853.html">61853</a>
 <td class="asm-label">Action_Down</td>
 <td class="address-2"><span id="61801"></span>61801</td>
 <td class="instruction">LD C,5</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=5.</td>
+<td class="comment-1" rowspan="1">Set <span class="register">C</span> to "DOWN" (5).</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="61803"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="61781.html">Action_North</a>, <a href="61785.html">Action_South</a>, <a href="61789.html">Action_East</a>, <a href="61793.html">Action_West</a> and <a href="61797.html">Action_Up</a>.
+Continue on to <a href="61803.html">MovePlayer</a>.
 </div>
 </div>
 </td>
-</tr>
-<tr>
-<td class="asm-label">Action_Down_0</td>
-<td class="address-2"><span id="61803"></span>61803</td>
-<td class="instruction">CALL <a href="50288.html">50288</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50288.html">50288</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61806"></span>61806</td>
-<td class="instruction">RET C</td>
-<td class="comment-1" rowspan="1">Return if ?? is less than 5.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61807"></span>61807</td>
-<td class="instruction">LD B,0</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=0.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61809"></span>61809</td>
-<td class="instruction">CALL <a href="49922.html">GetRoomPointer</a></td>
-<td class="comment-1" rowspan="1">Call <a href="49922.html">GetRoomPointer</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61812"></span>61812</td>
-<td class="instruction">ADD HL,BC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>+=<span class="register">BC</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61813"></span>61813</td>
-<td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">HL</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61814"></span>61814</td>
-<td class="instruction">OR A</td>
-<td class="comment-1" rowspan="1">Set the bits from <span class="register">A</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61815"></span>61815</td>
-<td class="instruction">JR Z,<a href="61801.html#61821">Action_Down_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61801.html#61821">Action_Down_1</a> if ?? is equal to <span class="register">A</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61817"></span>61817</td>
-<td class="instruction">CALL <a href="61268.html">61268</a></td>
-<td class="comment-1" rowspan="1">Call <a href="61268.html">61268</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61820"></span>61820</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
-</tr>
-<tr>
-<td class="asm-label">Action_Down_1</td>
-<td class="address-2"><span id="61821"></span>61821</td>
-<td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="61801.html#61840">Action_Down_2</a> if *<a href="48331.html">CurrentRoom</a> is not room 4: "
-
-<a href="52070.html">In A Rowing Boat</a>".</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61824"></span>61824</td>
-<td class="instruction">CP 4</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61826"></span>61826</td>
-<td class="instruction">JR NZ,<a href="61801.html#61840">Action_Down_2</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61828"></span>61828</td>
-<td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">C</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61829"></span>61829</td>
-<td class="instruction">CP 4</td>
-<td class="comment-1" rowspan="1">Compare <span class="register">A</span> with 4.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61831"></span>61831</td>
-<td class="instruction">JP Z,<a href="61521.html">Response_TryClimbing</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61521.html">Response_TryClimbing</a> if <span class="register">A</span> is equal to 4.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61834"></span>61834</td>
-<td class="instruction">JP C,<a href="61526.html">Response_TryRowing</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61526.html">Response_TryRowing</a> if <span class="register">A</span> is less than 4.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61837"></span>61837</td>
-<td class="instruction">JP <a href="61531.html">Response_YouCantGoInThatDirection</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61531.html">Response_YouCantGoInThatDirection</a>.</td>
-</tr>
-<tr>
-<td class="asm-label">Action_Down_2</td>
-<td class="address-2"><span id="61840"></span>61840</td>
-<td class="instruction">CP 2</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61801.html#61850">Action_Down_3</a> if *<a href="48331.html">CurrentRoom</a> is not room 2: "
-
-<a href="51974.html">The Open Sea</a>".</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61842"></span>61842</td>
-<td class="instruction">JR NZ,<a href="61801.html#61850">Action_Down_3</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61844"></span>61844</td>
-<td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=<span class="register">C</span>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61845"></span>61845</td>
-<td class="instruction">CP 4</td>
-<td class="comment-1" rowspan="2">Jump to <a href="61526.html">Response_TryRowing</a> if <span class="register">A</span> is less than 4.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="61847"></span>61847</td>
-<td class="instruction">JP C,<a href="61526.html">Response_TryRowing</a></td>
-</tr>
-<tr>
-<td class="asm-label">Action_Down_3</td>
-<td class="address-2"><span id="61850"></span>61850</td>
-<td class="instruction">JP <a href="61531.html">Response_YouCantGoInThatDirection</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61531.html">Response_YouCantGoInThatDirection</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -209,7 +64,7 @@ Prev: <a href="61797.html">61797</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#61801">Map</a></td>
 <td class="next">
-Next: <a href="61853.html">61853</a>
+Next: <a href="61803.html">61803</a>
 </td>
 </tr>
 </table>

@@ -47,14 +47,14 @@ Used by the routine at <a href="62593.html">Action_Get</a>.
 <tr>
 <td class="asm-label">Action_Take</td>
 <td class="address-2"><span id="62051"></span>62051</td>
-<td class="instruction">CALL <a href="50299.html">Handler_DirectObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50299.html">Handler_DirectObject</a>.</td>
+<td class="instruction">CALL <a href="50299.html">Parser_ValidateDirectObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="50299.html">Parser_ValidateDirectObject</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="62054"></span>62054</td>
 <td class="instruction">RET C</td>
-<td class="comment-1" rowspan="1">Return if <span class="register">A</span> is less than 89.</td>
+<td class="comment-1" rowspan="1">Return if the direct object is malformed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

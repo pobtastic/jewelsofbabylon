@@ -44,20 +44,20 @@ Next: <a href="FBA8.html">FBA8</a>
 <tr>
 <td class="asm-label">Action_Swearing</td>
 <td class="address-2"><span id="fb83"></span>FB83</td>
-<td class="instruction">CALL <a href="C47B.html">Handler_DirectObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C47B.html">Handler_DirectObject</a>.</td>
+<td class="instruction">CALL <a href="C47B.html">Parser_ValidateDirectObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C47B.html">Parser_ValidateDirectObject</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb86"></span>FB86</td>
 <td class="instruction">RET C</td>
-<td class="comment-1" rowspan="1">Return if <span class="register">A</span> is less than 31.</td>
+<td class="comment-1" rowspan="1">Return if the direct object is malformed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb87"></span>FB87</td>
 <td class="instruction">LD HL,$BC54</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html">BC54</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC54.html">GameFlags_Help</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

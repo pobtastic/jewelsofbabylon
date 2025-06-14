@@ -44,14 +44,14 @@ Next: <a href="F7AB.html">F7AB</a>
 <tr>
 <td class="asm-label">Action_DropThrow</td>
 <td class="address-2"><span id="f4d4"></span>F4D4</td>
-<td class="instruction">CALL <a href="C47B.html">Handler_DirectObject</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C47B.html">Handler_DirectObject</a>.</td>
+<td class="instruction">CALL <a href="C47B.html">Parser_ValidateDirectObject</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C47B.html">Parser_ValidateDirectObject</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4d7"></span>F4D7</td>
 <td class="instruction">RET C</td>
-<td class="comment-1" rowspan="1">Return if <span class="register">A</span> is less than 06.</td>
+<td class="comment-1" rowspan="1">Return if the direct object is malformed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
