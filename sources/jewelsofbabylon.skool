@@ -4130,8 +4130,19 @@ g$BBF0 DEFB $03                             ; Item #N(#PC-$BBF0)
  $BC47 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BC4F DEFB $00,$00,$00,$00,$00
 
-; Data block at BC54
-b$BC54 DEFB $00,$00,$00,$00,$00,$00,$00,$00
+; Game Flags
+;
+; Holds a single byte, where each bit relates to help states as follows:
+; #TABLE(default,centre,centre)
+; { =h Bit | =h Relating To }
+; { #N$01 | Cannibals }
+; { #N$02 | Swearing }
+; TABLE#
+@label=GameFlags_Help
+g$BC54 DEFB $00
+
+; Unused
+u$BC55 DEFB $00,$00,$00,$00,$00,$00,$00
 
 ; Table: Already Seen Room Images
 ;
@@ -5374,7 +5385,7 @@ c$C26A CALL $BA6D    ; Call #R$BA6D.
 
 ; Get Room Pointer
 ;
-; Used by the routines at #R$C26A and #R$F169.
+; Used by the routines at #R$C26A and #R$F16B.
 ;
 ; O:HL Pointer to the room data
 @label=GetRoomPointer
@@ -5451,9 +5462,8 @@ c$C32A INC BC        ; Increment #REGbc by one.
 ; Routine at C35F
 ;
 ; Used by the routines at #R$C32A, #R$C401, #R$EE00, #R$EE11, #R$EE40, #R$EE63,
-; #R$EF54, #R$F09C, #R$F0C2, #R$F0CF, #R$F0DC, #R$F0F9, #R$F113, #R$F19D,
-; #R$F263, #R$F4D4, #R$F7D6, #R$FA3C, #R$FAA8, #R$FB16, #R$FBA8, #R$FBD5,
-; #R$FC24, #R$FC98 and #R$FCCD.
+; #R$EF54, #R$F09C, #R$F19D, #R$F263, #R$F4D4, #R$F7D6, #R$FA3C, #R$FAA8,
+; #R$FB16, #R$FBA8, #R$FBD5, #R$FC24, #R$FC98 and #R$FCCD.
 ;
 ; A Object ID
 ; F Z flag set if the object is available
@@ -5529,29 +5539,38 @@ c$C37F EX DE,HL      ; Switch the phrase token pointer to #REGde.
 *$C3AC OR A          ; Set the bits from #REGa.
  $C3AD RET           ; Return.
 
-; Routine at C3AE
+; Parser: Count Item References
 ;
 ; Used by the routines at #R$C47B, #R$C490, #R$C4B7 and #R$FB16.
-c$C3AE LD HL,$BD66   ; #REGhl=#R$BD66.
- $C3B1 LD B,$0A      ; #REGb=#N$0A.
- $C3B3 LD E,$00      ; #REGe=#N$00.
-*$C3B5 LD A,(HL)     ; #REGa=*#REGhl.
- $C3B6 CP $FF        ; {Jump to #R$C3CD if #REGa is equal to #N$FF.
- $C3B8 JR Z,$C3CD    ; }
- $C3BA PUSH HL       ; {Stash #REGhl and #REGbc on the stack.
+; .
+; Count how many tokens in the user input refer to game items.
+@label=Parser_CountItems
+c$C3AE LD HL,$BD66   ; Set a pointer to #R$BD66 in #REGhl.
+ $C3B1 LD B,$0A      ; Set a token count in #REGb of #N$0A which is the total length of
+                     ; the user input tokens.
+ $C3B3 LD E,$00      ; Initialise the item counter held in #REGe to #N$00.
+@label=Parser_CountItems_Loop
+*$C3B5 LD A,(HL)     ; Fetch a user input token.
+ $C3B6 CP $FF        ; {Jump to #R$C3CD if the terminator character (#N$FF) has been
+ $C3B8 JR Z,$C3CD    ; reached.}
+ $C3BA PUSH HL       ; {Stash the token pointer and token counter on the stack.
  $C3BB PUSH BC       ; }
  $C3BC LD HL,($BD1E) ; #REGhl=*#R$BD1E.
  $C3BF LD BC,($BD2A) ; #REGbc=*#R$BD2A.
  $C3C3 CPIR          ; CPIR.
- $C3C5 POP BC        ; {Restore #REGbc and #REGhl from the stack.
- $C3C6 POP HL        ; }
- $C3C7 JR NZ,$C3CA   ; Jump to #R$C3CA if #REGa is not equal to #N$FF.
- $C3C9 INC E         ; Increment #REGe by one.
-*$C3CA INC HL        ; Increment #REGhl by one.
- $C3CB DJNZ $C3B5    ; Decrease counter by one and loop back to #R$C3B5 until
-                     ; counter is zero.
-*$C3CD XOR A         ; #REGa=#N$00.
- $C3CE OR E          ; Set the bits from #REGe.
+ $C3C5 POP BC        ; {Restore the token counter and token pointer from the
+ $C3C6 POP HL        ; stack.}
+ $C3C7 JR NZ,$C3CA   ; Jump to #R$C3CA if this token doesn't refer to a game
+                     ; item.
+; This token does point to a game item, so increase the item counter.
+ $C3C9 INC E         ; Increment item counter by one.
+@label=Parser_CountItems_Skip
+*$C3CA INC HL        ; Move to the next token.
+ $C3CB DJNZ $C3B5    ; Decrease the token counter by one and loop back to #R$C3B5 until
+                     ; all the tokens have been evaluated.
+@label=Parser_CountItems_Process
+*$C3CD XOR A         ; {Transfer the item count into #REGa and set flags
+ $C3CE OR E          ; accordingly.}
  $C3CF RET           ; Return.
 
 ; Object/ Event Locator
@@ -5637,7 +5656,7 @@ c$C3FA LD B,A        ; Copy the scenic event ID into #REGb.
 
 ; Check Active Scenic Events
 ;
-; Used by the routines at #R$EE51, #R$EF54, #R$F113, #R$F19D, #R$F263, #R$F4D4,
+; Used by the routines at #R$EE51, #R$EF54, #R$F09C, #R$F19D, #R$F263, #R$F4D4,
 ; #R$F851, #R$F999, #R$F9E4, #R$FA3C and #R$FAA8.
 @label=CheckActiveScenicEvents
 c$C401 JR $C404      ; Jump to #R$C404.
@@ -5774,40 +5793,58 @@ c$C456 PUSH AF       ; {Stash #REGaf and #REGbc on the stack.
  $C46E CP A          ; Set the Z flag.
  $C46F RET           ; Return.
 
-; Routine at C470
+; Parser: Validate No Direct Object
 ;
-; Used by the routines at #R$F09C, #R$F12E, #R$F14B, #R$F169, #R$F236, #R$F23E
+; Used by the routines at #R$F09C, #R$F12E, #R$F14B, #R$F16B, #R$F236, #R$F23E
 ; and #R$F246.
-c$C470 LD A,($BD67)  ; #REGa=*#R$BD67.
- $C473 CP $FF        ; {Return if #REGa is equal to #N$FF.
+; .
+; The opposite of #R$C47B, checks that there's no direct object.
+;
+; O:F The zero flag is set when there's no direct object present
+; O:F The carry flag is set when there's a second token set
+@label=Parser_ValidateNoDirectObject
+c$C470 LD A,($BD67)  ; {Return if the second token (*#R$BD67) is the terminator
+ $C473 CP $FF        ; character (#N$FF).
  $C475 RET Z         ; }
+; Print "#STR$BEEA,$08($b==$FF)".
  $C476 CALL $BFEE    ; Call #R$BFEE.
- $C479 SCF           ; Set the carry flag.
+ $C479 SCF           ; Set the carry flag to indicate the command is malformed.
  $C47A RET           ; Return.
 
-; Handler: Direct Object
+; Parser: Validate Direct Object
 ;
 ; Used by the routines at #R$C49F, #R$F19D, #R$F263, #R$F481, #R$F4D4, #R$F91B,
 ; #R$F946, #R$F999, #R$F9E4, #R$FA3C, #R$FAA8, #R$FB83, #R$FBA8, #R$FBD5,
 ; #R$FC24, #R$FC61, #R$FC98, #R$FCCD and #R$FD6D.
+; .
+; In most adventure games, the structure for a command is "verb + direct
+; object". This is usually how the player interacts with the game world.
+; The verb describes the action, and the direct object is what the action is
+; performed on. For example; "TAKE SHOE" uses the verb "TAKE" on the direct
+; object "SHOE".
 ;
 ; O:F The carry flag is set when the command is malformed
-@label=Handler_DirectObject
+;
+; The first token is the verb, so target the second token for the direct
+; object.
+@label=Parser_ValidateDirectObject
 c$C47B LD A,($BD67)  ; Fetch the #R$BD67(second token from the user input) and store it in
                      ; #REGa.
  $C47E CP $FF        ; {Jump forward to #R$C487 if the token is anything other than the
  $C480 JR NZ,$C487   ; terminator character (#N$FF).}
 ; The token was the terminator character (#N$FF), so the sentence is
 ; malformed.
+; .
+; E.g. They tried "TAKE" but didn't write anything after it.
  $C482 CALL $BFF5    ; Call #R$BFF5.
- $C485 SCF           ; Set the carry flag.
+ $C485 SCF           ; Set the carry flag to indicate this call was a failure.
  $C486 RET           ; Return.
 ; Process the direct object.
 @label=DirectObject_Process
 *$C487 CALL $C3AE    ; Call #R$C3AE.
  $C48A RET NZ        ; Return if #REGa is not equal to #N$FF.
  $C48B CALL $BFEE    ; Call #R$BFEE.
- $C48E SCF           ; Set the carry flag.
+ $C48E SCF           ; Set the carry flag to indicate the command is malformed.
  $C48F RET           ; Return.
 
 ; Routine at C490
@@ -5824,7 +5861,7 @@ c$C490 LD A,($BD67)  ; #REGa=*#R$BD67.
 ;
 ; Used by the routines at #R$F7AB, #R$F7D6, #R$F851 and #R$FB71.
 c$C49F CALL $C47B    ; Call #R$C47B.
- $C4A2 RET C         ; Return if #REGa is less than #N$FF.
+ $C4A2 RET C         ; Return if the direct object is malformed.
  $C4A3 CP $01        ; {Jump to #R$C4AC if #REGa is not equal to #N$01.
  $C4A5 JR NZ,$C4AC   ; }
  $C4A7 CALL $BFF5    ; Call #R$BFF5.
@@ -5850,9 +5887,10 @@ c$C4B7 LD A,($BD67)  ; #REGa=*#R$BD67.
 *$C4C3 CALL $C3AE    ; Call #R$C3AE.
  $C4C6 RET           ; Return.
 
-; Routine at C4C7
+; Parser: Process Item
 ;
 ; Used by the routine at #R$EDC4.
+@label=Parser_ProcessItem
 c$C4C7 LD HL,$BD66   ; #REGhl=#R$BD66.
  $C4CA LD B,$0A      ; #REGb=#N$0A.
 *$C4CC LD A,(HL)     ; {Return if *#REGhl is equal to #N$FF.
@@ -10437,15 +10475,18 @@ c$EDD7 LD HL,$BE31   ; #REGhl=#R$BE31.
 ; This entry point is used by the routine at #R$EDF2.
 ; .
 ; Print "#STR$BE3F,$08($b==$FF)".
-@label=GameOverInput
+@label=WantAnotherGameInput
 *$EDDD LD HL,$BE3F   ; #REGhl=#R$BE3F.
  $EDE0 CALL $BAB1    ; Call #R$BAB1.
-@label=GameOverInput_Loop
+@label=WantAnotherGameInput_Loop
 *$EDE3 CALL $BA5D    ; Call #R$BA5D.
+; The player is done with the game, so reset back to BASIC.
  $EDE6 CP $4E        ; {#HTML(Reset back to BASIC if the keypress is
  $EDE8 JP Z,$0000    ; "<code>#CHR$4E</code>".)}
+; The player wants another go...
  $EDEB CP $59        ; {#HTML(Jump to #R$BA50 if the keypress is
  $EDED JP Z,$BA50    ; "<code>#CHR$59</code>".)}
+; Just loop round for any other input.
  $EDF0 JR $EDE3      ; Jump to #R$EDE3.
 
 ; Game Complete
@@ -10796,7 +10837,7 @@ c$EF32 LD HL,$D8D8   ; #REGhl=#R$D8D8.
 
 ; Routine at EF54
 ;
-; Used by the routines at #R$F169, #R$F481, #R$F946, #R$FC61, #R$FD02 and
+; Used by the routines at #R$F16B, #R$F481, #R$F946, #R$FC61, #R$FD02 and
 ; #R$FD82.
 c$EF54 LD HL,$BC6F   ; #REGhl=#R$BC6F.
  $EF57 BIT 0,(HL)    ; {Jump to #R$EF7B if bit 0 of *#REGhl is unset.
@@ -10906,10 +10947,10 @@ c$EF54 LD HL,$BC6F   ; #REGhl=#R$BC6F.
 ;
 ; Used by the routines at #R$F042, #R$F047, #R$F04C, #R$F051, #R$F056, #R$F05B,
 ; #R$F060, #R$F065, #R$F06A, #R$F06F, #R$F074, #R$F079, #R$F07E, #R$F083,
-; #R$F088, #R$F08D, #R$F092, #R$F097, #R$F0C2, #R$F0CF, #R$F0DC, #R$F0F9,
-; #R$F106, #R$F19D, #R$F263, #R$F481, #R$F4D4, #R$F7D6, #R$F851, #R$F8D9,
-; #R$F91B, #R$F946, #R$F999, #R$F9E4, #R$FA3C, #R$FAA8, #R$FB83, #R$FBA8,
-; #R$FBD5, #R$FC24, #R$FC98, #R$FCCD, #R$FD02, #R$FD6D and #R$FD7C.
+; #R$F088, #R$F08D, #R$F092, #R$F097, #R$F09C, #R$F19D, #R$F263, #R$F481,
+; #R$F4D4, #R$F7D6, #R$F851, #R$F8D9, #R$F91B, #R$F946, #R$F999, #R$F9E4,
+; #R$FA3C, #R$FAA8, #R$FB83, #R$FBA8, #R$FBD5, #R$FC24, #R$FC98, #R$FCCD,
+; #R$FD02, #R$FD6D and #R$FD7C.
 @label=PrintStringAndNewline_Alias
 c$F03A CALL $BAB1    ; Call #R$BAB1.
  $F03D RET           ; Return.
@@ -10923,7 +10964,7 @@ c$F03E CALL $C579    ; Call #R$C579.
 
 ; Response: "Work It Out For Yourself"
 ;
-; Used by the routines at #R$F0DC and #R$F113.
+; Used by the routine at #R$F09C.
 ;
 ; .
 ;
@@ -10934,7 +10975,7 @@ c$F042 LD HL,$D9F3   ; #REGhl=#R$D9F3.
 
 ; Response: "You Really Don't Need It"
 ;
-; Used by the routine at #R$F113.
+; Used by the routine at #R$F09C.
 ;
 ; .
 ;
@@ -10956,7 +10997,7 @@ c$F04C LD HL,$BFC4   ; #REGhl=#R$BFC4.
 
 ; Response: "Try Climbing"
 ;
-; Used by the routine at #R$F169.
+; Used by the routine at #R$F16B.
 ;
 ; .
 ;
@@ -10967,7 +11008,7 @@ c$F051 LD HL,$DA59   ; #REGhl=#R$DA59.
 
 ; Response: "Try Rowing"
 ;
-; Used by the routine at #R$F169.
+; Used by the routine at #R$F16B.
 ;
 ; .
 ;
@@ -10978,7 +11019,7 @@ c$F056 LD HL,$DA67   ; #REGhl=#R$DA67.
 
 ; Response: "You Can't Go In That Direction"
 ;
-; Used by the routine at #R$F169.
+; Used by the routine at #R$F16B.
 ;
 ; .
 ;
@@ -11126,14 +11167,21 @@ c$F097 LD HL,$E5B4   ; #REGhl=#R$E5B4.
 ; Action: Help
 @label=Action_Help
 c$F09C CALL $C470    ; Call #R$C470.
- $F09F RET C         ; Return if ?? is less than #N$00.
- $F0A0 LD A,$18      ; {Call #R$C35F with #ITEM$18.
- $F0A2 CALL $C35F    ; }
- $F0A5 JR NZ,$F0C2   ; Jump to #R$F0C2 if #ITEM$18 isn't in the current room.
- $F0A7 LD HL,$BC54   ; #REGhl=#R$BC54.
- $F0AA BIT 1,(HL)    ; {Jump to #R$F0BC if bit 1 of *#REGhl is set.
+; The "HELP" command can only be called on its own; you can't type "HELP
+; CROCODILE" or "HELP WITH MATCH".
+ $F09F RET C         ; Return if there's any token set in #R$BD67.
+; Does the player want help with the natives/ cannibals?
+ $F0A0 LD A,$18      ; {Jump to #R$F0C2 if #R$C35F reports the player isn't in the room
+ $F0A2 CALL $C35F    ; where you're #ITEM$18.
+ $F0A5 JR NZ,$F0C2   ; }
+; Provide an initial full response for the natives/ cannibals.
+ $F0A7 LD HL,$BC54   ; {Jump to #R$F0BC if bit 1 of *#R$BC54 is set, which relates to
+ $F0AA BIT 1,(HL)    ; asking for help a second time.
  $F0AC JR NZ,$F0BC   ; }
- $F0AE SET 1,(HL)    ; Set bit 1 of *#REGhl.
+; This is the first time the player has asked for help on this topic, so
+; flag that it's been answered from now on.
+ $F0AE SET 1,(HL)    ; Set bit 1 of *#R$BC54 which relates to asking for help about the
+                     ; natives/ cannibals.
 ; Print "#STR$D974,$08($b==$FF)".
  $F0B0 LD HL,$D974   ; #REGhl=#R$D974.
  $F0B3 CALL $BAB1    ; Call #R$BAB1.
@@ -11141,88 +11189,97 @@ c$F09C CALL $C470    ; Call #R$C470.
  $F0B6 LD HL,$D993   ; #REGhl=#R$D993.
  $F0B9 CALL $C579    ; Call #R$C579.
 ; Print "#STR$D9B4,$08($b==$FF)".
+@label=Action_Help_Cannibals
 *$F0BC LD HL,$D9B4   ; #REGhl=#R$D9B4.
  $F0BF JP $F03E      ; Jump to #R$F03E.
-
-; Routine at F0C2
-;
-; Used by the routine at #R$F09C.
-c$F0C2 LD A,$39      ; {Call #R$C35F with #ITEM$39.
- $F0C4 CALL $C35F    ; }
- $F0C7 JR NZ,$F0CF   ; Jump to #R$F0CF if #ITEM$39 isn't in the current room.
+; Does the player want help with the boulder?
+@label=Action_Help_Boulder
+*$F0C2 LD A,$39      ; {Jump to #R$F0CF if #R$C35F reports the player isn't in the room
+ $F0C4 CALL $C35F    ; where there's a #ITEM$39.
+ $F0C7 JR NZ,$F0CF   ; }
+; The player is where the boulder is, so provide some pretty good help.
+; .
 ; Print "#STR$D9CA,$08($b==$FF)".
  $F0C9 LD HL,$D9CA   ; #REGhl=#R$D9CA.
  $F0CC JP $F03A      ; Jump to #R$F03A.
-
-; Routine at F0CF
-;
-; Used by the routine at #R$F0C2.
-c$F0CF LD A,$13      ; {Call #R$C35F with #ITEM$13.
- $F0D1 CALL $C35F    ; }
- $F0D4 JR NZ,$F0DC   ; Jump to #R$F0DC if #ITEM$13 isn't in the current room.
+; Does the player want help with the crocodile?
+@label=Action_Help_Crocodile
+*$F0CF LD A,$13      ; {Jump to #R$F0DC if #R$C35F reports the player isn't in the room
+ $F0D1 CALL $C35F    ; where there's #ITEM$13.
+ $F0D4 JR NZ,$F0DC   ; }
+; The player is where the crocodile is, so provide some abstract
+; unhelpful help.
+; .
 ; Print "#STR$D9DF,$08($b==$FF)".
  $F0D6 LD HL,$D9DF   ; #REGhl=#R$D9DF.
  $F0D9 JP $F03A      ; Jump to #R$F03A.
-
-; Routine at F0DC
-;
-; Used by the routine at #R$F0CF.
-c$F0DC LD A,$14      ; {Call #R$C35F with #ITEM$14.
- $F0DE CALL $C35F    ; }
- $F0E1 JP Z,$F042    ; Jump to #R$F042 if #ITEM$14 is in the current room.
- $F0E4 LD A,$2B      ; {Call #R$C35F with #ITEM$2B.
- $F0E6 CALL $C35F    ; }
- $F0E9 JP Z,$F042    ; Jump to #R$F042 if #ITEM$2B is in the current room.
- $F0EC LD A,$2A      ; {Call #R$C35F with #ITEM$2A.
- $F0EE CALL $C35F    ; }
- $F0F1 JR NZ,$F0F9   ; Jump to #R$F0F9 if #ITEM$2A isn't in the current room.
+; Does the player want help with the crocodile with the keg in its mouth?
+@label=label=Action_Help_CrocodileKeg
+*$F0DC LD A,$14      ; {Jump to #R$F042 if #R$C35F reports that #ITEM$14 is in the same
+ $F0DE CALL $C35F    ; room as the player.
+ $F0E1 JP Z,$F042    ; }
+; Does the player want help with the giant octopus?
+ $F0E4 LD A,$2B      ; {Jump to #R$F042 if #R$C35F reports that #ITEM$2B is in the same
+ $F0E6 CALL $C35F    ; room as the player.
+ $F0E9 JP Z,$F042    ; }
+; Does the player want help with the lion?
+ $F0EC LD A,$2A      ; {Jump to #R$F0F9 if #R$C35F reports the player isn't in the room
+ $F0EE CALL $C35F    ; where there's #ITEM$2A.
+ $F0F1 JR NZ,$F0F9   ; }
+; The player is where the lion is, so provide some abstract unhelpful
+; help.
+; .
 ; Print "#STR$DA27,$08($b==$FF)".
  $F0F3 LD HL,$DA27   ; #REGhl=#R$DA27.
  $F0F6 JP $F03A      ; Jump to #R$F03A.
-
-; Routine at F0F9
-;
-; Used by the routine at #R$F0DC.
-c$F0F9 LD A,$27      ; {Call #R$C35F with #ITEM$27.
- $F0FB CALL $C35F    ; }
- $F0FE JR NZ,$F106   ; Jump to #R$F106 if ?? is not equal to #N$27.
+; Does the player want help with the parrot?
+@label=Action_Help_Parrot
+*$F0F9 LD A,$27      ; {Jump to #R$F106 if #R$C35F reports the player isn't in the room
+ $F0FB CALL $C35F    ; where there's #ITEM$27.
+ $F0FE JR NZ,$F106   ; }
+; The player is where the parrot is, so provide some abstract unhelpful
+; help.
+; .
 ; Print "#STR$DA33,$08($b==$FF)".
  $F100 LD HL,$DA33   ; #REGhl=#R$DA33.
  $F103 JP $F03A      ; Jump to #R$F03A.
-
-; Routine at F106
-;
-; Used by the routine at #R$F0F9.
-c$F106 LD A,($BCCB)  ; {Jump to #R$F113 if *#R$BCCB is not room #N$02:
+; Does the player want help when they're at sea?
+@label=Action_Help_Sea
+*$F106 LD A,($BCCB)  ; {Jump to #R$F113 if the *#R$BCCB is not room #N$02:
  $F109 CP $02        ; "#ROOM$02".
  $F10B JR NZ,$F113   ; }
+; More unhelpful help ...
+; .
 ; Print "#STR$DA41,$08($b==$FF)".
  $F10D LD HL,$DA41   ; #REGhl=#R$DA41.
  $F110 JP $F03A      ; Jump to #R$F03A.
-
-; Routine at F113
-;
-; Used by the routine at #R$F106.
-c$F113 LD A,$32      ; {Call #R$C35F with #ITEM$32.
- $F115 CALL $C35F    ; }
- $F118 JP Z,$F042    ; Jump to #R$F042 if #ITEM$32 is present in the current
-                     ; room.
- $F11B LD HL,$E8E9   ; #REGhl=#R$E8E9.
- $F11E CALL $C401    ; Call #R$C401.
- $F121 JR NZ,$F12B   ; Jump to #R$F12B if #REGa is not equal to #N$32.
- $F123 LD A,$04      ; {Call #R$C35F with #ITEM$04.
- $F125 CALL $C35F    ; }
- $F128 JP Z,$F042    ; Jump to #R$F042 if #ITEM$04 is present in the current
-                     ; room.
+; Does the player want help with the door?
+@label=Action_Help_Door
+*$F113 LD A,$32      ; {Jump to #R$F042 if #R$C35F reports that #ITEM$32 is in the same
+ $F115 CALL $C35F    ; room as the player.
+ $F118 JP Z,$F042    ; }
+; Does the player want help with the pit?
+ $F11B LD HL,$E8E9   ; {Call #R$C401 with #R$E8E9.
+ $F11E CALL $C401    ; }
+ $F121 JR NZ,$F12B   ; Jump to #R$F12B if the player is not in the room with
+                     ; the pit.
+; Does the player want help with the plank?
+ $F123 LD A,$04      ; {Jump to #R$F042 if #R$C35F reports that #ITEM$04 is in the same
+ $F125 CALL $C35F    ; room as the player.
+ $F128 JP Z,$F042    ; }
+; There's no more help available...
+@label=Action_Help_GiveUp
 *$F12B JP $F047      ; Jump to #R$F047.
 
 ; Action: Inventory
 @label=Action_Inventory
 c$F12E CALL $C470    ; Call #R$C470.
- $F131 RET C         ; Return if "inventory" wasn't requested.
- $F132 LD A,($BC98)  ; {Jump to #R$F04C if *#R$BC98 is zero.
- $F135 AND A         ;
+; The "INVENTORY" command can only be called on its own.
+ $F131 RET C         ; Return if there's any token set in #R$BD67.
+ $F132 LD A,($BC98)  ; {Jump to #R$F04C if *#R$BC98 is zero. TODO re-evaluate
+ $F135 AND A         ; this.
  $F136 JP Z,$F04C    ; }
+; Clear the screen and display the players inventory.
  $F139 CALL $BA6D    ; Call #R$BA6D.
  $F13C CALL $BA89    ; Call #R$BA89.
 ; Print "#STR$BF4F,$08($b==$FF)".
@@ -11235,44 +11292,55 @@ c$F12E CALL $C470    ; Call #R$C470.
 ; Action: Look
 @label=Action_Look
 c$F14B CALL $C470    ; Call #R$C470.
- $F14E RET C         ; Return if "look" wasn't requested.
+; The "LOOK" command can only be called on its own.
+ $F14E RET C         ; Return if there's any token set in #R$BD67.
  $F14F LD E,$01      ; {Call #R$C21E with #REGe set to #N$01 (which will force any room
  $F151 CALL $C21E    ; images to be re-displayed).}
  $F154 RET           ; Return.
 
 ; Action: North
 @label=Action_North
-c$F155 LD C,$00      ; #REGc=#N$00.
+c$F155 LD C,$00      ; Set #REGc to "NORTH" (#N$00).
  $F157 JR $F16B      ; Jump to #R$F16B.
 
 ; Action: South
 @label=Action_South
-c$F159 LD C,$01      ; #REGc=#N$01.
+c$F159 LD C,$01      ; Set #REGc to "SOUTH" (#N$01).
  $F15B JR $F16B      ; Jump to #R$F16B.
 
 ; Action: East
 @label=Action_East
-c$F15D LD C,$02      ; #REGc=#N$02.
+c$F15D LD C,$02      ; Set #REGc to "EAST" (#N$02).
  $F15F JR $F16B      ; Jump to #R$F16B.
 
 ; Action: West
 @label=Action_West
-c$F161 LD C,$03      ; #REGc=#N$03.
+c$F161 LD C,$03      ; Set #REGc to "WEST" (#N$03).
  $F163 JR $F16B      ; Jump to #R$F16B.
 
 ; Action: Up
 @label=Action_Up
-c$F165 LD C,$04      ; #REGc=#N$04.
+c$F165 LD C,$04      ; Set #REGc to "UP" (#N$04).
  $F167 JR $F16B      ; Jump to #R$F16B.
 
 ; Action: Down
 @label=Action_Down
-c$F169 LD C,$05      ; #REGc=#N$05.
-; This entry point is used by the routines at #R$F155, #R$F159, #R$F15D,
-; #R$F161 and #R$F165.
-*$F16B CALL $C470    ; Call #R$C470.
- $F16E RET C         ; Return if ?? is less than #N$05.
- $F16F LD B,$00      ; #REGb=#N$00.
+c$F169 LD C,$05      ; Set #REGc to "DOWN" (#N$05).
+; Continue on to #R$F16B.
+
+; Move Player
+;
+; Used by the routines at #R$F155, #R$F159, #R$F15D, #R$F161 and #R$F165.
+;
+; C Requested direction where: #TABLE { #N$00 | NORTH } { #N$01 | SOUTH } {
+; . #N$02 | EAST } { #N$03 | WEST } { #N$04 | UP } { #N$05 | DOWN } TABLE#
+@label=MovePlayer
+c$F16B CALL $C470    ; Call #R$C470.
+; All "MOVE" commands can only be called on their own; you can't type
+; "NORTH TO BEACH" or "UP LADDER".
+ $F16E RET C         ; Return if there's any token set in #R$BD67.
+ $F16F LD B,$00      ; Set #REGb to #N$00, so that #REGbc now holds the
+                     ; direction number.
  $F171 CALL $C302    ; Call #R$C302.
  $F174 ADD HL,BC     ; #REGhl+=#REGbc.
  $F175 LD A,(HL)     ; #REGa=*#REGhl.
@@ -11280,25 +11348,35 @@ c$F169 LD C,$05      ; #REGc=#N$05.
  $F177 JR Z,$F17D    ; Jump to #R$F17D if ?? is equal to #REGa.
  $F179 CALL $EF54    ; Call #R$EF54.
  $F17C RET           ; Return.
-*$F17D LD A,($BCCB)  ; {Jump to #R$F190 if *#R$BCCB is not room #N$04:
+; Is the player stuck out on the rowing boat?
+@label=CheckPlayer_RowingBoat
+*$F17D LD A,($BCCB)  ; {Skip forward to #R$F190 if the *#R$BCCB is not room #N$04:
  $F180 CP $04        ; "#ROOM$04".
  $F182 JR NZ,$F190   ; }
- $F184 LD A,C        ; #REGa=#REGc.
- $F185 CP $04        ; Compare #REGa with #N$04.
- $F187 JP Z,$F051    ; Jump to #R$F051 if #REGa is equal to #N$04.
- $F18A JP C,$F056    ; Jump to #R$F056 if #REGa is less than #N$04.
+; The player is stuck in the rowing boat...
+ $F184 LD A,C        ; {Jump to #R$F051 if the player was trying to move "UP" (#N$04).
+ $F185 CP $04        ; Instead they must #R$F91B(climb) the ladder.
+ $F187 JP Z,$F051    ; }
+ $F18A JP C,$F056    ; Jump to #R$F056 if the player was trying to move "NORTH", "SOUTH",
+                     ; "EAST" or "WEST". Instead, they need to #R$FD02(row).
+; Else, the player was trying to move "DOWN"...
  $F18D JP $F05B      ; Jump to #R$F05B.
+; Is the player stuck out at sea?
+@label=CheckPlayer_AtSea
 *$F190 CP $02        ; {Jump to #R$F19A if *#R$BCCB is not room #N$02:
  $F192 JR NZ,$F19A   ; "#ROOM$02".}
- $F194 LD A,C        ; #REGa=#REGc.
- $F195 CP $04        ; {Jump to #R$F056 if #REGa is less than #N$04.
+; As above, except there's now no ladder!
+ $F194 LD A,C        ; {Jump to #R$F056 if the player was trying to move "NORTH", "SOUTH",
+ $F195 CP $04        ; "EAST" or "WEST".
  $F197 JP C,$F056    ; }
+; Print "#STR$BF62,$08($b==$FF)".
+@label=MovePlayer_Invalid
 *$F19A JP $F05B      ; Jump to #R$F05B.
 
 ; Action: Examine
 @label=Action_Examine
 c$F19D CALL $C47B    ; Call #R$C47B.
- $F1A0 RET C         ; Return if #REGa is less than #N$04.
+ $F1A0 RET C         ; Return if the direct object is malformed.
  $F1A1 CP $01        ; {Jump to #R$F060 if #REGa is not equal to #N$01.
  $F1A3 JP NZ,$F060   ; }
  $F1A6 LD HL,$E9CA   ; #REGhl=#R$E9CA.
@@ -11364,33 +11442,40 @@ c$F19D CALL $C47B    ; Call #R$C47B.
 ; Action: Load
 @label=Action_Load
 c$F236 CALL $C470    ; Call #R$C470.
- $F239 RET C         ; Return if #REGa is less than #N$1B.
+; The "LOAD" command can only be called on its own.
+ $F239 RET C         ; Return if there's any token set in #R$BD67.
  $F23A CALL $BB94    ; Call #R$BB94.
  $F23D RET           ; Return.
 
 ; Action: Save
 @label=Action_Save
 c$F23E CALL $C470    ; Call #R$C470.
- $F241 RET C         ; Return if #REGa is less than #N$1B.
+; The "SAVE" command can only be called on its own.
+ $F241 RET C         ; Return if there's any token set in #R$BD67.
  $F242 CALL $BB59    ; Call #R$BB59.
  $F245 RET           ; Return.
 
 ; Action: Quit
 @label=Action_Quit
 c$F246 CALL $C470    ; Call #R$C470.
- $F249 RET C         ; Return if #REGa is less than #N$1B.
+; The "QUIT" command can only be called on its own.
+ $F249 RET C         ; Return if there's any token set in #R$BD67.
 ; Print "#STR$BEB5,$08($b==$FF)".
  $F24A LD HL,$BEB5   ; #REGhl=#R$BEB5.
  $F24D CALL $BAB1    ; Call #R$BAB1.
+@label=WantToSave_Loop
 *$F250 CALL $BA5D    ; Call #R$BA5D.
- $F253 CP $4E        ; {Jump to #R$F25E if #REGa is equal to #N$4E.
- $F255 JR Z,$F25E    ; }
- $F257 CP $59        ; {Jump to #R$F250 if #REGa is not equal to #N$59.
- $F259 JR NZ,$F250   ; }
+; The player just wants to quit.
+ $F253 CP $4E        ; {#HTML(Jump to #R$F25E if the keypress is
+ $F255 JR Z,$F25E    ; "<code>#CHR$4E</code>".)}
+ $F257 CP $59        ; {#HTML(Jump back to #R$F250 if the keypress is anything other than
+ $F259 JR NZ,$F250   ; "<code>#CHR$59</code>".)}
+; The player does want to save before quitting...
  $F25B CALL $BB59    ; Call #R$BB59.
+; Jump to asking if the player "wants another game?"
+@label=QuitGame
 *$F25E LD HL,$EDDD   ; {Switch #R$EDDD onto the stack so the next return action is asking
- $F261 EX (SP),HL    ; for "Y"/ "N" user input, the same as for "Want another game? Y/N.".
-                     ; }
+ $F261 EX (SP),HL    ; if the player would "Want another game? Y/N.".}
  $F262 RET           ; Return.
 
 ; Action: Take
@@ -11398,7 +11483,7 @@ c$F246 CALL $C470    ; Call #R$C470.
 ; Used by the routine at #R$F481.
 @label=Action_Take
 c$F263 CALL $C47B    ; Call #R$C47B.
- $F266 RET C         ; Return if #REGa is less than #N$59.
+ $F266 RET C         ; Return if the direct object is malformed.
  $F267 JP $F2A8      ; Jump to #R$F2A8.
 *$F26A CALL $C3E4    ; Call #R$C3E4.
  $F26D JR NZ,$F28D   ; Jump to #R$F28D if #REGa is not equal to #N$59.
@@ -11622,7 +11707,7 @@ c$F263 CALL $C47B    ; Call #R$C47B.
 ; Action: Get
 @label=Action_Get
 c$F481 CALL $C47B    ; Call #R$C47B.
- $F484 RET C         ; Return if #REGa is less than #N$28.
+ $F484 RET C         ; Return if the direct object is malformed.
  $F485 LD HL,$EA0D   ; #REGhl=#R$EA0D.
  $F488 CALL $C37F    ; Call #R$C37F.
  $F48B JR NZ,$F4AC   ; Jump to #R$F4AC if #REGa is not equal to #N$28.
@@ -11665,7 +11750,7 @@ c$F481 CALL $C47B    ; Call #R$C47B.
 ; Action: Drop/ Throw
 @label=Action_DropThrow
 c$F4D4 CALL $C47B    ; Call #R$C47B.
- $F4D7 RET C         ; Return if #REGa is less than #N$06.
+ $F4D7 RET C         ; Return if the direct object is malformed.
  $F4D8 JR $F50B      ; Jump to #R$F50B.
 *$F4DA CALL $C3E4    ; Call #R$C3E4.
  $F4DD JR Z,$F4FC    ; Jump to #R$F4FC if #REGa is equal to #N$06.
@@ -12138,7 +12223,7 @@ c$F8D9 PUSH BC                      ; Stash #REGbc on the stack.
 ; Action: Climb
 @label=Action_Climb
 c$F91B CALL $C47B    ; Call #R$C47B.
- $F91E RET C         ; Return if ?? is less than #N$00.
+ $F91E RET C         ; Return if the direct object is malformed.
  $F91F LD A,$0F      ; {Call #R$C3E4 with item: #ITEM$0F.
  $F921 CALL $C3E4    ; }
  $F924 JR Z,$F92C    ; Jump to #R$F92C if the player has the gun in their
@@ -12161,7 +12246,7 @@ c$F91B CALL $C47B    ; Call #R$C47B.
 ; Action: Eat
 @label=Action_Eat
 c$F946 CALL $C47B    ; Call #R$C47B.
- $F949 RET C         ; Return if ?? is less than #N$0F.
+ $F949 RET C         ; Return if the direct object is malformed.
  $F94A LD HL,$EAB2   ; #REGhl=#R$EAB2.
  $F94D CALL $C37F    ; Call #R$C37F.
  $F950 JR NZ,$F960   ; Jump to #R$F960 if ?? is not equal to #N$0F.
@@ -12197,7 +12282,7 @@ c$F946 CALL $C47B    ; Call #R$C47B.
 ; Action: Drink
 @label=Action_Drink
 c$F999 CALL $C47B    ; Call #R$C47B.
- $F99C RET C         ; Return if #REGa is less than #N$04.
+ $F99C RET C         ; Return if the direct object is malformed.
  $F99D LD HL,$E9CC   ; #REGhl=#R$E9CC.
  $F9A0 CALL $C37F    ; Call #R$C37F.
  $F9A3 JR NZ,$F9C1   ; Jump to #R$F9C1 if #REGa is not equal to #N$04.
@@ -12233,7 +12318,7 @@ c$F999 CALL $C47B    ; Call #R$C47B.
 ; Action: Open
 @label=Action_Open
 c$F9E4 CALL $C47B    ; Call #R$C47B.
- $F9E7 RET C         ; Return if *#REGhl is less than #N$04.
+ $F9E7 RET C         ; Return if the direct object is malformed.
  $F9E8 LD HL,$EAB8   ; #REGhl=#R$EAB8.
  $F9EB CALL $C37F    ; Call #R$C37F.
  $F9EE JR NZ,$FA14   ; Jump to #R$FA14 if *#REGhl is not equal to #N$04.
@@ -12288,7 +12373,7 @@ c$F9E4 CALL $C47B    ; Call #R$C47B.
 ; Action: Close/ Shut
 @label=Action_CloseShut
 c$FA3C CALL $C47B    ; Call #R$C47B.
- $FA3F RET C         ; Return if #REGd is less than #N$06.
+ $FA3F RET C         ; Return if the direct object is malformed.
  $FA40 LD HL,$EABE   ; #REGhl=#R$EABE.
  $FA43 CALL $C37F    ; Call #R$C37F.
  $FA46 JR NZ,$FA85   ; Jump to #R$FA85 if #REGd is not equal to #N$06.
@@ -12336,7 +12421,7 @@ c$FA3C CALL $C47B    ; Call #R$C47B.
 ; Action: Shout
 @label=Action_Shout
 c$FAA8 CALL $C47B    ; Call #R$C47B.
- $FAAB RET C         ; Return if #REGa is less than #N$31.
+ $FAAB RET C         ; Return if the direct object is malformed.
  $FAAC LD HL,$EABE   ; #REGhl=#R$EABE.
  $FAAF CALL $C37F    ; Call #R$C37F.
  $FAB2 JR NZ,$FAE5   ; Jump to #R$FAE5 if #REGa is not equal to #N$31.
@@ -12445,7 +12530,7 @@ c$FB71 CALL $C49F    ; Call #R$C49F.
 ; Action: Swearing
 @label=Action_Swearing
 c$FB83 CALL $C47B    ; Call #R$C47B.
- $FB86 RET C         ; Return if #REGa is less than #N$31.
+ $FB86 RET C         ; Return if the direct object is malformed.
  $FB87 LD HL,$BC54   ; #REGhl=#R$BC54.
  $FB8A BIT 2,(HL)    ; Test bit 2 of *#REGhl.
  $FB8C JR NZ,$FB96   ; Jump to #R$FB96 if #REGa is not equal to #N$31.
@@ -12466,7 +12551,7 @@ c$FB83 CALL $C47B    ; Call #R$C47B.
 ; Action: Pull
 @label=Action_Pull
 c$FBA8 CALL $C47B    ; Call #R$C47B.
- $FBAB RET C         ; Return if #REGa is less than #N$31.
+ $FBAB RET C         ; Return if the direct object is malformed.
  $FBAC CP $02        ; {Jump to #R$F074 if #REGa is greater than #N$02.
  $FBAE JP NC,$F074   ; }
  $FBB1 LD HL,$EACB   ; #REGhl=#R$EACB.
@@ -12486,7 +12571,7 @@ c$FBA8 CALL $C47B    ; Call #R$C47B.
 ; Action: Wear
 @label=Action_Wear
 c$FBD5 CALL $C47B    ; Call #R$C47B.
- $FBD8 RET C         ; Return if #REGa is less than #N$60.
+ $FBD8 RET C         ; Return if the direct object is malformed.
  $FBD9 CP $02        ; {Jump to #R$F074 if #REGa is greater than #N$02.
  $FBDB JP NC,$F074   ; }
 ; Was the player trying to wear ... the eyepatch?
@@ -12601,7 +12686,7 @@ c$FC61 CALL $C47B    ; Call #R$C47B.
 ; Action: Move
 @label=Action_Move
 c$FC98 CALL $C47B    ; Call #R$C47B.
- $FC9B RET C         ; Return if #REGa is less than #N$52.
+ $FC9B RET C         ; Return if the direct object is malformed.
  $FC9C LD HL,$EAD8   ; #REGhl=#R$EAD8.
  $FC9F CALL $C37F    ; Call #R$C37F.
  $FCA2 JR NZ,$FCAA   ; Jump to #R$FCAA if #REGa is not equal to #N$52.
@@ -12626,7 +12711,7 @@ c$FC98 CALL $C47B    ; Call #R$C47B.
 ; Action: Unlock
 @label=Action_Unlock
 c$FCCD CALL $C47B    ; Call #R$C47B.
- $FCD0 RET C         ; Return if #REGa is less than #N$3B.
+ $FCD0 RET C         ; Return if the direct object is malformed.
  $FCD1 LD HL,$EAE6   ; #REGhl=#R$EAE6.
  $FCD4 CALL $C37F    ; Call #R$C37F.
  $FCD7 JR NZ,$FCFF   ; Jump to #R$FCFF if #REGa is not equal to #N$3B.
@@ -12702,7 +12787,7 @@ c$FD02 CALL $C4B7    ; Call #R$C4B7.
 ; Action: Swim
 @label=Action_Swim
 c$FD6D CALL $C47B    ; Call #R$C47B.
- $FD70 RET C         ; Return if #REGa is less than #N$02.
+ $FD70 RET C         ; Return if the direct object is malformed.
  $FD71 CP $02        ; {Jump to #R$F074 if #REGa is equal to #N$02.
  $FD73 JP Z,$F074    ; }
 ; Print "#STR$DB5F,$08($b==$FF)".

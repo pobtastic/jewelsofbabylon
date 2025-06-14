@@ -417,7 +417,17 @@ D $BBF0 When the item is in the players inventory, the room ID changes to
 B $BBF0,$01 Item #N(#PC-$BBF0) #ITEM(#PC-$BBF0) in room #N(#PEEK(#PC)): #ROOM(#PEEK(#PC)).
 L $BBF0,$01,$4F
 
-b $BC54
+g $BC54 Game Flags
+@ $BC54 label=GameFlags_Help
+D $BC54 Holds a single byte, where each bit relates to help states as follows:
+. #TABLE(default,centre,centre)
+. { =h Bit | =h Relating To }
+. { #N$01 | Cannibals }
+. { #N$02 | Swearing }
+. TABLE#
+B $BC54,$01
+
+u $BC55
 
 g $BC5C Table: Already Seen Room Images
 @ $BC5C label=Table_RoomImagesAlreadySeen
@@ -1509,23 +1519,31 @@ R $C37F HL A pointer to phrase token data
   $C3AC,$01 Set the bits from #REGa.
   $C3AD,$01 Return.
 
-c $C3AE
-  $C3AE,$03 #REGhl=#R$BD66.
-  $C3B1,$02 #REGb=#N$0A.
-  $C3B3,$02 #REGe=#N$00.
-  $C3B5,$01 #REGa=*#REGhl.
-  $C3B6,$04 Jump to #R$C3CD if #REGa is equal to #N$FF.
-  $C3BA,$02 Stash #REGhl and #REGbc on the stack.
+c $C3AE Parser: Count Item References
+@ $C3AE label=Parser_CountItems
+D $C3AE Count how many tokens in the user input refer to game items.
+  $C3AE,$03 Set a pointer to #R$BD66 in #REGhl.
+  $C3B1,$02 Set a token count in #REGb of #N$0A which is the total length of
+. the user input tokens.
+  $C3B3,$02 Initialise the item counter held in #REGe to #N$00.
+@ $C3B5 label=Parser_CountItems_Loop
+  $C3B5,$01 Fetch a user input token.
+  $C3B6,$04 Jump to #R$C3CD if the terminator character (#N$FF) has been
+. reached.
+  $C3BA,$02 Stash the token pointer and token counter on the stack.
   $C3BC,$03 #REGhl=*#R$BD1E.
   $C3BF,$04 #REGbc=*#R$BD2A.
   $C3C3,$02 CPIR.
-  $C3C5,$02 Restore #REGbc and #REGhl from the stack.
-  $C3C7,$02 Jump to #R$C3CA if #REGa is not equal to #N$FF.
-  $C3C9,$01 Increment #REGe by one.
-  $C3CA,$01 Increment #REGhl by one.
-  $C3CB,$02 Decrease counter by one and loop back to #R$C3B5 until counter is zero.
-  $C3CD,$01 #REGa=#N$00.
-  $C3CE,$01 Set the bits from #REGe.
+  $C3C5,$02 Restore the token counter and token pointer from the stack.
+  $C3C7,$02 Jump to #R$C3CA if this token doesn't refer to a game item.
+N $C3C9 This token does point to a game item, so increase the item counter.
+  $C3C9,$01 Increment item counter by one.
+@ $C3CA label=Parser_CountItems_Skip
+  $C3CA,$01 Move to the next token.
+  $C3CB,$02 Decrease the token counter by one and loop back to #R$C3B5 until
+. all the tokens have been evaluated.
+@ $C3CD label=Parser_CountItems_Process
+  $C3CD,$02 Transfer the item count into #REGa and set flags accordingly.
   $C3CF,$01 Return.
 
 c $C3D0 Object/ Event Locator
@@ -1692,31 +1710,44 @@ R $C456 O:F Z is unset if the object is valid, unset when invalid
   $C46E,$01 Set the Z flag.
   $C46F,$01 Return.
 
-c $C470
-  $C470,$03 #REGa=*#R$BD67.
-  $C473,$03 Return if #REGa is equal to #N$FF.
+c $C470 Parser: Validate No Direct Object
+@ $C470 label=Parser_ValidateNoDirectObject
+D $C470 The opposite of #R$C47B, checks that there's no direct object.
+R $C470 O:F The zero flag is set when there's no direct object present
+R $C470 O:F The carry flag is set when there's a second token set
+  $C470,$06 Return if the second token (*#R$BD67) is the terminator
+. character (#N$FF).
+N $C476 Print "#STR$BEEA,$08($b==$FF)".
   $C476,$03 Call #R$BFEE.
-  $C479,$01 Set the carry flag.
+  $C479,$01 Set the carry flag to indicate the command is malformed.
   $C47A,$01 Return.
 
-c $C47B Handler: Direct Object
-@ $C47B label=Handler_DirectObject
+c $C47B Parser: Validate Direct Object
+@ $C47B label=Parser_ValidateDirectObject
+D $C47B In most adventure games, the structure for a command is "verb + direct
+. object". This is usually how the player interacts with the game world.
+. The verb describes the action, and the direct object is what the action is
+. performed on. For example; "TAKE SHOE" uses the verb "TAKE" on the direct
+. object "SHOE".
 R $C47B O:F The carry flag is set when the command is malformed
+N $C47B The first token is the verb, so target the second token for the direct
+. object.
   $C47B,$03 Fetch the #R$BD67(second token from the user input) and store it in
 . #REGa.
   $C47E,$04 Jump forward to #R$C487 if the token is anything other than the
 . terminator character (#N$FF).
 N $C482 The token was the terminator character (#N$FF), so the sentence is
 . malformed.
+N $C482 E.g. They tried "TAKE" but didn't write anything after it.
   $C482,$03 Call #R$BFF5.
-  $C485,$01 Set the carry flag.
+  $C485,$01 Set the carry flag to indicate this call was a failure.
   $C486,$01 Return.
 N $C487 Process the direct object.
 @ $C487 label=DirectObject_Process
   $C487,$03 Call #R$C3AE.
   $C48A,$01 Return if #REGa is not equal to #N$FF.
   $C48B,$03 Call #R$BFEE.
-  $C48E,$01 Set the carry flag.
+  $C48E,$01 Set the carry flag to indicate the command is malformed.
   $C48F,$01 Return.
 
 c $C490
@@ -1730,7 +1761,7 @@ c $C490
 
 c $C49F
   $C49F,$03 Call #R$C47B.
-  $C4A2,$01 Return if #REGa is less than #N$FF.
+  $C4A2,$01 Return if the direct object is malformed.
   $C4A3,$04 Jump to #R$C4AC if #REGa is not equal to #N$01.
   $C4A7,$03 Call #R$BFF5.
   $C4AA,$01 Set the carry flag.
@@ -1751,7 +1782,8 @@ c $C4B7
   $C4C3,$03 Call #R$C3AE.
   $C4C6,$01 Return.
 
-c $C4C7
+c $C4C7 Parser: Process Item
+@ $C4C7 label=Parser_ProcessItem
   $C4C7,$03 #REGhl=#R$BD66.
   $C4CA,$02 #REGb=#N$0A.
   $C4CC,$04 Return if *#REGhl is equal to #N$FF.
@@ -3335,14 +3367,17 @@ c $EDD7 Game Over
 N $EDD7 Print "#STR$BE31,$08($b==$FF)".
   $EDD7,$03 #REGhl=#R$BE31.
   $EDDA,$03 Call #R$BAB1.
-@ $EDDD label=GameOverInput
+@ $EDDD label=WantAnotherGameInput
 N $EDDD Print "#STR$BE3F,$08($b==$FF)".
   $EDDD,$03 #REGhl=#R$BE3F.
   $EDE0,$03 Call #R$BAB1.
-@ $EDE3 label=GameOverInput_Loop
+@ $EDE3 label=WantAnotherGameInput_Loop
   $EDE3,$03 Call #R$BA5D.
+N $EDE6 The player is done with the game, so reset back to BASIC.
   $EDE6,$05 #HTML(Reset back to BASIC if the keypress is "<code>#CHR$4E</code>".)
+N $EDEB The player wants another go...
   $EDEB,$05 #HTML(Jump to #R$BA50 if the keypress is "<code>#CHR$59</code>".)
+N $EDF0 Just loop round for any other input.
   $EDF0,$02 Jump to #R$EDE3.
 
 c $EDF2 Game Complete
@@ -3774,75 +3809,98 @@ N $F097 Print "#STR$E5B4,$08($b==$FF)".
 c $F09C Action: Help
 @ $F09C label=Action_Help
   $F09C,$03 Call #R$C470.
-  $F09F,$01 Return if ?? is less than #N$00.
-  $F0A0,$05 Call #R$C35F with #ITEM$18.
-  $F0A5,$02 Jump to #R$F0C2 if #ITEM$18 isn't in the current room.
-  $F0A7,$03 #REGhl=#R$BC54.
-  $F0AA,$04 Jump to #R$F0BC if bit 1 of *#REGhl is set.
-  $F0AE,$02 Set bit 1 of *#REGhl.
+N $F09F The "HELP" command can only be called on its own; you can't type "HELP
+. CROCODILE" or "HELP WITH MATCH".
+  $F09F,$01 Return if there's any token set in #R$BD67.
+N $F0A0 Does the player want help with the natives/ cannibals?
+  $F0A0,$07 Jump to #R$F0C2 if #R$C35F reports the player isn't in the room
+. where you're #ITEM$18.
+N $F0A7 Provide an initial full response for the natives/ cannibals.
+  $F0A7,$07 Jump to #R$F0BC if bit 1 of *#R$BC54 is set, which relates to
+. asking for help a second time.
+N $F0AE This is the first time the player has asked for help on this topic, so
+. flag that it's been answered from now on.
+  $F0AE,$02 Set bit 1 of *#R$BC54 which relates to asking for help about the
+. natives/ cannibals.
 N $F0B0 Print "#STR$D974,$08($b==$FF)".
   $F0B0,$03 #REGhl=#R$D974.
   $F0B3,$03 Call #R$BAB1.
 N $F0B6 Print "#STR$D993,$08($b==$FF)".
   $F0B6,$03 #REGhl=#R$D993.
   $F0B9,$03 Call #R$C579.
+@ $F0BC label=Action_Help_Cannibals
 N $F0BC Print "#STR$D9B4,$08($b==$FF)".
   $F0BC,$03 #REGhl=#R$D9B4.
   $F0BF,$03 Jump to #R$F03E.
-
-c $F0C2
-  $F0C2,$05 Call #R$C35F with #ITEM$39.
-  $F0C7,$02 Jump to #R$F0CF if #ITEM$39 isn't in the current room.
+N $F0C2 Does the player want help with the boulder?
+@ $F0C2 label=Action_Help_Boulder
+  $F0C2,$07 Jump to #R$F0CF if #R$C35F reports the player isn't in the room
+. where there's a #ITEM$39.
+N $F0C9 The player is where the boulder is, so provide some pretty good help.
 N $F0C9 Print "#STR$D9CA,$08($b==$FF)".
   $F0C9,$03 #REGhl=#R$D9CA.
   $F0CC,$03 Jump to #R$F03A.
-
-c $F0CF
-  $F0CF,$05 Call #R$C35F with #ITEM$13.
-  $F0D4,$02 Jump to #R$F0DC if #ITEM$13 isn't in the current room.
+N $F0CF Does the player want help with the crocodile?
+@ $F0CF label=Action_Help_Crocodile
+  $F0CF,$07 Jump to #R$F0DC if #R$C35F reports the player isn't in the room
+. where there's #ITEM$13.
+N $F0D6 The player is where the crocodile is, so provide some abstract
+. unhelpful help.
 N $F0D6 Print "#STR$D9DF,$08($b==$FF)".
   $F0D6,$03 #REGhl=#R$D9DF.
   $F0D9,$03 Jump to #R$F03A.
-
-c $F0DC
-  $F0DC,$05 Call #R$C35F with #ITEM$14.
-  $F0E1,$03 Jump to #R$F042 if #ITEM$14 is in the current room.
-  $F0E4,$05 Call #R$C35F with #ITEM$2B.
-  $F0E9,$03 Jump to #R$F042 if #ITEM$2B is in the current room.
-  $F0EC,$05 Call #R$C35F with #ITEM$2A.
-  $F0F1,$02 Jump to #R$F0F9 if #ITEM$2A isn't in the current room.
+N $F0DC Does the player want help with the crocodile with the keg in its mouth?
+@ $F0DC label=label=Action_Help_CrocodileKeg
+  $F0DC,$08 Jump to #R$F042 if #R$C35F reports that #ITEM$14 is in the same
+. room as the player.
+N $F0E4 Does the player want help with the giant octopus?
+  $F0E4,$08 Jump to #R$F042 if #R$C35F reports that #ITEM$2B is in the same
+. room as the player.
+N $F0EC Does the player want help with the lion?
+  $F0EC,$07 Jump to #R$F0F9 if #R$C35F reports the player isn't in the room
+. where there's #ITEM$2A.
+N $F0F3 The player is where the lion is, so provide some abstract unhelpful
+. help.
 N $F0F3 Print "#STR$DA27,$08($b==$FF)".
   $F0F3,$03 #REGhl=#R$DA27.
   $F0F6,$03 Jump to #R$F03A.
-
-c $F0F9
-  $F0F9,$05 Call #R$C35F with #ITEM$27.
-  $F0FE,$02 Jump to #R$F106 if ?? is not equal to #N$27.
+N $F0F9 Does the player want help with the parrot?
+@ $F0F9 label=Action_Help_Parrot
+  $F0F9,$07 Jump to #R$F106 if #R$C35F reports the player isn't in the room
+. where there's #ITEM$27.
+N $F100 The player is where the parrot is, so provide some abstract unhelpful
+. help.
 N $F100 Print "#STR$DA33,$08($b==$FF)".
   $F100,$03 #REGhl=#R$DA33.
   $F103,$03 Jump to #R$F03A.
-
-c $F106
-  $F106,$07 Jump to #R$F113 if *#R$BCCB is not room #N$02: "#ROOM$02".
+N $F106 Does the player want help when they're at sea?
+@ $F106 label=Action_Help_Sea
+  $F106,$07 Jump to #R$F113 if the *#R$BCCB is not room #N$02: "#ROOM$02".
+N $F10D More unhelpful help ...
 N $F10D Print "#STR$DA41,$08($b==$FF)".
   $F10D,$03 #REGhl=#R$DA41.
   $F110,$03 Jump to #R$F03A.
-
-c $F113
-  $F113,$05 Call #R$C35F with #ITEM$32.
-  $F118,$03 Jump to #R$F042 if #ITEM$32 is present in the current room.
-  $F11B,$03 #REGhl=#R$E8E9.
-  $F11E,$03 Call #R$C401.
-  $F121,$02 Jump to #R$F12B if #REGa is not equal to #N$32.
-  $F123,$05 Call #R$C35F with #ITEM$04.
-  $F128,$03 Jump to #R$F042 if #ITEM$04 is present in the current room.
+N $F113 Does the player want help with the door?
+@ $F113 label=Action_Help_Door
+  $F113,$08 Jump to #R$F042 if #R$C35F reports that #ITEM$32 is in the same
+. room as the player.
+N $F11B Does the player want help with the pit?
+  $F11B,$06 Call #R$C401 with #R$E8E9.
+  $F121,$02 Jump to #R$F12B if the player is not in the room with the pit.
+N $F123 Does the player want help with the plank?
+  $F123,$08 Jump to #R$F042 if #R$C35F reports that #ITEM$04 is in the same
+. room as the player.
+N $F12B There's no more help available...
+@ $F12B label=Action_Help_GiveUp
   $F12B,$03 Jump to #R$F047.
 
 c $F12E Action: Inventory
 @ $F12E label=Action_Inventory
   $F12E,$03 Call #R$C470.
-  $F131,$01 Return if "inventory" wasn't requested.
-  $F132,$07 Jump to #R$F04C if *#R$BC98 is zero.
+N $F131 The "INVENTORY" command can only be called on its own.
+  $F131,$01 Return if there's any token set in #R$BD67.
+  $F132,$07 Jump to #R$F04C if *#R$BC98 is zero. TODO re-evaluate this.
+N $F139 Clear the screen and display the players inventory.
   $F139,$03 Call #R$BA6D.
   $F13C,$03 Call #R$BA89.
 N $F13F Print "#STR$BF4F,$08($b==$FF)".
@@ -3855,42 +3913,50 @@ N $F13F Print "#STR$BF4F,$08($b==$FF)".
 c $F14B Action: Look
 @ $F14B label=Action_Look
   $F14B,$03 Call #R$C470.
-  $F14E,$01 Return if "look" wasn't requested.
+N $F14E The "LOOK" command can only be called on its own.
+  $F14E,$01 Return if there's any token set in #R$BD67.
   $F14F,$05 Call #R$C21E with #REGe set to #N$01 (which will force any room
 . images to be re-displayed).
   $F154,$01 Return.
 
 c $F155 Action: North
 @ $F155 label=Action_North
-  $F155,$02 #REGc=#N$00.
+  $F155,$02 Set #REGc to "NORTH" (#N$00).
   $F157,$02 Jump to #R$F16B.
 
 c $F159 Action: South
 @ $F159 label=Action_South
-  $F159,$02 #REGc=#N$01.
+  $F159,$02 Set #REGc to "SOUTH" (#N$01).
   $F15B,$02 Jump to #R$F16B.
 
 c $F15D Action: East
 @ $F15D label=Action_East
-  $F15D,$02 #REGc=#N$02.
+  $F15D,$02 Set #REGc to "EAST" (#N$02).
   $F15F,$02 Jump to #R$F16B.
 
 c $F161 Action: West
 @ $F161 label=Action_West
-  $F161,$02 #REGc=#N$03.
+  $F161,$02 Set #REGc to "WEST" (#N$03).
   $F163,$02 Jump to #R$F16B.
 
 c $F165 Action: Up
 @ $F165 label=Action_Up
-  $F165,$02 #REGc=#N$04.
+  $F165,$02 Set #REGc to "UP" (#N$04).
   $F167,$02 Jump to #R$F16B.
 
 c $F169 Action: Down
 @ $F169 label=Action_Down
-  $F169,$02 #REGc=#N$05.
+E $F169 Continue on to #R$F16B.
+  $F169,$02 Set #REGc to "DOWN" (#N$05).
+
+c $F16B Move Player
+@ $F16B label=MovePlayer
+R $F16B C Requested direction where: #TABLE { #N$00 | NORTH } { #N$01 | SOUTH } { #N$02 | EAST } { #N$03 | WEST } { #N$04 | UP } { #N$05 | DOWN } TABLE#
   $F16B,$03 Call #R$C470.
-  $F16E,$01 Return if ?? is less than #N$05.
-  $F16F,$02 #REGb=#N$00.
+N $F16E All "MOVE" commands can only be called on their own; you can't type
+. "NORTH TO BEACH" or "UP LADDER".
+  $F16E,$01 Return if there's any token set in #R$BD67.
+  $F16F,$02 Set #REGb to #N$00, so that #REGbc now holds the direction number.
   $F171,$03 Call #R$C302.
   $F174,$01 #REGhl+=#REGbc.
   $F175,$01 #REGa=*#REGhl.
@@ -3898,22 +3964,31 @@ c $F169 Action: Down
   $F177,$02 Jump to #R$F17D if ?? is equal to #REGa.
   $F179,$03 Call #R$EF54.
   $F17C,$01 Return.
-  $F17D,$07 Jump to #R$F190 if *#R$BCCB is not room #N$04: "#ROOM$04".
-  $F184,$01 #REGa=#REGc.
-  $F185,$02 Compare #REGa with #N$04.
-  $F187,$03 Jump to #R$F051 if #REGa is equal to #N$04.
-  $F18A,$03 Jump to #R$F056 if #REGa is less than #N$04.
+N $F17D Is the player stuck out on the rowing boat?
+@ $F17D label=CheckPlayer_RowingBoat
+  $F17D,$07 Skip forward to #R$F190 if the *#R$BCCB is not room #N$04:
+. "#ROOM$04".
+N $F184 The player is stuck in the rowing boat...
+  $F184,$06 Jump to #R$F051 if the player was trying to move "UP" (#N$04).
+. Instead they must #R$F91B(climb) the ladder.
+  $F18A,$03 Jump to #R$F056 if the player was trying to move "NORTH", "SOUTH",
+. "EAST" or "WEST". Instead, they need to #R$FD02(row).
+N $F18D Else, the player was trying to move "DOWN"...
   $F18D,$03 Jump to #R$F05B.
-
+N $F190 Is the player stuck out at sea?
+@ $F190 label=CheckPlayer_AtSea
   $F190,$04 Jump to #R$F19A if *#R$BCCB is not room #N$02: "#ROOM$02".
-  $F194,$01 #REGa=#REGc.
-  $F195,$05 Jump to #R$F056 if #REGa is less than #N$04.
+N $F194 As above, except there's now no ladder!
+  $F194,$06 Jump to #R$F056 if the player was trying to move "NORTH", "SOUTH",
+. "EAST" or "WEST".
+N $F19A Print "#STR$BF62,$08($b==$FF)".
+@ $F19A label=MovePlayer_Invalid
   $F19A,$03 Jump to #R$F05B.
 
 c $F19D Action: Examine
 @ $F19D label=Action_Examine
   $F19D,$03 Call #R$C47B.
-  $F1A0,$01 Return if #REGa is less than #N$04.
+  $F1A0,$01 Return if the direct object is malformed.
   $F1A1,$05 Jump to #R$F060 if #REGa is not equal to #N$01.
   $F1A6,$03 #REGhl=#R$E9CA.
   $F1A9,$03 Call #R$C37F.
@@ -3983,36 +4058,45 @@ N $F22D Print "#STR$DB37,$08($b==$FF)".
 c $F236 Action: Load
 @ $F236 label=Action_Load
   $F236,$03 Call #R$C470.
-  $F239,$01 Return if #REGa is less than #N$1B.
+N $F239 The "LOAD" command can only be called on its own.
+  $F239,$01 Return if there's any token set in #R$BD67.
   $F23A,$03 Call #R$BB94.
   $F23D,$01 Return.
 
 c $F23E Action: Save
 @ $F23E label=Action_Save
   $F23E,$03 Call #R$C470.
-  $F241,$01 Return if #REGa is less than #N$1B.
+N $F241 The "SAVE" command can only be called on its own.
+  $F241,$01 Return if there's any token set in #R$BD67.
   $F242,$03 Call #R$BB59.
   $F245,$01 Return.
 
 c $F246 Action: Quit
 @ $F246 label=Action_Quit
   $F246,$03 Call #R$C470.
-  $F249,$01 Return if #REGa is less than #N$1B.
+N $F249 The "QUIT" command can only be called on its own.
+  $F249,$01 Return if there's any token set in #R$BD67.
 N $F24A Print "#STR$BEB5,$08($b==$FF)".
   $F24A,$03 #REGhl=#R$BEB5.
   $F24D,$03 Call #R$BAB1.
+@ $F250 label=WantToSave_Loop
   $F250,$03 Call #R$BA5D.
-  $F253,$04 Jump to #R$F25E if #REGa is equal to #N$4E.
-  $F257,$04 Jump to #R$F250 if #REGa is not equal to #N$59.
+N $F253 The player just wants to quit.
+  $F253,$04 #HTML(Jump to #R$F25E if the keypress is "<code>#CHR$4E</code>".)
+  $F257,$04 #HTML(Jump back to #R$F250 if the keypress is anything other than
+. "<code>#CHR$59</code>".)
+N $F25B The player does want to save before quitting...
   $F25B,$03 Call #R$BB59.
+N $F25E Jump to asking if the player "wants another game?"
+@ $F25E label=QuitGame
   $F25E,$04 Switch #R$EDDD onto the stack so the next return action is asking
-. for "Y"/ "N" user input, the same as for "Want another game? Y/N.".
+. if the player would "Want another game? Y/N.".
   $F262,$01 Return.
 
 c $F263 Action: Take
 @ $F263 label=Action_Take
   $F263,$03 Call #R$C47B.
-  $F266,$01 Return if #REGa is less than #N$59.
+  $F266,$01 Return if the direct object is malformed.
   $F267,$03 Jump to #R$F2A8.
 
   $F26A,$03 Call #R$C3E4.
@@ -4242,7 +4326,7 @@ N $F478 Print "#STR$DBCC,$08($b==$FF)".
 c $F481 Action: Get
 @ $F481 label=Action_Get
   $F481,$03 Call #R$C47B.
-  $F484,$01 Return if #REGa is less than #N$28.
+  $F484,$01 Return if the direct object is malformed.
   $F485,$03 #REGhl=#R$EA0D.
   $F488,$03 Call #R$C37F.
   $F48B,$02 Jump to #R$F4AC if #REGa is not equal to #N$28.
@@ -4283,7 +4367,7 @@ N $F4CB Print "#STR$DC37,$08($b==$FF)".
 c $F4D4 Action: Drop/ Throw
 @ $F4D4 label=Action_DropThrow
   $F4D4,$03 Call #R$C47B.
-  $F4D7,$01 Return if #REGa is less than #N$06.
+  $F4D7,$01 Return if the direct object is malformed.
   $F4D8,$02 Jump to #R$F50B.
 
   $F4DA,$03 Call #R$C3E4.
@@ -4745,7 +4829,7 @@ N $F912 Print "#STR$E14B,$08($b==$FF)".
 c $F91B Action: Climb
 @ $F91B label=Action_Climb
   $F91B,$03 Call #R$C47B.
-  $F91E,$01 Return if ?? is less than #N$00.
+  $F91E,$01 Return if the direct object is malformed.
   $F91F,$05 Call #R$C3E4 with item: #ITEM$0F.
   $F924,$02 Jump to #R$F92C if the player has the gun in their inventory.
 N $F926 Print "#STR$E15E,$08($b==$FF)".
@@ -4766,7 +4850,7 @@ N $F93D Print "#STR$E14B,$08($b==$FF)".
 c $F946 Action: Eat
 @ $F946 label=Action_Eat
   $F946,$03 Call #R$C47B.
-  $F949,$01 Return if ?? is less than #N$0F.
+  $F949,$01 Return if the direct object is malformed.
   $F94A,$03 #REGhl=#R$EAB2.
   $F94D,$03 Call #R$C37F.
   $F950,$02 Jump to #R$F960 if ?? is not equal to #N$0F.
@@ -4798,7 +4882,7 @@ N $F97E Print "#STR$BED1,$08($b==$FF)".
 c $F999 Action: Drink
 @ $F999 label=Action_Drink
   $F999,$03 Call #R$C47B.
-  $F99C,$01 Return if #REGa is less than #N$04.
+  $F99C,$01 Return if the direct object is malformed.
   $F99D,$03 #REGhl=#R$E9CC.
   $F9A0,$03 Call #R$C37F.
   $F9A3,$02 Jump to #R$F9C1 if #REGa is not equal to #N$04.
@@ -4834,7 +4918,7 @@ N $F9C9 Bad luck!
 c $F9E4 Action: Open
 @ $F9E4 label=Action_Open
   $F9E4,$03 Call #R$C47B.
-  $F9E7,$01 Return if *#REGhl is less than #N$04.
+  $F9E7,$01 Return if the direct object is malformed.
   $F9E8,$03 #REGhl=#R$EAB8.
   $F9EB,$03 Call #R$C37F.
   $F9EE,$02 Jump to #R$FA14 if *#REGhl is not equal to #N$04.
@@ -4882,7 +4966,7 @@ N $FA39 Tried to drink water where there is none.
 c $FA3C Action: Close/ Shut
 @ $FA3C label=Action_CloseShut
   $FA3C,$03 Call #R$C47B.
-  $FA3F,$01 Return if #REGd is less than #N$06.
+  $FA3F,$01 Return if the direct object is malformed.
   $FA40,$03 #REGhl=#R$EABE.
   $FA43,$03 Call #R$C37F.
   $FA46,$02 Jump to #R$FA85 if #REGd is not equal to #N$06.
@@ -4920,7 +5004,7 @@ N $FA9F Print "#STR$E305,$08($b==$FF)".
 c $FAA8 Action: Shout
 @ $FAA8 label=Action_Shout
   $FAA8,$03 Call #R$C47B.
-  $FAAB,$01 Return if #REGa is less than #N$31.
+  $FAAB,$01 Return if the direct object is malformed.
   $FAAC,$03 #REGhl=#R$EABE.
   $FAAF,$03 Call #R$C37F.
   $FAB2,$02 Jump to #R$FAE5 if #REGa is not equal to #N$31.
@@ -5010,7 +5094,7 @@ c $FB71 Action: Insert
 c $FB83 Action: Swearing
 @ $FB83 label=Action_Swearing
   $FB83,$03 Call #R$C47B.
-  $FB86,$01 Return if #REGa is less than #N$31.
+  $FB86,$01 Return if the direct object is malformed.
   $FB87,$03 #REGhl=#R$BC54.
   $FB8A,$02 Test bit 2 of *#REGhl.
   $FB8C,$02 Jump to #R$FB96 if #REGa is not equal to #N$31.
@@ -5031,7 +5115,7 @@ N $FBA2 Print "#STR$E3F7,$08($b==$FF)".
 c $FBA8 Action: Pull
 @ $FBA8 label=Action_Pull
   $FBA8,$03 Call #R$C47B.
-  $FBAB,$01 Return if #REGa is less than #N$31.
+  $FBAB,$01 Return if the direct object is malformed.
   $FBAC,$05 Jump to #R$F074 if #REGa is greater than #N$02.
   $FBB1,$03 #REGhl=#R$EACB.
   $FBB4,$03 Call #R$C37F.
@@ -5048,7 +5132,7 @@ c $FBA8 Action: Pull
 c $FBD5 Action: Wear
 @ $FBD5 label=Action_Wear
   $FBD5,$03 Call #R$C47B.
-  $FBD8,$01 Return if #REGa is less than #N$60.
+  $FBD8,$01 Return if the direct object is malformed.
   $FBD9,$05 Jump to #R$F074 if #REGa is greater than #N$02.
 N $FBDE Was the player trying to wear ... the eyepatch?
   $FBDE,$06 Call #R$C37F with #R$E9F1.
@@ -5144,7 +5228,7 @@ N $FC95 Nothing else is able to be entered, so provide a generic response.
 c $FC98 Action: Move
 @ $FC98 label=Action_Move
   $FC98,$03 Call #R$C47B.
-  $FC9B,$01 Return if #REGa is less than #N$52.
+  $FC9B,$01 Return if the direct object is malformed.
   $FC9C,$03 #REGhl=#R$EAD8.
   $FC9F,$03 Call #R$C37F.
   $FCA2,$02 Jump to #R$FCAA if #REGa is not equal to #N$52.
@@ -5168,7 +5252,7 @@ N $FCC4 Print "#STR$E508,$08($b==$FF)".
 c $FCCD Action: Unlock
 @ $FCCD label=Action_Unlock
   $FCCD,$03 Call #R$C47B.
-  $FCD0,$01 Return if #REGa is less than #N$3B.
+  $FCD0,$01 Return if the direct object is malformed.
   $FCD1,$03 #REGhl=#R$EAE6.
   $FCD4,$03 Call #R$C37F.
   $FCD7,$02 Jump to #R$FCFF if #REGa is not equal to #N$3B.
@@ -5236,7 +5320,7 @@ L $FD1E,$01,$03,$02
 c $FD6D Action: Swim
 @ $FD6D label=Action_Swim
   $FD6D,$03 Call #R$C47B.
-  $FD70,$01 Return if #REGa is less than #N$02.
+  $FD70,$01 Return if the direct object is malformed.
   $FD71,$05 Jump to #R$F074 if #REGa is equal to #N$02.
 N $FD76 Print "#STR$DB5F,$08($b==$FF)".
   $FD76,$03 #REGhl=#R$DB5F.
