@@ -57,19 +57,18 @@ Next: <a href="F999.html">F999</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f94a"></span>F94A</td>
 <td class="instruction">LD HL,$EAB2</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eab2">PhraseTokens_UpLadder</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#eab2">PhraseTokens_UpLadder</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f94d"></span>F94D</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f950"></span>F950</td>
 <td class="instruction">JR NZ,<a href="F946.html#f960">Action_Eat_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F946.html#f960">Action_Eat_0</a> if ?? is not equal to 0F.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F946.html#f960">Action_Eat_0</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -111,19 +110,18 @@ Next: <a href="F999.html">F999</a>
 <td class="asm-label">Action_Eat_0</td>
 <td class="address-2"><span id="f960"></span>F960</td>
 <td class="instruction">LD HL,$EAB5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eab5">PhraseTokens_DownLadder</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#eab5">PhraseTokens_DownLadder</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f963"></span>F963</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f966"></span>F966</td>
 <td class="instruction">JR NZ,<a href="F946.html#f976">Action_Eat_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F946.html#f976">Action_Eat_1</a> if <span class="register">A</span> is not equal to 03.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F946.html#f976">Action_Eat_1</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -165,19 +163,18 @@ Next: <a href="F999.html">F999</a>
 <td class="asm-label">Action_Eat_1</td>
 <td class="address-2"><span id="f976"></span>F976</td>
 <td class="instruction">LD HL,$EABC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eabc">PhraseTokens_Ladder</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#eabc">PhraseTokens_Ladder</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f979"></span>F979</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f97c"></span>F97C</td>
 <td class="instruction">JR NZ,<a href="F946.html#f984">Action_Eat_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F946.html#f984">Action_Eat_2</a> if <span class="register">A</span> is not equal to 04.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F946.html#f984">Action_Eat_2</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -205,37 +202,35 @@ Print "Please be more specific.".
 <td class="asm-label">Action_Eat_2</td>
 <td class="address-2"><span id="f984"></span>F984</td>
 <td class="instruction">LD HL,$EA0D</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea0d">PhraseTokens_IntoBoat</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea0d">PhraseTokens_IntoBoat</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f987"></span>F987</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f98a"></span>F98A</td>
-<td class="instruction">JP Z,<a href="F481.html#f48d">Action_Get_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F481.html#f48d">Action_Get_0</a> if <span class="register">A</span> is equal to 04.</td>
+<td class="instruction">JP Z,<a href="F481.html#f48d">Validate_GetIntoBoat</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F481.html#f48d">Validate_GetIntoBoat</a> if the token is for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f98d"></span>F98D</td>
 <td class="instruction">LD HL,$EA1D</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea1d">PhraseTokens_OutOfBoat</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea1d">PhraseTokens_OutOfBoat</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f990"></span>F990</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f993"></span>F993</td>
-<td class="instruction">JP Z,<a href="F481.html#f4b4">Action_Get_6</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F481.html#f4b4">Action_Get_6</a> if <span class="register">A</span> is equal to 04.</td>
+<td class="instruction">JP Z,<a href="F481.html#f4b4">IsPlayerInRowingBoat_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F481.html#f4b4">IsPlayerInRowingBoat_1</a> if the token is for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

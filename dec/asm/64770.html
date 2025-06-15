@@ -177,19 +177,18 @@ Any room ID in which, you're in the rowing boat.
 <td class="asm-label">Action_Row_1</td>
 <td class="address-2"><span id="64809"></span>64809</td>
 <td class="instruction">LD HL,60140</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60140">PhraseTokens_North</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60140">PhraseTokens_North</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64812"></span>64812</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64815"></span>64815</td>
 <td class="instruction">JR NZ,<a href="64770.html#64831">Action_Row_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64770.html#64831">Action_Row_2</a> if <span class="register">A</span> is not equal to 2.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="64770.html#64831">Action_Row_2</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -231,19 +230,18 @@ Any room ID in which, you're in the rowing boat.
 <td class="asm-label">Action_Row_2</td>
 <td class="address-2"><span id="64831"></span>64831</td>
 <td class="instruction">LD HL,60149</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60149">PhraseTokens_South</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60149">PhraseTokens_South</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64834"></span>64834</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64837"></span>64837</td>
 <td class="instruction">JR NZ,<a href="64770.html#64852">Action_Row_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64770.html#64852">Action_Row_3</a> if <span class="register">A</span> is not equal to 107.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="64770.html#64852">Action_Row_3</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -285,37 +283,35 @@ Any room ID in which, you're in the rowing boat.
 <td class="asm-label">Action_Row_3</td>
 <td class="address-2"><span id="64852"></span>64852</td>
 <td class="instruction">LD HL,60158</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60158">PhraseTokens_East</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60158">PhraseTokens_East</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64855"></span>64855</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64858"></span>64858</td>
 <td class="instruction">JR Z,<a href="64770.html#64871">Action_Row_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64770.html#64871">Action_Row_4</a> if <span class="register">A</span> is equal to 4.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="64770.html#64871">Action_Row_4</a> if the token is for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64860"></span>64860</td>
 <td class="instruction">LD HL,60167</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60167">PhraseTokens_West</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60167">PhraseTokens_West</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64863"></span>64863</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64866"></span>64866</td>
 <td class="instruction">JR Z,<a href="64770.html#64871">Action_Row_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64770.html#64871">Action_Row_4</a> if <span class="register">A</span> is equal to 4.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="64770.html#64871">Action_Row_4</a> if the token is for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

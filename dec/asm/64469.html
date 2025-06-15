@@ -89,7 +89,7 @@ Was the player trying to wear ... the eyepatch?
 <td class="asm-label"></td>
 <td class="address-1"><span id="64484"></span>64484</td>
 <td class="instruction">JR NZ,<a href="64469.html#64522">Wear_CheckShoe</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64469.html#64522">Wear_CheckShoe</a> if <span class="register">A</span> is not equal to 2.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="64469.html#64522">Wear_CheckShoe</a> if the token isn't for the eyepatch.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -211,7 +211,7 @@ Was the player trying to wear ... the shoe?
 <td class="asm-label"></td>
 <td class="address-1"><span id="64528"></span>64528</td>
 <td class="instruction">JR NZ,<a href="64469.html#64536">Wear_CheckJewels</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64469.html#64536">Wear_CheckJewels</a> if <span class="register">A</span> is not equal to 16.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="64469.html#64536">Wear_CheckJewels</a> if the token isn't for the shoe.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -249,7 +249,7 @@ Was the player trying to wear ... the jewels?
 <td class="asm-label">Wear_CheckJewels</td>
 <td class="address-2"><span id="64536"></span>64536</td>
 <td class="instruction">LD HL,59867</td>
-<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#59867">PhraseTokens_Jewel</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#59867">PhraseTokens_Jewels</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -260,7 +260,7 @@ Was the player trying to wear ... the jewels?
 <td class="asm-label"></td>
 <td class="address-1"><span id="64542"></span>64542</td>
 <td class="instruction">JP Z,<a href="61551.html">Response_YouCant_Duplicate</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61551.html">Response_YouCant_Duplicate</a> if <span class="register">A</span> is equal to 16.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="61551.html">Response_YouCant_Duplicate</a> if the token is for the jewels.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

@@ -57,19 +57,18 @@ Next: <a href="F9E4.html">F9E4</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f99d"></span>F99D</td>
 <td class="instruction">LD HL,$E9CC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9cc">PhraseTokens_Fish</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9cc">PhraseTokens_Fish</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9a0"></span>F9A0</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9a3"></span>F9A3</td>
 <td class="instruction">JR NZ,<a href="F999.html#f9c1">Action_Drink_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F999.html#f9c1">Action_Drink_1</a> if <span class="register">A</span> is not equal to 04.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F999.html#f9c1">Action_Drink_1</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -111,7 +110,7 @@ Next: <a href="F9E4.html">F9E4</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9b2"></span>F9B2</td>
 <td class="instruction">LD HL,$BC98</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC98.html">CounterMatch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC98.html">Count_InventoryItems</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -163,19 +162,18 @@ Print "You eat the fish.It was quite tasty.".
 <td class="asm-label">Action_Drink_1</td>
 <td class="address-2"><span id="f9c1"></span>F9C1</td>
 <td class="instruction">LD HL,$E9D7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d7">PhraseTokens_Fruit</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9d7">PhraseTokens_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9c4"></span>F9C4</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9c7"></span>F9C7</td>
 <td class="instruction">JR NZ,<a href="F999.html#f9d3">Action_Drink_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F999.html#f9d3">Action_Drink_2</a> if *<span class="register">HL</span> is not equal to 04.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F999.html#f9d3">Action_Drink_2</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -214,19 +212,18 @@ Bad luck!
 <td class="asm-label">Action_Drink_2</td>
 <td class="address-2"><span id="f9d3"></span>F9D3</td>
 <td class="instruction">LD HL,$E9E5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e5">PhraseTokens_Coconut</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9e5">PhraseTokens_Coconut</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9d6"></span>F9D6</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9d9"></span>F9D9</td>
 <td class="instruction">JR NZ,<a href="F999.html#f9e1">Action_Drink_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F999.html#f9e1">Action_Drink_3</a> if *<span class="register">HL</span> is not equal to 04.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F999.html#f9e1">Action_Drink_3</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

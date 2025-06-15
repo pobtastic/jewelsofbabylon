@@ -57,19 +57,18 @@ Next: <a href="FA3C.html">FA3C</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9e8"></span>F9E8</td>
 <td class="instruction">LD HL,$EAB8</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eab8">PhraseTokens_Rum</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#eab8">PhraseTokens_Rum</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9eb"></span>F9EB</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f9ee"></span>F9EE</td>
 <td class="instruction">JR NZ,<a href="F9E4.html#fa14">Handler_DrinkWater</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F9E4.html#fa14">Handler_DrinkWater</a> if *<span class="register">HL</span> is not equal to 04.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F9E4.html#fa14">Handler_DrinkWater</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -183,26 +182,25 @@ Handle drinking water.
 <td class="asm-label">Handler_DrinkWater</td>
 <td class="address-2"><span id="fa14"></span>FA14</td>
 <td class="instruction">LD HL,$EABA</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eaba">PhraseTokens_Water</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#eaba">PhraseTokens_Water</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fa17"></span>FA17</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fa1a"></span>FA1A</td>
 <td class="instruction">JR NZ,<a href="F9E4.html#fa39">Action_CantDrinkWater</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F9E4.html#fa39">Action_CantDrinkWater</a> if the player can't drink water at this time.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F9E4.html#fa39">Action_CantDrinkWater</a> if the token isn't for drinking the water.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="fa1c"></span>
 <div class="comments">
 <div class="paragraph">
-The player can drink water but determine what type of water...
+The player wants to drink water but determine what type of water...
 </div>
 </div>
 </td>

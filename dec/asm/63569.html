@@ -57,19 +57,18 @@ Next: <a href="63705.html">63705</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63573"></span>63573</td>
 <td class="instruction">LD HL,60045</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60045">PhraseTokens_OctopusWithSpear</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60045">PhraseTokens_OctopusWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63576"></span>63576</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63579"></span>63579</td>
 <td class="instruction">JR NZ,<a href="63569.html#63624">Action_Shoot_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="63569.html#63624">Action_Shoot_0</a> if *<span class="register">HL</span> is not equal to 21.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="63569.html#63624">Action_Shoot_0</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -114,7 +113,7 @@ Next: <a href="63705.html">63705</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63599"></span>63599</td>
 <td class="instruction">LD HL,48280</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48280.html">CounterMatch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="48280.html">Count_InventoryItems</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -193,19 +192,18 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 <td class="asm-label">Action_Shoot_0</td>
 <td class="address-2"><span id="63624"></span>63624</td>
 <td class="instruction">LD HL,60054</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60054">PhraseTokens_LionWithSpear</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60054">PhraseTokens_LionWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63627"></span>63627</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63630"></span>63630</td>
 <td class="instruction">JR NZ,<a href="63569.html#63646">Action_Shoot_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="63569.html#63646">Action_Shoot_1</a> if *<span class="register">HL</span> is not equal to 66.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="63569.html#63646">Action_Shoot_1</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -250,19 +248,18 @@ Print "You stab at the lionbut the beast easily avoids it.".
 <td class="asm-label">Action_Shoot_1</td>
 <td class="address-2"><span id="63646"></span>63646</td>
 <td class="instruction">LD HL,60058</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60058">PhraseTokens_CannibalsWithSpear</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60058">PhraseTokens_CannibalsWithSpear</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63649"></span>63649</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63652"></span>63652</td>
 <td class="instruction">JR NZ,<a href="63569.html#63672">Action_Shoot_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="63569.html#63672">Action_Shoot_2</a> if *<span class="register">HL</span> is not equal to 26.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="63569.html#63672">Action_Shoot_2</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -328,19 +325,18 @@ Print "The cannibals turn on you.They quickly overwhelm you.".
 <td class="asm-label">Action_Shoot_2</td>
 <td class="address-2"><span id="63672"></span>63672</td>
 <td class="instruction">LD HL,60062</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60062">PhraseTokens_PirateWithGun</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60062">PhraseTokens_PirateWithGun</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63675"></span>63675</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63678"></span>63678</td>
 <td class="instruction">JR NZ,<a href="63705.html#63754">Action_Shooting_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="63705.html#63754">Action_Shooting_0</a> if ?? is not equal to 0.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="63705.html#63754">Action_Shooting_0</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

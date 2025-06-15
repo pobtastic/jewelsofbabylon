@@ -57,19 +57,18 @@ Next: <a href="F851.html">F851</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f7da"></span>F7DA</td>
 <td class="instruction">LD HL,$EA26</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea26">PhraseTokens_PlankAcrossPit</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea26">PhraseTokens_PlankAcrossPit</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f7dd"></span>F7DD</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f7e0"></span>F7E0</td>
 <td class="instruction">JR NZ,<a href="F7D6.html#f813">Action_Kill_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F7D6.html#f813">Action_Kill_0</a> if *<span class="register">HL</span> is not equal to 14.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F7D6.html#f813">Action_Kill_0</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -97,8 +96,8 @@ Next: <a href="F851.html">F851</a>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f7ec"></span>F7EC</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_24</a>.</td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_1</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -192,19 +191,18 @@ Print "The plank now spans the pit.".
 <td class="asm-label">Action_Kill_0</td>
 <td class="address-2"><span id="f813"></span>F813</td>
 <td class="instruction">LD HL,$EA70</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea70">PhraseTokens_RodInHole</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea70">PhraseTokens_RodInHole</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f816"></span>F816</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f819"></span>F819</td>
 <td class="instruction">JR NZ,<a href="F7D6.html#f84e">Action_Kill_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F7D6.html#f84e">Action_Kill_2</a> if *<span class="register">HL</span> is not equal to 66.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F7D6.html#f84e">Action_Kill_2</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -237,12 +235,12 @@ This entry point is used by the routine at <a href="FB71.html">Action_Insert</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f823"></span>F823</td>
 <td class="instruction">LD A,$08</td>
-<td class="comment-1" rowspan="2">Call <a href="F4D4.html#f635">Action_DropThrow_24</a> with "A rod".</td>
+<td class="comment-1" rowspan="2">Call <a href="F4D4.html#f635">Action_DropThrow_1</a> with "A rod".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f825"></span>F825</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

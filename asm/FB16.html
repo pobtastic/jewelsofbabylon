@@ -29,7 +29,7 @@ Prev: <a href="FAA8.html">FAA8</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#fb16">Map</a></td>
 <td class="next">
-Next: <a href="FB37.html">FB37</a>
+Next: <a href="FB71.html">FB71</a>
 </td>
 </tr>
 </table>
@@ -57,19 +57,18 @@ Next: <a href="FB37.html">FB37</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb1c"></span>FB1C</td>
 <td class="instruction">LD HL,$EAC7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eac7">PhraseTokens_XXXX</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#eac7">PhraseTokens_XXXX</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb1f"></span>FB1F</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb22"></span>FB22</td>
-<td class="instruction">JR NZ,<a href="FB37.html#fb6e">$FB6E</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="FB37.html#fb6e">FB6E</a> if <span class="register">A</span> is not equal to 32.</td>
+<td class="instruction">JR NZ,<a href="FB16.html#fb6e">Give_Invalid</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="FB16.html#fb6e">Give_Invalid</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -102,8 +101,8 @@ Next: <a href="FB37.html">FB37</a>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fb31"></span>FB31</td>
-<td class="instruction">JR Z,<a href="FB37.html#fb43">$FB43</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="FB37.html#fb43">FB43</a> if <span class="register">A</span> is equal to 29.</td>
+<td class="instruction">JR Z,<a href="FB16.html#fb43">Action_Give_0</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="FB16.html#fb43">Action_Give_0</a> if <span class="register">A</span> is equal to 29.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -126,6 +125,180 @@ Bad luck!
 <td class="address-1"><span id="fb36"></span>FB36</td>
 <td class="instruction">EX (SP),HL</td>
 </tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="fb37"></span>
+<div class="comments">
+<div class="paragraph">
+Print "The whole canyon vibrates.The boulder is dislodged...".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb37"></span>FB37</td>
+<td class="instruction">LD HL,$E333</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E333.html">E333</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb3a"></span>FB3A</td>
+<td class="instruction">CALL <a href="BAB1.html">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAB1.html">PrintStringAndNewline</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="fb3d"></span>
+<div class="comments">
+<div class="paragraph">
+Print "It falls and crushes you.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb3d"></span>FB3D</td>
+<td class="instruction">LD HL,$E36A</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E36A.html">E36A</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb40"></span>FB40</td>
+<td class="instruction">JP <a href="F03E.html">PausePrintStringAndScroll_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03E.html">PausePrintStringAndScroll_Alias</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Action_Give_0</td>
+<td class="address-2"><span id="fb43"></span>FB43</td>
+<td class="instruction">LD HL,$BC6F</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC6F.html">Flag_EventState</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb46"></span>FB46</td>
+<td class="instruction">RES 0,(HL)</td>
+<td class="comment-1" rowspan="1">Reset bit 0 of *<span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb48"></span>FB48</td>
+<td class="instruction">LD A,$29</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=29 (event ID: 29).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb4a"></span>FB4A</td>
+<td class="instruction">CALL <a href="C3EA.html">Handler_DestroyItemEvent</a></td>
+<td class="comment-1" rowspan="1">Call <a href="C3EA.html">Handler_DestroyItemEvent</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb4d"></span>FB4D</td>
+<td class="instruction">LD BC,$393A</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 3A ("A boulder") into item 39 ("A boulder on the brink of a ledge").</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb50"></span>FB50</td>
+<td class="instruction">CALL <a href="C426.html">TransformItem</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb53"></span>FB53</td>
+<td class="instruction">LD A,$2F</td>
+<td class="comment-1" rowspan="2">Write 2F to *<a href="EB10.html#ec27">EC27</a> to open up westbound access to 
+
+<a href="CEB6.html">The Secluded Beach</a> from 
+
+<a href="CE81.html">The Canyon</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb55"></span>FB55</td>
+<td class="instruction">LD ($EC27),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb58"></span>FB58</td>
+<td class="instruction">LD A,$30</td>
+<td class="comment-1" rowspan="2">Write 30 to *<a href="EB10.html#ec2a">EC2A</a> to open up northbound access to 
+
+<a href="CECA.html">The Rockpool</a> from 
+
+<a href="CEB6.html">The Secluded Beach</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb5a"></span>FB5A</td>
+<td class="instruction">LD ($EC2A),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb5d"></span>FB5D</td>
+<td class="instruction">LD A,$31</td>
+<td class="comment-1" rowspan="2">Write 31 to *<a href="EB10.html#ec30">EC30</a> to open up northbound access to 
+
+<a href="CEFE.html">Wreckers' Cove</a> from 
+
+<a href="CECA.html">The Rockpool</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb5f"></span>FB5F</td>
+<td class="instruction">LD ($EC30),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="fb62"></span>
+<div class="comments">
+<div class="paragraph">
+Print "The whole canyon vibrates.The boulder is dislodged...".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb62"></span>FB62</td>
+<td class="instruction">LD HL,$E333</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E333.html">E333</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb65"></span>FB65</td>
+<td class="instruction">CALL <a href="BAB1.html">PrintStringAndNewline</a></td>
+<td class="comment-1" rowspan="1">Call <a href="BAB1.html">PrintStringAndNewline</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="fb68"></span>
+<div class="comments">
+<div class="paragraph">
+Print "It falls and crushes the crab.".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb68"></span>FB68</td>
+<td class="instruction">LD HL,$E384</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E384.html">E384</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb6b"></span>FB6B</td>
+<td class="instruction">JP <a href="F03E.html">PausePrintStringAndScroll_Alias</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03E.html">PausePrintStringAndScroll_Alias</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Give_Invalid</td>
+<td class="address-2"><span id="fb6e"></span>FB6E</td>
+<td class="instruction">JP <a href="F074.html">Response_PleaseRephraseThat_Duplicate</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F074.html">Response_PleaseRephraseThat_Duplicate</a>.</td>
+</tr>
 </table>
 <table class="asm-navigation">
 <tr>
@@ -134,7 +307,7 @@ Prev: <a href="FAA8.html">FAA8</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#fb16">Map</a></td>
 <td class="next">
-Next: <a href="FB37.html">FB37</a>
+Next: <a href="FB71.html">FB71</a>
 </td>
 </tr>
 </table>

@@ -96,37 +96,35 @@ Print "You haven't got a gun.".
 <td class="asm-label">PlayerHasGun</td>
 <td class="address-2"><span id="63788"></span>63788</td>
 <td class="instruction">LD HL,60070</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60070">PhraseTokens_PirateWithGun_2</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60070">PhraseTokens_PirateWithGun_2</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63791"></span>63791</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63794"></span>63794</td>
 <td class="instruction">JP Z,<a href="63569.html#63688">Action_Shoot_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="63569.html#63688">Action_Shoot_3</a> if ?? is equal to 15.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="63569.html#63688">Action_Shoot_3</a> if the token is for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63797"></span>63797</td>
 <td class="instruction">LD HL,60076</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60076">PhraseTokens_ParrotWithGun_2</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60076">PhraseTokens_ParrotWithGun_2</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63800"></span>63800</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63803"></span>63803</td>
 <td class="instruction">JR NZ,<a href="63771.html#63811">Action_Climb_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="63771.html#63811">Action_Climb_0</a> if ?? is not equal to 15.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="63771.html#63811">Action_Climb_0</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

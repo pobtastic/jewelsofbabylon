@@ -57,19 +57,18 @@ Next: <a href="64168.html">64168</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64064"></span>64064</td>
 <td class="instruction">LD HL,60094</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60094">PhraseTokens_Door</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60094">PhraseTokens_Door</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64067"></span>64067</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64070"></span>64070</td>
 <td class="instruction">JR NZ,<a href="64060.html#64133">Action_CloseShut_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64060.html#64133">Action_CloseShut_3</a> if <span class="register">D</span> is not equal to 6.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="64060.html#64133">Action_CloseShut_3</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -224,25 +223,24 @@ Print "The door is locked.".
 <td class="asm-label">Action_CloseShut_3</td>
 <td class="address-2"><span id="64133"></span>64133</td>
 <td class="instruction">LD HL,60096</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60096">PhraseTokens_RockDoor</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60096">PhraseTokens_RockDoor</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64136"></span>64136</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64139"></span>64139</td>
-<td class="instruction">JR NZ,<a href="64060.html#64165">Action_CloseShut_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64060.html#64165">Action_CloseShut_4</a> if <span class="register">A</span> is not equal to 97.</td>
+<td class="instruction">JR NZ,<a href="64060.html#64165">CloseShut_Invalid</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="64060.html#64165">CloseShut_Invalid</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64141"></span>64141</td>
 <td class="instruction">LD A,(48331)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="64060.html#64165">Action_CloseShut_4</a> if *<a href="48331.html">CurrentRoom</a> is not room 106: "
+<td class="comment-1" rowspan="3">Jump to <a href="64060.html#64165">CloseShut_Invalid</a> if *<a href="48331.html">CurrentRoom</a> is not room 106: "
 
 <a href="53649.html">The Mighty Rock Door</a>".</td>
 </tr>
@@ -254,7 +252,7 @@ Print "The door is locked.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64146"></span>64146</td>
-<td class="instruction">JR NZ,<a href="64060.html#64165">Action_CloseShut_4</a></td>
+<td class="instruction">JR NZ,<a href="64060.html#64165">CloseShut_Invalid</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -302,7 +300,7 @@ Print "It's much too heavy.".
 <td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_CloseShut_4</td>
+<td class="asm-label">CloseShut_Invalid</td>
 <td class="address-2"><span id="64165"></span>64165</td>
 <td class="instruction">JP <a href="61551.html">Response_YouCant_Duplicate</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="61551.html">Response_YouCant_Duplicate</a>.</td>

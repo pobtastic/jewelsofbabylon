@@ -54,27 +54,39 @@ Next: <a href="64717.html">64717</a>
 <td class="comment-1" rowspan="1">Return if the direct object is malformed.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="64668"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to move the stone?
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64668"></span>64668</td>
 <td class="instruction">LD HL,60120</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60120">PhraseTokens_Stone</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60120">PhraseTokens_Stone</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64671"></span>64671</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64674"></span>64674</td>
-<td class="instruction">JR NZ,<a href="64664.html#64682">Action_Move_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64664.html#64682">Action_Move_0</a> if <span class="register">A</span> is not equal to 82.</td>
+<td class="instruction">JR NZ,<a href="64664.html#64682">Move_StoneWithCrowbar</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="64664.html#64682">Move_StoneWithCrowbar</a> if the token isn't for the stone.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="64676"></span>
 <div class="comments">
+<div class="paragraph">
+The player is asking to move the stone.
+</div>
 <div class="paragraph">
 Print "It's much too heavy.".
 </div>
@@ -94,29 +106,51 @@ Print "It's much too heavy.".
 <td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Move_0</td>
+<td class="routine-comment" colspan="5">
+<span id="64682"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to move the stone with the crowbar?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Move_StoneWithCrowbar</td>
 <td class="address-2"><span id="64682"></span>64682</td>
 <td class="instruction">LD HL,60125</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60125">PhraseTokens_StoneWithCrowbar</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60125">PhraseTokens_StoneWithCrowbar</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64685"></span>64685</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64688"></span>64688</td>
-<td class="instruction">JR NZ,<a href="64664.html#64714">Action_Move_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64664.html#64714">Action_Move_1</a> if <span class="register">A</span> is not equal to 82.</td>
+<td class="instruction">JR NZ,<a href="64664.html#64714">Move_Invalid</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="64664.html#64714">Move_Invalid</a> if the token isn't asking to move the stone with the crowbar.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="64690"></span>
+<div class="comments">
+<div class="paragraph">
+The player is asking to move the stone with the crowbar.
+</div>
+<div class="paragraph">
+But ... have they done this already?
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64690"></span>64690</td>
 <td class="instruction">LD A,74</td>
-<td class="comment-1" rowspan="2">Call <a href="50015.html">Handler_Objects</a> with 
-N/A.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61561.html">Response_YouveDoneThatAlready</a> if <a href="50015.html">Handler_Objects</a> reports that 
+N/A is in the same room as the player.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -127,31 +161,43 @@ N/A.</td>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64695"></span>64695</td>
 <td class="instruction">JP Z,<a href="61561.html">Response_YouveDoneThatAlready</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="61561.html">Response_YouveDoneThatAlready</a> if <span class="register">A</span> is equal to 74.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="64698"></span>
+<div class="comments">
+<div class="paragraph">
+Handle moving the stone with the crowbar.
+</div>
+<div class="paragraph">
+This brings items 
+N/A and "A ring in the floor" into the current room.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64698"></span>64698</td>
 <td class="instruction">LD A,74</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=74.</td>
+<td class="comment-1" rowspan="2">Call <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a> with item 74: 
+N/A.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64700"></span>64700</td>
 <td class="instruction">CALL <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64703"></span>64703</td>
 <td class="instruction">LD A,59</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=59.</td>
+<td class="comment-1" rowspan="2">Call <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a> with item 59: "A ring in the floor".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64705"></span>64705</td>
 <td class="instruction">CALL <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50161.html">Handler_UpdateItemEventCurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -176,7 +222,17 @@ Print "Using the crowbar as a lever,You slowly move the stoneand uncover a rin
 <td class="comment-1" rowspan="1">Jump to <a href="61498.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Move_1</td>
+<td class="routine-comment" colspan="5">
+<span id="64714"></span>
+<div class="comments">
+<div class="paragraph">
+Everything else isn't valid.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Invalid</td>
 <td class="address-2"><span id="64714"></span>64714</td>
 <td class="instruction">JP <a href="61556.html">Response_PleaseRephraseThat_Duplicate</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="61556.html">Response_PleaseRephraseThat_Duplicate</a>.</td>

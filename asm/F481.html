@@ -54,22 +54,31 @@ Next: <a href="F4D4.html">F4D4</a>
 <td class="comment-1" rowspan="1">Return if the direct object is malformed.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="f485"></span>
+<div class="comments">
+<div class="paragraph">
+Confirm if the player intended to "GET INTO BOAT" (or similar).
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f485"></span>F485</td>
 <td class="instruction">LD HL,$EA0D</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea0d">PhraseTokens_IntoBoat</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea0d">PhraseTokens_IntoBoat</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f488"></span>F488</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f48b"></span>F48B</td>
-<td class="instruction">JR NZ,<a href="F481.html#f4ac">Action_Get_5</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F481.html#f4ac">Action_Get_5</a> if <span class="register">A</span> is not equal to 28.</td>
+<td class="instruction">JR NZ,<a href="F481.html#f4ac">GetOutOfBoat_Check</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F481.html#f4ac">GetOutOfBoat_Check</a> if the token isn't for getting into the boat.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -78,45 +87,50 @@ Next: <a href="F4D4.html">F4D4</a>
 <div class="paragraph">
 This entry point is used by the routine at <a href="F946.html">Action_Eat</a>.
 </div>
+<div class="paragraph">
+The player has typed any variation of wanting to get into the boat.
+</div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_Get_0</td>
+<td class="asm-label">Validate_GetIntoBoat</td>
 <td class="address-2"><span id="f48d"></span>F48D</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">CurrentRoom</a>.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="F481.html#f498">AlreadyInTheBoat</a> if the *<a href="BCCB.html">CurrentRoom</a> is room 04: "
+
+<a href="CB66.html">In A Rowing Boat</a>". So the player is already in the boat.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f490"></span>F490</td>
 <td class="instruction">CP $04</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F481.html#f498">Action_Get_1</a> if <span class="register">A</span> is room 04: "
-
-<a href="CB66.html">In A Rowing Boat</a>".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f492"></span>F492</td>
-<td class="instruction">JR Z,<a href="F481.html#f498">Action_Get_1</a></td>
+<td class="instruction">JR Z,<a href="F481.html#f498">AlreadyInTheBoat</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f494"></span>F494</td>
 <td class="instruction">CP $6B</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F481.html#f49e">Action_Get_2</a> if <span class="register">A</span> is not room 6B: "
+<td class="comment-1" rowspan="2">Jump to <a href="F481.html#f49e">Action_GetIntoBoat</a> if the *<a href="BCCB.html">CurrentRoom</a> is not room 6B: "
 
-<a href="CB66.html">In A Rowing Boat</a>".</td>
+<a href="CB66.html">In A Rowing Boat</a>" (a room variation, but the player being in the boat).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f496"></span>F496</td>
-<td class="instruction">JR NZ,<a href="F481.html#f49e">Action_Get_2</a></td>
+<td class="instruction">JR NZ,<a href="F481.html#f49e">Action_GetIntoBoat</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="f498"></span>
 <div class="comments">
+<div class="paragraph">
+The player is definitely already in the boat, so tell them this.
+</div>
 <div class="paragraph">
 Print "You're in it already.".
 </div>
@@ -124,7 +138,7 @@ Print "You're in it already.".
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_Get_1</td>
+<td class="asm-label">AlreadyInTheBoat</td>
 <td class="address-2"><span id="f498"></span>F498</td>
 <td class="instruction">LD HL,$DC21</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="DC21.html">DC21</a>.</td>
@@ -136,15 +150,29 @@ Print "You're in it already.".
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Get_2</td>
+<td class="routine-comment" colspan="5">
+<span id="f49e"></span>
+<div class="comments">
+<div class="paragraph">
+The player can only get into the boat from room 03: "
+
+<a href="CB2A.html">Your Ship</a>".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Action_GetIntoBoat</td>
 <td class="address-2"><span id="f49e"></span>F49E</td>
 <td class="instruction">CP $03</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F481.html#f4a6">Action_Get_3</a> if <span class="register">A</span> is not equal to 03.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F481.html#f4a6">WhereIsTheBoat</a> if the *<a href="BCCB.html">CurrentRoom</a> is not room 03: "
+
+<a href="CB2A.html">Your Ship</a>"</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4a0"></span>F4A0</td>
-<td class="instruction">JR NZ,<a href="F481.html#f4a6">Action_Get_3</a></td>
+<td class="instruction">JR NZ,<a href="F481.html#f4a6">WhereIsTheBoat</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -155,17 +183,17 @@ Print "You're in it already.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4a4"></span>F4A4</td>
-<td class="instruction">JR <a href="F481.html#f4a8">Action_Get_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F481.html#f4a8">Action_Get_4</a>.</td>
+<td class="instruction">JR <a href="F481.html#f4a8">Action_Get_0</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F481.html#f4a8">Action_Get_0</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Get_3</td>
+<td class="asm-label">WhereIsTheBoat</td>
 <td class="address-2"><span id="f4a6"></span>F4A6</td>
 <td class="instruction">LD A,$6B</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=6B.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Get_4</td>
+<td class="asm-label">Action_Get_0</td>
 <td class="address-2"><span id="f4a8"></span>F4A8</td>
 <td class="instruction">CALL <a href="EF54.html">$EF54</a></td>
 <td class="comment-1" rowspan="1">Call <a href="EF54.html">EF54</a>.</td>
@@ -177,22 +205,31 @@ Print "You're in it already.".
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Get_5</td>
+<td class="routine-comment" colspan="5">
+<span id="f4ac"></span>
+<div class="comments">
+<div class="paragraph">
+Confirm if the player intended to "GET OUT OF BOAT" (or similar).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">GetOutOfBoat_Check</td>
 <td class="address-2"><span id="f4ac"></span>F4AC</td>
 <td class="instruction">LD HL,$EA1D</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea1d">PhraseTokens_OutOfBoat</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea1d">PhraseTokens_OutOfBoat</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4af"></span>F4AF</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4b2"></span>F4B2</td>
-<td class="instruction">JR NZ,<a href="F481.html#f4d1">Action_Get_9</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F481.html#f4d1">Action_Get_9</a> if <span class="register">A</span> is not equal to 6B.</td>
+<td class="instruction">JR NZ,<a href="F481.html#f4d1">Synonym_Take</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F481.html#f4d1">Synonym_Take</a> if the token isn't for the getting out of the boat.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -205,10 +242,10 @@ This entry point is used by the routine at <a href="F946.html">Action_Eat</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_Get_6</td>
+<td class="asm-label">IsPlayerInRowingBoat_1</td>
 <td class="address-2"><span id="f4b4"></span>F4B4</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="F481.html#f4c1">Action_Get_7</a> if *<a href="BCCB.html">CurrentRoom</a> is not room 04: "
+<td class="comment-1" rowspan="3">Jump to <a href="F481.html#f4c1">IsPlayerInRowingBoat_2</a> if the *<a href="BCCB.html">CurrentRoom</a> is not room 04: "
 
 <a href="CB66.html">In A Rowing Boat</a>".</td>
 </tr>
@@ -220,7 +257,7 @@ This entry point is used by the routine at <a href="F946.html">Action_Eat</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4b9"></span>F4B9</td>
-<td class="instruction">JR NZ,<a href="F481.html#f4c1">Action_Get_7</a></td>
+<td class="instruction">JR NZ,<a href="F481.html#f4c1">IsPlayerInRowingBoat_2</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -241,17 +278,27 @@ This entry point is used by the routine at <a href="F946.html">Action_Eat</a>.
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Get_7</td>
+<td class="routine-comment" colspan="5">
+<span id="f4c1"></span>
+<div class="comments">
+<div class="paragraph">
+Also check the room variation, as the player is in the boat in both.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">IsPlayerInRowingBoat_2</td>
 <td class="address-2"><span id="f4c1"></span>F4C1</td>
 <td class="instruction">CP $6B</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F481.html#f4cb">Action_Get_8</a> if *<a href="BCCB.html">CurrentRoom</a> is not room 6B: "
+<td class="comment-1" rowspan="2">Jump to <a href="F481.html#f4cb">NotInTheBoat</a> if the *<a href="BCCB.html">CurrentRoom</a> is not room 6B: "
 
 <a href="CB66.html">In A Rowing Boat</a>".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4c3"></span>F4C3</td>
-<td class="instruction">JR NZ,<a href="F481.html#f4cb">Action_Get_8</a></td>
+<td class="instruction">JR NZ,<a href="F481.html#f4cb">NotInTheBoat</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -282,7 +329,7 @@ Print "You're not in the boat.".
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_Get_8</td>
+<td class="asm-label">NotInTheBoat</td>
 <td class="address-2"><span id="f4cb"></span>F4CB</td>
 <td class="instruction">LD HL,$DC37</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="DC37.html">DC37</a>.</td>
@@ -294,7 +341,17 @@ Print "You're not in the boat.".
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Get_9</td>
+<td class="routine-comment" colspan="5">
+<span id="f4d1"></span>
+<div class="comments">
+<div class="paragraph">
+Pivot to "TAKE" as a synonym.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Synonym_Take</td>
 <td class="address-2"><span id="f4d1"></span>F4D1</td>
 <td class="instruction">JP <a href="F263.html">Action_Take</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="F263.html">Action_Take</a>.</td>

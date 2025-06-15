@@ -96,37 +96,35 @@ Print "You haven't got a gun.".
 <td class="asm-label">PlayerHasGun</td>
 <td class="address-2"><span id="f92c"></span>F92C</td>
 <td class="instruction">LD HL,$EAA6</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eaa6">PhraseTokens_PirateWithGun_2</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#eaa6">PhraseTokens_PirateWithGun_2</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f92f"></span>F92F</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f932"></span>F932</td>
 <td class="instruction">JP Z,<a href="F851.html#f8c8">Action_Shoot_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F851.html#f8c8">Action_Shoot_3</a> if ?? is equal to 0F.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F851.html#f8c8">Action_Shoot_3</a> if the token is for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f935"></span>F935</td>
 <td class="instruction">LD HL,$EAAC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eaac">PhraseTokens_ParrotWithGun_2</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#eaac">PhraseTokens_ParrotWithGun_2</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f938"></span>F938</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f93b"></span>F93B</td>
 <td class="instruction">JR NZ,<a href="F91B.html#f943">Action_Climb_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F91B.html#f943">Action_Climb_0</a> if ?? is not equal to 0F.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F91B.html#f943">Action_Climb_0</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">

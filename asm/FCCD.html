@@ -57,19 +57,18 @@ Next: <a href="FD02.html">FD02</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fcd1"></span>FCD1</td>
 <td class="instruction">LD HL,$EAE6</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eae6">PhraseTokens_Door_2</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#eae6">PhraseTokens_Door_2</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fcd4"></span>FCD4</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fcd7"></span>FCD7</td>
 <td class="instruction">JR NZ,<a href="FCCD.html#fcff">Action_Unlock_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="FCCD.html#fcff">Action_Unlock_1</a> if <span class="register">A</span> is not equal to 3B.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="FCCD.html#fcff">Action_Unlock_1</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

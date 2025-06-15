@@ -68,19 +68,18 @@ Next: <a href="FBD5.html">FBD5</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbb1"></span>FBB1</td>
 <td class="instruction">LD HL,$EACB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#eacb">PhraseTokens_Ring</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#eacb">PhraseTokens_Ring</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbb4"></span>FBB4</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbb7"></span>FBB7</td>
-<td class="instruction">JR NZ,<a href="FBA8.html#fbd2">Action_Pull_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="FBA8.html#fbd2">Action_Pull_0</a> if <span class="register">A</span> is not equal to 02.</td>
+<td class="instruction">JR NZ,<a href="FBA8.html#fbd2">Pull_Invalid</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="FBA8.html#fbd2">Pull_Invalid</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -103,7 +102,7 @@ Next: <a href="FBD5.html">FBD5</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbc1"></span>FBC1</td>
 <td class="instruction">LD BC,$3B34</td>
-<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 34 ("An open trapdoor") into item 3B ("A ring in the floor").</td>
+<td class="comment-1" rowspan="2">Call <a href="C426.html">TransformItem</a> to transform item 3B ("A ring in the floor") into item 34 ("An open trapdoor").</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -114,12 +113,26 @@ Next: <a href="FBD5.html">FBD5</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbc7"></span>FBC7</td>
 <td class="instruction">LD A,$60</td>
-<td class="comment-1" rowspan="2">Write 60 to *<a href="EB10.html#ed4f">ED4F</a>.</td>
+<td class="comment-1" rowspan="2">Write 60 to *<a href="EB10.html#ed4f">ED4F</a> to open up downward access to 
+
+<a href="D0DF.html">The Narrow Passage</a> from 
+
+<a href="CFC4.html">A Dead End</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="fbc9"></span>FBC9</td>
 <td class="instruction">LD ($ED4F),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="fbcc"></span>
+<div class="comments">
+<div class="paragraph">
+Print "A small section of floorlifts up,revealing it to bea trapdoor.".
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -134,7 +147,7 @@ Next: <a href="FBD5.html">FBD5</a>
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Pull_0</td>
+<td class="asm-label">Pull_Invalid</td>
 <td class="address-2"><span id="fbd2"></span>FBD2</td>
 <td class="instruction">JP <a href="F06F.html">Response_YouCant_Duplicate</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="F06F.html">Response_YouCant_Duplicate</a>.</td>

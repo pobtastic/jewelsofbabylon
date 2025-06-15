@@ -68,19 +68,18 @@ Next: <a href="F236.html">F236</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f1a6"></span>F1A6</td>
 <td class="instruction">LD HL,$E9CA</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html">PhraseTokens_Bottle</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html">PhraseTokens_Bottle</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f1a9"></span>F1A9</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f1ac"></span>F1AC</td>
 <td class="instruction">JR NZ,<a href="F19D.html#f1c4">Action_Examine_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f1c4">Action_Examine_0</a> if <span class="register">A</span> is not equal to 01.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f1c4">Action_Examine_0</a> if the token isn't for the bottle.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -142,19 +141,18 @@ Print "It's full of rum!".
 <td class="asm-label">Action_Examine_0</td>
 <td class="address-2"><span id="f1c4"></span>F1C4</td>
 <td class="instruction">LD HL,$E9CC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9cc">PhraseTokens_Fish</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9cc">PhraseTokens_Fish</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f1c7"></span>F1C7</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f1ca"></span>F1CA</td>
 <td class="instruction">JR NZ,<a href="F19D.html#f1df">Action_Examine_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f1df">Action_Examine_1</a> if <span class="register">A</span> is not equal to 0B.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f1df">Action_Examine_1</a> if the token isn't for the fish.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -210,19 +208,18 @@ Print "It's a red herring!".
 <td class="asm-label">Action_Examine_1</td>
 <td class="address-2"><span id="f1df"></span>F1DF</td>
 <td class="instruction">LD HL,$E9D1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d1">PhraseTokens_Watch</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9d1">PhraseTokens_Watch</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f1e2"></span>F1E2</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f1e5"></span>F1E5</td>
 <td class="instruction">JR NZ,<a href="F19D.html#f1ed">Action_Examine_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f1ed">Action_Examine_2</a> if <span class="register">A</span> is not equal to 1B.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f1ed">Action_Examine_2</a> if the token isn't for the watch.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -250,19 +247,18 @@ Print "It appears to work.".
 <td class="asm-label">Action_Examine_2</td>
 <td class="address-2"><span id="f1ed"></span>F1ED</td>
 <td class="instruction">LD HL,$E9D3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d3">PhraseTokens_Shoe</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9d3">PhraseTokens_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f1f0"></span>F1F0</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f1f3"></span>F1F3</td>
 <td class="instruction">JR NZ,<a href="F19D.html#f1fb">Action_Examine_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f1fb">Action_Examine_3</a> if <span class="register">A</span> is not equal to 1B.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f1fb">Action_Examine_3</a> if the token isn't for the shoe.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -280,19 +276,18 @@ Print "It appears to work.".
 <td class="asm-label">Action_Examine_3</td>
 <td class="address-2"><span id="f1fb"></span>F1FB</td>
 <td class="instruction">LD HL,$E9D5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d5">PhraseTokens_Rod</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9d5">PhraseTokens_Rod</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f1fe"></span>F1FE</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f201"></span>F201</td>
 <td class="instruction">JR NZ,<a href="F19D.html#f209">Action_Examine_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f209">Action_Examine_4</a> if <span class="register">A</span> is not equal to 1B.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f209">Action_Examine_4</a> if the token isn't for the rod.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -320,19 +315,18 @@ Print "It has a circular cross-section.".
 <td class="asm-label">Action_Examine_4</td>
 <td class="address-2"><span id="f209"></span>F209</td>
 <td class="instruction">LD HL,$E9D7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d7">PhraseTokens_Fruit</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9d7">PhraseTokens_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f20c"></span>F20C</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f20f"></span>F20F</td>
 <td class="instruction">JR NZ,<a href="F19D.html#f217">Action_Examine_5</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f217">Action_Examine_5</a> if <span class="register">A</span> is not equal to 1B.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f217">Action_Examine_5</a> if the token isn't for the fruit.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -360,19 +354,18 @@ Print "It looks delicious.".
 <td class="asm-label">Action_Examine_5</td>
 <td class="address-2"><span id="f217"></span>F217</td>
 <td class="instruction">LD HL,$E9D9</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d9">PhraseTokens_Bridge</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9d9">PhraseTokens_Bridge</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f21a"></span>F21A</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f21d"></span>F21D</td>
 <td class="instruction">JR NZ,<a href="F19D.html#f225">Action_Examine_6</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f225">Action_Examine_6</a> if <span class="register">A</span> is not equal to 1B.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f225">Action_Examine_6</a> if the token isn't for the bridge.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -400,19 +393,18 @@ Print "Be careful.It won't carry much weight.".
 <td class="asm-label">Action_Examine_6</td>
 <td class="address-2"><span id="f225"></span>F225</td>
 <td class="instruction">LD HL,$E9DB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9db">PhraseTokens_Jewel</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9db">PhraseTokens_Jewels</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f228"></span>F228</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f22b"></span>F22B</td>
-<td class="instruction">JR NZ,<a href="F19D.html#f233">Action_Examine_7</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f233">Action_Examine_7</a> if <span class="register">A</span> is not equal to 1B.</td>
+<td class="instruction">JR NZ,<a href="F19D.html#f233">Examine_Invalid</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F19D.html#f233">Examine_Invalid</a> if the token isn't for the jewels.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -437,7 +429,7 @@ Print "They are very beautifuland very heavy.".
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Examine_7</td>
+<td class="asm-label">Examine_Invalid</td>
 <td class="address-2"><span id="f233"></span>F233</td>
 <td class="instruction">JP <a href="F065.html">Response_IDontSeeThePoint</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="F065.html">Response_IDontSeeThePoint</a>.</td>

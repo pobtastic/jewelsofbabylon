@@ -57,19 +57,18 @@ Next: <a href="63897.html">63897</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63818"></span>63818</td>
 <td class="instruction">LD HL,60082</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60082">PhraseTokens_UpLadder</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60082">PhraseTokens_UpLadder</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63821"></span>63821</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63824"></span>63824</td>
 <td class="instruction">JR NZ,<a href="63814.html#63840">Action_Eat_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="63814.html#63840">Action_Eat_0</a> if ?? is not equal to 15.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="63814.html#63840">Action_Eat_0</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -111,19 +110,18 @@ Next: <a href="63897.html">63897</a>
 <td class="asm-label">Action_Eat_0</td>
 <td class="address-2"><span id="63840"></span>63840</td>
 <td class="instruction">LD HL,60085</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60085">PhraseTokens_DownLadder</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60085">PhraseTokens_DownLadder</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63843"></span>63843</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63846"></span>63846</td>
 <td class="instruction">JR NZ,<a href="63814.html#63862">Action_Eat_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="63814.html#63862">Action_Eat_1</a> if <span class="register">A</span> is not equal to 3.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="63814.html#63862">Action_Eat_1</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -165,19 +163,18 @@ Next: <a href="63897.html">63897</a>
 <td class="asm-label">Action_Eat_1</td>
 <td class="address-2"><span id="63862"></span>63862</td>
 <td class="instruction">LD HL,60092</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60092">PhraseTokens_Ladder</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60092">PhraseTokens_Ladder</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63865"></span>63865</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63868"></span>63868</td>
 <td class="instruction">JR NZ,<a href="63814.html#63876">Action_Eat_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="63814.html#63876">Action_Eat_2</a> if <span class="register">A</span> is not equal to 4.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="63814.html#63876">Action_Eat_2</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -205,37 +202,35 @@ Print "Please be more specific.".
 <td class="asm-label">Action_Eat_2</td>
 <td class="address-2"><span id="63876"></span>63876</td>
 <td class="instruction">LD HL,59917</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59917">PhraseTokens_IntoBoat</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#59917">PhraseTokens_IntoBoat</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63879"></span>63879</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63882"></span>63882</td>
-<td class="instruction">JP Z,<a href="62593.html#62605">Action_Get_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="62593.html#62605">Action_Get_0</a> if <span class="register">A</span> is equal to 4.</td>
+<td class="instruction">JP Z,<a href="62593.html#62605">Validate_GetIntoBoat</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62593.html#62605">Validate_GetIntoBoat</a> if the token is for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63885"></span>63885</td>
 <td class="instruction">LD HL,59933</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#59933">PhraseTokens_OutOfBoat</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#59933">PhraseTokens_OutOfBoat</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63888"></span>63888</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="63891"></span>63891</td>
-<td class="instruction">JP Z,<a href="62593.html#62644">Action_Get_6</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="62593.html#62644">Action_Get_6</a> if <span class="register">A</span> is equal to 4.</td>
+<td class="instruction">JP Z,<a href="62593.html#62644">IsPlayerInRowingBoat_1</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62593.html#62644">IsPlayerInRowingBoat_1</a> if the token is for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

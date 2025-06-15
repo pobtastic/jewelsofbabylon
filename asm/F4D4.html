@@ -54,13 +54,33 @@ Next: <a href="F7AB.html">F7AB</a>
 <td class="comment-1" rowspan="1">Return if the direct object is malformed.</td>
 </tr>
 <tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="f4d8"></span>F4D8</td>
-<td class="instruction">JR <a href="F4D4.html#f50b">Action_DropThrow_3</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f50b">Action_DropThrow_3</a>.</td>
+<td class="routine-comment" colspan="5">
+<span id="f4d8"></span>
+<div class="comments">
+<div class="paragraph">
+Start by calling the chain of items to check...
+</div>
+</div>
+</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_0</td>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f4d8"></span>F4D8</td>
+<td class="instruction">JR <a href="F4D4.html#f50b">Validate_DropThrow_BottleRum</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f50b">Validate_DropThrow_BottleRum</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="f4da"></span>
+<div class="comments">
+<div class="paragraph">
+Check if the player is holding the requested item?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">DropThrow_IsPlayerHoldingItem</td>
 <td class="address-2"><span id="f4da"></span>F4DA</td>
 <td class="instruction">CALL <a href="C3E4.html">CheckObjectInInventory</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C3E4.html">CheckObjectInInventory</a>.</td>
@@ -68,8 +88,8 @@ Next: <a href="F7AB.html">F7AB</a>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4dd"></span>F4DD</td>
-<td class="instruction">JR Z,<a href="F4D4.html#f4fc">Action_DropThrow_2</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4fc">Action_DropThrow_2</a> if <span class="register">A</span> is equal to 06.</td>
+<td class="instruction">JR Z,<a href="F4D4.html#f4fc">DropItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4fc">DropItem</a> if the player is holding the requested item.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -103,7 +123,7 @@ Print "You're not carrying ".
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4e6"></span>F4E6</td>
 <td class="instruction">LD HL,$F29B</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="F263.html#f29b">F29B</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="F263.html#f29b">Table_ItemsWhichArePlural</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -120,8 +140,8 @@ Print "You're not carrying ".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4ee"></span>F4EE</td>
-<td class="instruction">JR Z,<a href="F4D4.html#f4f6">Action_DropThrow_1</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4f6">Action_DropThrow_1</a> if <span class="register">A</span> is equal to 06.</td>
+<td class="instruction">JR Z,<a href="F4D4.html#f4f6">NotCarryingItem_Plural</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4f6">NotCarryingItem_Plural</a> if <span class="register">A</span> is equal to 06.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -156,7 +176,7 @@ Print "them.".
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_1</td>
+<td class="asm-label">NotCarryingItem_Plural</td>
 <td class="address-2"><span id="f4f6"></span>F4F6</td>
 <td class="instruction">LD HL,$BF2F</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BF2F.html">Messaging_Them</a>.</td>
@@ -168,22 +188,41 @@ Print "them.".
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_2</td>
+<td class="routine-comment" colspan="5">
+<span id="f4fc"></span>
+<div class="comments">
+<div class="paragraph">
+The player has the item in their inventory so drop/ throw it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">DropItem</td>
 <td class="address-2"><span id="f4fc"></span>F4FC</td>
 <td class="instruction">LD B,E</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=<span class="register">E</span>.</td>
+<td class="comment-1" rowspan="1">Copy the item ID into <span class="register">B</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f4fd"></span>F4FD</td>
 <td class="instruction">LD A,($BCCB)</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="BCCB.html">CurrentRoom</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">C</span>=*<a href="BCCB.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f500"></span>F500</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">A</span>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="f501"></span>
+<div class="comments">
+<div class="paragraph">
+Alter the items location from the players inventory to the current room ID.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -195,13 +234,12 @@ Print "them.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="f504"></span>F504</td>
 <td class="instruction">LD HL,$BC98</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC98.html">CounterMatch</a>.</td>
+<td class="comment-1" rowspan="2">Decrease *<a href="BC98.html">Count_InventoryItems</a> by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f507"></span>F507</td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment-1" rowspan="1">Decrease *<span class="register">HL</span> by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -210,22 +248,31 @@ Print "them.".
 <td class="comment-1" rowspan="1">Jump to <a href="F06A.html">Response_OK_Duplicate</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_3</td>
+<td class="routine-comment" colspan="5">
+<span id="f50b"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the bottle of rum?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_BottleRum</td>
 <td class="address-2"><span id="f50b"></span>F50B</td>
 <td class="instruction">LD HL,$E9E7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e7">PhraseTokens_BottleOfRum</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9e7">PhraseTokens_BottleOfRum</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f50e"></span>F50E</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f511"></span>F511</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f51c">Action_DropThrow_4</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f51c">Action_DropThrow_4</a> if *<span class="register">HL</span> is not equal to 06.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f51c">Validate_DropThrow_Fish</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f51c">Validate_DropThrow_Fish</a> if the token isn't for the bottle of rum.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -242,26 +289,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f519"></span>F519</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_4</td>
+<td class="routine-comment" colspan="5">
+<span id="f51c"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the fish?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Fish</td>
 <td class="address-2"><span id="f51c"></span>F51C</td>
 <td class="instruction">LD HL,$E9CC</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9cc">PhraseTokens_Fish</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9cc">PhraseTokens_Fish</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f51f"></span>F51F</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f522"></span>F522</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f52d">Action_DropThrow_5</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f52d">Action_DropThrow_5</a> if *<span class="register">HL</span> is not equal to 06.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f52d">Validate_DropThrow_Watch</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f52d">Validate_DropThrow_Watch</a> if the token isn't for the fish.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -278,26 +334,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f52a"></span>F52A</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_5</td>
+<td class="routine-comment" colspan="5">
+<span id="f52d"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the watch?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Watch</td>
 <td class="address-2"><span id="f52d"></span>F52D</td>
 <td class="instruction">LD HL,$E9D1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d1">PhraseTokens_Watch</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9d1">PhraseTokens_Watch</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f530"></span>F530</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f533"></span>F533</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f53a">Action_DropThrow_6</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f53a">Action_DropThrow_6</a> if *<span class="register">HL</span> is not equal to 06.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f53a">Validate_DropThrow_Shoe</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f53a">Validate_DropThrow_Shoe</a> if the token isn't for the watch.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -308,26 +373,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f537"></span>F537</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_6</td>
+<td class="routine-comment" colspan="5">
+<span id="f53a"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the shoe?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Shoe</td>
 <td class="address-2"><span id="f53a"></span>F53A</td>
 <td class="instruction">LD HL,$E9D3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d3">PhraseTokens_Shoe</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9d3">PhraseTokens_Shoe</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f53d"></span>F53D</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f540"></span>F540</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f547">Action_DropThrow_7</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f547">Action_DropThrow_7</a> if *<span class="register">HL</span> is not equal to 17.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f547">Validate_DropThrow_Rod</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f547">Validate_DropThrow_Rod</a> if the token isn't for the shoe.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -338,26 +412,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f544"></span>F544</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_7</td>
+<td class="routine-comment" colspan="5">
+<span id="f547"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the rod?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Rod</td>
 <td class="address-2"><span id="f547"></span>F547</td>
 <td class="instruction">LD HL,$E9D5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d5">PhraseTokens_Rod</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9d5">PhraseTokens_Rod</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f54a"></span>F54A</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f54d"></span>F54D</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f554">Action_DropThrow_8</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f554">Action_DropThrow_8</a> if *<span class="register">HL</span> is not equal to 15.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f554">Validate_DropThrow_Fruit</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f554">Validate_DropThrow_Fruit</a> if the token isn't for the rod.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -368,26 +451,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f551"></span>F551</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_8</td>
+<td class="routine-comment" colspan="5">
+<span id="f554"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the fruit?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Fruit</td>
 <td class="address-2"><span id="f554"></span>F554</td>
 <td class="instruction">LD HL,$E9D7</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9d7">PhraseTokens_Fruit</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9d7">PhraseTokens_Fruit</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f557"></span>F557</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f55a"></span>F55A</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f561">Action_DropThrow_9</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f561">Action_DropThrow_9</a> if *<span class="register">HL</span> is not equal to 08.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f561">Validate_DropThrow_Jewels</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f561">Validate_DropThrow_Jewels</a> if the token isn't for the fruit.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -398,26 +490,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f55e"></span>F55E</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_9</td>
+<td class="routine-comment" colspan="5">
+<span id="f561"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the jewels?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Jewels</td>
 <td class="address-2"><span id="f561"></span>F561</td>
 <td class="instruction">LD HL,$E9DB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9db">PhraseTokens_Jewel</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9db">PhraseTokens_Jewels</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f564"></span>F564</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f567"></span>F567</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f56e">Action_DropThrow_10</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f56e">Action_DropThrow_10</a> if *<span class="register">HL</span> is not equal to 0E.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f56e">Validate_DropThrow_Match</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f56e">Validate_DropThrow_Match</a> if the token isn't for the jewels.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -428,26 +529,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f56b"></span>F56B</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_10</td>
+<td class="routine-comment" colspan="5">
+<span id="f56e"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the match?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Match</td>
 <td class="address-2"><span id="f56e"></span>F56E</td>
 <td class="instruction">LD HL,$E9E1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e1">PhraseTokens_Match</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9e1">PhraseTokens_Match</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f571"></span>F571</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f574"></span>F574</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f57f">Action_DropThrow_11</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f57f">Action_DropThrow_11</a> if *<span class="register">HL</span> is not equal to 1D.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f57f">Validate_DropThrow_Plank</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f57f">Validate_DropThrow_Plank</a> if the token isn't for the match.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -464,26 +574,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f57c"></span>F57C</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_11</td>
+<td class="routine-comment" colspan="5">
+<span id="f57f"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the plank?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Plank</td>
 <td class="address-2"><span id="f57f"></span>F57F</td>
 <td class="instruction">LD HL,$E9E3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e3">PhraseTokens_Plank</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9e3">PhraseTokens_Plank</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f582"></span>F582</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f585"></span>F585</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f58c">Action_DropThrow_12</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f58c">Action_DropThrow_12</a> if *<span class="register">HL</span> is not equal to 1D.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f58c">Validate_DropThrow_Coconut</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f58c">Validate_DropThrow_Coconut</a> if the token isn't for the plank.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -494,26 +613,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f589"></span>F589</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_12</td>
+<td class="routine-comment" colspan="5">
+<span id="f58c"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the coconut?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Coconut</td>
 <td class="address-2"><span id="f58c"></span>F58C</td>
 <td class="instruction">LD HL,$E9E5</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9e5">PhraseTokens_Coconut</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9e5">PhraseTokens_Coconut</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f58f"></span>F58F</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f592"></span>F592</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f599">Action_DropThrow_13</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f599">Action_DropThrow_13</a> if *<span class="register">HL</span> is not equal to 04.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f599">Validate_DropThrow_Gun</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f599">Validate_DropThrow_Gun</a> if the token isn't for the coconut.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -524,26 +652,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f596"></span>F596</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_13</td>
+<td class="routine-comment" colspan="5">
+<span id="f599"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the gun?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Gun</td>
 <td class="address-2"><span id="f599"></span>F599</td>
 <td class="instruction">LD HL,$E9EF</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9ef">PhraseTokens_Gun</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9ef">PhraseTokens_Gun</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f59c"></span>F59C</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f59f"></span>F59F</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f5a6">Action_DropThrow_14</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5a6">Action_DropThrow_14</a> if *<span class="register">HL</span> is not equal to 07.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f5a6">Validate_DropThrow_Eyepatch</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5a6">Validate_DropThrow_Eyepatch</a> if the token isn't for the gun.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -554,26 +691,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5a3"></span>F5A3</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_14</td>
+<td class="routine-comment" colspan="5">
+<span id="f5a6"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the eyepatch?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Eyepatch</td>
 <td class="address-2"><span id="f5a6"></span>F5A6</td>
 <td class="instruction">LD HL,$E9F1</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f1">PhraseTokens_Eyepatch</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9f1">PhraseTokens_Eyepatch</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5a9"></span>F5A9</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5ac"></span>F5AC</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f5c4">Action_DropThrow_15</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5c4">Action_DropThrow_15</a> if *<span class="register">HL</span> is not equal to 0F.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f5c4">Validate_DropThrow_KegGunpowder</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5c4">Validate_DropThrow_KegGunpowder</a> if the token isn't for the eyepatch.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -591,12 +737,12 @@ Print "them.".
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5b4"></span>F5B4</td>
 <td class="instruction">CP $11</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a> if <span class="register">A</span> is not equal to 11.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a> if <span class="register">A</span> is not equal to 11.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5b6"></span>F5B6</td>
-<td class="instruction">JP NZ,<a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
+<td class="instruction">JP NZ,<a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -618,26 +764,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5c1"></span>F5C1</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_15</td>
+<td class="routine-comment" colspan="5">
+<span id="f5c4"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the keg of gunpowder?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_KegGunpowder</td>
 <td class="address-2"><span id="f5c4"></span>F5C4</td>
 <td class="instruction">LD HL,$E9F3</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9f3">PhraseTokens_KegGunPowder</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9f3">PhraseTokens_KegGunPowder</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5c7"></span>F5C7</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5ca"></span>F5CA</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f5d1">Action_DropThrow_16</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5d1">Action_DropThrow_16</a> if <span class="register">A</span> is not equal to 10.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f5d1">Validate_DropThrow_Sextant</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5d1">Validate_DropThrow_Sextant</a> if the token isn't for the keg of gunpowder.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -648,26 +803,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5ce"></span>F5CE</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_16</td>
+<td class="routine-comment" colspan="5">
+<span id="f5d1"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the sextant?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Sextant</td>
 <td class="address-2"><span id="f5d1"></span>F5D1</td>
 <td class="instruction">LD HL,$E9FB</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9fb">PhraseTokens_Sextant</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9fb">PhraseTokens_Sextant</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5d4"></span>F5D4</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5d7"></span>F5D7</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f5de">Action_DropThrow_17</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5de">Action_DropThrow_17</a> if <span class="register">A</span> is not equal to 12.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f5de">Validate_DropThrow_Crowbar</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5de">Validate_DropThrow_Crowbar</a> if the token isn't for the sextant.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -678,26 +842,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5db"></span>F5DB</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_17</td>
+<td class="routine-comment" colspan="5">
+<span id="f5de"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the crowbar?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Crowbar</td>
 <td class="address-2"><span id="f5de"></span>F5DE</td>
 <td class="instruction">LD HL,$E9FD</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9fd">PhraseTokens_Crowbar</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9fd">PhraseTokens_Crowbar</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5e1"></span>F5E1</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5e4"></span>F5E4</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f5eb">Action_DropThrow_18</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5eb">Action_DropThrow_18</a> if <span class="register">A</span> is not equal to 16.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f5eb">Validate_DropThrow_Key</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5eb">Validate_DropThrow_Key</a> if the token isn't for the crowbar.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -708,26 +881,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5e8"></span>F5E8</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_18</td>
+<td class="routine-comment" colspan="5">
+<span id="f5eb"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the key?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Key</td>
 <td class="address-2"><span id="f5eb"></span>F5EB</td>
 <td class="instruction">LD HL,$E9FF</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#e9ff">PhraseTokens_Key</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#e9ff">PhraseTokens_Key</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5ee"></span>F5EE</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5f1"></span>F5F1</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f5f8">Action_DropThrow_19</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5f8">Action_DropThrow_19</a> if <span class="register">A</span> is not equal to 1E.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f5f8">Validate_DropThrow_Skull</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f5f8">Validate_DropThrow_Skull</a> if the token isn't for the key.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -738,26 +920,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5f5"></span>F5F5</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_19</td>
+<td class="routine-comment" colspan="5">
+<span id="f5f8"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the skull?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Skull</td>
 <td class="address-2"><span id="f5f8"></span>F5F8</td>
 <td class="instruction">LD HL,$EA01</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea01">PhraseTokens_Skull</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea01">PhraseTokens_Skull</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5fb"></span>F5FB</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f5fe"></span>F5FE</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f605">Action_DropThrow_20</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f605">Action_DropThrow_20</a> if <span class="register">A</span> is not equal to 1F.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f605">Validate_DropThrow_Spear</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f605">Validate_DropThrow_Spear</a> if the token isn't for the skull.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -768,26 +959,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f602"></span>F602</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_20</td>
+<td class="routine-comment" colspan="5">
+<span id="f605"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the spear?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Spear</td>
 <td class="address-2"><span id="f605"></span>F605</td>
 <td class="instruction">LD HL,$EA06</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea06">PhraseTokens_Spear</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea06">PhraseTokens_Spear</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f608"></span>F608</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f60b"></span>F60B</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f612">Action_DropThrow_21</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f612">Action_DropThrow_21</a> if <span class="register">A</span> is not equal to 20.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f612">Validate_DropThrow_Parrot</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f612">Validate_DropThrow_Parrot</a> if the token isn't for the spear.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -798,26 +998,35 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f60f"></span>F60F</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_21</td>
+<td class="routine-comment" colspan="5">
+<span id="f612"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the parrot?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_Parrot</td>
 <td class="address-2"><span id="f612"></span>F612</td>
 <td class="instruction">LD HL,$EA08</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea08">PhraseTokens_Parrot</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea08">PhraseTokens_Parrot</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f615"></span>F615</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f618"></span>F618</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f61f">Action_DropThrow_22</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f61f">Action_DropThrow_22</a> if <span class="register">A</span> is not equal to 1A.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f61f">Validate_DropThrow_PlankAcrossPit</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f61f">Validate_DropThrow_PlankAcrossPit</a> if the token isn't for the parrot.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -828,32 +1037,41 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f61c"></span>F61C</td>
-<td class="instruction">JP <a href="F4D4.html#f4da">Action_DropThrow_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">Action_DropThrow_0</a>.</td>
+<td class="instruction">JP <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f4da">DropThrow_IsPlayerHoldingItem</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_22</td>
+<td class="routine-comment" colspan="5">
+<span id="f61f"></span>
+<div class="comments">
+<div class="paragraph">
+Is the player asking to drop or throw the plank across the pit?
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Validate_DropThrow_PlankAcrossPit</td>
 <td class="address-2"><span id="f61f"></span>F61F</td>
 <td class="instruction">LD HL,$EA26</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea26">PhraseTokens_PlankAcrossPit</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea26">PhraseTokens_PlankAcrossPit</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f622"></span>F622</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f625"></span>F625</td>
 <td class="instruction">JP Z,<a href="F074.html">Response_PleaseRephraseThat_Duplicate</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F074.html">Response_PleaseRephraseThat_Duplicate</a> if <span class="register">A</span> is equal to 28.</td>
+<td class="comment-1" rowspan="1">Jump to <a href="F074.html">Response_PleaseRephraseThat_Duplicate</a> if the token is for dropping/ throwing the plank across the pit.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f628"></span>F628</td>
 <td class="instruction">LD A,($BD66)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="F4D4.html#f633">Action_DropThrow_23</a> if *<a href="BD66.html">UserInput_Token_1</a> is equal to 3E.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="F4D4.html#f633">Action_DropThrow_0</a> if *<a href="BD66.html">UserInput_Token_1</a> is equal to 3E.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -863,7 +1081,7 @@ Print "them.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f62d"></span>F62D</td>
-<td class="instruction">JP Z,<a href="F4D4.html#f633">Action_DropThrow_23</a></td>
+<td class="instruction">JP Z,<a href="F4D4.html#f633">Action_DropThrow_0</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -872,10 +1090,10 @@ Print "them.".
 <td class="comment-1" rowspan="1">Jump to <a href="F06F.html">Response_YouCant_Duplicate</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_23</td>
+<td class="asm-label">Action_DropThrow_0</td>
 <td class="address-2"><span id="f633"></span>F633</td>
-<td class="instruction">JR <a href="F4D4.html#f646">Action_DropThrow_25</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f646">Action_DropThrow_25</a>.</td>
+<td class="instruction">JR <a href="F4D4.html#f646">Action_DropThrow_2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f646">Action_DropThrow_2</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -888,7 +1106,7 @@ This entry point is used by the routine at <a href="F7D6.html">Action_Kill</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_24</td>
+<td class="asm-label">Action_DropThrow_1</td>
 <td class="address-2"><span id="f635"></span>F635</td>
 <td class="instruction">CALL <a href="C3E4.html">CheckObjectInInventory</a></td>
 <td class="comment-1" rowspan="1">Call <a href="C3E4.html">CheckObjectInInventory</a>.</td>
@@ -926,7 +1144,7 @@ This entry point is used by the routine at <a href="F7D6.html">Action_Kill</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="f641"></span>F641</td>
 <td class="instruction">LD HL,$BC98</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC98.html">CounterMatch</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC98.html">Count_InventoryItems</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -941,22 +1159,21 @@ This entry point is used by the routine at <a href="F7D6.html">Action_Kill</a>.
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_25</td>
+<td class="asm-label">Action_DropThrow_2</td>
 <td class="address-2"><span id="f646"></span>F646</td>
 <td class="instruction">LD HL,$EA2A</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea2a">PhraseTokens_SpearAtLion</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea2a">PhraseTokens_SpearAtLion</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f649"></span>F649</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f64c"></span>F64C</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f659">Action_DropThrow_26</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f659">Action_DropThrow_26</a> if *<span class="register">HL</span> is not equal to 3E.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f659">Action_DropThrow_3</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f659">Action_DropThrow_3</a> if the token isn't for dropping/ throwing the spear at the lion.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -967,8 +1184,8 @@ This entry point is used by the routine at <a href="F7D6.html">Action_Kill</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f650"></span>F650</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_24</a>.</td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_1</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -993,22 +1210,21 @@ Print "You fling the spear,but thelion easily avoids it.".
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_26</td>
+<td class="asm-label">Action_DropThrow_3</td>
 <td class="address-2"><span id="f659"></span>F659</td>
 <td class="instruction">LD HL,$EA2E</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea2e">PhraseTokens_CoconutAtLion</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea2e">PhraseTokens_CoconutAtLion</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f65c"></span>F65C</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f65f"></span>F65F</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f66c">Action_DropThrow_27</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f66c">Action_DropThrow_27</a> if *<span class="register">HL</span> is not equal to 1A.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f66c">Action_DropThrow_4</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f66c">Action_DropThrow_4</a> if the token isn't for dropping/ throwing the coconut at the lion.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1019,8 +1235,8 @@ Print "You fling the spear,but thelion easily avoids it.".
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f663"></span>F663</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_24</a>.</td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_1</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1045,22 +1261,21 @@ Print "The coconut bounces offthe lion's head.He shakes hislong mane in anger.
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_27</td>
+<td class="asm-label">Action_DropThrow_4</td>
 <td class="address-2"><span id="f66c"></span>F66C</td>
 <td class="instruction">LD HL,$EA32</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea32">PhraseTokens_FruitAtLion</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea32">PhraseTokens_FruitAtLion</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f66f"></span>F66F</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f672"></span>F672</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f67f">Action_DropThrow_29</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f67f">Action_DropThrow_29</a> if *<span class="register">HL</span> is not equal to 07.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f67f">Action_DropThrow_6</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f67f">Action_DropThrow_6</a> if the token isn't for dropping/ throwing the fruit at the lion.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1073,7 +1288,7 @@ This entry point is used by the routine at <a href="F7AB.html">Action_LayPlacePu
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_28</td>
+<td class="asm-label">Action_DropThrow_5</td>
 <td class="address-2"><span id="f674"></span>F674</td>
 <td class="instruction">LD A,$0E</td>
 <td class="comment-1" rowspan="1"><span class="register">A</span>=0E.</td>
@@ -1081,8 +1296,8 @@ This entry point is used by the routine at <a href="F7AB.html">Action_LayPlacePu
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f676"></span>F676</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_24</a>.</td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_1</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1107,22 +1322,21 @@ Print "He sniffs the fruit butotherwise ignores it.".
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_29</td>
+<td class="asm-label">Action_DropThrow_6</td>
 <td class="address-2"><span id="f67f"></span>F67F</td>
 <td class="instruction">LD HL,$EA36</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea36">PhraseTokens_FishAtLion</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea36">PhraseTokens_FishAtLion</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f682"></span>F682</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f685"></span>F685</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f6a4">Action_DropThrow_31</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f6a4">Action_DropThrow_31</a> if *<span class="register">HL</span> is not equal to 0E.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f6a4">Action_DropThrow_8</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f6a4">Action_DropThrow_8</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1135,7 +1349,7 @@ This entry point is used by the routine at <a href="F7AB.html">Action_LayPlacePu
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_30</td>
+<td class="asm-label">Action_DropThrow_7</td>
 <td class="address-2"><span id="f687"></span>F687</td>
 <td class="instruction">LD HL,$E895</td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E86E.html#e895">Data_ItemGroup_Fish</a>.</td>
@@ -1149,8 +1363,8 @@ This entry point is used by the routine at <a href="F7AB.html">Action_LayPlacePu
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f68d"></span>F68D</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_24</a>.</td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_1</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1210,22 +1424,21 @@ Print "The lion takes the fish inhis massive jaws and thendisappears into the 
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_31</td>
+<td class="asm-label">Action_DropThrow_8</td>
 <td class="address-2"><span id="f6a4"></span>F6A4</td>
 <td class="instruction">LD HL,$EA3F</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea3f">PhraseTokens_FruitAtParrot</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea3f">PhraseTokens_FruitAtParrot</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f6a7"></span>F6A7</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f6aa"></span>F6AA</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f6c2">Action_DropThrow_33</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f6c2">Action_DropThrow_33</a> if *<span class="register">HL</span> is not equal to 3C.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f6c2">Action_DropThrow_10</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f6c2">Action_DropThrow_10</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1238,7 +1451,7 @@ This entry point is used by the routine at <a href="F7AB.html">Action_LayPlacePu
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_32</td>
+<td class="asm-label">Action_DropThrow_9</td>
 <td class="address-2"><span id="f6ac"></span>F6AC</td>
 <td class="instruction">LD A,$0E</td>
 <td class="comment-1" rowspan="1">Load "Some fruit" into <span class="register">A</span>.</td>
@@ -1246,8 +1459,8 @@ This entry point is used by the routine at <a href="F7AB.html">Action_LayPlacePu
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f6ae"></span>F6AE</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_24</a>.</td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_1</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1295,22 +1508,21 @@ Print "The parrot catches the fruitin its beak and swallows it.It flutters mom
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_33</td>
+<td class="asm-label">Action_DropThrow_10</td>
 <td class="address-2"><span id="f6c2"></span>F6C2</td>
 <td class="instruction">LD HL,$EA43</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea43">PhraseTokens_WatchAtCannibals</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea43">PhraseTokens_WatchAtCannibals</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f6c5"></span>F6C5</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f6c8"></span>F6C8</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f6fd">Action_DropThrow_35</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f6fd">Action_DropThrow_35</a> if *<span class="register">HL</span> is not equal to 0E.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f6fd">Action_DropThrow_12</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f6fd">Action_DropThrow_12</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1323,7 +1535,7 @@ This entry point is used by the routine at <a href="F7AB.html">Action_LayPlacePu
 </td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_34</td>
+<td class="asm-label">Action_DropThrow_11</td>
 <td class="address-2"><span id="f6ca"></span>F6CA</td>
 <td class="instruction">LD A,$17</td>
 <td class="comment-1" rowspan="2">Call <a href="C35F.html">Handler_Objects</a> with "A watch".</td>
@@ -1348,8 +1560,8 @@ This entry point is used by the routine at <a href="F7AB.html">Action_LayPlacePu
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f6d4"></span>F6D4</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_24</a>.</td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_1</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1456,33 +1668,32 @@ Print "The cannibal drops the spearand takes the watch.He examines it briefly 
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_35</td>
+<td class="asm-label">Action_DropThrow_12</td>
 <td class="address-2"><span id="f6fd"></span>F6FD</td>
 <td class="instruction">LD HL,$EA47</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea47">PhraseTokens_SpearAtOctopus</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea47">PhraseTokens_SpearAtOctopus</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f700"></span>F700</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f703"></span>F703</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f729">Action_DropThrow_36</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f729">Action_DropThrow_36</a> if *<span class="register">HL</span> is not equal to 23.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f729">Action_DropThrow_13</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f729">Action_DropThrow_13</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f705"></span>F705</td>
 <td class="instruction">LD A,$1A</td>
-<td class="comment-1" rowspan="2">Call <a href="F4D4.html#f635">Action_DropThrow_24</a> using "A spear".</td>
+<td class="comment-1" rowspan="2">Call <a href="F4D4.html#f635">Action_DropThrow_1</a> using "A spear".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f707"></span>F707</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1574,22 +1785,21 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_36</td>
+<td class="asm-label">Action_DropThrow_13</td>
 <td class="address-2"><span id="f729"></span>F729</td>
 <td class="instruction">LD HL,$EA50</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea50">PhraseTokens_KegAtCrocodile</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea50">PhraseTokens_KegAtCrocodile</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f72c"></span>F72C</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f72f"></span>F72F</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f74f">Action_DropThrow_37</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f74f">Action_DropThrow_37</a> if *<span class="register">HL</span> is not equal to 42.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f74f">Action_DropThrow_14</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f74f">Action_DropThrow_14</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1617,8 +1827,8 @@ Print "The spear pierces the oilyskin and the octopus sinksbeneath the surface
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f73b"></span>F73B</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_24</a>.</td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_1</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1666,22 +1876,21 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_37</td>
+<td class="asm-label">Action_DropThrow_14</td>
 <td class="address-2"><span id="f74f"></span>F74F</td>
 <td class="instruction">LD HL,$EA5E</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea5e">PhraseTokens_MatchAtKeg</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea5e">PhraseTokens_MatchAtKeg</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f752"></span>F752</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f755"></span>F755</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f78d">Action_DropThrow_39</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f78d">Action_DropThrow_39</a> if *<span class="register">HL</span> is not equal to 12.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f78d">Action_DropThrow_16</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f78d">Action_DropThrow_16</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1715,8 +1924,8 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f765"></span>F765</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_24</a>.</td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_1</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1736,7 +1945,7 @@ Print "The crocodile opens its hugejaws and catches the keg.Its jaws close on 
 <td class="comment-1" rowspan="1">Jump to <a href="F06A.html">Response_OK_Duplicate</a> if "A keg of gunpowder" is present in the current room.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_38</td>
+<td class="asm-label">Action_DropThrow_15</td>
 <td class="address-2"><span id="f770"></span>F770</td>
 <td class="instruction">LD A,$02</td>
 <td class="comment-1" rowspan="2">Call <a href="C35F.html">Handler_Objects</a> with "A match".</td>
@@ -1812,22 +2021,21 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <td class="comment-1" rowspan="1">Jump to <a href="F03A.html">PrintStringAndNewline_Alias</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_39</td>
+<td class="asm-label">Action_DropThrow_16</td>
 <td class="address-2"><span id="f78d"></span>F78D</td>
 <td class="instruction">LD HL,$EA6C</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="E9CA.html#ea6c">PhraseTokens_MatchAtCrocodile</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="C37F.html">MatchPhraseTokens</a> with <a href="E9CA.html#ea6c">PhraseTokens_MatchAtCrocodile</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f790"></span>F790</td>
 <td class="instruction">CALL <a href="C37F.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="C37F.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f793"></span>F793</td>
-<td class="instruction">JR NZ,<a href="F4D4.html#f7a8">Action_DropThrow_40</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f7a8">Action_DropThrow_40</a> if *<span class="register">HL</span> is not equal to 4E.</td>
+<td class="instruction">JR NZ,<a href="F4D4.html#f7a8">Action_DropThrow_17</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f7a8">Action_DropThrow_17</a> if the token isn't for the .</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1844,8 +2052,8 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f79b"></span>F79B</td>
-<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_24</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_24</a>.</td>
+<td class="instruction">CALL <a href="F4D4.html#f635">Action_DropThrow_1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F4D4.html#f635">Action_DropThrow_1</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1861,8 +2069,8 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="f7a3"></span>F7A3</td>
-<td class="instruction">JR Z,<a href="F4D4.html#f770">Action_DropThrow_38</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f770">Action_DropThrow_38</a> if "A crocodile (with the keg in its mouth)" is present in the current room.</td>
+<td class="instruction">JR Z,<a href="F4D4.html#f770">Action_DropThrow_15</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F4D4.html#f770">Action_DropThrow_15</a> if "A crocodile (with the keg in its mouth)" is present in the current room.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1871,7 +2079,7 @@ Print "The match ignites thespilled gunpowder.There is a mighty flashand a th
 <td class="comment-1" rowspan="1">Jump to <a href="F06A.html">Response_OK_Duplicate</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_DropThrow_40</td>
+<td class="asm-label">Action_DropThrow_17</td>
 <td class="address-2"><span id="f7a8"></span>F7A8</td>
 <td class="instruction">JP <a href="F065.html">Response_IDontSeeThePoint</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="F065.html">Response_IDontSeeThePoint</a>.</td>

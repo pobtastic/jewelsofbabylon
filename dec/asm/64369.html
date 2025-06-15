@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="64311.html">64311</a>
+Prev: <a href="64278.html">64278</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#64369">Map</a></td>
 <td class="next">
@@ -57,19 +57,18 @@ Next: <a href="64387.html">64387</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64373"></span>64373</td>
 <td class="instruction">LD HL,60016</td>
-<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="59850.html#60016">PhraseTokens_RodInHole</a>.</td>
+<td class="comment-1" rowspan="2">Call <a href="50047.html">MatchPhraseTokens</a> with <a href="59850.html#60016">PhraseTokens_RodInHole</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64376"></span>64376</td>
 <td class="instruction">CALL <a href="50047.html">MatchPhraseTokens</a></td>
-<td class="comment-1" rowspan="1">Call <a href="50047.html">MatchPhraseTokens</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="64379"></span>64379</td>
-<td class="instruction">JR NZ,<a href="64369.html#64384">Action_Insert_0</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="64369.html#64384">Action_Insert_0</a> if <span class="register">A</span> is not equal to 49.</td>
+<td class="instruction">JR NZ,<a href="64369.html#64384">Insert_Invalid</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="64369.html#64384">Insert_Invalid</a> if the token isn't for inserting the rod into the hole.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -78,7 +77,7 @@ Next: <a href="64387.html">64387</a>
 <td class="comment-1" rowspan="1">Jump to <a href="63446.html#63515">Action_Kill_1</a>.</td>
 </tr>
 <tr>
-<td class="asm-label">Action_Insert_0</td>
+<td class="asm-label">Insert_Invalid</td>
 <td class="address-2"><span id="64384"></span>64384</td>
 <td class="instruction">JP <a href="61551.html">Response_YouCant_Duplicate</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="61551.html">Response_YouCant_Duplicate</a>.</td>
@@ -87,7 +86,7 @@ Next: <a href="64387.html">64387</a>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="64311.html">64311</a>
+Prev: <a href="64278.html">64278</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#64369">Map</a></td>
 <td class="next">
