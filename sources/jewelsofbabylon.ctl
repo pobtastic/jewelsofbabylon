@@ -514,9 +514,9 @@ L $BC78,$01,$09
 
 g $BC81
 
-g $BC98 Match Counter
-@ $BC98 label=CounterMatch
-D $BC98 The duration the match burns for before burning you.
+g $BC98 Number Of Items In The Players Inventory
+@ $BC98 label=Count_InventoryItems
+D $BC98 The number of items the player is currently holding.
 B $BC98,$01
 
 b $BC99
@@ -1522,6 +1522,8 @@ R $C37F HL A pointer to phrase token data
 c $C3AE Parser: Count Item References
 @ $C3AE label=Parser_CountItems
 D $C3AE Count how many tokens in the user input refer to game items.
+R $C3AE A The number of references to items in the user input tokens
+R $C3AE F
   $C3AE,$03 Set a pointer to #R$BD66 in #REGhl.
   $C3B1,$02 Set a token count in #REGb of #N$0A which is the total length of
 . the user input tokens.
@@ -3209,7 +3211,7 @@ N $E9D7 Matches e.g. "fruit".
 N $E9D9 Matches e.g. "bridge".
 @ $E9D9 label=PhraseTokens_Bridge
 N $E9DB Matches e.g. "jewels", "jewels of babylon".
-@ $E9DB label=PhraseTokens_Jewel
+@ $E9DB label=PhraseTokens_Jewels
 N $E9E1 Matches e.g. "match".
 @ $E9E1 label=PhraseTokens_Match
 N $E9E3 Matches e.g. "plank".
@@ -3618,6 +3620,7 @@ N $EF4D Print "#STR$D8FA,$08($b==$FF)".
   $EF53,$01 Return.
 
 c $EF54
+R $EF54 A
   $EF54,$03 #REGhl=#R$BC6F.
   $EF57,$04 Jump to #R$EF7B if bit 0 of *#REGhl is unset.
   $EF5B,$05 Initialise #R$BC67 to #N$06.
@@ -3899,7 +3902,8 @@ c $F12E Action: Inventory
   $F12E,$03 Call #R$C470.
 N $F131 The "INVENTORY" command can only be called on its own.
   $F131,$01 Return if there's any token set in #R$BD67.
-  $F132,$07 Jump to #R$F04C if *#R$BC98 is zero. TODO re-evaluate this.
+  $F132,$07 Jump to #R$F04C if *#R$BC98 is zero (the player isn't holding any
+. items).
 N $F139 Clear the screen and display the players inventory.
   $F139,$03 Call #R$BA6D.
   $F13C,$03 Call #R$BA89.
@@ -3990,9 +3994,8 @@ c $F19D Action: Examine
   $F19D,$03 Call #R$C47B.
   $F1A0,$01 Return if the direct object is malformed.
   $F1A1,$05 Jump to #R$F060 if #REGa is not equal to #N$01.
-  $F1A6,$03 #REGhl=#R$E9CA.
-  $F1A9,$03 Call #R$C37F.
-  $F1AC,$02 Jump to #R$F1C4 if #REGa is not equal to #N$01.
+  $F1A6,$06 Call #R$C37F with #R$E9CA.
+  $F1AC,$02 Jump to #R$F1C4 if the token isn't for the bottle.
   $F1AE,$03 #REGhl=#R$E87A.
   $F1B1,$03 Call #R$C401.
   $F1B4,$04 Jump to #R$F1C4 if #REGa is not equal to #N$0B.
@@ -4002,9 +4005,8 @@ N $F1BE Print "#STR$DA73,$08($b==$FF)".
   $F1BE,$03 #REGhl=#R$DA73.
   $F1C1,$03 Jump to #R$F03A.
 
-  $F1C4,$03 #REGhl=#R$E9CC.
-  $F1C7,$03 Call #R$C37F.
-  $F1CA,$02 Jump to #R$F1DF if #REGa is not equal to #N$0B.
+  $F1C4,$06 Call #R$C37F with #R$E9CC.
+  $F1CA,$02 Jump to #R$F1DF if the token isn't for the fish.
   $F1CC,$05 Call #R$C35F with #ITEM$1B.
   $F1D1,$02 Jump to #R$F1DF if #ITEM$1B isn't in the current room.
   $F1D3,$06 Call #R$C426 to transform item #N$1B (#ITEM$1B) into item #N$1C
@@ -4013,46 +4015,41 @@ N $F1D9 Print "#STR$DA85,$08($b==$FF)".
   $F1D9,$03 #REGhl=#R$DA85.
   $F1DC,$03 Jump to #R$F03A.
 
-  $F1DF,$03 #REGhl=#R$E9D1.
-  $F1E2,$03 Call #R$C37F.
-  $F1E5,$02 Jump to #R$F1ED if #REGa is not equal to #N$1B.
+  $F1DF,$06 Call #R$C37F with #R$E9D1.
+  $F1E5,$02 Jump to #R$F1ED if the token isn't for the watch.
 N $F1E7 Print "#STR$DA99,$08($b==$FF)".
   $F1E7,$03 #REGhl=#R$DA99.
   $F1EA,$03 Jump to #R$F03A.
-  $F1ED,$03 #REGhl=#R$E9D3.
-  $F1F0,$03 Call #R$C37F.
-  $F1F3,$02 Jump to #R$F1FB if #REGa is not equal to #N$1B.
+
+  $F1ED,$06 Call #R$C37F with #R$E9D3.
+  $F1F3,$02 Jump to #R$F1FB if the token isn't for the shoe.
   $F1F5,$03 #REGhl=#R$DAAD.
   $F1F8,$03 Jump to #R$F03A.
 
-  $F1FB,$03 #REGhl=#R$E9D5.
-  $F1FE,$03 Call #R$C37F.
-  $F201,$02 Jump to #R$F209 if #REGa is not equal to #N$1B.
+  $F1FB,$06 Call #R$C37F with #R$E9D5.
+  $F201,$02 Jump to #R$F209 if the token isn't for the rod.
 N $F203 Print "#STR$DADA,$08($b==$FF)".
   $F203,$03 #REGhl=#R$DADA.
   $F206,$03 Jump to #R$F03A.
 
-  $F209,$03 #REGhl=#R$E9D7.
-  $F20C,$03 Call #R$C37F.
-  $F20F,$02 Jump to #R$F217 if #REGa is not equal to #N$1B.
+  $F209,$06 Call #R$C37F with #R$E9D7.
+  $F20F,$02 Jump to #R$F217 if the token isn't for the fruit.
 N $F211 Print "#STR$DAFB,$08($b==$FF)".
   $F211,$03 #REGhl=#R$DAFB.
   $F214,$03 Jump to #R$F03A.
 
-  $F217,$03 #REGhl=#R$E9D9.
-  $F21A,$03 Call #R$C37F.
-  $F21D,$02 Jump to #R$F225 if #REGa is not equal to #N$1B.
+  $F217,$06 Call #R$C37F with #R$E9D9.
+  $F21D,$02 Jump to #R$F225 if the token isn't for the bridge.
 N $F21F Print "#STR$DB0F,$08($b==$FF)".
   $F21F,$03 #REGhl=#R$DB0F.
   $F222,$03 Jump to #R$F03A.
 
-  $F225,$03 #REGhl=#R$E9DB.
-  $F228,$03 Call #R$C37F.
-  $F22B,$02 Jump to #R$F233 if #REGa is not equal to #N$1B.
+  $F225,$06 Call #R$C37F with #R$E9DB.
+  $F22B,$02 Jump to #R$F233 if the token isn't for the jewels.
 N $F22D Print "#STR$DB37,$08($b==$FF)".
   $F22D,$03 #REGhl=#R$DB37.
   $F230,$03 Jump to #R$F03A.
-
+@ $F233 label=Examine_Invalid
   $F233,$03 Jump to #R$F065.
 
 c $F236 Action: Load
@@ -4097,8 +4094,10 @@ c $F263 Action: Take
 @ $F263 label=Action_Take
   $F263,$03 Call #R$C47B.
   $F266,$01 Return if the direct object is malformed.
+N $F267 Start by calling the chain of items to check...
   $F267,$03 Jump to #R$F2A8.
-
+N $F26A Check if the player is holding the requested item?
+@ $F26A label=Take_IsPlayerHoldingItem
   $F26A,$03 Call #R$C3E4.
   $F26D,$02 Jump to #R$F28D if #REGa is not equal to #N$59.
   $F26F,$01 Restore #REGhl from the stack.
@@ -4126,33 +4125,37 @@ N $F287 Print "#STR$BF2F,$08($b==$FF)".
 N $F295 Print "#STR$BF35,$08($b==$FF)".
   $F295,$03 #REGhl=#R$BF35.
   $F298,$03 Jump to #R$F03A.
-
-B $F29B,$01
-  $F29C,$02 #REGc=#N$01.
+N $F29B Table: All the items in the game which are plural.
+N $F29B Which is ... the jewels.
+@ $F29B label=Table_ItemsWhichArePlural
+B $F29B,$01 Item #N(#PEEK(#PC)): #ITEM(#PEEK(#PC)).
+N $F29C The player can take the item.
+@ $F29C label=TakeItem
+  $F29C,$02 Load #REGc with #N$01 which indicates the item will be in the
+. players inventory.
   $F29E,$03 Call #R$C412.
-  $F2A1,$03 #REGhl=#R$BC98.
-  $F2A4,$01 Increment *#REGhl by one.
+  $F2A1,$04 Increment *#R$BC98 by one.
   $F2A5,$03 Jump to #R$F06A.
-
-  $F2A8,$03 #REGhl=#R$E9E7.
-  $F2AB,$03 Call #R$C37F.
-  $F2AE,$02 Jump to #R$F2BC if *#REGhl is not equal to #N$01.
+N $F2A8 Is the player asking to take the bottle of rum?
+@ $F2A8 label=Validate_Take_BottleOfRum
+  $F2A8,$06 Call #R$C37F with #R$E9E7.
+  $F2AE,$02 Jump to #R$F2BC if the token isn't for the bottle of rum.
   $F2B0,$03 #REGhl=#R$E87A.
   $F2B3,$03 Call #R$C401.
   $F2B6,$03 Call #R$F26A.
   $F2B9,$03 Jump to #R$F29C.
-
-  $F2BC,$03 #REGhl=#R$E9CC.
-  $F2BF,$03 Call #R$C37F.
-  $F2C2,$02 Jump to #R$F2D0 if *#REGhl is not equal to #N$01.
+N $F2BC Is the player asking to take the fish?
+@ $F2BC label=Validate_Take_Fish
+  $F2BC,$06 Call #R$C37F with #R$E9CC.
+  $F2C2,$02 Jump to #R$F2D0 if the token isn't for the fish.
   $F2C4,$03 #REGhl=#R$E895.
   $F2C7,$03 Call #R$C401.
   $F2CA,$03 Call #R$F26A.
   $F2CD,$03 Jump to #R$F29C.
-
-  $F2D0,$03 #REGhl=#R$E9D1.
-  $F2D3,$03 Call #R$C37F.
-  $F2D6,$02 Jump to #R$F2ED if *#REGhl is not equal to #N$01.
+N $F2D0 Is the player asking to take the watch?
+@ $F2D0 label=Validate_Take_Watch
+  $F2D0,$06 Call #R$C37F with #R$E9D1.
+  $F2D6,$02 Jump to #R$F2ED if the token isn't for the watch.
   $F2D8,$05 Call #R$C35F with #ITEM$19.
   $F2DD,$02 Jump to #R$F2E5 if #ITEM$19 isn't in the current room.
 N $F2DF Print "#STR$DB5F,$08($b==$FF)".
@@ -4161,22 +4164,22 @@ N $F2DF Print "#STR$DB5F,$08($b==$FF)".
 
   $F2E5,$05 Call #R$F26A with #ITEM$17.
   $F2EA,$03 Jump to #R$F29C.
-
-  $F2ED,$03 #REGhl=#R$E9D3.
-  $F2F0,$03 Call #R$C37F.
-  $F2F3,$02 Jump to #R$F2FD if *#REGhl is not equal to #N$17.
+N $F2ED Is the player asking to take the shoe?
+@ $F2ED label=Validate_Take_Shoe
+  $F2ED,$06 Call #R$C37F with #R$E9D3.
+  $F2F3,$02 Jump to #R$F2FD if the token isn't for the shoe.
   $F2F5,$05 Call #R$F26A with #ITEM$15.
   $F2FA,$03 Jump to #R$F29C.
-
-  $F2FD,$03 #REGhl=#R$E9D7.
-  $F300,$03 Call #R$C37F.
-  $F303,$02 Jump to #R$F30D if *#REGhl is not equal to #N$15.
+N $F2FD Is the player asking to take the fruit?
+@ $F2FD label=Validate_Take_Fruit
+  $F2FD,$06 Call #R$C37F with #R$E9D7.
+  $F303,$02 Jump to #R$F30D if the token isn't for the fruit.
   $F305,$05 Call #R$F26A with #ITEM$0E.
   $F30A,$03 Jump to #R$F29C.
-
-  $F30D,$03 #REGhl=#R$E9D5.
-  $F310,$03 Call #R$C37F.
-  $F313,$02 Jump to #R$F347 if *#REGhl is not equal to #N$0E.
+N $F30D Is the player asking to take the rod?
+@ $F30D label=Validate_Take_Rod
+  $F30D,$06 Call #R$C37F with #R$E9D5.
+  $F313,$02 Jump to #R$F347 if the token isn't for the rod.
   $F315,$05 Call #R$F26A with #ITEM$08.
   $F31A,$01 #REGa=#REGb.
   $F31B,$03 Call #R$C35F.
@@ -4194,24 +4197,24 @@ N $F2DF Print "#STR$DB5F,$08($b==$FF)".
 N $F341 Print "#STR$DB7C,$08($b==$FF)".
   $F341,$03 #REGhl=#R$DB7C.
   $F344,$03 Jump to #R$F03A.
-
-  $F347,$03 #REGhl=#R$E9DB.
-  $F34A,$03 Call #R$C37F.
-  $F34D,$02 Jump to #R$F357 if *#REGhl is not equal to #N$08.
+N $F347 Is the player asking to take the jewels?
+@ $F347 label=Validate_Take_Jewels
+  $F347,$06 Call #R$C37F with #R$E9DB.
+  $F34D,$02 Jump to #R$F357 if the token isn't for the jewels.
   $F34F,$05 Call #R$F26A with #ITEM$1D.
   $F354,$03 Jump to #R$F29C.
-
-  $F357,$03 #REGhl=#R$E9E1.
-  $F35A,$03 Call #R$C37F.
-  $F35D,$02 Jump to #R$F36B if *#REGhl is not equal to #N$1D.
+N $F357 Is the player asking to take the match?
+@ $F357 label=Validate_Take_Match
+  $F357,$06 Call #R$C37F with #R$E9E1.
+  $F35D,$02 Jump to #R$F36B if the token isn't for the match.
   $F35F,$03 #REGhl=#R$E86E.
   $F362,$03 Call #R$C401.
   $F365,$03 Call #R$F26A.
   $F368,$03 Jump to #R$F29C.
-
-  $F36B,$03 #REGhl=#R$E9E3.
-  $F36E,$03 Call #R$C37F.
-  $F371,$02 Jump to #R$F398 if *#REGhl is not equal to #N$1D.
+N $F36B Is the player asking to take the plank?
+@ $F36B label=Validate_Take_Plank
+  $F36B,$06 Call #R$C37F with #R$E9E3.
+  $F371,$02 Jump to #R$F398 if the token isn't for the plank.
   $F373,$03 #REGhl=#R$E871.
   $F376,$03 Call #R$C401.
   $F379,$03 Call #R$F26A.
@@ -4224,16 +4227,16 @@ N $F341 Print "#STR$DB7C,$08($b==$FF)".
   $F38C,$02 #REGb=#N$04.
   $F38E,$07 Write #N$00 to: #LIST { *#R$ED75 } { *#R$ED80 } LIST#
   $F395,$03 Jump to #R$F29C.
-
-  $F398,$03 #REGhl=#R$E9E5.
-  $F39B,$03 Call #R$C37F.
-  $F39E,$02 Jump to #R$F3A8 if #REGa is not equal to #N$04.
+N $F398 Is the player asking to take the coconut?
+@ $F398 label=Validate_Take_Coconut
+  $F398,$06 Call #R$C37F with #R$E9E5.
+  $F39E,$02 Jump to #R$F3A8 if the token isn't for the coconut.
   $F3A0,$05 Call #R$F26A with #ITEM$07.
   $F3A5,$03 Jump to #R$F29C.
-
-  $F3A8,$03 #REGhl=#R$E9EF.
-  $F3AB,$03 Call #R$C37F.
-  $F3AE,$02 Jump to #R$F3D5 if #REGa is not equal to #N$07.
+N $F3A8 Is the player asking to take the gun?
+@ $F3A8 label=Validate_Take_Gun
+  $F3A8,$06 Call #R$C37F with #R$E9EF.
+  $F3AE,$02 Jump to #R$F3D5 if the token isn't for the gun.
   $F3B0,$05 Call #R$F26A with #ITEM$0F.
   $F3B5,$05 Call #R$C35F with #ITEM$27.
   $F3BA,$02 Jump to #R$F3CB if #ITEM$27 is present in the current room.
@@ -4250,18 +4253,18 @@ N $F3CB Bad luck!
 N $F3CF Print "#STR$DBCC,$08($b==$FF)".
   $F3CF,$03 #REGhl=#R$DBCC.
   $F3D2,$03 Jump to #R$F03A.
-
-  $F3D5,$03 #REGhl=#R$E9F1.
-  $F3D8,$03 Call #R$C37F.
-  $F3DB,$02 Jump to #R$F3E9 if #REGa is not equal to #N$0F.
+N $F3D5 Is the player asking to take the eyepatch?
+@ $F3D5 label=Validate_Take_Eyepatch
+  $F3D5,$06 Call #R$C37F with #R$E9F1.
+  $F3DB,$02 Jump to #R$F3E9 if the token isn't for the eyepatch.
   $F3DD,$03 #REGhl=#R$E885.
   $F3E0,$03 Call #R$C401.
   $F3E3,$03 Call #R$F26A.
   $F3E6,$03 Jump to #R$F29C.
-
-  $F3E9,$03 #REGhl=#R$E9F3.
-  $F3EC,$03 Call #R$C37F.
-  $F3EF,$02 Jump to #R$F403 if #REGa is not equal to #N$0F.
+N $F3E9 Is the player asking to take the keg of gunpowder?
+@ $F3E9 label=Validate_Take_KegOfGunpowder
+  $F3E9,$06 Call #R$C37F with #R$E9F3.
+  $F3EF,$02 Jump to #R$F403 if the token isn't for the keg of gunpowder.
   $F3F1,$03 #REGhl=#R$E888.
   $F3F4,$03 Call #R$C401.
   $F3F7,$03 Call #R$F26A.
@@ -4269,34 +4272,34 @@ N $F3CF Print "#STR$DBCC,$08($b==$FF)".
   $F3FB,$02 Compare #REGa with #N$12.
   $F3FD,$03 Jump to #R$F29C if #REGa is equal to #N$12.
   $F400,$03 Jump to #R$F06F.
-
-  $F403,$03 #REGhl=#R$E9FB.
-  $F406,$03 Call #R$C37F.
-  $F409,$02 Jump to #R$F413 if #REGa is not equal to #N$12.
+N $F403 Is the player asking to take the sextant?
+@ $F403 label=Validate_Take_Sextant
+  $F403,$06 Call #R$C37F with #R$E9FB.
+  $F409,$02 Jump to #R$F413 if the token isn't for the sextant.
   $F40B,$05 Call #R$F26A with #ITEM$16.
   $F410,$03 Jump to #R$F29C.
-
-  $F413,$03 #REGhl=#R$E9FD.
-  $F416,$03 Call #R$C37F.
-  $F419,$02 Jump to #R$F423 if #REGa is not equal to #N$16.
+N $F413 Is the player asking to take the crowbar?
+@ $F413 label=Validate_Take_Crowbar
+  $F413,$06 Call #R$C37F with #R$E9FD.
+  $F419,$02 Jump to #R$F423 if the token isn't for the crowbar.
   $F41B,$05 Call #R$F26A with #ITEM$1E.
   $F420,$03 Jump to #R$F29C.
-
-  $F423,$03 #REGhl=#R$E9FF.
-  $F426,$03 Call #R$C37F.
-  $F429,$02 Jump to #R$F433 if #REGa is not equal to #N$1E.
+N $F423 Is the player asking to take the key?
+@ $F423 label=Validate_Take_Key
+  $F423,$06 Call #R$C37F with #R$E9FF.
+  $F429,$02 Jump to #R$F433 if the token isn't for the key.
   $F42B,$05 Call #R$F26A with #ITEM$1F.
   $F430,$03 Jump to #R$F29C.
-
-  $F433,$03 #REGhl=#R$EA01.
-  $F436,$03 Call #R$C37F.
-  $F439,$02 Jump to #R$F443 if #REGa is not equal to #N$1F.
+N $F433 Is the player asking to take the skull?
+@ $F433 label=Validate_Take_Skull
+  $F433,$06 Call #R$C37F with #R$EA01.
+  $F439,$02 Jump to #R$F443 if the token isn't for the skull.
   $F43B,$05 Call #R$F26A with #ITEM$20.
   $F440,$03 Jump to #R$F29C.
-
-  $F443,$03 #REGhl=#R$EA06.
-  $F446,$03 Call #R$C37F.
-  $F449,$02 Jump to #R$F45D if #REGa is not equal to #N$20.
+N $F443 Is the player asking to take the spear?
+@ $F443 label=Validate_Take_Spear
+  $F443,$06 Call #R$C37F with #R$EA06.
+  $F449,$02 Jump to #R$F45D if the token isn't for the spear.
   $F44B,$03 #REGhl=#R$E8A0.
   $F44E,$03 Call #R$C401.
   $F451,$03 Call #R$F26A.
@@ -4304,10 +4307,10 @@ N $F3CF Print "#STR$DBCC,$08($b==$FF)".
   $F455,$02 Compare #REGa with #N$1A.
   $F457,$03 Jump to #R$F29C if #REGa is equal to #N$1A.
   $F45A,$03 Jump to #R$F06F.
-
-  $F45D,$03 #REGhl=#R$EA08.
-  $F460,$03 Call #R$C37F.
-  $F463,$02 Jump to #R$F47E if #REGa is not equal to #N$1A.
+N $F45D Is the player asking to take the parrot?
+@ $F45D label=Validate_Take_Parrot
+  $F45D,$06 Call #R$C37F with #R$EA08.
+  $F463,$02 Jump to #R$F47E if the token isn't for the parrot.
   $F465,$03 #REGhl=#R$E8BC.
   $F468,$03 Call #R$C401.
   $F46B,$03 Call #R$F26A.
@@ -4327,51 +4330,62 @@ c $F481 Action: Get
 @ $F481 label=Action_Get
   $F481,$03 Call #R$C47B.
   $F484,$01 Return if the direct object is malformed.
-  $F485,$03 #REGhl=#R$EA0D.
-  $F488,$03 Call #R$C37F.
-  $F48B,$02 Jump to #R$F4AC if #REGa is not equal to #N$28.
-  $F48D,$03 #REGa=*#R$BCCB.
-  $F490,$04 Jump to #R$F498 if #REGa is room #N$04: "#ROOM$04".
-  $F494,$04 Jump to #R$F49E if #REGa is not room #N$6B: "#ROOM$6B".
+N $F485 Confirm if the player intended to "GET INTO BOAT" (or similar).
+  $F485,$06 Call #R$C37F with #R$EA0D.
+  $F48B,$02 Jump to #R$F4AC if the token isn't for getting into the boat.
+N $F48D The player has typed any variation of wanting to get into the boat.
+@ $F48D label=Validate_GetIntoBoat
+  $F48D,$07 Jump to #R$F498 if the *#R$BCCB is room #N$04: "#ROOM$04". So the
+. player is already in the boat.
+  $F494,$04 Jump to #R$F49E if the *#R$BCCB is not room #N$6B: "#ROOM$6B" (a
+. room variation, but the player being in the boat).
+N $F498 The player is definitely already in the boat, so tell them this.
 N $F498 Print "#STR$DC21,$08($b==$FF)".
+@ $F498 label=AlreadyInTheBoat
   $F498,$03 #REGhl=#R$DC21.
   $F49B,$03 Jump to #R$F03A.
-
-  $F49E,$04 Jump to #R$F4A6 if #REGa is not equal to #N$03.
+N $F49E The player can only get into the boat from room #N$03: "#ROOM$03".
+@ $F49E label=Action_GetIntoBoat
+  $F49E,$04 Jump to #R$F4A6 if the *#R$BCCB is not room #N$03: "#ROOM$03"
   $F4A2,$02 #REGa=#N$04.
   $F4A4,$02 Jump to #R$F4A8.
-
+@ $F4A6 label=WhereIsTheBoat
   $F4A6,$02 #REGa=#N$6B.
   $F4A8,$03 Call #R$EF54.
   $F4AB,$01 Return.
-
-  $F4AC,$03 #REGhl=#R$EA1D.
-  $F4AF,$03 Call #R$C37F.
-  $F4B2,$02 Jump to #R$F4D1 if #REGa is not equal to #N$6B.
-  $F4B4,$07 Jump to #R$F4C1 if *#R$BCCB is not room #N$04: "#ROOM$04".
+N $F4AC Confirm if the player intended to "GET OUT OF BOAT" (or similar).
+@ $F4AC label=GetOutOfBoat_Check
+  $F4AC,$06 Call #R$C37F with #R$EA1D.
+  $F4B2,$02 Jump to #R$F4D1 if the token isn't for the getting out of the boat.
+@ $F4B4 label=IsPlayerInRowingBoat_1
+  $F4B4,$07 Jump to #R$F4C1 if the *#R$BCCB is not room #N$04: "#ROOM$04".
   $F4BB,$02 #REGa=#N$03.
   $F4BD,$03 Call #R$EF54.
   $F4C0,$01 Return.
-
-  $F4C1,$04 Jump to #R$F4CB if *#R$BCCB is not room #N$6B: "#ROOM$6B".
+N $F4C1 Also check the room variation, as the player is in the boat in both.
+@ $F4C1 label=IsPlayerInRowingBoat_2
+  $F4C1,$04 Jump to #R$F4CB if the *#R$BCCB is not room #N$6B: "#ROOM$6B".
   $F4C5,$02 #REGa=#N$06.
   $F4C7,$03 Call #R$EF54.
   $F4CA,$01 Return.
-
 N $F4CB Print "#STR$DC37,$08($b==$FF)".
+@ $F4CB label=NotInTheBoat
   $F4CB,$03 #REGhl=#R$DC37.
   $F4CE,$03 Jump to #R$F03A.
-
+N $F4D1 Pivot to "TAKE" as a synonym.
+@ $F4D1 label=Synonym_Take
   $F4D1,$03 Jump to #R$F263.
 
 c $F4D4 Action: Drop/ Throw
 @ $F4D4 label=Action_DropThrow
   $F4D4,$03 Call #R$C47B.
   $F4D7,$01 Return if the direct object is malformed.
+N $F4D8 Start by calling the chain of items to check...
   $F4D8,$02 Jump to #R$F50B.
-
+N $F4DA Check if the player is holding the requested item?
+@ $F4DA label=DropThrow_IsPlayerHoldingItem
   $F4DA,$03 Call #R$C3E4.
-  $F4DD,$02 Jump to #R$F4FC if #REGa is equal to #N$06.
+  $F4DD,$02 Jump to #R$F4FC if the player is holding the requested item.
 N $F4DF Print "#STR$BFAF,$08($b==$FF)".
   $F4DF,$03 #REGhl=#R$BFAF.
   $F4E2,$03 Call #R$BAA4.
@@ -4383,91 +4397,92 @@ N $F4DF Print "#STR$BFAF,$08($b==$FF)".
 N $F4F0 Print "#STR$BF2B,$08($b==$FF)".
   $F4F0,$03 #REGhl=#R$BF2B.
   $F4F3,$03 Jump to #R$F03A.
-
+@ $F4F6 label=NotCarryingItem_Plural
 N $F4F6 Print "#STR$BF2F,$08($b==$FF)".
   $F4F6,$03 #REGhl=#R$BF2F.
   $F4F9,$03 Jump to #R$F03A.
-
-  $F4FC,$01 #REGb=#REGe.
-  $F4FD,$03 #REGa=*#R$BCCB.
-  $F500,$01 #REGc=#REGa.
+N $F4FC The player has the item in their inventory so drop/ throw it.
+@ $F4FC label=DropItem
+  $F4FC,$01 Copy the item ID into #REGb.
+  $F4FD,$04 #REGc=*#R$BCCB.
+N $F501 Alter the items location from the players inventory to the current room
+. ID.
   $F501,$03 Call #R$C412.
-  $F504,$03 #REGhl=#R$BC98.
-  $F507,$01 Decrease *#REGhl by one.
+  $F504,$04 Decrease *#R$BC98 by one.
   $F508,$03 Jump to #R$F06A.
-
-  $F50B,$03 #REGhl=#R$E9E7.
-  $F50E,$03 Call #R$C37F.
-  $F511,$02 Jump to #R$F51C if *#REGhl is not equal to #N$06.
+N $F50B Is the player asking to drop or throw the bottle of rum?
+@ $F50B label=Validate_DropThrow_BottleRum
+  $F50B,$06 Call #R$C37F with #R$E9E7.
+  $F511,$02 Jump to #R$F51C if the token isn't for the bottle of rum.
   $F513,$03 #REGhl=#R$E87A.
   $F516,$03 Call #R$C401.
   $F519,$03 Jump to #R$F4DA.
-
-  $F51C,$03 #REGhl=#R$E9CC.
-  $F51F,$03 Call #R$C37F.
-  $F522,$02 Jump to #R$F52D if *#REGhl is not equal to #N$06.
+N $F51C Is the player asking to drop or throw the fish?
+@ $F51C label=Validate_DropThrow_Fish
+  $F51C,$06 Call #R$C37F with #R$E9CC.
+  $F522,$02 Jump to #R$F52D if the token isn't for the fish.
   $F524,$03 #REGhl=#R$E895.
   $F527,$03 Call #R$C401.
   $F52A,$03 Jump to #R$F4DA.
-
-  $F52D,$03 #REGhl=#R$E9D1.
-  $F530,$03 Call #R$C37F.
-  $F533,$02 Jump to #R$F53A if *#REGhl is not equal to #N$06.
+N $F52D Is the player asking to drop or throw the watch?
+@ $F52D label=Validate_DropThrow_Watch
+  $F52D,$06 Call #R$C37F with #R$E9D1.
+  $F533,$02 Jump to #R$F53A if the token isn't for the watch.
   $F535,$02 #REGa=#N$17.
   $F537,$03 Jump to #R$F4DA.
-
-  $F53A,$03 #REGhl=#R$E9D3.
-  $F53D,$03 Call #R$C37F.
-  $F540,$02 Jump to #R$F547 if *#REGhl is not equal to #N$17.
+N $F53A Is the player asking to drop or throw the shoe?
+@ $F53A label=Validate_DropThrow_Shoe
+  $F53A,$06 Call #R$C37F with #R$E9D3.
+  $F540,$02 Jump to #R$F547 if the token isn't for the shoe.
   $F542,$02 #REGa=#N$15.
   $F544,$03 Jump to #R$F4DA.
-
-  $F547,$03 #REGhl=#R$E9D5.
-  $F54A,$03 Call #R$C37F.
-  $F54D,$02 Jump to #R$F554 if *#REGhl is not equal to #N$15.
+N $F547 Is the player asking to drop or throw the rod?
+@ $F547 label=Validate_DropThrow_Rod
+  $F547,$06 Call #R$C37F with #R$E9D5.
+  $F54D,$02 Jump to #R$F554 if the token isn't for the rod.
   $F54F,$02 #REGa=#N$08.
   $F551,$03 Jump to #R$F4DA.
-
-  $F554,$03 #REGhl=#R$E9D7.
-  $F557,$03 Call #R$C37F.
-  $F55A,$02 Jump to #R$F561 if *#REGhl is not equal to #N$08.
+N $F554 Is the player asking to drop or throw the fruit?
+@ $F554 label=Validate_DropThrow_Fruit
+  $F554,$06 Call #R$C37F with #R$E9D7.
+  $F55A,$02 Jump to #R$F561 if the token isn't for the fruit.
   $F55C,$02 #REGa=#N$0E.
   $F55E,$03 Jump to #R$F4DA.
-
-  $F561,$03 #REGhl=#R$E9DB.
-  $F564,$03 Call #R$C37F.
-  $F567,$02 Jump to #R$F56E if *#REGhl is not equal to #N$0E.
+N $F561 Is the player asking to drop or throw the jewels?
+@ $F561 label=Validate_DropThrow_Jewels
+  $F561,$06 Call #R$C37F with #R$E9DB.
+  $F567,$02 Jump to #R$F56E if the token isn't for the jewels.
   $F569,$02 #REGa=#N$1D.
   $F56B,$03 Jump to #R$F4DA.
-
-  $F56E,$03 #REGhl=#R$E9E1.
-  $F571,$03 Call #R$C37F.
-  $F574,$02 Jump to #R$F57F if *#REGhl is not equal to #N$1D.
+N $F56E Is the player asking to drop or throw the match?
+@ $F56E label=Validate_DropThrow_Match
+  $F56E,$06 Call #R$C37F with #R$E9E1.
+  $F574,$02 Jump to #R$F57F if the token isn't for the match.
   $F576,$03 #REGhl=#R$E86E.
   $F579,$03 Call #R$C401.
   $F57C,$03 Jump to #R$F4DA.
-
-  $F57F,$03 #REGhl=#R$E9E3.
-  $F582,$03 Call #R$C37F.
-  $F585,$02 Jump to #R$F58C if *#REGhl is not equal to #N$1D.
+N $F57F Is the player asking to drop or throw the plank?
+@ $F57F label=Validate_DropThrow_Plank
+  $F57F,$06 Call #R$C37F with #R$E9E3.
+  $F585,$02 Jump to #R$F58C if the token isn't for the plank.
   $F587,$02 #REGa=#N$04.
   $F589,$03 Jump to #R$F4DA.
-
-  $F58C,$03 #REGhl=#R$E9E5.
-  $F58F,$03 Call #R$C37F.
-  $F592,$02 Jump to #R$F599 if *#REGhl is not equal to #N$04.
+N $F58C Is the player asking to drop or throw the coconut?
+@ $F58C label=Validate_DropThrow_Coconut
+  $F58C,$06 Call #R$C37F with #R$E9E5.
+  $F592,$02 Jump to #R$F599 if the token isn't for the coconut.
   $F594,$02 #REGa=#N$07.
   $F596,$03 Jump to #R$F4DA.
-
-  $F599,$03 #REGhl=#R$E9EF.
-  $F59C,$03 Call #R$C37F.
-  $F59F,$02 Jump to #R$F5A6 if *#REGhl is not equal to #N$07.
+N $F599 Is the player asking to drop or throw the gun?
+@ $F599 label=Validate_DropThrow_Gun
+  $F599,$06 Call #R$C37F with #R$E9EF.
+  $F59F,$02 Jump to #R$F5A6 if the token isn't for the gun.
   $F5A1,$02 #REGa=#N$0F.
   $F5A3,$03 Jump to #R$F4DA.
-
-  $F5A6,$03 #REGhl=#R$E9F1.
-  $F5A9,$03 Call #R$C37F.
-  $F5AC,$02 Jump to #R$F5C4 if *#REGhl is not equal to #N$0F.
+N $F5A6 Is the player asking to drop or throw the eyepatch?
+@ $F5A6 label=Validate_DropThrow_Eyepatch
+  $F5A6,$06 Call #R$C37F with #R$E9F1.
+  $F5AC,$02 Jump to #R$F5C4 if the token isn't for the eyepatch.
   $F5AE,$03 #REGhl=#R$E885.
   $F5B1,$03 Call #R$C401.
   $F5B4,$05 Jump to #R$F4DA if #REGa is not equal to #N$11.
@@ -4475,52 +4490,53 @@ N $F4F6 Print "#STR$BF2F,$08($b==$FF)".
 . (#ITEM$10).
   $F5BF,$02 #REGa=#N$10.
   $F5C1,$03 Jump to #R$F4DA.
-
-  $F5C4,$03 #REGhl=#R$E9F3.
-  $F5C7,$03 Call #R$C37F.
-  $F5CA,$02 Jump to #R$F5D1 if #REGa is not equal to #N$10.
+N $F5C4 Is the player asking to drop or throw the keg of gunpowder?
+@ $F5C4 label=Validate_DropThrow_KegGunpowder
+  $F5C4,$06 Call #R$C37F with #R$E9F3.
+  $F5CA,$02 Jump to #R$F5D1 if the token isn't for the keg of gunpowder.
   $F5CC,$02 #REGa=#N$12.
   $F5CE,$03 Jump to #R$F4DA.
-
-  $F5D1,$03 #REGhl=#R$E9FB.
-  $F5D4,$03 Call #R$C37F.
-  $F5D7,$02 Jump to #R$F5DE if #REGa is not equal to #N$12.
+N $F5D1 Is the player asking to drop or throw the sextant?
+@ $F5D1 label=Validate_DropThrow_Sextant
+  $F5D1,$06 Call #R$C37F with #R$E9FB.
+  $F5D7,$02 Jump to #R$F5DE if the token isn't for the sextant.
   $F5D9,$02 #REGa=#N$16.
   $F5DB,$03 Jump to #R$F4DA.
-
-  $F5DE,$03 #REGhl=#R$E9FD.
-  $F5E1,$03 Call #R$C37F.
-  $F5E4,$02 Jump to #R$F5EB if #REGa is not equal to #N$16.
+N $F5DE Is the player asking to drop or throw the crowbar?
+@ $F5DE label=Validate_DropThrow_Crowbar
+  $F5DE,$06 Call #R$C37F with #R$E9FD.
+  $F5E4,$02 Jump to #R$F5EB if the token isn't for the crowbar.
   $F5E6,$02 #REGa=#N$1E.
   $F5E8,$03 Jump to #R$F4DA.
-
-  $F5EB,$03 #REGhl=#R$E9FF.
-  $F5EE,$03 Call #R$C37F.
-  $F5F1,$02 Jump to #R$F5F8 if #REGa is not equal to #N$1E.
+N $F5EB Is the player asking to drop or throw the key?
+@ $F5EB label=Validate_DropThrow_Key
+  $F5EB,$06 Call #R$C37F with #R$E9FF.
+  $F5F1,$02 Jump to #R$F5F8 if the token isn't for the key.
   $F5F3,$02 #REGa=#N$1F.
   $F5F5,$03 Jump to #R$F4DA.
-
-  $F5F8,$03 #REGhl=#R$EA01.
-  $F5FB,$03 Call #R$C37F.
-  $F5FE,$02 Jump to #R$F605 if #REGa is not equal to #N$1F.
+N $F5F8 Is the player asking to drop or throw the skull?
+@ $F5F8 label=Validate_DropThrow_Skull
+  $F5F8,$06 Call #R$C37F with #R$EA01.
+  $F5FE,$02 Jump to #R$F605 if the token isn't for the skull.
   $F600,$02 #REGa=#N$20.
   $F602,$03 Jump to #R$F4DA.
-
-  $F605,$03 #REGhl=#R$EA06.
-  $F608,$03 Call #R$C37F.
-  $F60B,$02 Jump to #R$F612 if #REGa is not equal to #N$20.
+N $F605 Is the player asking to drop or throw the spear?
+@ $F605 label=Validate_DropThrow_Spear
+  $F605,$06 Call #R$C37F with #R$EA06.
+  $F60B,$02 Jump to #R$F612 if the token isn't for the spear.
   $F60D,$02 #REGa=#N$1A.
   $F60F,$03 Jump to #R$F4DA.
-
-  $F612,$03 #REGhl=#R$EA08.
-  $F615,$03 Call #R$C37F.
-  $F618,$02 Jump to #R$F61F if #REGa is not equal to #N$1A.
+N $F612 Is the player asking to drop or throw the parrot?
+@ $F612 label=Validate_DropThrow_Parrot
+  $F612,$06 Call #R$C37F with #R$EA08.
+  $F618,$02 Jump to #R$F61F if the token isn't for the parrot.
   $F61A,$02 #REGa=#N$28.
   $F61C,$03 Jump to #R$F4DA.
-
-  $F61F,$03 #REGhl=#R$EA26.
-  $F622,$03 Call #R$C37F.
-  $F625,$03 Jump to #R$F074 if #REGa is equal to #N$28.
+N $F61F Is the player asking to drop or throw the plank across the pit?
+@ $F61F label=Validate_DropThrow_PlankAcrossPit
+  $F61F,$06 Call #R$C37F with #R$EA26.
+  $F625,$03 Jump to #R$F074 if the token is for dropping/ throwing the plank
+. across the pit.
   $F628,$08 Jump to #R$F633 if *#R$BD66 is equal to #N$3E.
   $F630,$03 Jump to #R$F06F.
 
@@ -4535,35 +4551,34 @@ N $F4F6 Print "#STR$BF2F,$08($b==$FF)".
   $F644,$01 Decrease *#REGhl by one.
   $F645,$01 Return.
 
-  $F646,$03 #REGhl=#R$EA2A.
-  $F649,$03 Call #R$C37F.
-  $F64C,$02 Jump to #R$F659 if *#REGhl is not equal to #N$3E.
+  $F646,$06 Call #R$C37F with #R$EA2A.
+  $F64C,$02 Jump to #R$F659 if the token isn't for dropping/ throwing the spear
+. at the lion.
   $F64E,$02 #REGa=#N$1A.
   $F650,$03 Call #R$F635.
 N $F653 Print "#STR$DC4F,$08($b==$FF)".
   $F653,$03 #REGhl=#R$DC4F.
   $F656,$03 Jump to #R$F03A.
-  $F659,$03 #REGhl=#R$EA2E.
-  $F65C,$03 Call #R$C37F.
-  $F65F,$02 Jump to #R$F66C if *#REGhl is not equal to #N$1A.
+  $F659,$06 Call #R$C37F with #R$EA2E.
+  $F65F,$02 Jump to #R$F66C if the token isn't for dropping/ throwing the
+. coconut at the lion.
   $F661,$02 #REGa=#N$07.
   $F663,$03 Call #R$F635.
 N $F666 Print "#STR$DC82,$08($b==$FF)".
   $F666,$03 #REGhl=#R$DC82.
   $F669,$03 Jump to #R$F03A.
 
-  $F66C,$03 #REGhl=#R$EA32.
-  $F66F,$03 Call #R$C37F.
-  $F672,$02 Jump to #R$F67F if *#REGhl is not equal to #N$07.
+  $F66C,$06 Call #R$C37F with #R$EA32.
+  $F672,$02 Jump to #R$F67F if the token isn't for dropping/ throwing the fruit
+. at the lion.
   $F674,$02 #REGa=#N$0E.
   $F676,$03 Call #R$F635.
 N $F679 Print "#STR$DCED,$08($b==$FF)".
   $F679,$03 #REGhl=#R$DCED.
   $F67C,$03 Jump to #R$F03A.
 
-  $F67F,$03 #REGhl=#R$EA36.
-  $F682,$03 Call #R$C37F.
-  $F685,$02 Jump to #R$F6A4 if *#REGhl is not equal to #N$0E.
+  $F67F,$06 Call #R$C37F with #R$EA36.
+  $F685,$02 Jump to #R$F6A4 if the token isn't for the .
   $F687,$03 #REGhl=#R$E895.
   $F68A,$03 Call #R$C401.
   $F68D,$03 Call #R$F635.
@@ -4576,9 +4591,8 @@ N $F69E Print "#STR$DD1B,$08($b==$FF)".
   $F69E,$03 #REGhl=#R$DD1B.
   $F6A1,$03 Jump to #R$F03A.
 
-  $F6A4,$03 #REGhl=#R$EA3F.
-  $F6A7,$03 Call #R$C37F.
-  $F6AA,$02 Jump to #R$F6C2 if *#REGhl is not equal to #N$3C.
+  $F6A4,$06 Call #R$C37F with #R$EA3F.
+  $F6AA,$02 Jump to #R$F6C2 if the token isn't for the .
   $F6AC,$02 Load #ITEM$0E into #REGa.
   $F6AE,$03 Call #R$F635.
   $F6B1,$03 Call #R$C426 to transform item #N$27 (#ITEM$27) into item #N$28
@@ -4588,9 +4602,8 @@ N $F6BC Print "#STR$DD6C,$08($b==$FF)".
   $F6BC,$03 #REGhl=#R$DD6C.
   $F6BF,$03 Jump to #R$F03A.
 
-  $F6C2,$03 #REGhl=#R$EA43.
-  $F6C5,$03 Call #R$C37F.
-  $F6C8,$02 Jump to #R$F6FD if *#REGhl is not equal to #N$0E.
+  $F6C2,$06 Call #R$C37F with #R$EA43.
+  $F6C8,$02 Jump to #R$F6FD if the token isn't for the .
   $F6CA,$05 Call #R$C35F with #ITEM$17.
   $F6CF,$03 Jump to #R$F079 #ITEM$17 isn't in the current room.
   $F6D2,$02 Load #ITEM$17 into #REGa.
@@ -4611,9 +4624,8 @@ N $F6F7 Print "#STR$DDDD,$08($b==$FF)".
   $F6F7,$03 #REGhl=#R$DDDD.
   $F6FA,$03 Jump to #R$F03A.
 
-  $F6FD,$03 #REGhl=#R$EA47.
-  $F700,$03 Call #R$C37F.
-  $F703,$02 Jump to #R$F729 if *#REGhl is not equal to #N$23.
+  $F6FD,$06 Call #R$C37F with #R$EA47.
+  $F703,$02 Jump to #R$F729 if the token isn't for the .
   $F705,$05 Call #R$F635 using #ITEM$1A.
   $F70A,$05 Call #R$C3EA with #ITEM$2B.
   $F70F,$05 Call #R$C3EA with #ITEM$1A.
@@ -4625,10 +4637,10 @@ N $F6F7 Print "#STR$DDDD,$08($b==$FF)".
 . from #ROOM$3F.
 N $F723 Print "#STR$DE81,$08($b==$FF)".
   $F723,$03 #REGhl=#R$DE81.
+
   $F726,$03 Jump to #R$F03A.
-  $F729,$03 #REGhl=#R$EA50.
-  $F72C,$03 Call #R$C37F.
-  $F72F,$02 Jump to #R$F74F if *#REGhl is not equal to #N$42.
+  $F729,$06 Call #R$C37F with #R$EA50.
+  $F72F,$02 Jump to #R$F74F if the token isn't for the .
   $F731,$05 Call #R$C35F with #ITEM$12.
   $F736,$03 Jump to #R$F079 if #ITEM$12 isn't in the current room.
   $F739,$02 #REGa=#N$12.
@@ -4641,9 +4653,8 @@ N $F749 Print "#STR$DF15,$08($b==$FF)".
   $F749,$03 #REGhl=#R$DF15.
   $F74C,$03 Jump to #R$F03A.
 
-  $F74F,$03 #REGhl=#R$EA5E.
-  $F752,$03 Call #R$C37F.
-  $F755,$02 Jump to #R$F78D if *#REGhl is not equal to #N$12.
+  $F74F,$06 Call #R$C37F with #R$EA5E.
+  $F755,$02 Jump to #R$F78D if the token isn't for the .
   $F757,$05 Call #R$C3E4 with #ITEM$12.
   $F75C,$03 Jump to #R$F06F if *#REGhl is equal to #N$12.
   $F75F,$03 #REGhl=#R$E86E.
@@ -4661,9 +4672,8 @@ N $F787 Print "#STR$DF8E,$08($b==$FF)".
   $F787,$03 #REGhl=#R$DF8E.
   $F78A,$03 Jump to #R$F03A.
 
-  $F78D,$03 #REGhl=#R$EA6C.
-  $F790,$03 Call #R$C37F.
-  $F793,$02 Jump to #R$F7A8 if *#REGhl is not equal to #N$4E.
+  $F78D,$06 Call #R$C37F with #R$EA6C.
+  $F793,$02 Jump to #R$F7A8 if the token isn't for the .
   $F795,$03 #REGhl=#R$E86E.
   $F798,$03 Call #R$C401.
   $F79B,$03 Call #R$F635.
@@ -4676,27 +4686,22 @@ c $F7AB Action: Lay/ Place/ Put
 @ $F7AB label=Action_LayPlacePut
   $F7AB,$03 Call #R$C49F.
   $F7AE,$01 Return if *#REGhl is less than #N$14.
-  $F7AF,$03 #REGhl=#R$EA32.
-  $F7B2,$03 Call #R$C37F.
-  $F7B5,$03 Jump to #R$F674 if *#REGhl is equal to #N$14.
-  $F7B8,$03 #REGhl=#R$EA36.
-  $F7BB,$03 Call #R$C37F.
-  $F7BE,$03 Jump to #R$F687 if *#REGhl is equal to #N$14.
-  $F7C1,$03 #REGhl=#R$EA3F.
-  $F7C4,$03 Call #R$C37F.
-  $F7C7,$03 Jump to #R$F6AC if *#REGhl is equal to #N$14.
-  $F7CA,$03 #REGhl=#R$EA43.
-  $F7CD,$03 Call #R$C37F.
-  $F7D0,$03 Jump to #R$F6CA if *#REGhl is equal to #N$14.
+  $F7AF,$06 Call #R$C37F with #R$EA32.
+  $F7B5,$03 Jump to #R$F674 if the token is for the .
+  $F7B8,$06 Call #R$C37F with #R$EA36.
+  $F7BE,$03 Jump to #R$F687 if the token is for the .
+  $F7C1,$06 Call #R$C37F with #R$EA3F.
+  $F7C7,$03 Jump to #R$F6AC if the token is for the .
+  $F7CA,$06 Call #R$C37F with #R$EA43.
+  $F7D0,$03 Jump to #R$F6CA if the token is for the .
   $F7D3,$03 Jump to #R$F065.
 
 c $F7D6 Action: Kill
 @ $F7D6 label=Action_Kill
   $F7D6,$03 Call #R$C49F.
   $F7D9,$01 Return if *#REGhl is less than #N$14.
-  $F7DA,$03 #REGhl=#R$EA26.
-  $F7DD,$03 Call #R$C37F.
-  $F7E0,$02 Jump to #R$F813 if *#REGhl is not equal to #N$14.
+  $F7DA,$06 Call #R$C37F with #R$EA26.
+  $F7E0,$02 Jump to #R$F813 if the token isn't for the .
   $F7E2,$05 Call #R$C35F with #ITEM$04.
   $F7E7,$03 Jump to #R$F079 if #ITEM$04 isn't in the current room.
   $F7EA,$02 #REGa=#N$04.
@@ -4712,9 +4717,8 @@ N $F80D Print "#STR$E00C,$08($b==$FF)".
   $F80D,$03 #REGhl=#R$E00C.
   $F810,$03 Jump to #R$F03A.
 
-  $F813,$03 #REGhl=#R$EA70.
-  $F816,$03 Call #R$C37F.
-  $F819,$02 Jump to #R$F84E if *#REGhl is not equal to #N$66.
+  $F813,$06 Call #R$C37F with #R$EA70.
+  $F819,$02 Jump to #R$F84E if the token isn't for the .
   $F81B,$05 Call #R$C35F with #ITEM$08.
   $F820,$03 Jump to #R$F079 if #ITEM$08 isn't in the current room.
   $F823,$05 Call #R$F635 with #ITEM$08.
@@ -4737,9 +4741,8 @@ c $F851 Action: Shoot
 @ $F851 label=Action_Shoot
   $F851,$03 Call #R$C49F.
   $F854,$01 Return if *#REGhl is less than #N$15.
-  $F855,$03 #REGhl=#R$EA8D.
-  $F858,$03 Call #R$C37F.
-  $F85B,$02 Jump to #R$F888 if *#REGhl is not equal to #N$15.
+  $F855,$06 Call #R$C37F with #R$EA8D.
+  $F85B,$02 Jump to #R$F888 if the token isn't for the .
   $F85D,$05 Call #R$C3E4 with #ITEM$1A.
   $F862,$03 Jump to #R$F07E if *#REGhl is not equal to #N$1A.
   $F865,$05 Call #R$C3EA with #ITEM$1A.
@@ -4756,18 +4759,16 @@ N $F882 Print "#STR$DE81,$08($b==$FF)".
   $F882,$03 #REGhl=#R$DE81.
   $F885,$03 Jump to #R$F03A.
 
-  $F888,$03 #REGhl=#R$EA96.
-  $F88B,$03 Call #R$C37F.
-  $F88E,$02 Jump to #R$F89E if *#REGhl is not equal to #N$42.
+  $F888,$06 Call #R$C37F with #R$EA96.
+  $F88E,$02 Jump to #R$F89E if the token isn't for the .
   $F890,$05 Call #R$C3E4 with #ITEM$1A.
   $F895,$03 Jump to #R$F07E if *#REGhl is not equal to #N$1A.
 N $F898 Print "#STR$E07F,$08($b==$FF)".
   $F898,$03 #REGhl=#R$E07F.
   $F89B,$03 Jump to #R$F03A.
 
-  $F89E,$03 #REGhl=#R$EA9A.
-  $F8A1,$03 Call #R$C37F.
-  $F8A4,$02 Jump to #R$F8B8 if *#REGhl is not equal to #N$1A.
+  $F89E,$06 Call #R$C37F with #R$EA9A.
+  $F8A4,$02 Jump to #R$F8B8 if the token isn't for the .
   $F8A6,$05 Call #R$C3E4 with #ITEM$1A.
   $F8AB,$03 Jump to #R$F07E if *#REGhl is not equal to #N$1A.
 N $F8AE Bad luck!
@@ -4777,9 +4778,8 @@ N $F8B2 Print "#STR$E0B4,$08($b==$FF)".
   $F8B2,$03 #REGhl=#R$E0B4.
   $F8B5,$03 Jump to #R$F03A.
 
-  $F8B8,$03 #REGhl=#R$EA9E.
-  $F8BB,$03 Call #R$C37F.
-  $F8BE,$02 Jump to #R$F90A if ?? is not equal to #N$00.
+  $F8B8,$06 Call #R$C37F with #R$EA9E.
+  $F8BE,$02 Jump to #R$F90A if the token isn't for the .
   $F8C0,$05 Call #R$C3E4 with #ITEM$0F.
   $F8C5,$03 Jump to #R$F07E if ?? is not equal to #N$0F.
   $F8C8,$03 #REGhl=#R$E8B2.
@@ -4818,9 +4818,8 @@ N $F8FE Print "#STR$E0FF,$08($b==$FF)".
   $F8FE,$03 #REGhl=#R$E0FF.
   $F901,$03 Jump to #R$F03E.
 B $F904,$06
-  $F90A,$03 #REGhl=#R$EAA2.
-  $F90D,$03 Call #R$C37F.
-  $F910,$02 Jump to #R$F918 if ?? is not equal to #N$00.
+  $F90A,$06 Call #R$C37F with #R$EAA2.
+  $F910,$02 Jump to #R$F918 if the token isn't for the .
 N $F912 Print "#STR$E14B,$08($b==$FF)".
   $F912,$03 #REGhl=#R$E14B.
   $F915,$03 Jump to #R$F03A.
@@ -4836,12 +4835,10 @@ N $F926 Print "#STR$E15E,$08($b==$FF)".
   $F926,$03 #REGhl=#R$E15E.
   $F929,$03 Jump to #R$F03A.
 @ $F92C label=PlayerHasGun
-  $F92C,$03 #REGhl=#R$EAA6.
-  $F92F,$03 Call #R$C37F.
-  $F932,$03 Jump to #R$F8C8 if ?? is equal to #N$0F.
-  $F935,$03 #REGhl=#R$EAAC.
-  $F938,$03 Call #R$C37F.
-  $F93B,$02 Jump to #R$F943 if ?? is not equal to #N$0F.
+  $F92C,$06 Call #R$C37F with #R$EAA6.
+  $F932,$03 Jump to #R$F8C8 if the token is for the .
+  $F935,$06 Call #R$C37F with #R$EAAC.
+  $F93B,$02 Jump to #R$F943 if the token isn't for the .
 N $F93D Print "#STR$E14B,$08($b==$FF)".
   $F93D,$03 #REGhl=#R$E14B.
   $F940,$03 Jump to #R$F03A.
@@ -4851,41 +4848,38 @@ c $F946 Action: Eat
 @ $F946 label=Action_Eat
   $F946,$03 Call #R$C47B.
   $F949,$01 Return if the direct object is malformed.
-  $F94A,$03 #REGhl=#R$EAB2.
-  $F94D,$03 Call #R$C37F.
-  $F950,$02 Jump to #R$F960 if ?? is not equal to #N$0F.
+  $F94A,$06 Call #R$C37F with #R$EAB2.
+  $F950,$02 Jump to #R$F960 if the token isn't for the .
   $F952,$08 Jump to #R$F06F if *#R$BCCB is not room #N$04: "#ROOM$04".
   $F95A,$02 #REGa=#N$03.
   $F95C,$03 Call #R$EF54.
   $F95F,$01 Return.
-  $F960,$03 #REGhl=#R$EAB5.
-  $F963,$03 Call #R$C37F.
-  $F966,$02 Jump to #R$F976 if #REGa is not equal to #N$03.
+
+  $F960,$06 Call #R$C37F with #R$EAB5.
+  $F966,$02 Jump to #R$F976 if the token isn't for the .
   $F968,$08 Jump to #R$F06F if *#R$BCCB is not room #N$03: "#ROOM$03".
   $F970,$02 #REGa=#N$04.
   $F972,$03 Call #R$EF54.
   $F975,$01 Return.
-  $F976,$03 #REGhl=#R$EABC.
-  $F979,$03 Call #R$C37F.
-  $F97C,$02 Jump to #R$F984 if #REGa is not equal to #N$04.
+
+  $F976,$06 Call #R$C37F with #R$EABC.
+  $F97C,$02 Jump to #R$F984 if the token isn't for the .
 N $F97E Print "#STR$BED1,$08($b==$FF)".
   $F97E,$03 #REGhl=#R$BED1.
   $F981,$03 Jump to #R$F03A.
-  $F984,$03 #REGhl=#R$EA0D.
-  $F987,$03 Call #R$C37F.
-  $F98A,$03 Jump to #R$F48D if #REGa is equal to #N$04.
-  $F98D,$03 #REGhl=#R$EA1D.
-  $F990,$03 Call #R$C37F.
-  $F993,$03 Jump to #R$F4B4 if #REGa is equal to #N$04.
+
+  $F984,$06 Call #R$C37F with #R$EA0D.
+  $F98A,$03 Jump to #R$F48D if the token is for the .
+  $F98D,$06 Call #R$C37F with #R$EA1D.
+  $F993,$03 Jump to #R$F4B4 if the token is for the .
   $F996,$03 Jump to #R$F06F.
 
 c $F999 Action: Drink
 @ $F999 label=Action_Drink
   $F999,$03 Call #R$C47B.
   $F99C,$01 Return if the direct object is malformed.
-  $F99D,$03 #REGhl=#R$E9CC.
-  $F9A0,$03 Call #R$C37F.
-  $F9A3,$02 Jump to #R$F9C1 if #REGa is not equal to #N$04.
+  $F99D,$06 Call #R$C37F with #R$E9CC.
+  $F9A3,$02 Jump to #R$F9C1 if the token isn't for the .
   $F9A5,$03 #REGhl=#R$E895.
   $F9A8,$03 Call #R$C401.
   $F9AB,$01 #REGb=#REGa.
@@ -4900,17 +4894,16 @@ c $F999 Action: Drink
 N $F9BB Print "#STR$E175,$08($b==$FF)".
   $F9BB,$03 #REGhl=#R$E175.
   $F9BE,$03 Jump to #R$F03A.
-  $F9C1,$03 #REGhl=#R$E9D7.
-  $F9C4,$03 Call #R$C37F.
-  $F9C7,$02 Jump to #R$F9D3 if *#REGhl is not equal to #N$04.
+  $F9C1,$06 Call #R$C37F with #R$E9D7.
+  $F9C7,$02 Jump to #R$F9D3 if the token isn't for the .
 N $F9C9 Bad luck!
   $F9C9,$04 Switch #R$EDD7 onto the stack so the next return actions a "game
 . over".
   $F9CD,$03 #REGhl=#R$E19B.
   $F9D0,$03 Jump to #R$F03A.
-  $F9D3,$03 #REGhl=#R$E9E5.
-  $F9D6,$03 Call #R$C37F.
-  $F9D9,$02 Jump to #R$F9E1 if *#REGhl is not equal to #N$04.
+
+  $F9D3,$06 Call #R$C37F with #R$E9E5.
+  $F9D9,$02 Jump to #R$F9E1 if the token isn't for the .
   $F9DB,$03 #REGhl=#R$E208.
   $F9DE,$03 Jump to #R$F03A.
   $F9E1,$03 Jump to #R$F083.
@@ -4919,9 +4912,8 @@ c $F9E4 Action: Open
 @ $F9E4 label=Action_Open
   $F9E4,$03 Call #R$C47B.
   $F9E7,$01 Return if the direct object is malformed.
-  $F9E8,$03 #REGhl=#R$EAB8.
-  $F9EB,$03 Call #R$C37F.
-  $F9EE,$02 Jump to #R$FA14 if *#REGhl is not equal to #N$04.
+  $F9E8,$06 Call #R$C37F with #R$EAB8.
+  $F9EE,$02 Jump to #R$FA14 if the token isn't for the .
   $F9F0,$03 #REGhl=#R$E87A.
   $F9F3,$03 Call #R$C401.
   $F9F6,$01 #REGb=#REGa.
@@ -4938,10 +4930,9 @@ N $FA0E Print "#STR$E238,$08($b==$FF)".
   $FA11,$03 Jump to #R$F03A.
 N $FA14 Handle drinking water.
 @ $FA14 label=Handler_DrinkWater
-  $FA14,$03 #REGhl=#R$EABA.
-  $FA17,$03 Call #R$C37F.
-  $FA1A,$02 Jump to #R$FA39 if the player can't drink water at this time.
-N $FA1C The player can drink water but determine what type of water...
+  $FA14,$06 Call #R$C37F with #R$EABA.
+  $FA1A,$02 Jump to #R$FA39 if the token isn't for drinking the water.
+N $FA1C The player wants to drink water but determine what type of water...
   $FA1C,$03 #REGa=*#R$BCCB.
   $FA1F,$03 #REGhl=#R$FA35.
   $FA22,$03 #REGbc=#N($0004,$04,$04).
@@ -4967,9 +4958,8 @@ c $FA3C Action: Close/ Shut
 @ $FA3C label=Action_CloseShut
   $FA3C,$03 Call #R$C47B.
   $FA3F,$01 Return if the direct object is malformed.
-  $FA40,$03 #REGhl=#R$EABE.
-  $FA43,$03 Call #R$C37F.
-  $FA46,$02 Jump to #R$FA85 if #REGd is not equal to #N$06.
+  $FA40,$06 Call #R$C37F with #R$EABE.
+  $FA46,$02 Jump to #R$FA85 if the token isn't for the .
   $FA48,$03 #REGa=*#R$BCCB.
   $FA4B,$04 Jump to #R$FA53 if #REGa is room #N$61: "#ROOM$61".
   $FA4F,$04 Jump to #R$FA85 if #REGa is not room #N$62: "#ROOM$62".
@@ -4989,9 +4979,9 @@ N $FA5D Print "#STR$E2F1,$08($b==$FF)".
   $FA78,$05 Write #N$62 to *#R$ED57.
   $FA7D,$05 Write #N$61 to *#R$ED5C.
   $FA82,$03 Jump to #R$F06A.
-  $FA85,$03 #REGhl=#R$EAC0.
-  $FA88,$03 Call #R$C37F.
-  $FA8B,$02 Jump to #R$FAA5 if #REGa is not equal to #N$61.
+
+  $FA85,$06 Call #R$C37F with #R$EAC0.
+  $FA8B,$02 Jump to #R$FAA5 if the token isn't for the .
   $FA8D,$07 Jump to #R$FAA5 if *#R$BCCB is not room #N$6A: "#ROOM$6A".
   $FA94,$05 Call #R$C35F with #ITEM$31.
   $FA99,$03 Jump to #R$F088 if #ITEM$31 is present in the current room.
@@ -4999,15 +4989,15 @@ N $FA5D Print "#STR$E2F1,$08($b==$FF)".
 N $FA9F Print "#STR$E305,$08($b==$FF)".
   $FA9F,$03 #REGhl=#R$E305.
   $FAA2,$03 Jump to #R$F03A.
+@ $FAA5 label=CloseShut_Invalid
   $FAA5,$03 Jump to #R$F06F.
 
 c $FAA8 Action: Shout
 @ $FAA8 label=Action_Shout
   $FAA8,$03 Call #R$C47B.
   $FAAB,$01 Return if the direct object is malformed.
-  $FAAC,$03 #REGhl=#R$EABE.
-  $FAAF,$03 Call #R$C37F.
-  $FAB2,$02 Jump to #R$FAE5 if #REGa is not equal to #N$31.
+  $FAAC,$06 Call #R$C37F with #R$EABE.
+  $FAB2,$02 Jump to #R$FAE5 if the token isn't for the .
   $FAB4,$07 Jump to #R$FABF if *#R$BCCB is room #N$61: "#ROOM$61".
   $FABB,$04 Jump to #R$FAE5 if *#R$BCCB is not room #N$62: "#ROOM$62".
   $FABF,$03 #REGhl=#R$E8CA.
@@ -5020,9 +5010,9 @@ c $FAA8 Action: Shout
 . (#ITEM$2F).
   $FADB,$07 Write #N$00 to: #LIST { *#R$ED57 } { *#R$ED5C } LIST#
   $FAE2,$03 Jump to #R$F06A.
-  $FAE5,$03 #REGhl=#R$EAC0.
-  $FAE8,$03 Call #R$C37F.
-  $FAEB,$02 Jump to #R$FB05 if #REGa is not equal to #N$30.
+
+  $FAE5,$06 Call #R$C37F with #R$EAC0.
+  $FAEB,$02 Jump to #R$FB05 if the token isn't for the .
   $FAED,$07 Jump to #R$FB05 if *#R$BCCB is not room #N$6A: "#ROOM$6A".
   $FAF4,$05 Call #R$C35F with #ITEM$32.
   $FAF9,$03 Jump to #R$F08D if #ITEM$32 is present in the current room.
@@ -5030,9 +5020,9 @@ c $FAA8 Action: Shout
 N $FAFF Print "#STR$E305,$08($b==$FF)".
   $FAFF,$03 #REGhl=#R$E305.
   $FB02,$03 Jump to #R$F03A.
-  $FB05,$03 #REGhl=#R$EAC5.
-  $FB08,$03 Call #R$C37F.
-  $FB0B,$02 Jump to #R$FB13 if #REGa is not equal to #N$32.
+
+  $FB05,$06 Call #R$C37F with #R$EAC5.
+  $FB0B,$02 Jump to #R$FB13 if the token isn't for the .
 N $FB0D Print "#STR$E31A,$08($b==$FF)".
   $FB0D,$03 #REGhl=#R$E31A.
   $FB10,$03 Jump to #R$F03A.
@@ -5042,9 +5032,8 @@ c $FB16 Action: Give
 @ $FB16 label=Action_Give
   $FB16,$03 Call #R$C3AE.
   $FB19,$03 Jump to #R$F074 if #REGa is not equal to #N$32.
-  $FB1C,$03 #REGhl=#R$EAC7.
-  $FB1F,$03 Call #R$C37F.
-  $FB22,$02 Jump to #R$FB6E if #REGa is not equal to #N$32.
+  $FB1C,$06 Call #R$C37F with #R$EAC7.
+  $FB22,$02 Jump to #R$FB6E if the token isn't for the .
   $FB24,$05 Call #R$C35F with #ITEM$39.
   $FB29,$03 Jump to #R$F06A if #ITEM$39 isn't in the current room.
   $FB2C,$05 Call #R$C35F with #ITEM$29.
@@ -5052,8 +5041,6 @@ c $FB16 Action: Give
 N $FB33 Bad luck!
   $FB33,$04 Switch #R$EDD7 onto the stack so the next return actions a "game
 . over".
-
-c $FB37
 N $FB37 Print "#STR$E333,$08($b==$FF)".
   $FB37,$03 #REGhl=#R$E333.
   $FB3A,$03 Call #R$BAB1.
@@ -5079,16 +5066,18 @@ N $FB62 Print "#STR$E333,$08($b==$FF)".
 N $FB68 Print "#STR$E384,$08($b==$FF)".
   $FB68,$03 #REGhl=#R$E384.
   $FB6B,$03 Jump to #R$F03E.
+@ $FB6E label=Give_Invalid
   $FB6E,$03 Jump to #R$F074.
 
 c $FB71 Action: Insert
 @ $FB71 label=Action_Insert
   $FB71,$03 Call #R$C49F.
   $FB74,$01 Return if #REGa is less than #N$31.
-  $FB75,$03 #REGhl=#R$EA70.
-  $FB78,$03 Call #R$C37F.
-  $FB7B,$02 Jump to #R$FB80 if #REGa is not equal to #N$31.
+  $FB75,$06 Call #R$C37F with #R$EA70.
+  $FB7B,$02 Jump to #R$FB80 if the token isn't for inserting the rod into the
+. hole.
   $FB7D,$03 Jump to #R$F81B.
+@ $FB80 label=Insert_Invalid
   $FB80,$03 Jump to #R$F06F.
 
 c $FB83 Action: Swearing
@@ -5117,16 +5106,18 @@ c $FBA8 Action: Pull
   $FBA8,$03 Call #R$C47B.
   $FBAB,$01 Return if the direct object is malformed.
   $FBAC,$05 Jump to #R$F074 if #REGa is greater than #N$02.
-  $FBB1,$03 #REGhl=#R$EACB.
-  $FBB4,$03 Call #R$C37F.
-  $FBB7,$02 Jump to #R$FBD2 if #REGa is not equal to #N$02.
+  $FBB1,$06 Call #R$C37F with #R$EACB.
+  $FBB7,$02 Jump to #R$FBD2 if the token isn't for the .
   $FBB9,$05 Call #R$C35F with #ITEM$34.
   $FBBE,$03 Jump to #R$F065 if #REGa is equal to #N$34.
-  $FBC1,$06 Call #R$C426 to transform item #N$34 (#ITEM$34) into item #N$3B
-. (#ITEM$3B).
-  $FBC7,$05 Write #N$60 to *#R$ED4F.
+  $FBC1,$06 Call #R$C426 to transform item #N$3B (#ITEM$3B) into item #N$34
+. (#ITEM$34).
+  $FBC7,$05 Write #N$60 to *#R$ED4F to open up downward access to #ROOM$60
+. from #ROOM$5F.
+N $FBCC Print "#STR$E40B,$08($b==$FF)".
   $FBCC,$03 #REGhl=#R$E40B.
   $FBCF,$03 Jump to #R$F03A.
+@ $FBD2 label=Pull_Invalid
   $FBD2,$03 Jump to #R$F06F.
 
 c $FBD5 Action: Wear
@@ -5136,7 +5127,7 @@ c $FBD5 Action: Wear
   $FBD9,$05 Jump to #R$F074 if #REGa is greater than #N$02.
 N $FBDE Was the player trying to wear ... the eyepatch?
   $FBDE,$06 Call #R$C37F with #R$E9F1.
-  $FBE4,$02 Jump to #R$FC0A if #REGa is not equal to #N$02.
+  $FBE4,$02 Jump to #R$FC0A if the token isn't for the eyepatch.
   $FBE6,$05 Call #R$C35F with #ITEM$11.
   $FBEB,$02 Jump to #R$FBF3 if #ITEM$11 isn't in the current room.
 N $FBED Print "#STR$E44C,$08($b==$FF)".
@@ -5154,14 +5145,14 @@ N $FC04 Print "#STR$E467,$08($b==$FF)".
 N $FC0A Was the player trying to wear ... the shoe?
 @ $FC0A label=Wear_CheckShoe
   $FC0A,$06 Call #R$C37F with #R$E9D3.
-  $FC10,$02 Jump to #R$FC18 if #REGa is not equal to #N$10.
+  $FC10,$02 Jump to #R$FC18 if the token isn't for the shoe.
 N $FC12 Print "#STR$E486,$08($b==$FF)".
   $FC12,$03 #REGhl=#R$E486.
   $FC15,$03 Jump to #R$F03A.
 N $FC18 Was the player trying to wear ... the jewels?
 @ $FC18 label=Wear_CheckJewels
   $FC18,$06 Call #R$C37F with #R$E9DB.
-  $FC1E,$03 Jump to #R$F06F if #REGa is equal to #N$10.
+  $FC1E,$03 Jump to #R$F06F if the token is for the jewels.
   $FC21,$03 Jump to #R$F092.
 
 c $FC24 Action: Light/ Strike
@@ -5229,33 +5220,39 @@ c $FC98 Action: Move
 @ $FC98 label=Action_Move
   $FC98,$03 Call #R$C47B.
   $FC9B,$01 Return if the direct object is malformed.
-  $FC9C,$03 #REGhl=#R$EAD8.
-  $FC9F,$03 Call #R$C37F.
-  $FCA2,$02 Jump to #R$FCAA if #REGa is not equal to #N$52.
+N $FC9C Is the player asking to move the stone?
+  $FC9C,$06 Call #R$C37F with #R$EAD8.
+  $FCA2,$02 Jump to #R$FCAA if the token isn't for the stone.
+N $FCA4 The player is asking to move the stone.
 N $FCA4 Print "#STR$E305,$08($b==$FF)".
   $FCA4,$03 #REGhl=#R$E305.
   $FCA7,$03 Jump to #R$F03A.
-  $FCAA,$03 #REGhl=#R$EADD.
-  $FCAD,$03 Call #R$C37F.
-  $FCB0,$02 Jump to #R$FCCA if #REGa is not equal to #N$52.
-  $FCB2,$05 Call #R$C35F with #ITEM$4A.
-  $FCB7,$03 Jump to #R$F079 if #REGa is equal to #N$4A.
-  $FCBA,$02 #REGa=#N$4A.
-  $FCBC,$03 Call #R$C3F1.
-  $FCBF,$02 #REGa=#N$3B.
-  $FCC1,$03 Call #R$C3F1.
+N $FCAA Is the player asking to move the stone with the crowbar?
+@ $FCAA label=Move_StoneWithCrowbar
+  $FCAA,$06 Call #R$C37F with #R$EADD.
+  $FCB0,$02 Jump to #R$FCCA if the token isn't asking to move the stone with
+. the crowbar.
+N $FCB2 The player is asking to move the stone with the crowbar.
+N $FCB2 But ... have they done this already?
+  $FCB2,$08 Jump to #R$F079 if #R$C35F reports that #ITEM$4A is in the same
+. room as the player.
+N $FCBA Handle moving the stone with the crowbar.
+N $FCBA This brings items #ITEM$4A and #ITEM$3B into the current room.
+  $FCBA,$05 Call #R$C3F1 with item #N$4A: #ITEM$4A.
+  $FCBF,$05 Call #R$C3F1 with item #N$3B: #ITEM$3B.
 N $FCC4 Print "#STR$E508,$08($b==$FF)".
   $FCC4,$03 #REGhl=#R$E508.
   $FCC7,$03 Jump to #R$F03A.
+N $FCCA Everything else isn't valid.
+@ $FCCA label=Move_Invalid
   $FCCA,$03 Jump to #R$F074.
 
 c $FCCD Action: Unlock
 @ $FCCD label=Action_Unlock
   $FCCD,$03 Call #R$C47B.
   $FCD0,$01 Return if the direct object is malformed.
-  $FCD1,$03 #REGhl=#R$EAE6.
-  $FCD4,$03 Call #R$C37F.
-  $FCD7,$02 Jump to #R$FCFF if #REGa is not equal to #N$3B.
+  $FCD1,$06 Call #R$C37F with #R$EAE6.
+  $FCD7,$02 Jump to #R$FCFF if the token isn't for the .
   $FCD9,$08 Jump to #R$F06F if *#R$BCCB is room #N$6A: "#ROOM$6A".
   $FCE1,$05 Call #R$C35F with #ITEM$2E.
   $FCE6,$03 Jump to #R$F079 if #ITEM$2E isn't in the current room.
@@ -5291,27 +5288,24 @@ L $FD1E,$01,$03,$02
   $FD25,$03 Call #R$EF54.
   $FD28,$01 Return.
 
-  $FD29,$03 #REGhl=#R$EAEC.
-  $FD2C,$03 Call #R$C37F.
-  $FD2F,$02 Jump to #R$FD3F if #REGa is not equal to #N$02.
+  $FD29,$06 Call #R$C37F with #R$EAEC.
+  $FD2F,$02 Jump to #R$FD3F if the token isn't for the .
   $FD31,$08 Jump to #R$F079 if *#R$BCCB is not room #N$04: "#ROOM$04".
   $FD39,$02 #REGa=#N$6B.
   $FD3B,$03 Call #R$EF54.
   $FD3E,$01 Return.
-  $FD3F,$03 #REGhl=#R$EAF5.
-  $FD42,$03 Call #R$C37F.
-  $FD45,$02 Jump to #R$FD54 if #REGa is not equal to #N$6B.
+
+  $FD3F,$06 Call #R$C37F with #R$EAF5.
+  $FD45,$02 Jump to #R$FD54 if the token isn't for the .
   $FD47,$07 Jump to #R$FD67 if *#R$BCCB is not room #N$6B: "#ROOM$6B".
   $FD4E,$02 #REGa=#N$04.
   $FD50,$03 Call #R$EF54.
   $FD53,$01 Return.
 
-  $FD54,$03 #REGhl=#R$EAFE.
-  $FD57,$03 Call #R$C37F.
-  $FD5A,$02 Jump to #R$FD67 if #REGa is equal to #N$04.
-  $FD5C,$03 #REGhl=#R$EB07.
-  $FD5F,$03 Call #R$C37F.
-  $FD62,$02 Jump to #R$FD67 if #REGa is equal to #N$04.
+  $FD54,$06 Call #R$C37F with #R$EAFE.
+  $FD5A,$02 Jump to #R$FD67 if the token is for the .
+  $FD5C,$06 Call #R$C37F with #R$EB07.
+  $FD62,$02 Jump to #R$FD67 if the token is for the .
   $FD64,$03 Jump to #R$F074.
   $FD67,$02 #REGa=#N$02.
   $FD69,$03 Call #R$EF54.

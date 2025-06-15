@@ -3518,7 +3518,7 @@ c$BAA4 CALL $BA96    ; Call #R$BA96.
 ; Used by the routines at #R$BB59, #R$BB94, #R$BFEE, #R$BFF5, #R$BFFC, #R$C003,
 ; #R$C058, #R$C1FF, #R$C26A, #R$C315, #R$C32A, #R$C556, #R$C579, #R$EDD7,
 ; #R$EDF2, #R$EE74, #R$EE9B, #R$EEA9, #R$EEBB, #R$EECD, #R$EEDF, #R$EEFC,
-; #R$EF32, #R$EF54, #R$F03A, #R$F09C, #R$F12E, #R$F246, #R$F8D9 and #R$FB37.
+; #R$EF32, #R$EF54, #R$F03A, #R$F09C, #R$F12E, #R$F246, #R$F8D9 and #R$FB16.
 ; .
 ; Shortcut print routine which prints a newline after it's done.
 @label=PrintStringAndNewline
@@ -4273,10 +4273,10 @@ g$BC81 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BC89 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $BC91 DEFB $00,$00,$00,$00,$00,$00,$00
 
-; Match Counter
+; Number Of Items In The Players Inventory
 ;
-; The duration the match burns for before burning you.
-@label=CounterMatch
+; The number of items the player is currently holding.
+@label=Count_InventoryItems
 g$BC98 DEFB $00
 
 ; Data block at BC99
@@ -5544,6 +5544,9 @@ c$C37F EX DE,HL      ; Switch the phrase token pointer to #REGde.
 ; Used by the routines at #R$C47B, #R$C490, #R$C4B7 and #R$FB16.
 ; .
 ; Count how many tokens in the user input refer to game items.
+;
+; A The number of references to items in the user input tokens
+; F
 @label=Parser_CountItems
 c$C3AE LD HL,$BD66   ; Set a pointer to #R$BD66 in #REGhl.
  $C3B1 LD B,$0A      ; Set a token count in #REGb of #N$0A which is the total length of
@@ -5613,7 +5616,7 @@ c$C3E4 CALL $C3D0    ; Call #R$C3D0.
 ; Handler: Destroy Item/ Event
 ;
 ; Used by the routines at #R$EE74, #R$EEA9, #R$EEBB, #R$EECD, #R$EEFC, #R$EF32,
-; #R$F263, #R$F4D4, #R$F7D6, #R$F851, #R$F999 and #R$FB37.
+; #R$F263, #R$F4D4, #R$F7D6, #R$F851, #R$F999 and #R$FB16.
 ; .
 ; Updates a given item/ event ID so it's then "inactive" (has a location
 ; ID of #N$00).
@@ -5704,7 +5707,7 @@ c$C412 BIT 7,B       ; {Jump to #R$C41D if this is a normal object/ event.
 ; Transform Item
 ;
 ; Used by the routines at #R$F19D, #R$F263, #R$F4D4, #R$F7D6, #R$F8D9, #R$F9E4,
-; #R$FA3C, #R$FAA8, #R$FB37, #R$FBA8, #R$FBD5, #R$FC24 and #R$FCCD.
+; #R$FA3C, #R$FAA8, #R$FB16, #R$FBA8, #R$FBD5, #R$FC24 and #R$FCCD.
 ; .
 ; Rather than use item properties, the game just has separate objects
 ; that don't exist until an action is performed.
@@ -8562,7 +8565,7 @@ g$E9CA DEFB $04      ; #TOKEN(#PEEK(#PC)).
  $E9D9 DEFB $23      ; #TOKEN(#PEEK(#PC)).
  $E9DA DEFB $FE      ; #TOKEN(#PEEK(#PC)).
 ; Matches e.g. "jewels", "jewels of babylon".
-@label=PhraseTokens_Jewel
+@label=PhraseTokens_Jewels
  $E9DB DEFB $0F      ; #TOKEN(#PEEK(#PC)).
  $E9DC DEFB $FD      ; #TOKEN(#PEEK(#PC)).
  $E9DD DEFB $0F      ; #TOKEN(#PEEK(#PC)).
@@ -10839,6 +10842,8 @@ c$EF32 LD HL,$D8D8   ; #REGhl=#R$D8D8.
 ;
 ; Used by the routines at #R$F16B, #R$F481, #R$F946, #R$FC61, #R$FD02 and
 ; #R$FD82.
+;
+; A
 c$EF54 LD HL,$BC6F   ; #REGhl=#R$BC6F.
  $EF57 BIT 0,(HL)    ; {Jump to #R$EF7B if bit 0 of *#REGhl is unset.
  $EF59 JR Z,$EF7B    ; }
@@ -10957,7 +10962,7 @@ c$F03A CALL $BAB1    ; Call #R$BAB1.
 
 ; Pause, Print String And Scroll Alias
 ;
-; Used by the routines at #R$F09C, #R$F8D9 and #R$FB37.
+; Used by the routines at #R$F09C, #R$F8D9 and #R$FB16.
 @label=PausePrintStringAndScroll_Alias
 c$F03E CALL $C579    ; Call #R$C579.
  $F041 RET           ; Return.
@@ -11076,8 +11081,8 @@ c$F06F LD HL,$BF00   ; #REGhl=#R$BF00.
 
 ; Response: "Please Rephrase That"
 ;
-; Used by the routines at #R$F4D4, #R$FB16, #R$FB37, #R$FBA8, #R$FBD5, #R$FC24,
-; #R$FC61, #R$FC98, #R$FD02 and #R$FD6D.
+; Used by the routines at #R$F4D4, #R$FB16, #R$FBA8, #R$FBD5, #R$FC24, #R$FC61,
+; #R$FC98, #R$FD02 and #R$FD6D.
 ;
 ; .
 ;
@@ -11276,8 +11281,8 @@ c$F09C CALL $C470    ; Call #R$C470.
 c$F12E CALL $C470    ; Call #R$C470.
 ; The "INVENTORY" command can only be called on its own.
  $F131 RET C         ; Return if there's any token set in #R$BD67.
- $F132 LD A,($BC98)  ; {Jump to #R$F04C if *#R$BC98 is zero. TODO re-evaluate
- $F135 AND A         ; this.
+ $F132 LD A,($BC98)  ; {Jump to #R$F04C if *#R$BC98 is zero (the player isn't holding any
+ $F135 AND A         ; items).
  $F136 JP Z,$F04C    ; }
 ; Clear the screen and display the players inventory.
  $F139 CALL $BA6D    ; Call #R$BA6D.
@@ -11379,9 +11384,9 @@ c$F19D CALL $C47B    ; Call #R$C47B.
  $F1A0 RET C         ; Return if the direct object is malformed.
  $F1A1 CP $01        ; {Jump to #R$F060 if #REGa is not equal to #N$01.
  $F1A3 JP NZ,$F060   ; }
- $F1A6 LD HL,$E9CA   ; #REGhl=#R$E9CA.
- $F1A9 CALL $C37F    ; Call #R$C37F.
- $F1AC JR NZ,$F1C4   ; Jump to #R$F1C4 if #REGa is not equal to #N$01.
+ $F1A6 LD HL,$E9CA   ; {Call #R$C37F with #R$E9CA.
+ $F1A9 CALL $C37F    ; }
+ $F1AC JR NZ,$F1C4   ; Jump to #R$F1C4 if the token isn't for the bottle.
  $F1AE LD HL,$E87A   ; #REGhl=#R$E87A.
  $F1B1 CALL $C401    ; Call #R$C401.
  $F1B4 CP $0B        ; {Jump to #R$F1C4 if #REGa is not equal to #N$0B.
@@ -11391,9 +11396,9 @@ c$F19D CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$DA73,$08($b==$FF)".
  $F1BE LD HL,$DA73   ; #REGhl=#R$DA73.
  $F1C1 JP $F03A      ; Jump to #R$F03A.
-*$F1C4 LD HL,$E9CC   ; #REGhl=#R$E9CC.
- $F1C7 CALL $C37F    ; Call #R$C37F.
- $F1CA JR NZ,$F1DF   ; Jump to #R$F1DF if #REGa is not equal to #N$0B.
+*$F1C4 LD HL,$E9CC   ; {Call #R$C37F with #R$E9CC.
+ $F1C7 CALL $C37F    ; }
+ $F1CA JR NZ,$F1DF   ; Jump to #R$F1DF if the token isn't for the fish.
  $F1CC LD A,$1B      ; {Call #R$C35F with #ITEM$1B.
  $F1CE CALL $C35F    ; }
  $F1D1 JR NZ,$F1DF   ; Jump to #R$F1DF if #ITEM$1B isn't in the current room.
@@ -11402,41 +11407,42 @@ c$F19D CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$DA85,$08($b==$FF)".
  $F1D9 LD HL,$DA85   ; #REGhl=#R$DA85.
  $F1DC JP $F03A      ; Jump to #R$F03A.
-*$F1DF LD HL,$E9D1   ; #REGhl=#R$E9D1.
- $F1E2 CALL $C37F    ; Call #R$C37F.
- $F1E5 JR NZ,$F1ED   ; Jump to #R$F1ED if #REGa is not equal to #N$1B.
+*$F1DF LD HL,$E9D1   ; {Call #R$C37F with #R$E9D1.
+ $F1E2 CALL $C37F    ; }
+ $F1E5 JR NZ,$F1ED   ; Jump to #R$F1ED if the token isn't for the watch.
 ; Print "#STR$DA99,$08($b==$FF)".
  $F1E7 LD HL,$DA99   ; #REGhl=#R$DA99.
  $F1EA JP $F03A      ; Jump to #R$F03A.
-*$F1ED LD HL,$E9D3   ; #REGhl=#R$E9D3.
- $F1F0 CALL $C37F    ; Call #R$C37F.
- $F1F3 JR NZ,$F1FB   ; Jump to #R$F1FB if #REGa is not equal to #N$1B.
+*$F1ED LD HL,$E9D3   ; {Call #R$C37F with #R$E9D3.
+ $F1F0 CALL $C37F    ; }
+ $F1F3 JR NZ,$F1FB   ; Jump to #R$F1FB if the token isn't for the shoe.
  $F1F5 LD HL,$DAAD   ; #REGhl=#R$DAAD.
  $F1F8 JP $F03A      ; Jump to #R$F03A.
-*$F1FB LD HL,$E9D5   ; #REGhl=#R$E9D5.
- $F1FE CALL $C37F    ; Call #R$C37F.
- $F201 JR NZ,$F209   ; Jump to #R$F209 if #REGa is not equal to #N$1B.
+*$F1FB LD HL,$E9D5   ; {Call #R$C37F with #R$E9D5.
+ $F1FE CALL $C37F    ; }
+ $F201 JR NZ,$F209   ; Jump to #R$F209 if the token isn't for the rod.
 ; Print "#STR$DADA,$08($b==$FF)".
  $F203 LD HL,$DADA   ; #REGhl=#R$DADA.
  $F206 JP $F03A      ; Jump to #R$F03A.
-*$F209 LD HL,$E9D7   ; #REGhl=#R$E9D7.
- $F20C CALL $C37F    ; Call #R$C37F.
- $F20F JR NZ,$F217   ; Jump to #R$F217 if #REGa is not equal to #N$1B.
+*$F209 LD HL,$E9D7   ; {Call #R$C37F with #R$E9D7.
+ $F20C CALL $C37F    ; }
+ $F20F JR NZ,$F217   ; Jump to #R$F217 if the token isn't for the fruit.
 ; Print "#STR$DAFB,$08($b==$FF)".
  $F211 LD HL,$DAFB   ; #REGhl=#R$DAFB.
  $F214 JP $F03A      ; Jump to #R$F03A.
-*$F217 LD HL,$E9D9   ; #REGhl=#R$E9D9.
- $F21A CALL $C37F    ; Call #R$C37F.
- $F21D JR NZ,$F225   ; Jump to #R$F225 if #REGa is not equal to #N$1B.
+*$F217 LD HL,$E9D9   ; {Call #R$C37F with #R$E9D9.
+ $F21A CALL $C37F    ; }
+ $F21D JR NZ,$F225   ; Jump to #R$F225 if the token isn't for the bridge.
 ; Print "#STR$DB0F,$08($b==$FF)".
  $F21F LD HL,$DB0F   ; #REGhl=#R$DB0F.
  $F222 JP $F03A      ; Jump to #R$F03A.
-*$F225 LD HL,$E9DB   ; #REGhl=#R$E9DB.
- $F228 CALL $C37F    ; Call #R$C37F.
- $F22B JR NZ,$F233   ; Jump to #R$F233 if #REGa is not equal to #N$1B.
+*$F225 LD HL,$E9DB   ; {Call #R$C37F with #R$E9DB.
+ $F228 CALL $C37F    ; }
+ $F22B JR NZ,$F233   ; Jump to #R$F233 if the token isn't for the jewels.
 ; Print "#STR$DB37,$08($b==$FF)".
  $F22D LD HL,$DB37   ; #REGhl=#R$DB37.
  $F230 JP $F03A      ; Jump to #R$F03A.
+@label=Examine_Invalid
 *$F233 JP $F065      ; Jump to #R$F065.
 
 ; Action: Load
@@ -11484,7 +11490,10 @@ c$F246 CALL $C470    ; Call #R$C470.
 @label=Action_Take
 c$F263 CALL $C47B    ; Call #R$C47B.
  $F266 RET C         ; Return if the direct object is malformed.
+; Start by calling the chain of items to check...
  $F267 JP $F2A8      ; Jump to #R$F2A8.
+; Check if the player is holding the requested item?
+@label=Take_IsPlayerHoldingItem
 *$F26A CALL $C3E4    ; Call #R$C3E4.
  $F26D JR NZ,$F28D   ; Jump to #R$F28D if #REGa is not equal to #N$59.
  $F26F POP HL        ; Restore #REGhl from the stack.
@@ -11510,29 +11519,43 @@ c$F263 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$BF35,$08($b==$FF)".
  $F295 LD HL,$BF35   ; #REGhl=#R$BF35.
  $F298 JP $F03A      ; Jump to #R$F03A.
- $F29B DEFB $1D      ;
-*$F29C LD C,$01      ; #REGc=#N$01.
+; Table: All the items in the game which are plural.
+; .
+; Which is ... the jewels.
+@label=Table_ItemsWhichArePlural
+ $F29B DEFB $1D      ; Item #N(#PEEK(#PC)): #ITEM(#PEEK(#PC)).
+; The player can take the item.
+@label=TakeItem
+*$F29C LD C,$01      ; Load #REGc with #N$01 which indicates the item will be in the
+                     ; players inventory.
  $F29E CALL $C412    ; Call #R$C412.
- $F2A1 LD HL,$BC98   ; #REGhl=#R$BC98.
- $F2A4 INC (HL)      ; Increment *#REGhl by one.
+ $F2A1 LD HL,$BC98   ; {Increment *#R$BC98 by one.
+ $F2A4 INC (HL)      ; }
  $F2A5 JP $F06A      ; Jump to #R$F06A.
-*$F2A8 LD HL,$E9E7   ; #REGhl=#R$E9E7.
- $F2AB CALL $C37F    ; Call #R$C37F.
- $F2AE JR NZ,$F2BC   ; Jump to #R$F2BC if *#REGhl is not equal to #N$01.
+; Is the player asking to take the bottle of rum?
+@label=Validate_Take_BottleOfRum
+*$F2A8 LD HL,$E9E7   ; {Call #R$C37F with #R$E9E7.
+ $F2AB CALL $C37F    ; }
+ $F2AE JR NZ,$F2BC   ; Jump to #R$F2BC if the token isn't for the bottle of
+                     ; rum.
  $F2B0 LD HL,$E87A   ; #REGhl=#R$E87A.
  $F2B3 CALL $C401    ; Call #R$C401.
  $F2B6 CALL $F26A    ; Call #R$F26A.
  $F2B9 JP $F29C      ; Jump to #R$F29C.
-*$F2BC LD HL,$E9CC   ; #REGhl=#R$E9CC.
- $F2BF CALL $C37F    ; Call #R$C37F.
- $F2C2 JR NZ,$F2D0   ; Jump to #R$F2D0 if *#REGhl is not equal to #N$01.
+; Is the player asking to take the fish?
+@label=Validate_Take_Fish
+*$F2BC LD HL,$E9CC   ; {Call #R$C37F with #R$E9CC.
+ $F2BF CALL $C37F    ; }
+ $F2C2 JR NZ,$F2D0   ; Jump to #R$F2D0 if the token isn't for the fish.
  $F2C4 LD HL,$E895   ; #REGhl=#R$E895.
  $F2C7 CALL $C401    ; Call #R$C401.
  $F2CA CALL $F26A    ; Call #R$F26A.
  $F2CD JP $F29C      ; Jump to #R$F29C.
-*$F2D0 LD HL,$E9D1   ; #REGhl=#R$E9D1.
- $F2D3 CALL $C37F    ; Call #R$C37F.
- $F2D6 JR NZ,$F2ED   ; Jump to #R$F2ED if *#REGhl is not equal to #N$01.
+; Is the player asking to take the watch?
+@label=Validate_Take_Watch
+*$F2D0 LD HL,$E9D1   ; {Call #R$C37F with #R$E9D1.
+ $F2D3 CALL $C37F    ; }
+ $F2D6 JR NZ,$F2ED   ; Jump to #R$F2ED if the token isn't for the watch.
  $F2D8 LD A,$19      ; {Call #R$C35F with #ITEM$19.
  $F2DA CALL $C35F    ; }
  $F2DD JR NZ,$F2E5   ; Jump to #R$F2E5 if #ITEM$19 isn't in the current room.
@@ -11542,21 +11565,27 @@ c$F263 CALL $C47B    ; Call #R$C47B.
 *$F2E5 LD A,$17      ; {Call #R$F26A with #ITEM$17.
  $F2E7 CALL $F26A    ; }
  $F2EA JP $F29C      ; Jump to #R$F29C.
-*$F2ED LD HL,$E9D3   ; #REGhl=#R$E9D3.
- $F2F0 CALL $C37F    ; Call #R$C37F.
- $F2F3 JR NZ,$F2FD   ; Jump to #R$F2FD if *#REGhl is not equal to #N$17.
+; Is the player asking to take the shoe?
+@label=Validate_Take_Shoe
+*$F2ED LD HL,$E9D3   ; {Call #R$C37F with #R$E9D3.
+ $F2F0 CALL $C37F    ; }
+ $F2F3 JR NZ,$F2FD   ; Jump to #R$F2FD if the token isn't for the shoe.
  $F2F5 LD A,$15      ; {Call #R$F26A with #ITEM$15.
  $F2F7 CALL $F26A    ; }
  $F2FA JP $F29C      ; Jump to #R$F29C.
-*$F2FD LD HL,$E9D7   ; #REGhl=#R$E9D7.
- $F300 CALL $C37F    ; Call #R$C37F.
- $F303 JR NZ,$F30D   ; Jump to #R$F30D if *#REGhl is not equal to #N$15.
+; Is the player asking to take the fruit?
+@label=Validate_Take_Fruit
+*$F2FD LD HL,$E9D7   ; {Call #R$C37F with #R$E9D7.
+ $F300 CALL $C37F    ; }
+ $F303 JR NZ,$F30D   ; Jump to #R$F30D if the token isn't for the fruit.
  $F305 LD A,$0E      ; {Call #R$F26A with #ITEM$0E.
  $F307 CALL $F26A    ; }
  $F30A JP $F29C      ; Jump to #R$F29C.
-*$F30D LD HL,$E9D5   ; #REGhl=#R$E9D5.
- $F310 CALL $C37F    ; Call #R$C37F.
- $F313 JR NZ,$F347   ; Jump to #R$F347 if *#REGhl is not equal to #N$0E.
+; Is the player asking to take the rod?
+@label=Validate_Take_Rod
+*$F30D LD HL,$E9D5   ; {Call #R$C37F with #R$E9D5.
+ $F310 CALL $C37F    ; }
+ $F313 JR NZ,$F347   ; Jump to #R$F347 if the token isn't for the rod.
  $F315 LD A,$08      ; {Call #R$F26A with #ITEM$08.
  $F317 CALL $F26A    ; }
  $F31A LD A,B        ; #REGa=#REGb.
@@ -11578,22 +11607,28 @@ c$F263 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$DB7C,$08($b==$FF)".
  $F341 LD HL,$DB7C   ; #REGhl=#R$DB7C.
  $F344 JP $F03A      ; Jump to #R$F03A.
-*$F347 LD HL,$E9DB   ; #REGhl=#R$E9DB.
- $F34A CALL $C37F    ; Call #R$C37F.
- $F34D JR NZ,$F357   ; Jump to #R$F357 if *#REGhl is not equal to #N$08.
+; Is the player asking to take the jewels?
+@label=Validate_Take_Jewels
+*$F347 LD HL,$E9DB   ; {Call #R$C37F with #R$E9DB.
+ $F34A CALL $C37F    ; }
+ $F34D JR NZ,$F357   ; Jump to #R$F357 if the token isn't for the jewels.
  $F34F LD A,$1D      ; {Call #R$F26A with #ITEM$1D.
  $F351 CALL $F26A    ; }
  $F354 JP $F29C      ; Jump to #R$F29C.
-*$F357 LD HL,$E9E1   ; #REGhl=#R$E9E1.
- $F35A CALL $C37F    ; Call #R$C37F.
- $F35D JR NZ,$F36B   ; Jump to #R$F36B if *#REGhl is not equal to #N$1D.
+; Is the player asking to take the match?
+@label=Validate_Take_Match
+*$F357 LD HL,$E9E1   ; {Call #R$C37F with #R$E9E1.
+ $F35A CALL $C37F    ; }
+ $F35D JR NZ,$F36B   ; Jump to #R$F36B if the token isn't for the match.
  $F35F LD HL,$E86E   ; #REGhl=#R$E86E.
  $F362 CALL $C401    ; Call #R$C401.
  $F365 CALL $F26A    ; Call #R$F26A.
  $F368 JP $F29C      ; Jump to #R$F29C.
-*$F36B LD HL,$E9E3   ; #REGhl=#R$E9E3.
- $F36E CALL $C37F    ; Call #R$C37F.
- $F371 JR NZ,$F398   ; Jump to #R$F398 if *#REGhl is not equal to #N$1D.
+; Is the player asking to take the plank?
+@label=Validate_Take_Plank
+*$F36B LD HL,$E9E3   ; {Call #R$C37F with #R$E9E3.
+ $F36E CALL $C37F    ; }
+ $F371 JR NZ,$F398   ; Jump to #R$F398 if the token isn't for the plank.
  $F373 LD HL,$E871   ; #REGhl=#R$E871.
  $F376 CALL $C401    ; Call #R$C401.
  $F379 CALL $F26A    ; Call #R$F26A.
@@ -11609,15 +11644,19 @@ c$F263 CALL $C47B    ; Call #R$C47B.
  $F38F LD ($ED75),A  ;
  $F392 LD ($ED80),A  ; }
  $F395 JP $F29C      ; Jump to #R$F29C.
-*$F398 LD HL,$E9E5   ; #REGhl=#R$E9E5.
- $F39B CALL $C37F    ; Call #R$C37F.
- $F39E JR NZ,$F3A8   ; Jump to #R$F3A8 if #REGa is not equal to #N$04.
+; Is the player asking to take the coconut?
+@label=Validate_Take_Coconut
+*$F398 LD HL,$E9E5   ; {Call #R$C37F with #R$E9E5.
+ $F39B CALL $C37F    ; }
+ $F39E JR NZ,$F3A8   ; Jump to #R$F3A8 if the token isn't for the coconut.
  $F3A0 LD A,$07      ; {Call #R$F26A with #ITEM$07.
  $F3A2 CALL $F26A    ; }
  $F3A5 JP $F29C      ; Jump to #R$F29C.
-*$F3A8 LD HL,$E9EF   ; #REGhl=#R$E9EF.
- $F3AB CALL $C37F    ; Call #R$C37F.
- $F3AE JR NZ,$F3D5   ; Jump to #R$F3D5 if #REGa is not equal to #N$07.
+; Is the player asking to take the gun?
+@label=Validate_Take_Gun
+*$F3A8 LD HL,$E9EF   ; {Call #R$C37F with #R$E9EF.
+ $F3AB CALL $C37F    ; }
+ $F3AE JR NZ,$F3D5   ; Jump to #R$F3D5 if the token isn't for the gun.
  $F3B0 LD A,$0F      ; {Call #R$F26A with #ITEM$0F.
  $F3B2 CALL $F26A    ; }
  $F3B5 LD A,$27      ; {Call #R$C35F with #ITEM$27.
@@ -11636,16 +11675,21 @@ c$F263 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$DBCC,$08($b==$FF)".
  $F3CF LD HL,$DBCC   ; #REGhl=#R$DBCC.
  $F3D2 JP $F03A      ; Jump to #R$F03A.
-*$F3D5 LD HL,$E9F1   ; #REGhl=#R$E9F1.
- $F3D8 CALL $C37F    ; Call #R$C37F.
- $F3DB JR NZ,$F3E9   ; Jump to #R$F3E9 if #REGa is not equal to #N$0F.
+; Is the player asking to take the eyepatch?
+@label=Validate_Take_Eyepatch
+*$F3D5 LD HL,$E9F1   ; {Call #R$C37F with #R$E9F1.
+ $F3D8 CALL $C37F    ; }
+ $F3DB JR NZ,$F3E9   ; Jump to #R$F3E9 if the token isn't for the eyepatch.
  $F3DD LD HL,$E885   ; #REGhl=#R$E885.
  $F3E0 CALL $C401    ; Call #R$C401.
  $F3E3 CALL $F26A    ; Call #R$F26A.
  $F3E6 JP $F29C      ; Jump to #R$F29C.
-*$F3E9 LD HL,$E9F3   ; #REGhl=#R$E9F3.
- $F3EC CALL $C37F    ; Call #R$C37F.
- $F3EF JR NZ,$F403   ; Jump to #R$F403 if #REGa is not equal to #N$0F.
+; Is the player asking to take the keg of gunpowder?
+@label=Validate_Take_KegOfGunpowder
+*$F3E9 LD HL,$E9F3   ; {Call #R$C37F with #R$E9F3.
+ $F3EC CALL $C37F    ; }
+ $F3EF JR NZ,$F403   ; Jump to #R$F403 if the token isn't for the keg of
+                     ; gunpowder.
  $F3F1 LD HL,$E888   ; #REGhl=#R$E888.
  $F3F4 CALL $C401    ; Call #R$C401.
  $F3F7 CALL $F26A    ; Call #R$F26A.
@@ -11653,33 +11697,43 @@ c$F263 CALL $C47B    ; Call #R$C47B.
  $F3FB CP $12        ; Compare #REGa with #N$12.
  $F3FD JP Z,$F29C    ; Jump to #R$F29C if #REGa is equal to #N$12.
  $F400 JP $F06F      ; Jump to #R$F06F.
-*$F403 LD HL,$E9FB   ; #REGhl=#R$E9FB.
- $F406 CALL $C37F    ; Call #R$C37F.
- $F409 JR NZ,$F413   ; Jump to #R$F413 if #REGa is not equal to #N$12.
+; Is the player asking to take the sextant?
+@label=Validate_Take_Sextant
+*$F403 LD HL,$E9FB   ; {Call #R$C37F with #R$E9FB.
+ $F406 CALL $C37F    ; }
+ $F409 JR NZ,$F413   ; Jump to #R$F413 if the token isn't for the sextant.
  $F40B LD A,$16      ; {Call #R$F26A with #ITEM$16.
  $F40D CALL $F26A    ; }
  $F410 JP $F29C      ; Jump to #R$F29C.
-*$F413 LD HL,$E9FD   ; #REGhl=#R$E9FD.
- $F416 CALL $C37F    ; Call #R$C37F.
- $F419 JR NZ,$F423   ; Jump to #R$F423 if #REGa is not equal to #N$16.
+; Is the player asking to take the crowbar?
+@label=Validate_Take_Crowbar
+*$F413 LD HL,$E9FD   ; {Call #R$C37F with #R$E9FD.
+ $F416 CALL $C37F    ; }
+ $F419 JR NZ,$F423   ; Jump to #R$F423 if the token isn't for the crowbar.
  $F41B LD A,$1E      ; {Call #R$F26A with #ITEM$1E.
  $F41D CALL $F26A    ; }
  $F420 JP $F29C      ; Jump to #R$F29C.
-*$F423 LD HL,$E9FF   ; #REGhl=#R$E9FF.
- $F426 CALL $C37F    ; Call #R$C37F.
- $F429 JR NZ,$F433   ; Jump to #R$F433 if #REGa is not equal to #N$1E.
+; Is the player asking to take the key?
+@label=Validate_Take_Key
+*$F423 LD HL,$E9FF   ; {Call #R$C37F with #R$E9FF.
+ $F426 CALL $C37F    ; }
+ $F429 JR NZ,$F433   ; Jump to #R$F433 if the token isn't for the key.
  $F42B LD A,$1F      ; {Call #R$F26A with #ITEM$1F.
  $F42D CALL $F26A    ; }
  $F430 JP $F29C      ; Jump to #R$F29C.
-*$F433 LD HL,$EA01   ; #REGhl=#R$EA01.
- $F436 CALL $C37F    ; Call #R$C37F.
- $F439 JR NZ,$F443   ; Jump to #R$F443 if #REGa is not equal to #N$1F.
+; Is the player asking to take the skull?
+@label=Validate_Take_Skull
+*$F433 LD HL,$EA01   ; {Call #R$C37F with #R$EA01.
+ $F436 CALL $C37F    ; }
+ $F439 JR NZ,$F443   ; Jump to #R$F443 if the token isn't for the skull.
  $F43B LD A,$20      ; {Call #R$F26A with #ITEM$20.
  $F43D CALL $F26A    ; }
  $F440 JP $F29C      ; Jump to #R$F29C.
-*$F443 LD HL,$EA06   ; #REGhl=#R$EA06.
- $F446 CALL $C37F    ; Call #R$C37F.
- $F449 JR NZ,$F45D   ; Jump to #R$F45D if #REGa is not equal to #N$20.
+; Is the player asking to take the spear?
+@label=Validate_Take_Spear
+*$F443 LD HL,$EA06   ; {Call #R$C37F with #R$EA06.
+ $F446 CALL $C37F    ; }
+ $F449 JR NZ,$F45D   ; Jump to #R$F45D if the token isn't for the spear.
  $F44B LD HL,$E8A0   ; #REGhl=#R$E8A0.
  $F44E CALL $C401    ; Call #R$C401.
  $F451 CALL $F26A    ; Call #R$F26A.
@@ -11687,9 +11741,11 @@ c$F263 CALL $C47B    ; Call #R$C47B.
  $F455 CP $1A        ; Compare #REGa with #N$1A.
  $F457 JP Z,$F29C    ; Jump to #R$F29C if #REGa is equal to #N$1A.
  $F45A JP $F06F      ; Jump to #R$F06F.
-*$F45D LD HL,$EA08   ; #REGhl=#R$EA08.
- $F460 CALL $C37F    ; Call #R$C37F.
- $F463 JR NZ,$F47E   ; Jump to #R$F47E if #REGa is not equal to #N$1A.
+; Is the player asking to take the parrot?
+@label=Validate_Take_Parrot
+*$F45D LD HL,$EA08   ; {Call #R$C37F with #R$EA08.
+ $F460 CALL $C37F    ; }
+ $F463 JR NZ,$F47E   ; Jump to #R$F47E if the token isn't for the parrot.
  $F465 LD HL,$E8BC   ; #REGhl=#R$E8BC.
  $F468 CALL $C401    ; Call #R$C401.
  $F46B CALL $F26A    ; Call #R$F26A.
@@ -11708,52 +11764,76 @@ c$F263 CALL $C47B    ; Call #R$C47B.
 @label=Action_Get
 c$F481 CALL $C47B    ; Call #R$C47B.
  $F484 RET C         ; Return if the direct object is malformed.
- $F485 LD HL,$EA0D   ; #REGhl=#R$EA0D.
- $F488 CALL $C37F    ; Call #R$C37F.
- $F48B JR NZ,$F4AC   ; Jump to #R$F4AC if #REGa is not equal to #N$28.
+; Confirm if the player intended to "GET INTO BOAT" (or similar).
+ $F485 LD HL,$EA0D   ; {Call #R$C37F with #R$EA0D.
+ $F488 CALL $C37F    ; }
+ $F48B JR NZ,$F4AC   ; Jump to #R$F4AC if the token isn't for getting into the
+                     ; boat.
 ; This entry point is used by the routine at #R$F946.
-*$F48D LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $F490 CP $04        ; {Jump to #R$F498 if #REGa is room #N$04: "#ROOM$04".
+; .
+; The player has typed any variation of wanting to get into the boat.
+@label=Validate_GetIntoBoat
+*$F48D LD A,($BCCB)  ; {Jump to #R$F498 if the *#R$BCCB is room #N$04: "#ROOM$04". So the
+ $F490 CP $04        ; player is already in the boat.
  $F492 JR Z,$F498    ; }
- $F494 CP $6B        ; {Jump to #R$F49E if #REGa is not room #N$6B: "#ROOM$6B".
- $F496 JR NZ,$F49E   ; }
+ $F494 CP $6B        ; {Jump to #R$F49E if the *#R$BCCB is not room #N$6B: "#ROOM$6B" (a
+ $F496 JR NZ,$F49E   ; room variation, but the player being in the boat).}
+; The player is definitely already in the boat, so tell them this.
+; .
 ; Print "#STR$DC21,$08($b==$FF)".
+@label=AlreadyInTheBoat
 *$F498 LD HL,$DC21   ; #REGhl=#R$DC21.
  $F49B JP $F03A      ; Jump to #R$F03A.
-*$F49E CP $03        ; {Jump to #R$F4A6 if #REGa is not equal to #N$03.
- $F4A0 JR NZ,$F4A6   ; }
+; The player can only get into the boat from room #N$03: "#ROOM$03".
+@label=Action_GetIntoBoat
+*$F49E CP $03        ; {Jump to #R$F4A6 if the *#R$BCCB is not room #N$03:
+ $F4A0 JR NZ,$F4A6   ; "#ROOM$03"}
  $F4A2 LD A,$04      ; #REGa=#N$04.
  $F4A4 JR $F4A8      ; Jump to #R$F4A8.
+@label=WhereIsTheBoat
 *$F4A6 LD A,$6B      ; #REGa=#N$6B.
 *$F4A8 CALL $EF54    ; Call #R$EF54.
  $F4AB RET           ; Return.
-*$F4AC LD HL,$EA1D   ; #REGhl=#R$EA1D.
- $F4AF CALL $C37F    ; Call #R$C37F.
- $F4B2 JR NZ,$F4D1   ; Jump to #R$F4D1 if #REGa is not equal to #N$6B.
+; Confirm if the player intended to "GET OUT OF BOAT" (or similar).
+@label=GetOutOfBoat_Check
+*$F4AC LD HL,$EA1D   ; {Call #R$C37F with #R$EA1D.
+ $F4AF CALL $C37F    ; }
+ $F4B2 JR NZ,$F4D1   ; Jump to #R$F4D1 if the token isn't for the getting out
+                     ; of the boat.
 ; This entry point is used by the routine at #R$F946.
-*$F4B4 LD A,($BCCB)  ; {Jump to #R$F4C1 if *#R$BCCB is not room #N$04:
+@label=IsPlayerInRowingBoat_1
+*$F4B4 LD A,($BCCB)  ; {Jump to #R$F4C1 if the *#R$BCCB is not room #N$04:
  $F4B7 CP $04        ; "#ROOM$04".
  $F4B9 JR NZ,$F4C1   ; }
  $F4BB LD A,$03      ; #REGa=#N$03.
  $F4BD CALL $EF54    ; Call #R$EF54.
  $F4C0 RET           ; Return.
-*$F4C1 CP $6B        ; {Jump to #R$F4CB if *#R$BCCB is not room #N$6B:
+; Also check the room variation, as the player is in the boat in both.
+@label=IsPlayerInRowingBoat_2
+*$F4C1 CP $6B        ; {Jump to #R$F4CB if the *#R$BCCB is not room #N$6B:
  $F4C3 JR NZ,$F4CB   ; "#ROOM$6B".}
  $F4C5 LD A,$06      ; #REGa=#N$06.
  $F4C7 CALL $EF54    ; Call #R$EF54.
  $F4CA RET           ; Return.
 ; Print "#STR$DC37,$08($b==$FF)".
+@label=NotInTheBoat
 *$F4CB LD HL,$DC37   ; #REGhl=#R$DC37.
  $F4CE JP $F03A      ; Jump to #R$F03A.
+; Pivot to "TAKE" as a synonym.
+@label=Synonym_Take
 *$F4D1 JP $F263      ; Jump to #R$F263.
 
 ; Action: Drop/ Throw
 @label=Action_DropThrow
 c$F4D4 CALL $C47B    ; Call #R$C47B.
  $F4D7 RET C         ; Return if the direct object is malformed.
+; Start by calling the chain of items to check...
  $F4D8 JR $F50B      ; Jump to #R$F50B.
+; Check if the player is holding the requested item?
+@label=DropThrow_IsPlayerHoldingItem
 *$F4DA CALL $C3E4    ; Call #R$C3E4.
- $F4DD JR Z,$F4FC    ; Jump to #R$F4FC if #REGa is equal to #N$06.
+ $F4DD JR Z,$F4FC    ; Jump to #R$F4FC if the player is holding the requested
+                     ; item.
 ; Print "#STR$BFAF,$08($b==$FF)".
  $F4DF LD HL,$BFAF   ; #REGhl=#R$BFAF.
  $F4E2 CALL $BAA4    ; Call #R$BAA4.
@@ -11766,76 +11846,106 @@ c$F4D4 CALL $C47B    ; Call #R$C47B.
  $F4F0 LD HL,$BF2B   ; #REGhl=#R$BF2B.
  $F4F3 JP $F03A      ; Jump to #R$F03A.
 ; Print "#STR$BF2F,$08($b==$FF)".
+@label=NotCarryingItem_Plural
 *$F4F6 LD HL,$BF2F   ; #REGhl=#R$BF2F.
  $F4F9 JP $F03A      ; Jump to #R$F03A.
-*$F4FC LD B,E        ; #REGb=#REGe.
- $F4FD LD A,($BCCB)  ; #REGa=*#R$BCCB.
- $F500 LD C,A        ; #REGc=#REGa.
+; The player has the item in their inventory so drop/ throw it.
+@label=DropItem
+*$F4FC LD B,E        ; Copy the item ID into #REGb.
+ $F4FD LD A,($BCCB)  ; {#REGc=*#R$BCCB.
+ $F500 LD C,A        ; }
+; Alter the items location from the players inventory to the current room
+; ID.
  $F501 CALL $C412    ; Call #R$C412.
- $F504 LD HL,$BC98   ; #REGhl=#R$BC98.
- $F507 DEC (HL)      ; Decrease *#REGhl by one.
+ $F504 LD HL,$BC98   ; {Decrease *#R$BC98 by one.
+ $F507 DEC (HL)      ; }
  $F508 JP $F06A      ; Jump to #R$F06A.
-*$F50B LD HL,$E9E7   ; #REGhl=#R$E9E7.
- $F50E CALL $C37F    ; Call #R$C37F.
- $F511 JR NZ,$F51C   ; Jump to #R$F51C if *#REGhl is not equal to #N$06.
+; Is the player asking to drop or throw the bottle of rum?
+@label=Validate_DropThrow_BottleRum
+*$F50B LD HL,$E9E7   ; {Call #R$C37F with #R$E9E7.
+ $F50E CALL $C37F    ; }
+ $F511 JR NZ,$F51C   ; Jump to #R$F51C if the token isn't for the bottle of
+                     ; rum.
  $F513 LD HL,$E87A   ; #REGhl=#R$E87A.
  $F516 CALL $C401    ; Call #R$C401.
  $F519 JP $F4DA      ; Jump to #R$F4DA.
-*$F51C LD HL,$E9CC   ; #REGhl=#R$E9CC.
- $F51F CALL $C37F    ; Call #R$C37F.
- $F522 JR NZ,$F52D   ; Jump to #R$F52D if *#REGhl is not equal to #N$06.
+; Is the player asking to drop or throw the fish?
+@label=Validate_DropThrow_Fish
+*$F51C LD HL,$E9CC   ; {Call #R$C37F with #R$E9CC.
+ $F51F CALL $C37F    ; }
+ $F522 JR NZ,$F52D   ; Jump to #R$F52D if the token isn't for the fish.
  $F524 LD HL,$E895   ; #REGhl=#R$E895.
  $F527 CALL $C401    ; Call #R$C401.
  $F52A JP $F4DA      ; Jump to #R$F4DA.
-*$F52D LD HL,$E9D1   ; #REGhl=#R$E9D1.
- $F530 CALL $C37F    ; Call #R$C37F.
- $F533 JR NZ,$F53A   ; Jump to #R$F53A if *#REGhl is not equal to #N$06.
+; Is the player asking to drop or throw the watch?
+@label=Validate_DropThrow_Watch
+*$F52D LD HL,$E9D1   ; {Call #R$C37F with #R$E9D1.
+ $F530 CALL $C37F    ; }
+ $F533 JR NZ,$F53A   ; Jump to #R$F53A if the token isn't for the watch.
  $F535 LD A,$17      ; #REGa=#N$17.
  $F537 JP $F4DA      ; Jump to #R$F4DA.
-*$F53A LD HL,$E9D3   ; #REGhl=#R$E9D3.
- $F53D CALL $C37F    ; Call #R$C37F.
- $F540 JR NZ,$F547   ; Jump to #R$F547 if *#REGhl is not equal to #N$17.
+; Is the player asking to drop or throw the shoe?
+@label=Validate_DropThrow_Shoe
+*$F53A LD HL,$E9D3   ; {Call #R$C37F with #R$E9D3.
+ $F53D CALL $C37F    ; }
+ $F540 JR NZ,$F547   ; Jump to #R$F547 if the token isn't for the shoe.
  $F542 LD A,$15      ; #REGa=#N$15.
  $F544 JP $F4DA      ; Jump to #R$F4DA.
-*$F547 LD HL,$E9D5   ; #REGhl=#R$E9D5.
- $F54A CALL $C37F    ; Call #R$C37F.
- $F54D JR NZ,$F554   ; Jump to #R$F554 if *#REGhl is not equal to #N$15.
+; Is the player asking to drop or throw the rod?
+@label=Validate_DropThrow_Rod
+*$F547 LD HL,$E9D5   ; {Call #R$C37F with #R$E9D5.
+ $F54A CALL $C37F    ; }
+ $F54D JR NZ,$F554   ; Jump to #R$F554 if the token isn't for the rod.
  $F54F LD A,$08      ; #REGa=#N$08.
  $F551 JP $F4DA      ; Jump to #R$F4DA.
-*$F554 LD HL,$E9D7   ; #REGhl=#R$E9D7.
- $F557 CALL $C37F    ; Call #R$C37F.
- $F55A JR NZ,$F561   ; Jump to #R$F561 if *#REGhl is not equal to #N$08.
+; Is the player asking to drop or throw the fruit?
+@label=Validate_DropThrow_Fruit
+*$F554 LD HL,$E9D7   ; {Call #R$C37F with #R$E9D7.
+ $F557 CALL $C37F    ; }
+ $F55A JR NZ,$F561   ; Jump to #R$F561 if the token isn't for the fruit.
  $F55C LD A,$0E      ; #REGa=#N$0E.
  $F55E JP $F4DA      ; Jump to #R$F4DA.
-*$F561 LD HL,$E9DB   ; #REGhl=#R$E9DB.
- $F564 CALL $C37F    ; Call #R$C37F.
- $F567 JR NZ,$F56E   ; Jump to #R$F56E if *#REGhl is not equal to #N$0E.
+; Is the player asking to drop or throw the jewels?
+@label=Validate_DropThrow_Jewels
+*$F561 LD HL,$E9DB   ; {Call #R$C37F with #R$E9DB.
+ $F564 CALL $C37F    ; }
+ $F567 JR NZ,$F56E   ; Jump to #R$F56E if the token isn't for the jewels.
  $F569 LD A,$1D      ; #REGa=#N$1D.
  $F56B JP $F4DA      ; Jump to #R$F4DA.
-*$F56E LD HL,$E9E1   ; #REGhl=#R$E9E1.
- $F571 CALL $C37F    ; Call #R$C37F.
- $F574 JR NZ,$F57F   ; Jump to #R$F57F if *#REGhl is not equal to #N$1D.
+; Is the player asking to drop or throw the match?
+@label=Validate_DropThrow_Match
+*$F56E LD HL,$E9E1   ; {Call #R$C37F with #R$E9E1.
+ $F571 CALL $C37F    ; }
+ $F574 JR NZ,$F57F   ; Jump to #R$F57F if the token isn't for the match.
  $F576 LD HL,$E86E   ; #REGhl=#R$E86E.
  $F579 CALL $C401    ; Call #R$C401.
  $F57C JP $F4DA      ; Jump to #R$F4DA.
-*$F57F LD HL,$E9E3   ; #REGhl=#R$E9E3.
- $F582 CALL $C37F    ; Call #R$C37F.
- $F585 JR NZ,$F58C   ; Jump to #R$F58C if *#REGhl is not equal to #N$1D.
+; Is the player asking to drop or throw the plank?
+@label=Validate_DropThrow_Plank
+*$F57F LD HL,$E9E3   ; {Call #R$C37F with #R$E9E3.
+ $F582 CALL $C37F    ; }
+ $F585 JR NZ,$F58C   ; Jump to #R$F58C if the token isn't for the plank.
  $F587 LD A,$04      ; #REGa=#N$04.
  $F589 JP $F4DA      ; Jump to #R$F4DA.
-*$F58C LD HL,$E9E5   ; #REGhl=#R$E9E5.
- $F58F CALL $C37F    ; Call #R$C37F.
- $F592 JR NZ,$F599   ; Jump to #R$F599 if *#REGhl is not equal to #N$04.
+; Is the player asking to drop or throw the coconut?
+@label=Validate_DropThrow_Coconut
+*$F58C LD HL,$E9E5   ; {Call #R$C37F with #R$E9E5.
+ $F58F CALL $C37F    ; }
+ $F592 JR NZ,$F599   ; Jump to #R$F599 if the token isn't for the coconut.
  $F594 LD A,$07      ; #REGa=#N$07.
  $F596 JP $F4DA      ; Jump to #R$F4DA.
-*$F599 LD HL,$E9EF   ; #REGhl=#R$E9EF.
- $F59C CALL $C37F    ; Call #R$C37F.
- $F59F JR NZ,$F5A6   ; Jump to #R$F5A6 if *#REGhl is not equal to #N$07.
+; Is the player asking to drop or throw the gun?
+@label=Validate_DropThrow_Gun
+*$F599 LD HL,$E9EF   ; {Call #R$C37F with #R$E9EF.
+ $F59C CALL $C37F    ; }
+ $F59F JR NZ,$F5A6   ; Jump to #R$F5A6 if the token isn't for the gun.
  $F5A1 LD A,$0F      ; #REGa=#N$0F.
  $F5A3 JP $F4DA      ; Jump to #R$F4DA.
-*$F5A6 LD HL,$E9F1   ; #REGhl=#R$E9F1.
- $F5A9 CALL $C37F    ; Call #R$C37F.
- $F5AC JR NZ,$F5C4   ; Jump to #R$F5C4 if *#REGhl is not equal to #N$0F.
+; Is the player asking to drop or throw the eyepatch?
+@label=Validate_DropThrow_Eyepatch
+*$F5A6 LD HL,$E9F1   ; {Call #R$C37F with #R$E9F1.
+ $F5A9 CALL $C37F    ; }
+ $F5AC JR NZ,$F5C4   ; Jump to #R$F5C4 if the token isn't for the eyepatch.
  $F5AE LD HL,$E885   ; #REGhl=#R$E885.
  $F5B1 CALL $C401    ; Call #R$C401.
  $F5B4 CP $11        ; {Jump to #R$F4DA if #REGa is not equal to #N$11.
@@ -11844,44 +11954,62 @@ c$F4D4 CALL $C47B    ; Call #R$C47B.
  $F5BC CALL $C426    ; (#ITEM$10).}
  $F5BF LD A,$10      ; #REGa=#N$10.
  $F5C1 JP $F4DA      ; Jump to #R$F4DA.
-*$F5C4 LD HL,$E9F3   ; #REGhl=#R$E9F3.
- $F5C7 CALL $C37F    ; Call #R$C37F.
- $F5CA JR NZ,$F5D1   ; Jump to #R$F5D1 if #REGa is not equal to #N$10.
+; Is the player asking to drop or throw the keg of gunpowder?
+@label=Validate_DropThrow_KegGunpowder
+*$F5C4 LD HL,$E9F3   ; {Call #R$C37F with #R$E9F3.
+ $F5C7 CALL $C37F    ; }
+ $F5CA JR NZ,$F5D1   ; Jump to #R$F5D1 if the token isn't for the keg of
+                     ; gunpowder.
  $F5CC LD A,$12      ; #REGa=#N$12.
  $F5CE JP $F4DA      ; Jump to #R$F4DA.
-*$F5D1 LD HL,$E9FB   ; #REGhl=#R$E9FB.
- $F5D4 CALL $C37F    ; Call #R$C37F.
- $F5D7 JR NZ,$F5DE   ; Jump to #R$F5DE if #REGa is not equal to #N$12.
+; Is the player asking to drop or throw the sextant?
+@label=Validate_DropThrow_Sextant
+*$F5D1 LD HL,$E9FB   ; {Call #R$C37F with #R$E9FB.
+ $F5D4 CALL $C37F    ; }
+ $F5D7 JR NZ,$F5DE   ; Jump to #R$F5DE if the token isn't for the sextant.
  $F5D9 LD A,$16      ; #REGa=#N$16.
  $F5DB JP $F4DA      ; Jump to #R$F4DA.
-*$F5DE LD HL,$E9FD   ; #REGhl=#R$E9FD.
- $F5E1 CALL $C37F    ; Call #R$C37F.
- $F5E4 JR NZ,$F5EB   ; Jump to #R$F5EB if #REGa is not equal to #N$16.
+; Is the player asking to drop or throw the crowbar?
+@label=Validate_DropThrow_Crowbar
+*$F5DE LD HL,$E9FD   ; {Call #R$C37F with #R$E9FD.
+ $F5E1 CALL $C37F    ; }
+ $F5E4 JR NZ,$F5EB   ; Jump to #R$F5EB if the token isn't for the crowbar.
  $F5E6 LD A,$1E      ; #REGa=#N$1E.
  $F5E8 JP $F4DA      ; Jump to #R$F4DA.
-*$F5EB LD HL,$E9FF   ; #REGhl=#R$E9FF.
- $F5EE CALL $C37F    ; Call #R$C37F.
- $F5F1 JR NZ,$F5F8   ; Jump to #R$F5F8 if #REGa is not equal to #N$1E.
+; Is the player asking to drop or throw the key?
+@label=Validate_DropThrow_Key
+*$F5EB LD HL,$E9FF   ; {Call #R$C37F with #R$E9FF.
+ $F5EE CALL $C37F    ; }
+ $F5F1 JR NZ,$F5F8   ; Jump to #R$F5F8 if the token isn't for the key.
  $F5F3 LD A,$1F      ; #REGa=#N$1F.
  $F5F5 JP $F4DA      ; Jump to #R$F4DA.
-*$F5F8 LD HL,$EA01   ; #REGhl=#R$EA01.
- $F5FB CALL $C37F    ; Call #R$C37F.
- $F5FE JR NZ,$F605   ; Jump to #R$F605 if #REGa is not equal to #N$1F.
+; Is the player asking to drop or throw the skull?
+@label=Validate_DropThrow_Skull
+*$F5F8 LD HL,$EA01   ; {Call #R$C37F with #R$EA01.
+ $F5FB CALL $C37F    ; }
+ $F5FE JR NZ,$F605   ; Jump to #R$F605 if the token isn't for the skull.
  $F600 LD A,$20      ; #REGa=#N$20.
  $F602 JP $F4DA      ; Jump to #R$F4DA.
-*$F605 LD HL,$EA06   ; #REGhl=#R$EA06.
- $F608 CALL $C37F    ; Call #R$C37F.
- $F60B JR NZ,$F612   ; Jump to #R$F612 if #REGa is not equal to #N$20.
+; Is the player asking to drop or throw the spear?
+@label=Validate_DropThrow_Spear
+*$F605 LD HL,$EA06   ; {Call #R$C37F with #R$EA06.
+ $F608 CALL $C37F    ; }
+ $F60B JR NZ,$F612   ; Jump to #R$F612 if the token isn't for the spear.
  $F60D LD A,$1A      ; #REGa=#N$1A.
  $F60F JP $F4DA      ; Jump to #R$F4DA.
-*$F612 LD HL,$EA08   ; #REGhl=#R$EA08.
- $F615 CALL $C37F    ; Call #R$C37F.
- $F618 JR NZ,$F61F   ; Jump to #R$F61F if #REGa is not equal to #N$1A.
+; Is the player asking to drop or throw the parrot?
+@label=Validate_DropThrow_Parrot
+*$F612 LD HL,$EA08   ; {Call #R$C37F with #R$EA08.
+ $F615 CALL $C37F    ; }
+ $F618 JR NZ,$F61F   ; Jump to #R$F61F if the token isn't for the parrot.
  $F61A LD A,$28      ; #REGa=#N$28.
  $F61C JP $F4DA      ; Jump to #R$F4DA.
-*$F61F LD HL,$EA26   ; #REGhl=#R$EA26.
- $F622 CALL $C37F    ; Call #R$C37F.
- $F625 JP Z,$F074    ; Jump to #R$F074 if #REGa is equal to #N$28.
+; Is the player asking to drop or throw the plank across the pit?
+@label=Validate_DropThrow_PlankAcrossPit
+*$F61F LD HL,$EA26   ; {Call #R$C37F with #R$EA26.
+ $F622 CALL $C37F    ; }
+ $F625 JP Z,$F074    ; Jump to #R$F074 if the token is for dropping/ throwing the plank
+                     ; across the pit.
  $F628 LD A,($BD66)  ; {Jump to #R$F633 if *#R$BD66 is equal to #N$3E.
  $F62B CP $3E        ;
  $F62D JP Z,$F633    ; }
@@ -11897,34 +12025,37 @@ c$F4D4 CALL $C47B    ; Call #R$C47B.
  $F641 LD HL,$BC98   ; #REGhl=#R$BC98.
  $F644 DEC (HL)      ; Decrease *#REGhl by one.
  $F645 RET           ; Return.
-*$F646 LD HL,$EA2A   ; #REGhl=#R$EA2A.
- $F649 CALL $C37F    ; Call #R$C37F.
- $F64C JR NZ,$F659   ; Jump to #R$F659 if *#REGhl is not equal to #N$3E.
+*$F646 LD HL,$EA2A   ; {Call #R$C37F with #R$EA2A.
+ $F649 CALL $C37F    ; }
+ $F64C JR NZ,$F659   ; Jump to #R$F659 if the token isn't for dropping/ throwing the spear
+                     ; at the lion.
  $F64E LD A,$1A      ; #REGa=#N$1A.
  $F650 CALL $F635    ; Call #R$F635.
 ; Print "#STR$DC4F,$08($b==$FF)".
  $F653 LD HL,$DC4F   ; #REGhl=#R$DC4F.
  $F656 JP $F03A      ; Jump to #R$F03A.
-*$F659 LD HL,$EA2E   ; #REGhl=#R$EA2E.
- $F65C CALL $C37F    ; Call #R$C37F.
- $F65F JR NZ,$F66C   ; Jump to #R$F66C if *#REGhl is not equal to #N$1A.
+*$F659 LD HL,$EA2E   ; {Call #R$C37F with #R$EA2E.
+ $F65C CALL $C37F    ; }
+ $F65F JR NZ,$F66C   ; Jump to #R$F66C if the token isn't for dropping/ throwing the
+                     ; coconut at the lion.
  $F661 LD A,$07      ; #REGa=#N$07.
  $F663 CALL $F635    ; Call #R$F635.
 ; Print "#STR$DC82,$08($b==$FF)".
  $F666 LD HL,$DC82   ; #REGhl=#R$DC82.
  $F669 JP $F03A      ; Jump to #R$F03A.
-*$F66C LD HL,$EA32   ; #REGhl=#R$EA32.
- $F66F CALL $C37F    ; Call #R$C37F.
- $F672 JR NZ,$F67F   ; Jump to #R$F67F if *#REGhl is not equal to #N$07.
+*$F66C LD HL,$EA32   ; {Call #R$C37F with #R$EA32.
+ $F66F CALL $C37F    ; }
+ $F672 JR NZ,$F67F   ; Jump to #R$F67F if the token isn't for dropping/ throwing the fruit
+                     ; at the lion.
 ; This entry point is used by the routine at #R$F7AB.
 *$F674 LD A,$0E      ; #REGa=#N$0E.
  $F676 CALL $F635    ; Call #R$F635.
 ; Print "#STR$DCED,$08($b==$FF)".
  $F679 LD HL,$DCED   ; #REGhl=#R$DCED.
  $F67C JP $F03A      ; Jump to #R$F03A.
-*$F67F LD HL,$EA36   ; #REGhl=#R$EA36.
- $F682 CALL $C37F    ; Call #R$C37F.
- $F685 JR NZ,$F6A4   ; Jump to #R$F6A4 if *#REGhl is not equal to #N$0E.
+*$F67F LD HL,$EA36   ; {Call #R$C37F with #R$EA36.
+ $F682 CALL $C37F    ; }
+ $F685 JR NZ,$F6A4   ; Jump to #R$F6A4 if the token isn't for the .
 ; This entry point is used by the routine at #R$F7AB.
 *$F687 LD HL,$E895   ; #REGhl=#R$E895.
  $F68A CALL $C401    ; Call #R$C401.
@@ -11938,9 +12069,9 @@ c$F4D4 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$DD1B,$08($b==$FF)".
  $F69E LD HL,$DD1B   ; #REGhl=#R$DD1B.
  $F6A1 JP $F03A      ; Jump to #R$F03A.
-*$F6A4 LD HL,$EA3F   ; #REGhl=#R$EA3F.
- $F6A7 CALL $C37F    ; Call #R$C37F.
- $F6AA JR NZ,$F6C2   ; Jump to #R$F6C2 if *#REGhl is not equal to #N$3C.
+*$F6A4 LD HL,$EA3F   ; {Call #R$C37F with #R$EA3F.
+ $F6A7 CALL $C37F    ; }
+ $F6AA JR NZ,$F6C2   ; Jump to #R$F6C2 if the token isn't for the .
 ; This entry point is used by the routine at #R$F7AB.
 *$F6AC LD A,$0E      ; Load #ITEM$0E into #REGa.
  $F6AE CALL $F635    ; Call #R$F635.
@@ -11952,9 +12083,9 @@ c$F4D4 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$DD6C,$08($b==$FF)".
  $F6BC LD HL,$DD6C   ; #REGhl=#R$DD6C.
  $F6BF JP $F03A      ; Jump to #R$F03A.
-*$F6C2 LD HL,$EA43   ; #REGhl=#R$EA43.
- $F6C5 CALL $C37F    ; Call #R$C37F.
- $F6C8 JR NZ,$F6FD   ; Jump to #R$F6FD if *#REGhl is not equal to #N$0E.
+*$F6C2 LD HL,$EA43   ; {Call #R$C37F with #R$EA43.
+ $F6C5 CALL $C37F    ; }
+ $F6C8 JR NZ,$F6FD   ; Jump to #R$F6FD if the token isn't for the .
 ; This entry point is used by the routine at #R$F7AB.
 *$F6CA LD A,$17      ; {Call #R$C35F with #ITEM$17.
  $F6CC CALL $C35F    ; }
@@ -11976,9 +12107,9 @@ c$F4D4 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$DDDD,$08($b==$FF)".
  $F6F7 LD HL,$DDDD   ; #REGhl=#R$DDDD.
  $F6FA JP $F03A      ; Jump to #R$F03A.
-*$F6FD LD HL,$EA47   ; #REGhl=#R$EA47.
- $F700 CALL $C37F    ; Call #R$C37F.
- $F703 JR NZ,$F729   ; Jump to #R$F729 if *#REGhl is not equal to #N$23.
+*$F6FD LD HL,$EA47   ; {Call #R$C37F with #R$EA47.
+ $F700 CALL $C37F    ; }
+ $F703 JR NZ,$F729   ; Jump to #R$F729 if the token isn't for the .
  $F705 LD A,$1A      ; {Call #R$F635 using #ITEM$1A.
  $F707 CALL $F635    ; }
  $F70A LD A,$2B      ; {Call #R$C3EA with #ITEM$2B.
@@ -11994,9 +12125,9 @@ c$F4D4 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$DE81,$08($b==$FF)".
  $F723 LD HL,$DE81   ; #REGhl=#R$DE81.
  $F726 JP $F03A      ; Jump to #R$F03A.
-*$F729 LD HL,$EA50   ; #REGhl=#R$EA50.
- $F72C CALL $C37F    ; Call #R$C37F.
- $F72F JR NZ,$F74F   ; Jump to #R$F74F if *#REGhl is not equal to #N$42.
+*$F729 LD HL,$EA50   ; {Call #R$C37F with #R$EA50.
+ $F72C CALL $C37F    ; }
+ $F72F JR NZ,$F74F   ; Jump to #R$F74F if the token isn't for the .
  $F731 LD A,$12      ; {Call #R$C35F with #ITEM$12.
  $F733 CALL $C35F    ; }
  $F736 JP NZ,$F079   ; Jump to #R$F079 if #ITEM$12 isn't in the current room.
@@ -12009,9 +12140,9 @@ c$F4D4 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$DF15,$08($b==$FF)".
  $F749 LD HL,$DF15   ; #REGhl=#R$DF15.
  $F74C JP $F03A      ; Jump to #R$F03A.
-*$F74F LD HL,$EA5E   ; #REGhl=#R$EA5E.
- $F752 CALL $C37F    ; Call #R$C37F.
- $F755 JR NZ,$F78D   ; Jump to #R$F78D if *#REGhl is not equal to #N$12.
+*$F74F LD HL,$EA5E   ; {Call #R$C37F with #R$EA5E.
+ $F752 CALL $C37F    ; }
+ $F755 JR NZ,$F78D   ; Jump to #R$F78D if the token isn't for the .
  $F757 LD A,$12      ; {Call #R$C3E4 with #ITEM$12.
  $F759 CALL $C3E4    ; }
  $F75C JP Z,$F06F    ; Jump to #R$F06F if *#REGhl is equal to #N$12.
@@ -12035,9 +12166,9 @@ c$F4D4 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$DF8E,$08($b==$FF)".
  $F787 LD HL,$DF8E   ; #REGhl=#R$DF8E.
  $F78A JP $F03A      ; Jump to #R$F03A.
-*$F78D LD HL,$EA6C   ; #REGhl=#R$EA6C.
- $F790 CALL $C37F    ; Call #R$C37F.
- $F793 JR NZ,$F7A8   ; Jump to #R$F7A8 if *#REGhl is not equal to #N$4E.
+*$F78D LD HL,$EA6C   ; {Call #R$C37F with #R$EA6C.
+ $F790 CALL $C37F    ; }
+ $F793 JR NZ,$F7A8   ; Jump to #R$F7A8 if the token isn't for the .
  $F795 LD HL,$E86E   ; #REGhl=#R$E86E.
  $F798 CALL $C401    ; Call #R$C401.
  $F79B CALL $F635    ; Call #R$F635.
@@ -12052,27 +12183,27 @@ c$F4D4 CALL $C47B    ; Call #R$C47B.
 @label=Action_LayPlacePut
 c$F7AB CALL $C49F    ; Call #R$C49F.
  $F7AE RET C         ; Return if *#REGhl is less than #N$14.
- $F7AF LD HL,$EA32   ; #REGhl=#R$EA32.
- $F7B2 CALL $C37F    ; Call #R$C37F.
- $F7B5 JP Z,$F674    ; Jump to #R$F674 if *#REGhl is equal to #N$14.
- $F7B8 LD HL,$EA36   ; #REGhl=#R$EA36.
- $F7BB CALL $C37F    ; Call #R$C37F.
- $F7BE JP Z,$F687    ; Jump to #R$F687 if *#REGhl is equal to #N$14.
- $F7C1 LD HL,$EA3F   ; #REGhl=#R$EA3F.
- $F7C4 CALL $C37F    ; Call #R$C37F.
- $F7C7 JP Z,$F6AC    ; Jump to #R$F6AC if *#REGhl is equal to #N$14.
- $F7CA LD HL,$EA43   ; #REGhl=#R$EA43.
- $F7CD CALL $C37F    ; Call #R$C37F.
- $F7D0 JP Z,$F6CA    ; Jump to #R$F6CA if *#REGhl is equal to #N$14.
+ $F7AF LD HL,$EA32   ; {Call #R$C37F with #R$EA32.
+ $F7B2 CALL $C37F    ; }
+ $F7B5 JP Z,$F674    ; Jump to #R$F674 if the token is for the .
+ $F7B8 LD HL,$EA36   ; {Call #R$C37F with #R$EA36.
+ $F7BB CALL $C37F    ; }
+ $F7BE JP Z,$F687    ; Jump to #R$F687 if the token is for the .
+ $F7C1 LD HL,$EA3F   ; {Call #R$C37F with #R$EA3F.
+ $F7C4 CALL $C37F    ; }
+ $F7C7 JP Z,$F6AC    ; Jump to #R$F6AC if the token is for the .
+ $F7CA LD HL,$EA43   ; {Call #R$C37F with #R$EA43.
+ $F7CD CALL $C37F    ; }
+ $F7D0 JP Z,$F6CA    ; Jump to #R$F6CA if the token is for the .
  $F7D3 JP $F065      ; Jump to #R$F065.
 
 ; Action: Kill
 @label=Action_Kill
 c$F7D6 CALL $C49F    ; Call #R$C49F.
  $F7D9 RET C         ; Return if *#REGhl is less than #N$14.
- $F7DA LD HL,$EA26   ; #REGhl=#R$EA26.
- $F7DD CALL $C37F    ; Call #R$C37F.
- $F7E0 JR NZ,$F813   ; Jump to #R$F813 if *#REGhl is not equal to #N$14.
+ $F7DA LD HL,$EA26   ; {Call #R$C37F with #R$EA26.
+ $F7DD CALL $C37F    ; }
+ $F7E0 JR NZ,$F813   ; Jump to #R$F813 if the token isn't for the .
  $F7E2 LD A,$04      ; {Call #R$C35F with #ITEM$04.
  $F7E4 CALL $C35F    ; }
  $F7E7 JP NZ,$F079   ; Jump to #R$F079 if #ITEM$04 isn't in the current room.
@@ -12092,9 +12223,9 @@ c$F7D6 CALL $C49F    ; Call #R$C49F.
 ; Print "#STR$E00C,$08($b==$FF)".
  $F80D LD HL,$E00C   ; #REGhl=#R$E00C.
  $F810 JP $F03A      ; Jump to #R$F03A.
-*$F813 LD HL,$EA70   ; #REGhl=#R$EA70.
- $F816 CALL $C37F    ; Call #R$C37F.
- $F819 JR NZ,$F84E   ; Jump to #R$F84E if *#REGhl is not equal to #N$66.
+*$F813 LD HL,$EA70   ; {Call #R$C37F with #R$EA70.
+ $F816 CALL $C37F    ; }
+ $F819 JR NZ,$F84E   ; Jump to #R$F84E if the token isn't for the .
 ; This entry point is used by the routine at #R$FB71.
 *$F81B LD A,$08      ; {Call #R$C35F with #ITEM$08.
  $F81D CALL $C35F    ; }
@@ -12122,9 +12253,9 @@ c$F7D6 CALL $C49F    ; Call #R$C49F.
 @label=Action_Shoot
 c$F851 CALL $C49F    ; Call #R$C49F.
  $F854 RET C         ; Return if *#REGhl is less than #N$15.
- $F855 LD HL,$EA8D   ; #REGhl=#R$EA8D.
- $F858 CALL $C37F    ; Call #R$C37F.
- $F85B JR NZ,$F888   ; Jump to #R$F888 if *#REGhl is not equal to #N$15.
+ $F855 LD HL,$EA8D   ; {Call #R$C37F with #R$EA8D.
+ $F858 CALL $C37F    ; }
+ $F85B JR NZ,$F888   ; Jump to #R$F888 if the token isn't for the .
  $F85D LD A,$1A      ; {Call #R$C3E4 with #ITEM$1A.
  $F85F CALL $C3E4    ; }
  $F862 JP NZ,$F07E   ; Jump to #R$F07E if *#REGhl is not equal to #N$1A.
@@ -12143,18 +12274,18 @@ c$F851 CALL $C49F    ; Call #R$C49F.
 ; Print "#STR$DE81,$08($b==$FF)".
  $F882 LD HL,$DE81   ; #REGhl=#R$DE81.
  $F885 JP $F03A      ; Jump to #R$F03A.
-*$F888 LD HL,$EA96   ; #REGhl=#R$EA96.
- $F88B CALL $C37F    ; Call #R$C37F.
- $F88E JR NZ,$F89E   ; Jump to #R$F89E if *#REGhl is not equal to #N$42.
+*$F888 LD HL,$EA96   ; {Call #R$C37F with #R$EA96.
+ $F88B CALL $C37F    ; }
+ $F88E JR NZ,$F89E   ; Jump to #R$F89E if the token isn't for the .
  $F890 LD A,$1A      ; {Call #R$C3E4 with #ITEM$1A.
  $F892 CALL $C3E4    ; }
  $F895 JP NZ,$F07E   ; Jump to #R$F07E if *#REGhl is not equal to #N$1A.
 ; Print "#STR$E07F,$08($b==$FF)".
  $F898 LD HL,$E07F   ; #REGhl=#R$E07F.
  $F89B JP $F03A      ; Jump to #R$F03A.
-*$F89E LD HL,$EA9A   ; #REGhl=#R$EA9A.
- $F8A1 CALL $C37F    ; Call #R$C37F.
- $F8A4 JR NZ,$F8B8   ; Jump to #R$F8B8 if *#REGhl is not equal to #N$1A.
+*$F89E LD HL,$EA9A   ; {Call #R$C37F with #R$EA9A.
+ $F8A1 CALL $C37F    ; }
+ $F8A4 JR NZ,$F8B8   ; Jump to #R$F8B8 if the token isn't for the .
  $F8A6 LD A,$1A      ; {Call #R$C3E4 with #ITEM$1A.
  $F8A8 CALL $C3E4    ; }
  $F8AB JP NZ,$F07E   ; Jump to #R$F07E if *#REGhl is not equal to #N$1A.
@@ -12164,9 +12295,9 @@ c$F851 CALL $C49F    ; Call #R$C49F.
 ; Print "#STR$E0B4,$08($b==$FF)".
  $F8B2 LD HL,$E0B4   ; #REGhl=#R$E0B4.
  $F8B5 JP $F03A      ; Jump to #R$F03A.
-*$F8B8 LD HL,$EA9E   ; #REGhl=#R$EA9E.
- $F8BB CALL $C37F    ; Call #R$C37F.
- $F8BE JR NZ,$F90A   ; Jump to #R$F90A if ?? is not equal to #N$00.
+*$F8B8 LD HL,$EA9E   ; {Call #R$C37F with #R$EA9E.
+ $F8BB CALL $C37F    ; }
+ $F8BE JR NZ,$F90A   ; Jump to #R$F90A if the token isn't for the .
  $F8C0 LD A,$0F      ; {Call #R$C3E4 with #ITEM$0F.
  $F8C2 CALL $C3E4    ; }
  $F8C5 JP NZ,$F07E   ; Jump to #R$F07E if ?? is not equal to #N$0F.
@@ -12211,10 +12342,10 @@ c$F8D9 PUSH BC                      ; Stash #REGbc on the stack.
  $F901 JP $F03E                     ; Jump to #R$F03E.
  $F904 DEFB $23,$24,$25,$00,$00,$26 ;
 ; This entry point is used by the routine at #R$F851.
-*$F90A LD HL,$EAA2                  ; #REGhl=#R$EAA2.
- $F90D CALL $C37F                   ; Call #R$C37F.
- $F910 JR NZ,$F918                  ; Jump to #R$F918 if ?? is not equal to
-                                    ; #N$00.
+*$F90A LD HL,$EAA2                  ; {Call #R$C37F with #R$EAA2.
+ $F90D CALL $C37F                   ; }
+ $F910 JR NZ,$F918                  ; Jump to #R$F918 if the token isn't for
+                                    ; the .
 ; Print "#STR$E14B,$08($b==$FF)".
  $F912 LD HL,$E14B                  ; #REGhl=#R$E14B.
  $F915 JP $F03A                     ; Jump to #R$F03A.
@@ -12232,12 +12363,12 @@ c$F91B CALL $C47B    ; Call #R$C47B.
  $F926 LD HL,$E15E   ; #REGhl=#R$E15E.
  $F929 JP $F03A      ; Jump to #R$F03A.
 @label=PlayerHasGun
-*$F92C LD HL,$EAA6   ; #REGhl=#R$EAA6.
- $F92F CALL $C37F    ; Call #R$C37F.
- $F932 JP Z,$F8C8    ; Jump to #R$F8C8 if ?? is equal to #N$0F.
- $F935 LD HL,$EAAC   ; #REGhl=#R$EAAC.
- $F938 CALL $C37F    ; Call #R$C37F.
- $F93B JR NZ,$F943   ; Jump to #R$F943 if ?? is not equal to #N$0F.
+*$F92C LD HL,$EAA6   ; {Call #R$C37F with #R$EAA6.
+ $F92F CALL $C37F    ; }
+ $F932 JP Z,$F8C8    ; Jump to #R$F8C8 if the token is for the .
+ $F935 LD HL,$EAAC   ; {Call #R$C37F with #R$EAAC.
+ $F938 CALL $C37F    ; }
+ $F93B JR NZ,$F943   ; Jump to #R$F943 if the token isn't for the .
 ; Print "#STR$E14B,$08($b==$FF)".
  $F93D LD HL,$E14B   ; #REGhl=#R$E14B.
  $F940 JP $F03A      ; Jump to #R$F03A.
@@ -12247,45 +12378,45 @@ c$F91B CALL $C47B    ; Call #R$C47B.
 @label=Action_Eat
 c$F946 CALL $C47B    ; Call #R$C47B.
  $F949 RET C         ; Return if the direct object is malformed.
- $F94A LD HL,$EAB2   ; #REGhl=#R$EAB2.
- $F94D CALL $C37F    ; Call #R$C37F.
- $F950 JR NZ,$F960   ; Jump to #R$F960 if ?? is not equal to #N$0F.
+ $F94A LD HL,$EAB2   ; {Call #R$C37F with #R$EAB2.
+ $F94D CALL $C37F    ; }
+ $F950 JR NZ,$F960   ; Jump to #R$F960 if the token isn't for the .
  $F952 LD A,($BCCB)  ; {Jump to #R$F06F if *#R$BCCB is not room #N$04:
  $F955 CP $04        ; "#ROOM$04".
  $F957 JP NZ,$F06F   ; }
  $F95A LD A,$03      ; #REGa=#N$03.
  $F95C CALL $EF54    ; Call #R$EF54.
  $F95F RET           ; Return.
-*$F960 LD HL,$EAB5   ; #REGhl=#R$EAB5.
- $F963 CALL $C37F    ; Call #R$C37F.
- $F966 JR NZ,$F976   ; Jump to #R$F976 if #REGa is not equal to #N$03.
+*$F960 LD HL,$EAB5   ; {Call #R$C37F with #R$EAB5.
+ $F963 CALL $C37F    ; }
+ $F966 JR NZ,$F976   ; Jump to #R$F976 if the token isn't for the .
  $F968 LD A,($BCCB)  ; {Jump to #R$F06F if *#R$BCCB is not room #N$03:
  $F96B CP $03        ; "#ROOM$03".
  $F96D JP NZ,$F06F   ; }
  $F970 LD A,$04      ; #REGa=#N$04.
  $F972 CALL $EF54    ; Call #R$EF54.
  $F975 RET           ; Return.
-*$F976 LD HL,$EABC   ; #REGhl=#R$EABC.
- $F979 CALL $C37F    ; Call #R$C37F.
- $F97C JR NZ,$F984   ; Jump to #R$F984 if #REGa is not equal to #N$04.
+*$F976 LD HL,$EABC   ; {Call #R$C37F with #R$EABC.
+ $F979 CALL $C37F    ; }
+ $F97C JR NZ,$F984   ; Jump to #R$F984 if the token isn't for the .
 ; Print "#STR$BED1,$08($b==$FF)".
  $F97E LD HL,$BED1   ; #REGhl=#R$BED1.
  $F981 JP $F03A      ; Jump to #R$F03A.
-*$F984 LD HL,$EA0D   ; #REGhl=#R$EA0D.
- $F987 CALL $C37F    ; Call #R$C37F.
- $F98A JP Z,$F48D    ; Jump to #R$F48D if #REGa is equal to #N$04.
- $F98D LD HL,$EA1D   ; #REGhl=#R$EA1D.
- $F990 CALL $C37F    ; Call #R$C37F.
- $F993 JP Z,$F4B4    ; Jump to #R$F4B4 if #REGa is equal to #N$04.
+*$F984 LD HL,$EA0D   ; {Call #R$C37F with #R$EA0D.
+ $F987 CALL $C37F    ; }
+ $F98A JP Z,$F48D    ; Jump to #R$F48D if the token is for the .
+ $F98D LD HL,$EA1D   ; {Call #R$C37F with #R$EA1D.
+ $F990 CALL $C37F    ; }
+ $F993 JP Z,$F4B4    ; Jump to #R$F4B4 if the token is for the .
  $F996 JP $F06F      ; Jump to #R$F06F.
 
 ; Action: Drink
 @label=Action_Drink
 c$F999 CALL $C47B    ; Call #R$C47B.
  $F99C RET C         ; Return if the direct object is malformed.
- $F99D LD HL,$E9CC   ; #REGhl=#R$E9CC.
- $F9A0 CALL $C37F    ; Call #R$C37F.
- $F9A3 JR NZ,$F9C1   ; Jump to #R$F9C1 if #REGa is not equal to #N$04.
+ $F99D LD HL,$E9CC   ; {Call #R$C37F with #R$E9CC.
+ $F9A0 CALL $C37F    ; }
+ $F9A3 JR NZ,$F9C1   ; Jump to #R$F9C1 if the token isn't for the .
  $F9A5 LD HL,$E895   ; #REGhl=#R$E895.
  $F9A8 CALL $C401    ; Call #R$C401.
  $F9AB LD B,A        ; #REGb=#REGa.
@@ -12300,17 +12431,17 @@ c$F999 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$E175,$08($b==$FF)".
  $F9BB LD HL,$E175   ; #REGhl=#R$E175.
  $F9BE JP $F03A      ; Jump to #R$F03A.
-*$F9C1 LD HL,$E9D7   ; #REGhl=#R$E9D7.
- $F9C4 CALL $C37F    ; Call #R$C37F.
- $F9C7 JR NZ,$F9D3   ; Jump to #R$F9D3 if *#REGhl is not equal to #N$04.
+*$F9C1 LD HL,$E9D7   ; {Call #R$C37F with #R$E9D7.
+ $F9C4 CALL $C37F    ; }
+ $F9C7 JR NZ,$F9D3   ; Jump to #R$F9D3 if the token isn't for the .
 ; Bad luck!
  $F9C9 LD HL,$EDD7   ; {Switch #R$EDD7 onto the stack so the next return actions a "game
  $F9CC EX (SP),HL    ; over".}
  $F9CD LD HL,$E19B   ; #REGhl=#R$E19B.
  $F9D0 JP $F03A      ; Jump to #R$F03A.
-*$F9D3 LD HL,$E9E5   ; #REGhl=#R$E9E5.
- $F9D6 CALL $C37F    ; Call #R$C37F.
- $F9D9 JR NZ,$F9E1   ; Jump to #R$F9E1 if *#REGhl is not equal to #N$04.
+*$F9D3 LD HL,$E9E5   ; {Call #R$C37F with #R$E9E5.
+ $F9D6 CALL $C37F    ; }
+ $F9D9 JR NZ,$F9E1   ; Jump to #R$F9E1 if the token isn't for the .
  $F9DB LD HL,$E208   ; #REGhl=#R$E208.
  $F9DE JP $F03A      ; Jump to #R$F03A.
 *$F9E1 JP $F083      ; Jump to #R$F083.
@@ -12319,9 +12450,9 @@ c$F999 CALL $C47B    ; Call #R$C47B.
 @label=Action_Open
 c$F9E4 CALL $C47B    ; Call #R$C47B.
  $F9E7 RET C         ; Return if the direct object is malformed.
- $F9E8 LD HL,$EAB8   ; #REGhl=#R$EAB8.
- $F9EB CALL $C37F    ; Call #R$C37F.
- $F9EE JR NZ,$FA14   ; Jump to #R$FA14 if *#REGhl is not equal to #N$04.
+ $F9E8 LD HL,$EAB8   ; {Call #R$C37F with #R$EAB8.
+ $F9EB CALL $C37F    ; }
+ $F9EE JR NZ,$FA14   ; Jump to #R$FA14 if the token isn't for the .
  $F9F0 LD HL,$E87A   ; #REGhl=#R$E87A.
  $F9F3 CALL $C401    ; Call #R$C401.
  $F9F6 LD B,A        ; #REGb=#REGa.
@@ -12340,11 +12471,11 @@ c$F9E4 CALL $C47B    ; Call #R$C47B.
  $FA11 JP $F03A      ; Jump to #R$F03A.
 ; Handle drinking water.
 @label=Handler_DrinkWater
-*$FA14 LD HL,$EABA   ; #REGhl=#R$EABA.
- $FA17 CALL $C37F    ; Call #R$C37F.
- $FA1A JR NZ,$FA39   ; Jump to #R$FA39 if the player can't drink water at this
-                     ; time.
-; The player can drink water but determine what type of water...
+*$FA14 LD HL,$EABA   ; {Call #R$C37F with #R$EABA.
+ $FA17 CALL $C37F    ; }
+ $FA1A JR NZ,$FA39   ; Jump to #R$FA39 if the token isn't for drinking the
+                     ; water.
+; The player wants to drink water but determine what type of water...
  $FA1C LD A,($BCCB)  ; #REGa=*#R$BCCB.
  $FA1F LD HL,$FA35   ; #REGhl=#R$FA35.
  $FA22 LD BC,$0004   ; #REGbc=#N($0004,$04,$04).
@@ -12374,9 +12505,9 @@ c$F9E4 CALL $C47B    ; Call #R$C47B.
 @label=Action_CloseShut
 c$FA3C CALL $C47B    ; Call #R$C47B.
  $FA3F RET C         ; Return if the direct object is malformed.
- $FA40 LD HL,$EABE   ; #REGhl=#R$EABE.
- $FA43 CALL $C37F    ; Call #R$C37F.
- $FA46 JR NZ,$FA85   ; Jump to #R$FA85 if #REGd is not equal to #N$06.
+ $FA40 LD HL,$EABE   ; {Call #R$C37F with #R$EABE.
+ $FA43 CALL $C37F    ; }
+ $FA46 JR NZ,$FA85   ; Jump to #R$FA85 if the token isn't for the .
  $FA48 LD A,($BCCB)  ; #REGa=*#R$BCCB.
  $FA4B CP $61        ; {Jump to #R$FA53 if #REGa is room #N$61: "#ROOM$61".
  $FA4D JR Z,$FA53    ; }
@@ -12402,9 +12533,9 @@ c$FA3C CALL $C47B    ; Call #R$C47B.
  $FA7D LD A,$61      ; {Write #N$61 to *#R$ED5C.
  $FA7F LD ($ED5C),A  ; }
  $FA82 JP $F06A      ; Jump to #R$F06A.
-*$FA85 LD HL,$EAC0   ; #REGhl=#R$EAC0.
- $FA88 CALL $C37F    ; Call #R$C37F.
- $FA8B JR NZ,$FAA5   ; Jump to #R$FAA5 if #REGa is not equal to #N$61.
+*$FA85 LD HL,$EAC0   ; {Call #R$C37F with #R$EAC0.
+ $FA88 CALL $C37F    ; }
+ $FA8B JR NZ,$FAA5   ; Jump to #R$FAA5 if the token isn't for the .
  $FA8D LD A,($BCCB)  ; {Jump to #R$FAA5 if *#R$BCCB is not room #N$6A:
  $FA90 CP $6A        ; "#ROOM$6A".
  $FA92 JR NZ,$FAA5   ; }
@@ -12416,15 +12547,16 @@ c$FA3C CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$E305,$08($b==$FF)".
  $FA9F LD HL,$E305   ; #REGhl=#R$E305.
  $FAA2 JP $F03A      ; Jump to #R$F03A.
+@label=CloseShut_Invalid
 *$FAA5 JP $F06F      ; Jump to #R$F06F.
 
 ; Action: Shout
 @label=Action_Shout
 c$FAA8 CALL $C47B    ; Call #R$C47B.
  $FAAB RET C         ; Return if the direct object is malformed.
- $FAAC LD HL,$EABE   ; #REGhl=#R$EABE.
- $FAAF CALL $C37F    ; Call #R$C37F.
- $FAB2 JR NZ,$FAE5   ; Jump to #R$FAE5 if #REGa is not equal to #N$31.
+ $FAAC LD HL,$EABE   ; {Call #R$C37F with #R$EABE.
+ $FAAF CALL $C37F    ; }
+ $FAB2 JR NZ,$FAE5   ; Jump to #R$FAE5 if the token isn't for the .
  $FAB4 LD A,($BCCB)  ; {Jump to #R$FABF if *#R$BCCB is room #N$61: "#ROOM$61".
  $FAB7 CP $61        ;
  $FAB9 JR Z,$FABF    ; }
@@ -12444,9 +12576,9 @@ c$FAA8 CALL $C47B    ; Call #R$C47B.
  $FADC LD ($ED57),A  ;
  $FADF LD ($ED5C),A  ; }
  $FAE2 JP $F06A      ; Jump to #R$F06A.
-*$FAE5 LD HL,$EAC0   ; #REGhl=#R$EAC0.
- $FAE8 CALL $C37F    ; Call #R$C37F.
- $FAEB JR NZ,$FB05   ; Jump to #R$FB05 if #REGa is not equal to #N$30.
+*$FAE5 LD HL,$EAC0   ; {Call #R$C37F with #R$EAC0.
+ $FAE8 CALL $C37F    ; }
+ $FAEB JR NZ,$FB05   ; Jump to #R$FB05 if the token isn't for the .
  $FAED LD A,($BCCB)  ; {Jump to #R$FB05 if *#R$BCCB is not room #N$6A:
  $FAF0 CP $6A        ; "#ROOM$6A".
  $FAF2 JR NZ,$FB05   ; }
@@ -12458,9 +12590,9 @@ c$FAA8 CALL $C47B    ; Call #R$C47B.
 ; Print "#STR$E305,$08($b==$FF)".
  $FAFF LD HL,$E305   ; #REGhl=#R$E305.
  $FB02 JP $F03A      ; Jump to #R$F03A.
-*$FB05 LD HL,$EAC5   ; #REGhl=#R$EAC5.
- $FB08 CALL $C37F    ; Call #R$C37F.
- $FB0B JR NZ,$FB13   ; Jump to #R$FB13 if #REGa is not equal to #N$32.
+*$FB05 LD HL,$EAC5   ; {Call #R$C37F with #R$EAC5.
+ $FB08 CALL $C37F    ; }
+ $FB0B JR NZ,$FB13   ; Jump to #R$FB13 if the token isn't for the .
 ; Print "#STR$E31A,$08($b==$FF)".
  $FB0D LD HL,$E31A   ; #REGhl=#R$E31A.
  $FB10 JP $F03A      ; Jump to #R$F03A.
@@ -12470,9 +12602,9 @@ c$FAA8 CALL $C47B    ; Call #R$C47B.
 @label=Action_Give
 c$FB16 CALL $C3AE    ; Call #R$C3AE.
  $FB19 JP NZ,$F074   ; Jump to #R$F074 if #REGa is not equal to #N$32.
- $FB1C LD HL,$EAC7   ; #REGhl=#R$EAC7.
- $FB1F CALL $C37F    ; Call #R$C37F.
- $FB22 JR NZ,$FB6E   ; Jump to #R$FB6E if #REGa is not equal to #N$32.
+ $FB1C LD HL,$EAC7   ; {Call #R$C37F with #R$EAC7.
+ $FB1F CALL $C37F    ; }
+ $FB22 JR NZ,$FB6E   ; Jump to #R$FB6E if the token isn't for the .
  $FB24 LD A,$39      ; {Call #R$C35F with #ITEM$39.
  $FB26 CALL $C35F    ; }
  $FB29 JP NZ,$F06A   ; Jump to #R$F06A if #ITEM$39 isn't in the current room.
@@ -12482,20 +12614,12 @@ c$FB16 CALL $C3AE    ; Call #R$C3AE.
 ; Bad luck!
  $FB33 LD HL,$EDD7   ; {Switch #R$EDD7 onto the stack so the next return actions a "game
  $FB36 EX (SP),HL    ; over".}
-
-; Routine at FB37
-;
-; .
-;
-; .
-;
 ; Print "#STR$E333,$08($b==$FF)".
-c$FB37 LD HL,$E333   ; #REGhl=#R$E333.
+ $FB37 LD HL,$E333   ; #REGhl=#R$E333.
  $FB3A CALL $BAB1    ; Call #R$BAB1.
 ; Print "#STR$E36A,$08($b==$FF)".
  $FB3D LD HL,$E36A   ; #REGhl=#R$E36A.
  $FB40 JP $F03E      ; Jump to #R$F03E.
-; This entry point is used by the routine at #R$FB16.
 *$FB43 LD HL,$BC6F   ; #REGhl=#R$BC6F.
  $FB46 RES 0,(HL)    ; Reset bit 0 of *#REGhl.
  $FB48 LD A,$29      ; #REGa=#N$29 (event ID: #N($29&$7F)).
@@ -12514,17 +12638,19 @@ c$FB37 LD HL,$E333   ; #REGhl=#R$E333.
 ; Print "#STR$E384,$08($b==$FF)".
  $FB68 LD HL,$E384   ; #REGhl=#R$E384.
  $FB6B JP $F03E      ; Jump to #R$F03E.
-; This entry point is used by the routine at #R$FB16.
+@label=Give_Invalid
 *$FB6E JP $F074      ; Jump to #R$F074.
 
 ; Action: Insert
 @label=Action_Insert
 c$FB71 CALL $C49F    ; Call #R$C49F.
  $FB74 RET C         ; Return if #REGa is less than #N$31.
- $FB75 LD HL,$EA70   ; #REGhl=#R$EA70.
- $FB78 CALL $C37F    ; Call #R$C37F.
- $FB7B JR NZ,$FB80   ; Jump to #R$FB80 if #REGa is not equal to #N$31.
+ $FB75 LD HL,$EA70   ; {Call #R$C37F with #R$EA70.
+ $FB78 CALL $C37F    ; }
+ $FB7B JR NZ,$FB80   ; Jump to #R$FB80 if the token isn't for inserting the rod into the
+                     ; hole.
  $FB7D JP $F81B      ; Jump to #R$F81B.
+@label=Insert_Invalid
 *$FB80 JP $F06F      ; Jump to #R$F06F.
 
 ; Action: Swearing
@@ -12554,18 +12680,20 @@ c$FBA8 CALL $C47B    ; Call #R$C47B.
  $FBAB RET C         ; Return if the direct object is malformed.
  $FBAC CP $02        ; {Jump to #R$F074 if #REGa is greater than #N$02.
  $FBAE JP NC,$F074   ; }
- $FBB1 LD HL,$EACB   ; #REGhl=#R$EACB.
- $FBB4 CALL $C37F    ; Call #R$C37F.
- $FBB7 JR NZ,$FBD2   ; Jump to #R$FBD2 if #REGa is not equal to #N$02.
+ $FBB1 LD HL,$EACB   ; {Call #R$C37F with #R$EACB.
+ $FBB4 CALL $C37F    ; }
+ $FBB7 JR NZ,$FBD2   ; Jump to #R$FBD2 if the token isn't for the .
  $FBB9 LD A,$34      ; {Call #R$C35F with #ITEM$34.
  $FBBB CALL $C35F    ; }
  $FBBE JP Z,$F065    ; Jump to #R$F065 if #REGa is equal to #N$34.
- $FBC1 LD BC,$3B34   ; {Call #R$C426 to transform item #N$34 (#ITEM$34) into item #N$3B
- $FBC4 CALL $C426    ; (#ITEM$3B).}
- $FBC7 LD A,$60      ; {Write #N$60 to *#R$ED4F.
- $FBC9 LD ($ED4F),A  ; }
+ $FBC1 LD BC,$3B34   ; {Call #R$C426 to transform item #N$3B (#ITEM$3B) into item #N$34
+ $FBC4 CALL $C426    ; (#ITEM$34).}
+ $FBC7 LD A,$60      ; {Write #N$60 to *#R$ED4F to open up downward access to #ROOM$60
+ $FBC9 LD ($ED4F),A  ; from #ROOM$5F.}
+; Print "#STR$E40B,$08($b==$FF)".
  $FBCC LD HL,$E40B   ; #REGhl=#R$E40B.
  $FBCF JP $F03A      ; Jump to #R$F03A.
+@label=Pull_Invalid
 *$FBD2 JP $F06F      ; Jump to #R$F06F.
 
 ; Action: Wear
@@ -12577,7 +12705,7 @@ c$FBD5 CALL $C47B    ; Call #R$C47B.
 ; Was the player trying to wear ... the eyepatch?
  $FBDE LD HL,$E9F1   ; {Call #R$C37F with #R$E9F1.
  $FBE1 CALL $C37F    ; }
- $FBE4 JR NZ,$FC0A   ; Jump to #R$FC0A if #REGa is not equal to #N$02.
+ $FBE4 JR NZ,$FC0A   ; Jump to #R$FC0A if the token isn't for the eyepatch.
  $FBE6 LD A,$11      ; {Call #R$C35F with #ITEM$11.
  $FBE8 CALL $C35F    ; }
  $FBEB JR NZ,$FBF3   ; Jump to #R$FBF3 if #ITEM$11 isn't in the current room.
@@ -12597,7 +12725,7 @@ c$FBD5 CALL $C47B    ; Call #R$C47B.
 @label=Wear_CheckShoe
 *$FC0A LD HL,$E9D3   ; {Call #R$C37F with #R$E9D3.
  $FC0D CALL $C37F    ; }
- $FC10 JR NZ,$FC18   ; Jump to #R$FC18 if #REGa is not equal to #N$10.
+ $FC10 JR NZ,$FC18   ; Jump to #R$FC18 if the token isn't for the shoe.
 ; Print "#STR$E486,$08($b==$FF)".
  $FC12 LD HL,$E486   ; #REGhl=#R$E486.
  $FC15 JP $F03A      ; Jump to #R$F03A.
@@ -12605,7 +12733,7 @@ c$FBD5 CALL $C47B    ; Call #R$C47B.
 @label=Wear_CheckJewels
 *$FC18 LD HL,$E9DB   ; {Call #R$C37F with #R$E9DB.
  $FC1B CALL $C37F    ; }
- $FC1E JP Z,$F06F    ; Jump to #R$F06F if #REGa is equal to #N$10.
+ $FC1E JP Z,$F06F    ; Jump to #R$F06F if the token is for the jewels.
  $FC21 JP $F092      ; Jump to #R$F092.
 
 ; Action: Light/ Strike
@@ -12687,34 +12815,48 @@ c$FC61 CALL $C47B    ; Call #R$C47B.
 @label=Action_Move
 c$FC98 CALL $C47B    ; Call #R$C47B.
  $FC9B RET C         ; Return if the direct object is malformed.
- $FC9C LD HL,$EAD8   ; #REGhl=#R$EAD8.
- $FC9F CALL $C37F    ; Call #R$C37F.
- $FCA2 JR NZ,$FCAA   ; Jump to #R$FCAA if #REGa is not equal to #N$52.
+; Is the player asking to move the stone?
+ $FC9C LD HL,$EAD8   ; {Call #R$C37F with #R$EAD8.
+ $FC9F CALL $C37F    ; }
+ $FCA2 JR NZ,$FCAA   ; Jump to #R$FCAA if the token isn't for the stone.
+; The player is asking to move the stone.
+; .
 ; Print "#STR$E305,$08($b==$FF)".
  $FCA4 LD HL,$E305   ; #REGhl=#R$E305.
  $FCA7 JP $F03A      ; Jump to #R$F03A.
-*$FCAA LD HL,$EADD   ; #REGhl=#R$EADD.
- $FCAD CALL $C37F    ; Call #R$C37F.
- $FCB0 JR NZ,$FCCA   ; Jump to #R$FCCA if #REGa is not equal to #N$52.
- $FCB2 LD A,$4A      ; {Call #R$C35F with #ITEM$4A.
- $FCB4 CALL $C35F    ; }
- $FCB7 JP Z,$F079    ; Jump to #R$F079 if #REGa is equal to #N$4A.
- $FCBA LD A,$4A      ; #REGa=#N$4A.
- $FCBC CALL $C3F1    ; Call #R$C3F1.
- $FCBF LD A,$3B      ; #REGa=#N$3B.
- $FCC1 CALL $C3F1    ; Call #R$C3F1.
+; Is the player asking to move the stone with the crowbar?
+@label=Move_StoneWithCrowbar
+*$FCAA LD HL,$EADD   ; {Call #R$C37F with #R$EADD.
+ $FCAD CALL $C37F    ; }
+ $FCB0 JR NZ,$FCCA   ; Jump to #R$FCCA if the token isn't asking to move the stone with
+                     ; the crowbar.
+; The player is asking to move the stone with the crowbar.
+; .
+; But ... have they done this already?
+ $FCB2 LD A,$4A      ; {Jump to #R$F079 if #R$C35F reports that #ITEM$4A is in the same
+ $FCB4 CALL $C35F    ; room as the player.
+ $FCB7 JP Z,$F079    ; }
+; Handle moving the stone with the crowbar.
+; .
+; This brings items #ITEM$4A and #ITEM$3B into the current room.
+ $FCBA LD A,$4A      ; {Call #R$C3F1 with item #N$4A: #ITEM$4A.
+ $FCBC CALL $C3F1    ; }
+ $FCBF LD A,$3B      ; {Call #R$C3F1 with item #N$3B: #ITEM$3B.
+ $FCC1 CALL $C3F1    ; }
 ; Print "#STR$E508,$08($b==$FF)".
  $FCC4 LD HL,$E508   ; #REGhl=#R$E508.
  $FCC7 JP $F03A      ; Jump to #R$F03A.
+; Everything else isn't valid.
+@label=Move_Invalid
 *$FCCA JP $F074      ; Jump to #R$F074.
 
 ; Action: Unlock
 @label=Action_Unlock
 c$FCCD CALL $C47B    ; Call #R$C47B.
  $FCD0 RET C         ; Return if the direct object is malformed.
- $FCD1 LD HL,$EAE6   ; #REGhl=#R$EAE6.
- $FCD4 CALL $C37F    ; Call #R$C37F.
- $FCD7 JR NZ,$FCFF   ; Jump to #R$FCFF if #REGa is not equal to #N$3B.
+ $FCD1 LD HL,$EAE6   ; {Call #R$C37F with #R$EAE6.
+ $FCD4 CALL $C37F    ; }
+ $FCD7 JR NZ,$FCFF   ; Jump to #R$FCFF if the token isn't for the .
  $FCD9 LD A,($BCCB)  ; {Jump to #R$F06F if *#R$BCCB is room #N$6A: "#ROOM$6A".
  $FCDC CP $6A        ;
  $FCDE JP Z,$F06F    ; }
@@ -12755,30 +12897,30 @@ c$FD02 CALL $C4B7    ; Call #R$C4B7.
  $FD23 JR NZ,$FD29   ; }
  $FD25 CALL $EF54    ; Call #R$EF54.
  $FD28 RET           ; Return.
-*$FD29 LD HL,$EAEC   ; #REGhl=#R$EAEC.
- $FD2C CALL $C37F    ; Call #R$C37F.
- $FD2F JR NZ,$FD3F   ; Jump to #R$FD3F if #REGa is not equal to #N$02.
+*$FD29 LD HL,$EAEC   ; {Call #R$C37F with #R$EAEC.
+ $FD2C CALL $C37F    ; }
+ $FD2F JR NZ,$FD3F   ; Jump to #R$FD3F if the token isn't for the .
  $FD31 LD A,($BCCB)  ; {Jump to #R$F079 if *#R$BCCB is not room #N$04:
  $FD34 CP $04        ; "#ROOM$04".
  $FD36 JP NZ,$F079   ; }
  $FD39 LD A,$6B      ; #REGa=#N$6B.
  $FD3B CALL $EF54    ; Call #R$EF54.
  $FD3E RET           ; Return.
-*$FD3F LD HL,$EAF5   ; #REGhl=#R$EAF5.
- $FD42 CALL $C37F    ; Call #R$C37F.
- $FD45 JR NZ,$FD54   ; Jump to #R$FD54 if #REGa is not equal to #N$6B.
+*$FD3F LD HL,$EAF5   ; {Call #R$C37F with #R$EAF5.
+ $FD42 CALL $C37F    ; }
+ $FD45 JR NZ,$FD54   ; Jump to #R$FD54 if the token isn't for the .
  $FD47 LD A,($BCCB)  ; {Jump to #R$FD67 if *#R$BCCB is not room #N$6B:
  $FD4A CP $6B        ; "#ROOM$6B".
  $FD4C JR NZ,$FD67   ; }
  $FD4E LD A,$04      ; #REGa=#N$04.
  $FD50 CALL $EF54    ; Call #R$EF54.
  $FD53 RET           ; Return.
-*$FD54 LD HL,$EAFE   ; #REGhl=#R$EAFE.
- $FD57 CALL $C37F    ; Call #R$C37F.
- $FD5A JR Z,$FD67    ; Jump to #R$FD67 if #REGa is equal to #N$04.
- $FD5C LD HL,$EB07   ; #REGhl=#R$EB07.
- $FD5F CALL $C37F    ; Call #R$C37F.
- $FD62 JR Z,$FD67    ; Jump to #R$FD67 if #REGa is equal to #N$04.
+*$FD54 LD HL,$EAFE   ; {Call #R$C37F with #R$EAFE.
+ $FD57 CALL $C37F    ; }
+ $FD5A JR Z,$FD67    ; Jump to #R$FD67 if the token is for the .
+ $FD5C LD HL,$EB07   ; {Call #R$C37F with #R$EB07.
+ $FD5F CALL $C37F    ; }
+ $FD62 JR Z,$FD67    ; Jump to #R$FD67 if the token is for the .
  $FD64 JP $F074      ; Jump to #R$F074.
 *$FD67 LD A,$02      ; #REGa=#N$02.
  $FD69 CALL $EF54    ; Call #R$EF54.
